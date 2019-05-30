@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 
 public class BoardDTO {
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
+	private String email;
 	private String title;
 	private String writer;
 	private int amount;
@@ -15,15 +16,19 @@ public class BoardDTO {
 	private int viewCount;
 	private String writeDate;	
 	private int recommend;
-	private int sumAmount;
-	// 총 14개
+	private int sumAmount;	
+	// 총 13개
+	
+	public int getBoardNo() {
+		return boardNo;
+	}
 	public BoardDTO() {
 		super();
 	}
-	public BoardDTO(int boardNo, String title, String writer, int amount, String bank, String account, String contents,
-			String dueDate, int viewCount, String writeDate, int recommend, int sumAmount) {
-		super();
+	public BoardDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
+			String contents, String dueDate, int viewCount, String writeDate, int recommend, int sumAmount) {
 		this.boardNo = boardNo;
+		this.email = email;
 		this.title = title;
 		this.writer = writer;
 		this.amount = amount;
@@ -36,11 +41,14 @@ public class BoardDTO {
 		this.recommend = recommend;
 		this.sumAmount = sumAmount;
 	}
-	public int getBoardNo() {
-		return boardNo;
-	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getTitle() {
 		return title;
@@ -108,7 +116,6 @@ public class BoardDTO {
 	public void setSumAmount(int sumAmount) {
 		this.sumAmount = sumAmount;
 	}
-	
 	
 	
 	
