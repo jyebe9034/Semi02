@@ -58,7 +58,7 @@ public class MembersController extends HttpServlet {
 						request.setAttribute("percentage", douArr);
 					}
 				}
-				request.getRequestDispatcher("main.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

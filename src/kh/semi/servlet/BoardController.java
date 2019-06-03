@@ -27,7 +27,6 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dao.PaymentDAO;
-import kh.semi.dao.TitleImgDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.CommentDTO;
 import kh.semi.dto.PaymentDTO;
@@ -51,30 +50,12 @@ public class BoardController extends HttpServlet {
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO dao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-		TitleImgDAO tdao = new TitleImgDAO();
 		BoardDTO dto = new BoardDTO();
 		TitleImgDTO tdto = new TitleImgDTO();
 
 		try {
 			if(cmd.contentEquals("/titleImagesMain.board")) {
-				List<BoardDTO> list1 = dao.getDataForMain();
-				int bNo1 = list1.get(0).getBoardNo();
-				int bNo2 = list1.get(1).getBoardNo();
-				int bNo3 = list1.get(2).getBoardNo();
 				
-				List<TitleImgDTO> list2 = tdao.getTitleImgMain(bNo1, bNo2, bNo3);
-				String fName1 = list2.get(0).getFileName();
-				String fPath1 = list2.get(0).getFilePath();
-				String imgTag1 = fPath1 + fName1;
-				
-				String fName2 = list2.get(1).getFileName();
-				String fPath2 = list2.get(1).getFilePath();
-				String imgTag2 = fPath2 + fName2;
-				
-				String fName3 = list2.get(2).getFileName();
-				String fPath3 = list2.get(2).getFilePath();
-				String imgTag3 = fPath3 + fName3;
-			
 			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
 				
 				int totalAmount = pdao.getTotalAmount();
@@ -98,7 +79,7 @@ public class BoardController extends HttpServlet {
 
 				String rootPath = request.getSession().getServletContext().getRealPath("/");
 				String email = (String)request.getSession().getAttribute("loginEmail");
-				dto.setEmail(email);
+//				dto.setEmail(email); 자꾸 null이 들어가서 잠시 주석처리 해 둔 것!!
 
 				File tempFile = new File(rootPath+email);
 				if(!tempFile.exists()) {
@@ -153,14 +134,18 @@ public class BoardController extends HttpServlet {
 					try {
 						int result = dao.insertBoard(dto);
 						System.out.println("result : "+result);
+						request.setAttribute("board", result);
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
 					int result = dao.insertTitleImg(tdto);
-					System.out.println("titleresult : " + result);
+					System.out.println("title result : " + result);
+					request.setAttribute("titleImg", result);
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
+				request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
+	
 			}else if(cmd.equals("/uploadImage.board")) { // 서버 측 이미지 업로드 
 				request.getSession().setAttribute("flag", "false");
 				int maxSize = 10 * 1024 * 1024;
@@ -280,7 +265,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
 				
-			}else if(cmd.equals("/List.board")){//게시판 목록
+			}else if(cmd.equals("/List.board")){ //게시판 목록
 				try {
 					String searchOption = request.getParameter("searchOption");
 					String searchWord = request.getParameter("searchWord");
@@ -295,20 +280,20 @@ public class BoardController extends HttpServlet {
 						searchOption = "b_title";
 						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						System.out.println("recordTotalCount : " + recordTotalCount);
-						
-						
-						
 						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));
+						
 					}else if(searchOption.equals("contents")) {
 						searchOption = " B_CONTENTS1 || b_contents2 ||b_contents3";
 						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						System.out.println("게시글 개수(내용) : " + recordTotalCount);
 						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));	
+						
 					}else if(searchOption.equals("all")) {
 						searchOption = "b_title || B_CONTENTS1 || b_contents2 ||b_contents3";
 						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						System.out.println("게시글 개수(내용) : " + recordTotalCount);
-						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));						
+						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));
+						
 					}else{	
 						recordTotalCount = dao.totalRecordNum();
 						System.out.println("게시글 개수 : " + recordTotalCount);
@@ -318,16 +303,15 @@ public class BoardController extends HttpServlet {
 					/*페이지*/	
 					Map<String, Integer> getNavi = dao.getNavi(currentPage, recordTotalCount);
 					request.setAttribute("getNavi", getNavi);
-					
-					
-					
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
+					
 				}catch(Exception e) {				
 					e.printStackTrace();
 					//response.sendRedirect("error.html");
 				}
 			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
-				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);				
+				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);		
+				
 			}else if(cmd.equals("/Payment.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String name = request.getParameter("name");

@@ -26,24 +26,14 @@
 	.wrapper {
 		display: inline-block;
 	}
-	a {
+	.anker{
 		font-weight: bold;
 	}
-	a:hover {
+	.anker:hover{
 		color: #000000;
 	}
-	ul {
-		margin: auto;
-	}
-	li {
+	.nav-li{
 		width: 130px;
-	}
-	.hope {
-		text-align: center;
-		margin-bottom: 20px;
-	}
-	.nav_link {
-		font-family: "Nanum Gothic";
 	}
 	.btn-primary {
 		margin: 20px 0px 20px;
@@ -92,47 +82,120 @@
 	}
 	.navbar {
 		position: relative;
+		height: 60px;
 	}
 	.logo {
 		position: absolute;
-		top: 15%;
-		left: 10%;
+		top: 10%;
+		left: 15%;
 	}
 	#navbarNav {
 		line-height: 40px;
+		position: relative;
+		top: 30%;
+		left: 50%;
+	}
+	#toggle{
+		position: absolute;
+		top: 30%;
+		right: 5%;
+	}
+	#footer{
+        height: 200px;
+        width: 100%;
+        background-color: #2d3f53;
+        align-items: center;
+        position: relative;
+        margin-top: 30px;
+	}
+	#f_logo{
+		color: #98ddde;
+        text-decoration: none;
+	}
+	#f_logo_wrap{
+        position: absolute;
+        left: 15%;
+        top: 20%;
+	}
+	#f_info_wrap{
+		position: absolute;
+		right: 15%;
+		top: 20%;
+	}
+	#f_info{
+		color: gray;
+		text-align: right;
+		font-size: 13px;
+		float: left;
+		padding-top: 5px;
+		margin-right: 10px;
+	}
+	#suggest{
+		display: inline-block;
+		background-color: #fa7268;
+		border-radius: 10%;
+		color: white; 
+		width: 90px;
+		height: 45px;
+		text-decoration: none;
+		line-height: 45px;
+		float: right;
+		margin-left: 15px;
+		text-align: center;
+	}
+	#f_sns{
+		position: absolute;
+		right: 15%;
+		top: 47%;
+	}
+	.sns{
+		width: 30px;
+		height: 30px;
+		margin: 3px;
+	}
+	#kakao{
+		width: 40px;
+		height: 40px;
+	}
+	#insta{
+		width: 32px;
+		height: 32px;
+		margin-left: 8px;
+	}
+	#copyright{
+		color: gray;
+		position: absolute;
+		right: 15%;
+		top: 70%;
+		font-size: 13px;
+		margin-top: 5px;
 	}
 </style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-light">
 		<div class="logo">
-			<a class="navbar-brand" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse navbar-fixed-top" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="Introduce.members">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item"><a class="nav-link" href="write.board">후원해 주세요</a></li>
-				<li class="nav-item"><a class="nav-link" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav nav-ul">
+				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+				<li class="nav-item nav-li"><a class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li"><a class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item"><a class="nav-link"
-							href="Mypage.members">마이 페이지</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="Logout.members">로그아웃</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item"><a class="nav-link"
-							href="LoginForm.members">로그인</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="JoinForm.members">회원가입</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="LoginForm.members">로그인</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="JoinForm.members">회원가입</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -270,39 +333,24 @@
 		<hr class="my-4">
 	</div>
 	
+	<div id="footer">
+		<div id="f_logo_wrap">
+			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="f_info_wrap">
+			<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
+		</div>
+		<div id="f_sns">
+			<img id="kakao" class="sns" src="photo_image/ka.png">
+			<img class="sns" src="photo_image/fa.png">
+			<img id="insta" class="sns" src="photo_image/kk.png">
+			<a href="write.board"><div id="suggest">후원 신청</div></a>
+		</div>
+		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+	</div>
+	
+	
 	<script>
-
-		$.ajax({
-			url : "card1.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#title1").text(resp.title1);
-			$("#dueDate1").text(resp.dueDate1);
-			$("#card1").css("width", resp.percentage1 + "%");
-			$("#percentage1").text(resp.percentage1 + "%");
-		});
-		
-		$.ajax({
-			url : "card2.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#title2").text(resp.title2);
-			$("#dueDate2").text(resp.dueDate2);
-			$("#card2").css("width", resp.percentage2 + "%");
-			$("#percentage2").text(resp.percentage2 + "%");
-		});
-		
-		$.ajax({
-			url : "card3.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#title3").text(resp.title3);
-			$("#dueDate3").text(resp.dueDate3);
-			$("#card3").css("width", resp.percentage3 + "%");
-			$("#percentage3").text(resp.percentage3 + "%");
-		});
-		
-
 		$.ajax({
 			url : "totalAmountDonors.board",
 			dataType : "json"

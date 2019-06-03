@@ -27,25 +27,39 @@
 		font-family: "Nanum Gothic";
 		height: 100%;
 	}
+	div{
+        box-sizing: border-box;
+    }
+	.navbar{
+		position: relative;
+		height: 60px;
+	}
+	.logo{
+		position: absolute;
+		top: 10%;
+		left: 15%;
+	}
+	#navbarNav{
+		position: relative;
+		top: 30%;
+		left: 50%;
+	}
+	#toggle{
+		position: absolute;
+		top: 30%;
+		right: 5%;
+	}
 	.wrapper {
 		display: inline-block;
 	}
-	.navA{
+	.anker{
 		font-weight: bold;
-		color: #fcfcfc;
 	}
-	.navA:hover {
+	.anker:hover{
 		color: #000000;
-		text-decoration: none;
 	}
-	ul {
-		margin: auto;
-	}
-	li {
+	.nav-li{
 		width: 130px;
-	}
-	.nav_link {
-		font-family: "Nanum Gothic";
 	}
 	.btn-primary {
 		margin: 20px 0px 20px;
@@ -109,6 +123,7 @@
 		line-height: 50px;
 		float: right;
 		margin-left: 15px;
+		text-align: center;
 	}
 	#f_sns{
 		position: absolute;
@@ -141,45 +156,40 @@
 </head>
 <body>
 	<div id="root">
+		<nav class="navbar navbar-expand-md navbar-light">
+			<div class="logo">
+				<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+			</div>
+			<button id="toggle" class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav nav-ul">
+					<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+					<li class="nav-item nav-li"><a class="nav-link anker" href="write.board">후원해 주세요</a></li>
+					<li class="nav-item nav-li"><a class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+	
+					<c:choose>
+						<c:when test="${sessionScope.loginEmail != null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item nav-li"><a class="nav-link anker" href="LoginForm.members">로그인</a></li>
+							<li class="nav-item nav-li"><a class="nav-link anker" href="JoinForm.members">회원가입</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
+		</nav>
+		<hr>
 		<div id="wrapper">
-			<nav class="navbar navbar-expand-md navbar-light navbar-fixed-top">
-				<div class="logo">
-					<a class="navbar-brand" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-				</div>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarNav" aria-controls="navbarNav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link navA" href="Introduce.members">소개</a></li>
-						<li class="nav-item"><a class="nav-link navA" href="#">후원안내</a></li>
-						<li class="nav-item"><a class="nav-link navA" href="to_write.board">후원해 주세요</a></li>
-						<li class="nav-item"><a class="nav-link navA" href="textList.board?currentPage=1">후원 게시판</a></li>
-		
-						<c:choose>
-							<c:when test="${sessionScope.loginEmail != null || navercontents.name != null}">
-								<li class="nav-item"><a class="nav-link navA"
-									href="Logout.members">로그아웃</a></li>
-							</c:when>
-							<c:otherwise>
-								<li class="nav-item"><a class="nav-link navA" href="LoginForm.members">로그인</a></li>
-								<li class="nav-item"><a class="nav-link navA" href="JoinForm.members">회원가입</a></li>
-							</c:otherwise>
-						</c:choose>
-					</ul>
-				</div>
-			</nav>
-			
 			<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
 				    <div class="carousel-item active">
-<<<<<<< HEAD
 				        <img id="image" src="photo_image/editGiveyou.PNG" class="d-block w-100" alt="이미지를 찾을 수 없습니다.">
-=======
-				        <img id="image" src="editGiveyou.PNG" class="d-block w-100" alt="이미지를 찾을 수 없습니다.">
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 				    </div>
 				</div>
 			</div>
@@ -206,10 +216,10 @@
 					<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
 				</div>
 				<div id="f_sns">
-					<img id="kakao" class="sns" src="ka.png">
-					<img class="sns" src="fa.png">
-					<img id="insta" class="sns" src="kk.png">
-					<a href="/"><div id="suggest">후원 신청</div></a>
+					<img id="kakao" class="sns" src="photo_image/ka.png">
+					<img class="sns" src="photo_image/fa.png">
+					<img id="insta" class="sns" src="photo_image/kk.png">
+					<a href="write.board"><div id="suggest">후원 신청</div></a>
 				</div>
 				<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	        </div>
