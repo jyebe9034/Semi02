@@ -56,13 +56,11 @@ commit;
 --------------------------------------------------------------------------------
 
 create table title_img(
-    t_b_no number,
-    t_fileSeq number primary key,
+    t_b_no number not null,
     t_fileName varchar(300) not null,
     t_oriFileName varchar(300) not null,
     t_filePath varchar(300) not null,
-    t_fileSize number not null,
-    constraint t_b_no_fk foreign key(t_b_no) references board(b_no) on delete cascade
+    t_fileSize number not null
 );
 --drop table title_img;
 
