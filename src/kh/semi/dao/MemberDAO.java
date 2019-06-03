@@ -32,7 +32,7 @@ import kh.semi.dto.MemberDTO;
 public class MemberDAO {
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@192.168.60.23:1521:xe";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url, user, pw);
@@ -289,8 +289,8 @@ class MyAuthentication extends Authenticator {
 	PasswordAuthentication pa;
 	public MyAuthentication(){
 
-		String id = "junhaeyong95@gmail.com";       // 구글 ID
-		String pw = "wjsgodyd95!!";          // 구글 비밀번호
+		String id = "@gmail.com";       // 구글 ID
+		String pw = "";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);
 	}

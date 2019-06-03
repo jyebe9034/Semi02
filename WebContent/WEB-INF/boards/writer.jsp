@@ -43,14 +43,12 @@ li {
 	width: 130px;
 }
 
-#wrapper {
+.container {
 	width: 700px;
-	margin: auto;
+	min-width: 400px;
 }
 
-.content {
-	
-}
+
 </style>
 </head>
 <body>
@@ -87,7 +85,7 @@ li {
 		</div>
 	</nav>
 	<hr>
-	<div id="wrapper">
+	<div class="container">
 		<form action="supportMe.board" method="post" id="all"
 			enctype="multipart/form-data">
 			<div class="form-group">

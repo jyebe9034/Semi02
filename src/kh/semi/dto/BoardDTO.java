@@ -11,9 +11,9 @@ public class BoardDTO {
 	private String bank;
 	private String account;
 	private String contents;
-	private String dueDate;
+	private Timestamp dueDate;
 	private int viewCount;
-	private String writeDate;	
+	private Timestamp writeDate;	
 	private int recommend;
 	private int sumAmount;
 	// 총 14개
@@ -21,7 +21,7 @@ public class BoardDTO {
 		super();
 	}
 	public BoardDTO(int boardNo, String title, String writer, int amount, String bank, String account, String contents,
-			String dueDate, int viewCount, String writeDate, int recommend, int sumAmount) {
+			Timestamp dueDate, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
 		super();
 		this.boardNo = boardNo;
 		this.title = title;
@@ -78,10 +78,10 @@ public class BoardDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getDueDate() {
+	public Timestamp getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(String dueDate) {
+	public void setDueDate(Timestamp dueDate) {
 		this.dueDate = dueDate;
 	}
 	public int getViewCount() {
@@ -90,10 +90,10 @@ public class BoardDTO {
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
-	public String getWriteDate() {
+	public Timestamp getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(String writeDate) {
+	public void setWriteDate(Timestamp writeDate) {
 		this.writeDate = writeDate;
 	}
 	public int getRecommend() {
@@ -106,6 +106,13 @@ public class BoardDTO {
 		return sumAmount;
 	}
 	public void setSumAmount(int sumAmount) {
+		this.sumAmount = sumAmount;
+	}
+	public BoardDTO(String title, int amount, Timestamp dueDate, int sumAmount) {
+		super();
+		this.title = title;
+		this.amount = amount;
+		this.dueDate = dueDate;
 		this.sumAmount = sumAmount;
 	}
 	
