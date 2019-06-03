@@ -175,7 +175,7 @@
 			<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
 				    <div class="carousel-item active">
-				        <img id="image" src="editGiveyou.PNG" class="d-block w-100" alt="이미지를 찾을 수 없습니다.">
+				        <img id="image" src="photo_image/editGiveyou.PNG" class="d-block w-100" alt="이미지를 찾을 수 없습니다.">
 				    </div>
 				</div>
 			</div>

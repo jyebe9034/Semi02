@@ -136,8 +136,6 @@ public class MemberDAO {
 		return dto;
 	}
 
-
-
 	public int insertMember(MemberDTO dto) throws Exception {
 		String sql = "insert into members values (?,?,?,?,?,?,?,default,?,?)";
 		try(
@@ -306,8 +304,8 @@ class MyAuthentication extends Authenticator {
 
 	PasswordAuthentication pa;
 	public MyAuthentication(){
-		String id = "@gmail.com";       // 구글 ID
-		String pw = "";          // 구글 비밀번호
+		String id = "hannahjihyelim@gmail.com";       // 구글 ID
+		String pw = "7pGA4774@";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);
 	}

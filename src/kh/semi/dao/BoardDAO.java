@@ -30,10 +30,11 @@ public class BoardDAO {
 
 	public PreparedStatement pstatForGetDataForMain(Connection con)throws Exception{
 		String sql = "select b_due_date-sysdate as d_day, b_no, b_title, b_amount, "
-				+ "b_due_date, b_sum_amount from board order by d_day";
+				+ "b_due_date, b_sum_amount from board where b_due_date-sysdate like'+%' order by d_day";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		return pstat;
 	}
+	
 	public List<BoardDTO> getDataForMain() throws Exception{
 		try(
 				Connection con = this.getConnection();
@@ -56,11 +57,10 @@ public class BoardDAO {
 		}
 	}
 	public int insertBoard(BoardDTO dto)throws Exception{
-		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,?,?,default,default,default,default)";
+		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,default,default,default,default)";
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement pstat = this.pstatForGetDataForMain(con);
-				ResultSet rs = pstat.executeQuery();
+				PreparedStatement pstat = con.prepareStatement(sql);
 				){
 			pstat.setString(1,dto.getTitle());
 			pstat.setString(2, dto.getEmail());
@@ -68,8 +68,8 @@ public class BoardDAO {
 			pstat.setInt(4,dto.getAmount());
 			pstat.setString(5,dto.getBank());
 			pstat.setString(6,dto.getAccount());
-			pstat.setString(7, dto.getContents());
-			pstat.setTimestamp(8, dto.getDueDate());
+			pstat.setTimestamp(7, dto.getDueDate());
+			pstat.setString(8, dto.getContents());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -110,7 +110,7 @@ public class BoardDAO {
 	}
 
 	public int insertTitleImg(TitleImgDTO dto) throws Exception {
-		String sql = "insert into title_img values(?, t_fileSeq_seq.nextval, ?, ?, ?, ?)";
+		String sql = "insert into title_img values(?, ?, ?, ?, ?)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);

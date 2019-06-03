@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class BoardDTO {
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
-	private String email;
+	private String email = "jihye6712@gmail.com";
 	private String title;
 	private String writer;
 	private int amount;
