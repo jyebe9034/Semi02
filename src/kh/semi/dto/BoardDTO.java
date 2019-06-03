@@ -5,25 +5,30 @@ import java.text.SimpleDateFormat;
 
 public class BoardDTO {
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
+	private String email;
 	private String title;
 	private String writer;
 	private int amount;
 	private String bank;
 	private String account;
 	private String contents;
-	private String dueDate;
+	private Timestamp dueDate;
 	private int viewCount;
-	private String writeDate;	
+	private Timestamp writeDate;	
 	private int recommend;
 	private int sumAmount;
 	// 총 14개
 	public BoardDTO() {
 		super();
 	}
-	public BoardDTO(int boardNo, String title, String writer, int amount, String bank, String account, String contents,
-			String dueDate, int viewCount, String writeDate, int recommend, int sumAmount) {
+	
+	
+
+	public BoardDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
+			String contents, Timestamp dueDate, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
 		super();
 		this.boardNo = boardNo;
+		this.email = email;
 		this.title = title;
 		this.writer = writer;
 		this.amount = amount;
@@ -41,6 +46,12 @@ public class BoardDTO {
 	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getTitle() {
 		return title;
@@ -78,10 +89,10 @@ public class BoardDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public String getDueDate() {
+	public Timestamp getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(String dueDate) {
+	public void setDueDate(Timestamp dueDate) {
 		this.dueDate = dueDate;
 	}
 	public int getViewCount() {
@@ -90,10 +101,10 @@ public class BoardDTO {
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
-	public String getWriteDate() {
+	public Timestamp getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(String writeDate) {
+	public void setWriteDate(Timestamp writeDate) {
 		this.writeDate = writeDate;
 	}
 	public int getRecommend() {
@@ -109,29 +120,11 @@ public class BoardDTO {
 		this.sumAmount = sumAmount;
 	}
 	
-	
-	
-	
-	
+	public String getFormedDate() {
+		long writeTime = this.writeDate.getTime();
+		long dueTime = this.dueDate.getTime();
 
-//	public String getFormedTime() {
-//		long currentTime = System.currentTimeMillis();
-//		long writeTime = this.writedate.getTime();
-//		
-//		if(currentTime - writeTime <= (1000 * 60)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 + " 초 전";
-//		}else if((1000 * 60) <= currentTime - writeTime && 
-//				currentTime - writeTime <= (1000 * 60 * 60)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 / 60 + " 분 전";
-//		}else if(currentTime - writeTime >= (1000 * 60 * 60) &&
-//				currentTime - writeTime <= (1000 * 60 * 60 * 24)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 / 60 / 60 + " 시간 전";
-//		}else {
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//			return sdf.format(writeTime);
-//		}
-//	}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(writeTime) + " ~ " + sdf.format(dueTime);
+	}
 }

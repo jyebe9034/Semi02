@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>도움닿기</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -102,7 +102,7 @@ li {
 				<li class="nav-item"><a class="nav-link" href="textList.board?currentPage=1">후원 게시판</a></li>
 
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null}">
+					<c:when test="${sessionScope.loginEmail != null}">
 						<li class="nav-item"><a class="nav-link"
 							href="Logout.members">로그아웃</a></li>
 					</c:when>
@@ -172,7 +172,7 @@ li {
 							</div>${percentage }%
 						</div>
 					</div>
-					<div class="forBtnDonate"><button type="button" class="btn btn-primary">후원하기</button></div>
+					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1">후원하기</a></div>
 					<small class="text-muted"></small>
 			</div>	
 		</div>
@@ -191,7 +191,7 @@ li {
 						</div>
 					</div>
 				</div>
-				<div class="forBtnDonate"><button type="button" class="btn btn-primary">후원하기</button></div>
+				<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=2">후원하기</a></div>
 				<small class="text-muted"></small>
 			</div>
 		</div>
@@ -216,24 +216,14 @@ li {
 		</div>
 	</div>
 
-
 	<script>
 		$.ajax({
-			url : "Fund",
+			url : "Progress.board",
 			type : "post",
 		}).done(function(resp) {
 			$("#card1").css("width", resp + "%");
 			$("#card1_span").text(resp + "%");
 		})
 	</script>
-	
-	<c:if test="${navercontents.name != null }">
-	
-		<script>
-		alert("${navercontents.name}님 반갑습니다 !");
-		
-	</script>
-	
-	</c:if>
 </body>
 </html>

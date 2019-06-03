@@ -16,9 +16,11 @@ create table members(
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))
 );
-drop table members;
+--drop table members;
 
 select * from members;
+
+select m_name, m_email, m_phone from members where m_email='junhaeyong95@naver.com';
 
 commit;
 
@@ -27,6 +29,7 @@ commit;
 
 create table board(
     b_no number primary key,
+    b_email varchar(30) not null,
     b_title varchar(100) not null,
     b_writer varchar(20) not null,
     b_amount number not null,
@@ -41,17 +44,29 @@ create table board(
     b_recommend number default 0 not null,
     b_sum_amount number default 0
 );
-drop table board;
+--drop table board;
 
 create sequence b_no_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
-drop sequence b_no_seq;
+--drop sequence b_no_seq;
 
 select * from board;
 
+insert into board values(
+    b_no_seq.nextval, 'junhaeyong95@naver.com', '피곤해요ㅠㅠ', '전해용', 1000000, '신한', '123123123456',
+    '191225', '빨리 자고싶어요<br>시원한 맥주한잔 하고~~ 크흐<br>폭신폭신한 침대에 누워서<br>선풍기바람 솔솔!!', null, null, default, default, default, default
+);
+
+select b_due_date-sysdate as d_day from board order by d_day;
+
+select sysdate-b_due_date as d_day from board order by d_day;
+
+update board set b_sum_amount=b_sum_amount+120000 where b_No=1;
+
+commit;
 --------------------------------------------------------------------------------
 
 create table title_img(
@@ -63,18 +78,18 @@ create table title_img(
     t_fileSize number not null,
     constraint t_b_no_fk foreign key(t_b_no) references board(b_no) on delete cascade
 );
-drop table title_img;
+--drop table title_img;
 
 create sequence t_fileSeq_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
-drop sequence t_fileSeq_seq;
+--drop sequence t_fileSeq_seq;
 
 select * from title_img;
 
-
+commit;
 
 --------------------------------------------------------------------------------
 
@@ -86,7 +101,7 @@ create table payment(
     p_amount number not null,
     p_payment_date timestamp default sysdate not null
 );
-drop table payment;
+--drop table payment;
 
 select * from payment;
 
@@ -94,22 +109,33 @@ commit;
 
 --------------------------------------------------------------------------------
 
-create table ufile(
-    fileSeq number primary key,
-    fileName varchar(300) not null,
-    oriFileName varchar(300) not null,
-    filePath varchar(300) not null,
-    fileSize number not null
+create table recommend(
+    r_email varchar(30) not null,
+    r_b_no number not null,
+    r_b_title varchar(100) not null
 );
-drop table ufile;
+--drop table recommend;
 
-create sequence file_seq
-start with 1
-increment by 1
-nocache
-nomaxvalue;
-drop sequence file_seq;
-
-select * from ufile;
+select * from recommend;
 
 commit;
+
+--------------------------------------------------------------------------------
+
+create table comments(
+    c_email varchar(30) not null,
+    c_name varchar(20) not null,
+    c_b_no number not null,
+    c_comment varchar(1000) not null,
+    c_write_date timestamp default sysdate not null
+);
+--drop table comments;
+
+select * from comments;
+
+delete comments where c_email='junhaeyong95@naver.com';
+
+commit;
+
+ROLLBACK;
+

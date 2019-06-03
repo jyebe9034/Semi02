@@ -99,7 +99,7 @@ public class MembersController extends HttpServlet {
 			String clientSecret = "otERPitybs";// 애플리케이션 클라이언트 시크릿값";
 			String code = request.getParameter("code");
 			String state = request.getParameter("state");
-			String redirectURI = URLEncoder.encode("http://localhost:8080/SemiProjectTest/naverLogin.members", "UTF-8");
+			String redirectURI = URLEncoder.encode("http://localhost/naverLogin.members");
 			String apiURL;
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 			apiURL += "client_id=" + clientId;
@@ -131,11 +131,11 @@ public class MembersController extends HttpServlet {
 					String ip = request.getRemoteAddr();
 					MemberDTO dto = dao.NaverContentsParse(res.toString(), ip);
 					if (dao.isIdExist(dto)) {
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					}
 				}
