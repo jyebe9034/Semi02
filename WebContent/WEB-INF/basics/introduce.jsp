@@ -57,13 +57,27 @@
 		color: #FFF;
 	}
 	#wrap{
+		width:900px;
+		height:400px;
 		position: relative;
+		background-image:url("giveyou01.jpg");
+		background-size:cover;
+		padding-left:0px;
+		padding-right:0px;
 	}
+	.bg{ 
+		 background-color:rgba(0, 0, 0, 0.5); /*살짝 투명한 검정으로 배경색*/ 
+		 width:100%; 
+		 height:400px; 
+		 position: absolute; /*다른 요소들 위로 겹쳐질 수 있게함*/ 
+
+	}
+
 	#text01{
 		position: absolute;
 		top: 33%;
 		left: 40%;
-		color: #fcfcfc;
+        color: #fcfcfc;      
 	}
 	#text02{
 		position: absolute;
@@ -75,11 +89,11 @@
 		font-size: 30px;
         font-weight: bold;
 	}
-    .card-text{
-        padding-left: 400px;
-        padding-right: 400px;
-        font-size: 20px;
-    }
+/*     .card-text{ */
+/*         padding-left: 400px; */
+/*         padding-right: 400px; */
+/*         font-size: 20px; */
+/*     } */
     #lastmenu1{
         float: left;
         margin: 120px;
@@ -187,7 +201,7 @@
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link navA" href="Introduce.members">소개</a></li>
 						<li class="nav-item"><a class="nav-link navA" href="#">후원안내</a></li>
-						<li class="nav-item"><a class="nav-link navA" href="to_write.board">후원해 주세요</a></li>
+						<li class="nav-item"><a class="nav-link navA" href="write.board">후원해 주세요</a></li>
 						<li class="nav-item"><a class="nav-link navA" href="textList.board?currentPage=1">후원 게시판</a></li>
 		
 						<c:choose>
@@ -206,7 +220,8 @@
 			<div id="mainPhoto" class="container">
 				<div class="row">
 					<div id="wrap" class="col-12">
-						<img src="giveyou01.jpg" class="introMain p-0 m-0">
+<!-- 						<img src="giveyou01.jpg" class="introMain p-0 m-0"> -->
+						<div class="bg"></div>
 						<h1 id="text01">도움닿기란?</h1>
 						<h3 id="text02">"도움닫기 + 닿다" 의 합성어</h3>
 					</div>

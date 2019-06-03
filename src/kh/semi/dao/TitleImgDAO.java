@@ -35,55 +35,32 @@ public class TitleImgDAO {
 			return result;
 		}
 	}
-	
-	/*대표사진 한개만 꺼내기*/
-//	public PreparedStatement pstatForGetTitleImg(Connection con, int boardNo) throws Exception {
-//		String sql = "select * from title_img where t_b_no=?";
-//		PreparedStatement pstat = con.prepareStatement(sql);
-//		pstat.setInt(1, boardNo);
-//		return pstat;
-//	}
-//	public TitleImgDTO getTitleImg(int boardNo) throws Exception {
-//		try(
-//				Connection con = this.getConnection();
-//				PreparedStatement pstat = this.pstatForGetTitleImg(con, boardNo);
-//				ResultSet rs = pstat.executeQuery();
-//				){
-//			if(rs.next()) {
-//				TitleImgDTO dto = new TitleImgDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
-//				return dto;
-//			}
-//		}
-//		return null;
-//	}
 
-	
-	
-/*대표사진 8개씩 꺼내기*/
-	public PreparedStatement psForGetTitleImages(Connection con, int startNum, int endNum) throws Exception{
-		String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.* from board) where rown between ? and ?";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, startNum);
-		ps.setInt(2, endNum);
-		return ps;
+
+	public PreparedStatement pstatForGetTitleImgMain(Connection con, int bNo1, int bNo2, int bNo3) throws Exception {
+		String sql = "select * from title_img where t_b_no in (?,?,?)";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, bNo1);
+		pstat.setInt(2, bNo2);
+		pstat.setInt(3, bNo3);
+		return pstat;
 	}
-	public List<TitleImgDTO> getTitleImages(int startNum, int endNum) throws Exception{
-
+	public List<TitleImgDTO> getTitleImgMain(int bNo1, int bNo2, int bNo3) throws Exception {
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement ps = this.psForGetTitleImages(con, startNum, endNum);
-				ResultSet rs = ps.executeQuery();	
+				PreparedStatement pstat = this.pstatForGetTitleImgMain(con, bNo1, bNo2, bNo3);
+				ResultSet rs = pstat.executeQuery();
 				){
-			List<TitleImgDTO> result = new ArrayList<>();
-			while(rs.next()) {
-			TitleImgDTO dto = new TitleImgDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
-			result.add(dto);
-		}
-			return result;
+			List<TitleImgDTO> list = new ArrayList<>();
+			for(int i=0; i<3;i++) {
+				if(rs.next()) {
+					TitleImgDTO dto = new TitleImgDTO(rs.getInt("t_b_no"),rs.getString("t_fileName"), rs.getString("t_filePath"));
+					list.add(dto);
+				}
+			}
+			return list;
 		}
 	}
-	
-	
 }
 
 

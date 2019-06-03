@@ -161,7 +161,7 @@ li{
 					style="font-size: 18px; font-weight: bold;">로그인</button>
  <%
     String clientId = "9fcJ6ehu7V7mEFnBQABz";//애플리케이션 클라이언트 아이디값";
-    String redirectURI = URLEncoder.encode("http://localhost:8080/SemiProject/naverLogin.members", "UTF-8");
+    String redirectURI = URLEncoder.encode("http://localhost/naverLogin.members", "UTF-8");
     SecureRandom random = new SecureRandom();
     String state = new BigInteger(130, random).toString();
     String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
@@ -171,16 +171,12 @@ li{
     session.setAttribute("state", state);
  %>
  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+	<hr>			
 				<div id="toJoin">
-
 					아직 계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="JoinForm.members" id="a_join"
 						style="color: black">가입하기</a>
 				</div>
 			</form>
-			<hr>
-			<div id="forget_pw" style="text-align: center">
-				<a href="" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
-			</div>
 		</div>
 	</div>
 </body>

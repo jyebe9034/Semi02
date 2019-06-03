@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kh.semi.dao.BoardDAO;
+import kh.semi.dao.MemberDAO;
+import kh.semi.dto.BoardDTO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
 
@@ -30,10 +35,33 @@ public class MembersController extends HttpServlet {
 		String ctxPath = request.getContextPath();
 		String cmd = reqUri.substring(ctxPath.length());
 		MemberDAO dao = new MemberDAO();
-		
-		if (cmd.equals("/Main.members")) {
-			request.getRequestDispatcher("main.jsp").forward(request, response);
+		BoardDAO bdao = new BoardDAO();
 
+		if (cmd.equals("/Main.members")) {
+			List<BoardDTO> list;
+			try {
+				list = bdao.getDataForMain();
+				request.setAttribute("list", list);
+				for(int i = 0; i < list.size(); i++) {
+					String[] strArr = new String[3];
+					double[] douArr = new double[3];
+					
+					int goalAmount = list.get(i).getAmount();
+					Timestamp dueDate = list.get(i).getDueDate();
+					long dueTime = dueDate.getTime();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					strArr[i] = sdf.format(dueTime);
+					int sumAmount = list.get(i).getSumAmount();
+					douArr[i] = Math.floor((double)sumAmount / goalAmount * 100);
+					if(i == list.size()-1) {
+						request.setAttribute("duedate", strArr);
+						request.setAttribute("percentage", douArr);
+					}
+				}
+				request.getRequestDispatcher("main.jsp").forward(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
 			
@@ -100,7 +128,7 @@ public class MembersController extends HttpServlet {
 			String clientSecret = "otERPitybs";// 애플리케이션 클라이언트 시크릿값";
 			String code = request.getParameter("code");
 			String state = request.getParameter("state");
-			String redirectURI = URLEncoder.encode("http://localhost:8080/SemiProjectTest/naverLogin.members", "UTF-8");
+			String redirectURI = URLEncoder.encode("http://localhost/naverLogin.members", "UTF-8");
 			String apiURL;
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 			apiURL += "client_id=" + clientId;
@@ -132,11 +160,11 @@ public class MembersController extends HttpServlet {
 					String ip = request.getRemoteAddr();
 					MemberDTO dto = dao.NaverContentsParse(res.toString(), ip);
 					if (dao.isIdExist(dto)) {
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					}
 				}

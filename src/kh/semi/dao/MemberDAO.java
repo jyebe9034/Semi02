@@ -36,7 +36,6 @@ import kh.semi.dto.MySupportDTO;
 public class MemberDAO {
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		//String url = "jdbc:oracle:thin:@192.168.60.23:1521:xe";
 		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
@@ -141,8 +140,6 @@ public class MemberDAO {
 		return dto;
 	}
 
-
-
 	public int insertMember(MemberDTO dto) throws Exception {
 		String sql = "insert into members values (?,?,?,?,?,?,?,default,?,?)";
 		try(
@@ -187,6 +184,24 @@ public class MemberDAO {
 				result.add(dto);
 			}
 			return result;
+		}
+	}
+	
+	public List<String> selectByEmail(String email) throws Exception {
+		String sql = "select m_name, m_email, m_phone from members where m_email='"+email+"'";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();
+				){
+			if(rs.next()) {
+				List<String> result = new ArrayList<>();
+				result.add(rs.getString(1));
+				result.add(rs.getString(2));
+				result.add(rs.getString(3));
+				return result;
+			}
+			return null;
 		}
 	}
 
@@ -249,7 +264,7 @@ public class MemberDAO {
 			InternetAddress from = new InternetAddress() ;
 
 			// 이메일 발신자
-			from = new InternetAddress("REACH YOU <//email>");
+			from = new InternetAddress("RUN UP <//email>");
 			msg.setFrom(from);
 
 			// 이메일 수신자
@@ -260,7 +275,7 @@ public class MemberDAO {
 			msg.setSubject("*도움닿기* 회원가입 인증 메일", "UTF-8");
 
 			// 이메일 내용
-			msg.setText("<h3>DARI 회원가입 인증 메일입니다.</h3><br>"
+			msg.setText("<h3>\"도움닿기\" 회원가입 인증 메일입니다.</h3><br>"
 					+ "아래 인증번호를 입력창에 입력해주세요.<br>"
 					+ "인증번호는 " + ranNum + "입니다.", "UTF-8");
 
@@ -431,13 +446,13 @@ public class MemberDAO {
 				int amount = rs.getInt("b_amount");
 				String bank = rs.getString("b_bank");
 				String account = rs.getString("b_account");
-				String dueDate = rs.getString("b_due_date");
-				String contents = rs.getString("b_contents1")+rs.getString("b_contents2")+rs.getString("b_contents3");
+				Timestamp dueDate = rs.getTimestamp("b_due_date");
+				String contents = rs.getString("b_contents");
 				int viewCount = rs.getInt("b_viewcount");
-				String writeDate = rs.getString("b_writedate");
+				Timestamp writeDate = rs.getTimestamp("b_writedate");
 				int recommend = rs.getInt("b_recommend");
 				int sumAmount = rs.getInt("b_sum_amount");
-				BoardDTO dto = new BoardDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount);
+				BoardDTO dto = new BoardDTO(boardNo,email,title,writer,amount,bank,account,contents,dueDate,viewCount,writeDate,recommend,sumAmount);
 				result.add(dto);
 			}
 			return result;
@@ -528,9 +543,8 @@ class MyAuthentication extends Authenticator {
 
 	PasswordAuthentication pa;
 	public MyAuthentication(){
-
-		String id = "junhaeyong95@gmail.com";       // 구글 ID
-		String pw = "wjsgodyd95!!";          // 구글 비밀번호
+		String id = "@gmail.com";       // 구글 ID
+		String pw = "";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);
 	}

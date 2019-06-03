@@ -16,17 +16,19 @@ create table members(
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))
 );
-drop table members;
+--drop table members;
 
 select * from members;
 
-commit;
+select m_name, m_email, m_phone from members where m_email='junhaeyong95@naver.com';
 
+commit;
 
 --------------------------------------------------------------------------------
 
 create table board(
     b_no number primary key,
+    b_email varchar(30) not null,
     b_title varchar(100) not null,
     b_writer varchar(20) not null,
     b_amount number not null,
@@ -41,17 +43,18 @@ create table board(
     b_recommend number default 0 not null,
     b_sum_amount number default 0
 );
-drop table board;
+--drop table board;
 
 create sequence b_no_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
-drop sequence b_no_seq;
+--drop sequence b_no_seq;
 
 select * from board;
 
+commit;
 --------------------------------------------------------------------------------
 
 create table title_img(
@@ -63,18 +66,18 @@ create table title_img(
     t_fileSize number not null,
     constraint t_b_no_fk foreign key(t_b_no) references board(b_no) on delete cascade
 );
-drop table title_img;
+--drop table title_img;
 
 create sequence t_fileSeq_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
-drop sequence t_fileSeq_seq;
+--drop sequence t_fileSeq_seq;
 
 select * from title_img;
 
-
+commit;
 
 --------------------------------------------------------------------------------
 
@@ -86,7 +89,7 @@ create table payment(
     p_amount number not null,
     p_payment_date timestamp default sysdate not null
 );
-drop table payment;
+--drop table payment;
 
 select * from payment;
 
@@ -94,22 +97,28 @@ commit;
 
 --------------------------------------------------------------------------------
 
-create table ufile(
-    fileSeq number primary key,
-    fileName varchar(300) not null,
-    oriFileName varchar(300) not null,
-    filePath varchar(300) not null,
-    fileSize number not null
+create table recommend(
+    r_email varchar(30) not null,
+    r_b_no number not null,
+    r_b_title varchar(100) not null
 );
-drop table ufile;
+--drop table recommend;
 
-create sequence file_seq
-start with 1
-increment by 1
-nocache
-nomaxvalue;
-drop sequence file_seq;
+select * from recommend;
 
-select * from ufile;
+commit;
+
+--------------------------------------------------------------------------------
+
+create table comments(
+    c_email varchar(30) not null,
+    c_name varchar(20) not null,
+    c_b_no number not null,
+    c_comment varchar(1000) not null,
+    c_write_date timestamp default sysdate not null
+);
+--drop table comments;
+
+select * from comments;
 
 commit;

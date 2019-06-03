@@ -179,12 +179,14 @@ a:hover {
 					console.log(resp); 			    	
 				});
 		})
-		$(".pageNavi").on("click",function(){
+		
+		$(".page-link").on("click",function(){
+			var paging = $(this).attr("paging");
 			$.ajax({
 					url:"List.board",		
 					type:"post",
 					data:{
-						//currentPage:1,
+						currentPage:paging,
 						searchOption:$("#dropdownforSearch option").val(),
 						searchWord:$(".searchWord").val()
 					}
