@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 
 public class BoardDTO {
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
+	private String email;
 	private String title;
 	private String writer;
 	private int amount;
@@ -15,15 +16,20 @@ public class BoardDTO {
 	private int viewCount;
 	private Timestamp writeDate;	
 	private int recommend;
-	private int sumAmount;
-	// 총 14개
+	private int sumAmount;	
+	// 총 13개
+	
+
 	public BoardDTO() {
 		super();
 	}
-	public BoardDTO(int boardNo, String title, String writer, int amount, String bank, String account, String contents,
-			Timestamp dueDate, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
+	
+	
+	public BoardDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
+			String contents, Timestamp dueDate, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
 		super();
 		this.boardNo = boardNo;
+		this.email = email;
 		this.title = title;
 		this.writer = writer;
 		this.amount = amount;
@@ -36,11 +42,19 @@ public class BoardDTO {
 		this.recommend = recommend;
 		this.sumAmount = sumAmount;
 	}
+
+
 	public int getBoardNo() {
 		return boardNo;
 	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getTitle() {
 		return title;
@@ -116,29 +130,5 @@ public class BoardDTO {
 		this.sumAmount = sumAmount;
 	}
 	
-	
-	
-	
-	
 
-//	public String getFormedTime() {
-//		long currentTime = System.currentTimeMillis();
-//		long writeTime = this.writedate.getTime();
-//		
-//		if(currentTime - writeTime <= (1000 * 60)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 + " 초 전";
-//		}else if((1000 * 60) <= currentTime - writeTime && 
-//				currentTime - writeTime <= (1000 * 60 * 60)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 / 60 + " 분 전";
-//		}else if(currentTime - writeTime >= (1000 * 60 * 60) &&
-//				currentTime - writeTime <= (1000 * 60 * 60 * 24)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 / 60 / 60 + " 시간 전";
-//		}else {
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//			return sdf.format(writeTime);
-//		}
-//	}
 }
