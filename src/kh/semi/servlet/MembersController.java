@@ -131,11 +131,11 @@ public class MembersController extends HttpServlet {
 					String ip = request.getRemoteAddr();
 					MemberDTO dto = dao.NaverContentsParse(res.toString(), ip);
 					if (dao.isIdExist(dto)) {
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					}
 				}

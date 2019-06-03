@@ -184,6 +184,24 @@ public class MemberDAO {
 			return result;
 		}
 	}
+	
+	public List<String> selectByEmail(String email) throws Exception {
+		String sql = "select m_name, m_email, m_phone from members where m_email='"+email+"'";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();
+				){
+			if(rs.next()) {
+				List<String> result = new ArrayList<>();
+				result.add(rs.getString(1));
+				result.add(rs.getString(2));
+				result.add(rs.getString(3));
+				return result;
+			}
+			return null;
+		}
+	}
 
 	public PreparedStatement pstatForIsLoginOk(Connection con, String email, String pw) throws Exception {
 		String sql = "select * from members where m_email=? and m_pw=?";
@@ -244,7 +262,7 @@ public class MemberDAO {
 			InternetAddress from = new InternetAddress() ;
 
 			// 이메일 발신자
-			from = new InternetAddress("REACH YOU <//email>");
+			from = new InternetAddress("RUN UP <//email>");
 			msg.setFrom(from);
 
 			// 이메일 수신자
@@ -255,7 +273,7 @@ public class MemberDAO {
 			msg.setSubject("*도움닿기* 회원가입 인증 메일", "UTF-8");
 
 			// 이메일 내용
-			msg.setText("<h3>DARI 회원가입 인증 메일입니다.</h3><br>"
+			msg.setText("<h3>\"도움닿기\" 회원가입 인증 메일입니다.</h3><br>"
 					+ "아래 인증번호를 입력창에 입력해주세요.<br>"
 					+ "인증번호는 " + ranNum + "입니다.", "UTF-8");
 
@@ -288,8 +306,7 @@ class MyAuthentication extends Authenticator {
 
 	PasswordAuthentication pa;
 	public MyAuthentication(){
-
-		String id = "@gmail.com";       // 구글 ID
+		String id = "jaeyong.lee55@gmail.com";       // 구글 ID
 		String pw = "";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);

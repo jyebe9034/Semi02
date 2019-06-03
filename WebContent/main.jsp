@@ -5,15 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link
-	href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<title>도움닿기</title>
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -139,6 +134,96 @@ li {
 .logo{
 	margin-left:100px;
 }
+
+	body {
+		font-family: "Nanum Gothic";
+		height: 100%;
+	}
+	.progress {
+		width: 200px;
+	}
+	.progress-bar {
+		background-color: orange;
+	}
+	.wrapper {
+		display: inline-block;
+	}
+	a {
+		font-weight: bold;
+	}
+	a:hover {
+		color: #000000;
+	}
+	ul {
+		margin: auto;
+	}
+	li {
+		width: 130px;
+	}
+	.hope {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.nav_link {
+		font-family: "Nanum Gothic";
+	}
+	.btn-primary {
+		margin: 20px 0px 20px;
+		background-color: #1ebdd8;
+		border-color: #1ebdd8;
+		color: #FFF;
+	}
+	.btn-primary:hover, .btn-primary:focus {
+		border-color: #28a39f;
+		background-color: #28a39f;
+		color: #FFF;
+	}
+	.carousel {
+		width: 100%;
+		height: 100%;
+		margin: auto;
+	}
+	.img_carousel {
+		max-height: 730px;
+		object-fit: cover;
+	}
+	.card {
+		border-radius: 10px;
+		min-width: 300px;
+	}
+	.container_card {
+		margin: auto;
+	}
+	.jumbotron {
+		background-image: url("photo_image/redheartbluesky.jpg");
+		background-size: cover;
+		font-family: "Jua";
+		text-align: center;
+		margin-top: 40px;
+	}
+	.step1, .step2, .step3, .step4 {
+		width: 200px;
+		height: 200px;
+		border-radius: 10px;
+		font-family: "Jua";
+		padding: 10px;
+	}
+	.text {
+		vertical-align: middle;
+		font-family: "Jua";
+	}
+	.navbar {
+		position: relative;
+	}
+	.logo {
+		position: absolute;
+		top: 15%;
+		left: 10%;
+	}
+	#navbarNav {
+		line-height: 40px;
+	}
+
 </style>
 </head>
 <body>
@@ -162,8 +247,9 @@ li {
 					href="textList.board?currentPage=1">후원 게시판</a></li>
 
 				<c:choose>
-					<c:when
-						test="${sessionScope.loginEmail != null || navercontents.name != null}">
+
+					<c:when test="${sessionScope.loginEmail != null}">
+
 						<li class="nav-item"><a class="nav-link"
 							href="Logout.members">로그아웃</a></li>
 					</c:when>
@@ -249,10 +335,8 @@ li {
 					</h6>
 					<hr>
 					<p class="card-text" align="left">
-						모금 마감일 <br>
-						<span id="dueDate1"></span><br>
-					<p></p>
-					모금현황<br> <span id="percentage1"></span>
+						모금 마감일 <br> <span id="dueDate1"></span><br> 모금현황<br>
+						<span id="percentage1"></span>
 					<div class="progress">
 						<div id="card1" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -270,10 +354,8 @@ li {
 					</h6>
 					<hr>
 					<p class="card-text">
-						모금 마감일 <br>
-						<span id="dueDate2"></span> <br>
-					<p></p>
-					모금현황<br> <span id="percentage2"></span>
+						모금 마감일 <br> <span id="dueDate2"></span> <br> 모금현황<br>
+						<span id="percentage2"></span>
 					<div class="progress">
 						<div id="card2" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -291,10 +373,8 @@ li {
 					</h6>
 					<hr>
 					<p class="card-text">
-						모금 마감일 <br>
-						<span id="dueDate3"></span><br>
-					<p></p>
-					모금현황<br> <span id="percentage3"></span>
+						모금 마감일 <br> <span id="dueDate3"></span><br> 모금현황<br>
+						<span id="percentage3"></span>
 					<div class="progress">
 						<div id="card3" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -308,18 +388,28 @@ li {
 	<div class="jumbotron">
 		<h1 class="display-4">2019년 도움닿기 후원 현황</h1>
 		<p class="lead">
-		<h2>여러분의 사랑이 이렇게 모아졌습니다.</h2>
-		<br>
-		<h2>
-			<span id="amount"></span>
-		</h2>
-		<br>
-		<h2>
-			현재 후원자수 : <span id="countDonors"></span>
-		</h2>
+			<h2>여러분의 사랑이 이렇게 모아졌습니다.</h2><br>
+			<h2><span id="amount"></span></h2><br>
+			<h2>현재 후원자수 : <span id="countDonors"></span></h2>
 		</p>
 		<hr class="my-4">
 	</div>
+	
+				<div id="footer">
+	            <div id="f_logo_wrap">
+					<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+				</div>
+				<div id="f_info_wrap">
+					<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
+				</div>
+				<div id="f_sns">
+					<img id="kakao" class="sns" src="ka.png">
+					<img class="sns" src="fa.png">
+					<img id="insta" class="sns" src="kk.png">
+					<a href="/"><div id="suggest">후원 신청</div></a>
+				</div>
+				<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+	        </div>
 
 	<script>
 
@@ -353,7 +443,6 @@ li {
 			$("#percentage3").text(resp.percentage3 + "%");
 		});
 		
-		
 		$.ajax({
 			url : "totalAmountDonors.board",
 			dataType : "json"
@@ -370,17 +459,8 @@ li {
 			$("#imgBox2").html(resp.imgTag2);
 			$("#imgBox3").html(resp.imgTag3);
 		});
-		
-		
+
 	</script>
 
-	<c:if test="${navercontents.name != null }">
-
-		<script>
-		alert("${navercontents.name}님 반갑습니다 !");
-		
-	</script>
-
-	</c:if>
 </body>
 </html>

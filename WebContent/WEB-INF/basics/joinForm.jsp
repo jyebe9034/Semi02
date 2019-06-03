@@ -13,7 +13,8 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Do+Hyeon|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
 	rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>	
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
 body {
 	font-family: "Nanum Gothic";
@@ -71,7 +72,7 @@ a:hover {
 
 #zip {
 	display: inline-block;
-	margin-top:20px;
+	margin-top: 20px;
 }
 
 #inputZip {
@@ -81,18 +82,27 @@ a:hover {
 .helper {
 	font-size: 12px;
 }
-#pw_form, #pw_match, #emailCheck{
-	font-size:12px;
+
+#pw_form, #pw_match, #emailCheck {
+	font-size: 12px;
 }
-#divBtnJoin{
-	text-align:center;
+
+#divBtnJoin {
+	text-align: center;
 }
-#checkPassword{
-	margin-bottom:5px;
+
+#checkPassword {
+	margin-bottom: 5px;
 }
-#inputEmail{
-	display:inline-block;
+
+#inputEmail, #inputNum {
+	display: inline-block;
 }
+
+#btnInputNum {
+	display: none;
+}
+
 ul {
 	margin: auto;
 }
@@ -104,7 +114,7 @@ li {
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-light">
+	<nav class="navbar navbar-expand-md navbar-light">
 		<div class="logo">
 			<a class="navbar-brand" href="Main.members"
 				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -116,7 +126,8 @@ li {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="Introduce.members">소개</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="Introduce.members">소개</a></li>
 				<li class="nav-item"><a class="nav-link" href="write.board">후원해
 						주세요</a></li>
 				<li class="nav-item"><a class="nav-link"
@@ -135,26 +146,31 @@ li {
 			<div class="title">
 				<h3>회원가입</h3>
 			</div>
-			
+			<p style="font-size: 12px">*표시는 필수항목입니다.</p>
 			<div class="form-group">
-				<input type="email" class="form-control" id="inputEmail" name="email"
-					placeholder="이메일 계정" style="width:70%" required>
+				<input type="email" class="form-control" id="inputEmail"
+					name="email" placeholder="*이메일 계정" style="width: 70%" required>
 				<button type="button" id="btnConfirmEmail"
 					class="btn btn-outline-info">인증하기</button>
 				<p id="emailCheck"></p>
+				<input type="hidden" class="form-control" id="inputNum"
+					placeholder="*인증번호" style="width: 70%" flag="false" required>
+				<button type="button" id="btnInputNum" class="btn btn-outline-info">확인</button>
 			</div>
 			<div id="divPw" class="form-group">
-				<input type="password" class="form-control" id="inputPassword" name="pw"
-					placeholder="비밀번호" required><em class="helper">영문, 숫자, 특수문자
-					(!@#$%^&*+=-)를 조합한 8자 이상</em><p id="pw_form"> </p>
+				<input type="password" class="form-control" id="inputPassword"
+					name="pw" placeholder="*비밀번호" required><em class="helper">영문,
+					숫자, 특수문자 (!@#$%^&*+=-)를 조합한 8자 이상</em>
+				<p id="pw_form"></p>
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control" id="checkPassword"
-					placeholder="비밀번호 확인" required><p id="pw_match"></p>
+					placeholder="*비밀번호 확인" required>
+				<p id="pw_match"></p>
 			</div>
 			<div class="form-group">
 				<input type="text" class="form-control" id="name" name="name"
-					placeholder="이름" required>
+					placeholder="*이름" required>
 			</div>
 			<div class="form-group">
 				<input type="text" class="form-control" id="phone" name="phone"
@@ -163,73 +179,111 @@ li {
 			<div id="zip" class="form-group">
 				<input type="text" id="inputZip" class="form-control" name="zip"
 					style="width: 50%" placeholder="우편번호" readonly>
-				<button type="button" id="search"
-					class="btn btn-outline-info">찾기</button>
+				<button type="button" id="search" class="btn btn-outline-info">찾기</button>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="inputAddress" name="address1"
-					placeholder="주소" readonly>
+				<input type="text" class="form-control" id="inputAddress"
+					name="address1" placeholder="주소" readonly>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="inputAddress2" name="address2"
-					placeholder="상세주소">
+				<input type="text" class="form-control" id="inputAddress2"
+					name="address2" placeholder="상세주소">
 			</div>
 
-			<div id="divBtnJoin"><input type="button" id="btnJoin" class="btn btn-primary" value="가입하기"></div>
+			<div id="divBtnJoin">
+				<input type="button" id="btnJoin" class="btn btn-primary"
+					value="가입하기">
+			</div>
 		</div>
 	</form>
 
+	<div id="footer">
+		<div id="f_logo_wrap">
+			<a id="f_logo" href="Main.members"
+				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="f_info_wrap">
+			<div id="f_info">
+				행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
+			</div>
+		</div>
+		<div id="f_sns">
+			<img id="kakao" class="sns" src="ka.png"> <img class="sns"
+				src="fa.png"> <img id="insta" class="sns" src="kk.png">
+			<a href="/"><div id="suggest">후원 신청</div></a>
+		</div>
+		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+	</div>
+
 	<script>
-		$("#btnJoin").on("click", function(){
-			if($("#inputEmail").val() == ""){
+		$("#btnConfirmEmail").on("click", function() {
+			if ($("#inputNum").attr("flag") == "true") {
+				alert("이미 인증이 완료되었습니다.");
+				return;
+			}
+			if ($("#inputEmail").val() == "") {
 				alert("이메일을 입력해주세요.");
-			}
-			else if($("#pw_match").text() != ""){
-				alert("비밀번호를 다시 확인해주세요.");
-			}
-			else if($("#name").val() == ""){
-				alert("이름을 입력해주세요.");
-			}
-			else{
-				alert("메일 발송중입니다. 잠시만 기다려주세요.");
+			} else {
 				$.ajax({
-					url: "SendMail.members",
-					type: "post",
-					data: {
-						email: $("#inputEmail").val()
+					url : "SendMail.members",
+					type : "post",
+					data : {
+						email : $("#inputEmail").val()
 					}
-				}).done(function(resp){
-					if(resp == 0){
+				}).done(function(resp) {
+					if (resp == 0) {
 						alert("이메일 주소가 잘못되었습니다. 다시 입력해주세요.");
-					}
-					else{	// 메일 발송을 성공했을 때
-						var inputNum = prompt("입력하신 이메일로 메일이 발송되었습니다. 확인하신 후 인증번호를 입력해주세요.");
-						if(inputNum == resp){
-							$("#joinForm").submit();
-						}
-						else if(resp){
-							alert("인증번호가 일치하지 않습니다.");
-							location.href = "JoinForm.members";
-						}
+					} else { // 메일 발송을 성공했을 때
+						alert("입력하신 이메일로 메일이 발송되었습니다. 확인하신 후 인증번호를 입력해주세요.");
+						$("#inputNum").attr("type", "text");
+						$("#btnInputNum").css("display", "inline-block");
+						$("#btnInputNum").on("click", function() {
+							var inputNum = $("#inputNum").val();
+							if (inputNum == resp) {
+								$("#inputNum").attr("flag", true);
+								alert("인증되었습니다.");
+								$("#inputEmail").attr("readonly", "true");
+								$("#inputNum").attr("type", "hidden");
+								$("#btnInputNum").css("display", "none");
+							} else if (resp) {
+								alert("인증번호가 일치하지 않습니다.");
+								$("#inputNum").attr("flag", false);
+								$("#inputNum").val("");
+							}
+						})
+
 					}
 				});
 			}
 		})
-		
-		$("#inputEmail").on("input", function(){
+
+		$("#btnJoin").on("click", function() {
+			if ($("#inputEmail").val() == "") {
+				alert("이메일을 입력해주세요.");
+			} else if ($("#inputNum").attr("flag") == "false") {
+				alert("이메일 인증을 완료해주세요.");
+			} else if ($("#pw_match").text() != "") {
+				alert("비밀번호를 다시 확인해주세요.");
+			} else if ($("#name").val() == "") {
+				alert("이름을 입력해주세요.");
+			} else {
+				$("#joinForm").submit();
+			}
+		})
+
+		$("#inputEmail").on("input", function() {
 			$.ajax({
-				url: "EmailDuplCheck.members",
-				type: "post",
-				data: {
-					email: $("#inputEmail").val()
+				url : "EmailDuplCheck.members",
+				type : "post",
+				data : {
+					email : $("#inputEmail").val()
 				}
-			}).done(function(resp){
+			}).done(function(resp) {
 				console.log(resp);
-				if(resp == "false"){
+				if (resp == "false") {
 					$("#emailCheck").css("color", "red");
 					$("#emailCheck").text("이미 가입된 이메일입니다.");
-				}
-				else{
+				} else {
 					$("#emailCheck").text("");
 				}
 			})
@@ -252,7 +306,7 @@ li {
 			var pw_chk = document.getElementById("checkPassword").value;
 			if (pw == pw_chk) {
 				document.getElementById("pw_match").innerHTML = "";
-		
+
 			} else {
 				document.getElementById("pw_match").innerHTML = "비밀번호가 일치하지 않습니다.";
 				document.getElementById("pw_match").style.color = "red";

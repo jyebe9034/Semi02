@@ -2,9 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!-- <script type="text/javascript" -->
@@ -122,20 +120,24 @@ li {
 			<div class="title">
 				<h3>후원하기</h3>
 			</div>
-			<input type="hidden" name="boardNo" value="1">
+			<input type="hidden" name="boardNo" value="${boardNo }">
 			<div class="form-group">
+				이름
 				<input type="text" class="form-control" id="name" name="name"
-					placeholder="이름" value="로그인한 사람 이름 가져오기" required>
+					placeholder="이름" value="${result[0] }" required>
 			</div>
 			<div class="form-group">
+				이메일 계정(카카오고유ID)
 				<input type="email" class="form-control" id="inputEmail" name="email"
-					placeholder="이메일 계정" value="로그인한 사람 이메일 가져오기" required>
+					placeholder="이메일 계정(카카오고유ID)" value="${result[1] }" readonly>
 			</div>
 			<div class="form-group">
+				전화번호
 				<input type="text" class="form-control" id="phone" name="phone"
-					placeholder="전화번호" value="로그인한 사람 전화번호 가져오기">
+					placeholder="전화번호" value="${result[2] }">
 			</div>
 			<div class="form-group">
+				후원 금액
 				<select class="form-control" id="selectAmount">
     				<option value="0">금액 선택</option>
     				<option value="1000">1,000원</option>
@@ -194,7 +196,7 @@ li {
 				    참고하세요. 
 				    나중에 포스팅 해볼게요.
 				 */
-				name : '주문명:결제테스트', //결제창에서 보여질 이름 //// 후원명 불러오기
+				name : "${title}", //결제창에서 보여질 이름 //// 후원명 불러오기
 				amount : $("#amount").val(), // 입력받은 금액
 				buyer_email : $("#inputEmail").val(),
 				buyer_name : $("#name").val(),
@@ -226,7 +228,7 @@ li {
 				} else {
 					var msg = '결제에 실패하였습니다.';
 					msg += '에러내용 : ' + rsp.error_msg;
-					location.href = "test.jsp";
+					location.href = "Read.board?boardNo=" + ${boardNo};
 				}
 			});
 		});

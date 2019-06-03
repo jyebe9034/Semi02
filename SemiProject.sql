@@ -16,9 +16,11 @@ create table members(
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))
 );
-drop table members;
+--drop table members;
 
 select * from members;
+
+select m_name, m_email, m_phone from members where m_email='junhaeyong95@naver.com';
 
 commit;
 
@@ -41,22 +43,16 @@ create table board(
     b_recommend number default 0 not null,
     b_sum_amount number default 0
 );
-drop table board;
+--drop table board;
 
 create sequence b_no_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
-drop sequence b_no_seq;
+--drop sequence b_no_seq;
 
 select * from board;
-
-select b_due_date-sysdate as d_day from board order by d_day;
-
-select sysdate-b_due_date as d_day from board order by d_day;
-
-update board set b_sum_amount=b_sum_amount+120000 where b_No=1;
 
 commit;
 --------------------------------------------------------------------------------
@@ -70,14 +66,14 @@ create table title_img(
     t_fileSize number not null,
     constraint t_b_no_fk foreign key(t_b_no) references board(b_no) on delete cascade
 );
-drop table title_img;
+--drop table title_img;
 
 create sequence t_fileSeq_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
-drop sequence t_fileSeq_seq;
+--drop sequence t_fileSeq_seq;
 
 select * from title_img;
 
@@ -93,7 +89,7 @@ create table payment(
     p_amount number not null,
     p_payment_date timestamp default sysdate not null
 );
-drop table payment;
+--drop table payment;
 
 select * from payment;
 
@@ -106,7 +102,7 @@ create table recommend(
     r_b_no number not null,
     r_b_title varchar(100) not null
 );
-drop table recommend;
+--drop table recommend;
 
 select * from recommend;
 
@@ -121,6 +117,8 @@ create table comments(
     c_comment varchar(1000) not null,
     c_write_date timestamp default sysdate not null
 );
-drop table comments;
+--drop table comments;
 
 select * from comments;
+
+commit;
