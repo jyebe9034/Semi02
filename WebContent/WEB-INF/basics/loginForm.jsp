@@ -116,8 +116,8 @@ li{
 
 	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
-			<a class="navbar-brand" href="main.jsp"><img src="logo/bridge_logo2.png"
-				width="150px"></a>
+			<a class="navbar-brand" href="Main.members"
+				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -153,9 +153,6 @@ li{
 					<input type="password" class="form-control"
 						id="exampleInputPassword1" name="pw"
 						placeholder="비밀번호 (영문,숫자,특수문자 포함 8자 이상)" required>
-				</div>
-				<div class="save_find">
-					<a href="" class="find_id" style="color: black">아이디·비밀번호 찾기></a>
 				</div>
 				<button type="submit" class="btn btn-primary btn-md btn-block"
 					style="font-size: 18px; font-weight: bold;">로그인</button>

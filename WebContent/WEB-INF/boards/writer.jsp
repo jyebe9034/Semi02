@@ -54,8 +54,8 @@ li {
 <body>
 	<nav class="navbar navbar-expand-md navbar-light navbar-fixed-top">
 		<div class="logo">
-			<a class="navbar-brand" href="main.jsp"><img
-				src="logo/bridge_logo2.png" width="150px"></a>
+			<a class="navbar-brand" href="Main.members"
+				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
