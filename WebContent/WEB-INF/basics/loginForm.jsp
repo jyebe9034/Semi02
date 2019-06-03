@@ -171,16 +171,12 @@ li{
     session.setAttribute("state", state);
  %>
  <a href="<%=apiURL%>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+	<hr>			
 				<div id="toJoin">
-
 					아직 계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="JoinForm.members" id="a_join"
 						style="color: black">가입하기</a>
 				</div>
 			</form>
-			<hr>
-			<div id="forget_pw" style="text-align: center">
-				<a href="" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
-			</div>
 		</div>
 	</div>
 </body>

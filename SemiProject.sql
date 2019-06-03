@@ -24,7 +24,6 @@ select m_name, m_email, m_phone from members where m_email='junhaeyong95@naver.c
 
 commit;
 
-
 --------------------------------------------------------------------------------
 
 create table board(
@@ -54,17 +53,6 @@ nomaxvalue;
 --drop sequence b_no_seq;
 
 select * from board;
-
-insert into board values(
-    b_no_seq.nextval, 'junhaeyong95@naver.com', '피곤해요ㅠㅠ', '전해용', 1000000, '신한', '123123123456',
-    '191225', '빨리 자고싶어요<br>시원한 맥주한잔 하고~~ 크흐<br>폭신폭신한 침대에 누워서<br>선풍기바람 솔솔!!', null, null, default, default, default, default
-);
-
-select b_due_date-sysdate as d_day from board order by d_day;
-
-select sysdate-b_due_date as d_day from board order by d_day;
-
-update board set b_sum_amount=b_sum_amount+120000 where b_No=1;
 
 commit;
 --------------------------------------------------------------------------------
@@ -133,9 +121,4 @@ create table comments(
 
 select * from comments;
 
-delete comments where c_email='junhaeyong95@naver.com';
-
 commit;
-
-ROLLBACK;
-

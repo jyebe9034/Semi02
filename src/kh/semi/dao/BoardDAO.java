@@ -28,12 +28,39 @@ public class BoardDAO {
 		return DriverManager.getConnection(url,user,pw);
 	}
 
-
+	public PreparedStatement pstatForGetDataForMain(Connection con)throws Exception{
+		String sql = "select b_due_date-sysdate as d_day, b_no, b_title, b_amount, "
+				+ "b_due_date, b_sum_amount from board order by d_day";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		return pstat;
+	}
+	public List<BoardDTO> getDataForMain() throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = this.pstatForGetDataForMain(con);
+				ResultSet rs = pstat.executeQuery();
+				){
+			List<BoardDTO> list = new ArrayList<>();
+			for(int i=0; i<3;i++) {
+				if(rs.next()) {
+					BoardDTO dto = new BoardDTO();
+					dto.setBoardNo(rs.getInt("b_no"));
+					dto.setTitle(rs.getString("b_title"));
+					dto.setAmount(rs.getInt("b_amount"));
+					dto.setDueDate(rs.getTimestamp("b_due_date"));
+					dto.setSumAmount(rs.getInt("b_sum_amount"));
+					list.add(dto);
+				}
+			}
+			return list;
+		}
+	}
 	public int insertBoard(BoardDTO dto)throws Exception{
 		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,?,?,default,default,default,default)";
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
+				PreparedStatement pstat = this.pstatForGetDataForMain(con);
+				ResultSet rs = pstat.executeQuery();
 				){
 			pstat.setString(1,dto.getTitle());
 			pstat.setString(2, dto.getEmail());
@@ -41,17 +68,8 @@ public class BoardDAO {
 			pstat.setInt(4,dto.getAmount());
 			pstat.setString(5,dto.getBank());
 			pstat.setString(6,dto.getAccount());
-			if(dto.getContents().length()<=4000) {
-				pstat.setString(7,dto.getContents());
-			}else if(dto.getContents().length() > 4000 && dto.getContents().length()<=8000){
-				pstat.setString(7,dto.getContents().substring(0, 3999));
-				pstat.setString(8,dto.getContents().substring(4000,7999));
-			}else if(dto.getContents().length() > 8000 && dto.getContents().length() <=11999) {
-				pstat.setString(7,dto.getContents().substring(0, 3999));
-				pstat.setString(8,dto.getContents().substring(4000,7999));
-				pstat.setString(9,dto.getContents().substring(8000, 11999));
-			}
-			pstat.setTimestamp(10, dto.getDueDate());
+			pstat.setString(7, dto.getContents());
+			pstat.setTimestamp(8, dto.getDueDate());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -80,11 +98,7 @@ public class BoardDAO {
 				boardDTO.setBank(rs.getString("b_bank"));
 				boardDTO.setAccount(rs.getString("b_account"));
 				boardDTO.setDueDate(rs.getTimestamp("b_due_date"));
-				String contents = rs.getString("b_contents1");
-				if(rs.getString("b_contents2") != null) {
-					contents += rs.getString("b_contents2") + rs.getString("b_contents3");
-				}
-				boardDTO.setContents(contents);
+				boardDTO.setContents(rs.getString("b_contents"));
 				boardDTO.setViewCount(rs.getInt("b_viewcount"));
 				boardDTO.setWriteDate(rs.getTimestamp("b_writedate"));
 				boardDTO.setRecommend(rs.getInt("b_recommend"));
@@ -118,19 +132,6 @@ public class BoardDAO {
 		pstat.setInt(1, boardNo);
 		return pstat;
 	}
-	public TitleImgDTO getTitleImg(int boardNo) throws Exception {
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = this.pstatForGetTitleImg(con, boardNo);
-				ResultSet rs = pstat.executeQuery();
-				){
-			if(rs.next()) {
-				TitleImgDTO dto = new TitleImgDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
-				return dto;
-			}
-		}
-		return null;
-	}
 
 	public int updateSumAccount(int amount, int boardNo) throws Exception {
 		String sql = "update board set b_sum_amount=b_sum_amount+? where b_No=?";
@@ -145,7 +146,7 @@ public class BoardDAO {
 			return result;
 		}
 	}
-	
+
 	private PreparedStatement pstatForRecommendCheck(Connection con, String email, int boardNo) throws Exception {
 		String sql = "select * from recommend where r_email=? and r_b_no=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
@@ -166,7 +167,7 @@ public class BoardDAO {
 			return true;
 		}
 	}
-	
+
 	public boolean updateRecommend(String email, int boardNo, String title) throws Exception{
 		String sql1 = "update board set b_recommend=b_recommend+1 where b_no=?";
 		String sql2 = "insert into recommend values(?, ?, ?)";
@@ -176,22 +177,22 @@ public class BoardDAO {
 				PreparedStatement pstat2 = con.prepareStatement(sql2);
 				){
 			pstat1.setInt(1, boardNo);
-			
+
 			pstat2.setString(1, email);
 			pstat2.setInt(2, boardNo);
 			pstat2.setString(3, title);
-			
+
 			int result = pstat1.executeUpdate();
 			int result2 = pstat2.executeUpdate();
 			con.commit();
-			
+
 			if(result>0 && result2>0) {
 				return true;
 			}
 			return false;
 		}
 	}
-	
+
 	public int insertComment(String email, String name, int boardNo, String comment) throws Exception {
 		String sql = "insert into comments values(?, ?, ?, ?, default)";
 		try(
@@ -207,8 +208,8 @@ public class BoardDAO {
 			return result;
 		}
 	}
-	
-	public List<CommentDTO> selectCommentsByBoardNo(int currentPage, int boardNo) throws Exception {
+
+	public List<CommentDTO> selectCommentsByBoardNo(int commentPage, int boardNo) throws Exception {
 		String sql = "select * from comments where c_b_no=" + boardNo + " order by c_write_date desc";
 		try(
 				Connection con = this.getConnection();
@@ -219,18 +220,18 @@ public class BoardDAO {
 			while(rs.next()) {
 				result.add(new CommentDTO(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getTimestamp(5)));
 			}
-			
-			int fromIndex = (currentPage*recordCountPerPage)-(recordCountPerPage-1);
-			int toIndex = currentPage*recordCountPerPage;
+
+			int fromIndex = (commentPage*recordCountPerPage)-(recordCountPerPage-1);
+			int toIndex = commentPage*recordCountPerPage;
 
 			if(toIndex > result.size()) {
 				toIndex = result.size();
 			}
-			
+
 			return result.subList(fromIndex-1, toIndex);
 		}
 	}
-	
+
 	public int deleteComment(String email, String writeDate) throws Exception {
 		String sql = "delete comments where c_email=? and c_write_date=?";
 		try(
@@ -244,7 +245,7 @@ public class BoardDAO {
 			return result;
 		}
 	}
-	
+
 	public Map<String, Integer> getNavi(int currentPage, int recordTotalCount) {
 		// 가지고 있는 게시글의 수에 맞는 페이지의 개수를 구함.
 		int pageTotalCount = recordTotalCount / recordCountPerPage;
@@ -288,8 +289,5 @@ public class BoardDAO {
 
 		return pageNavi;
 	}
-	
-	
-	
 }
 

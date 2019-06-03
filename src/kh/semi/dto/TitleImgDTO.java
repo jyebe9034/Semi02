@@ -2,33 +2,38 @@ package kh.semi.dto;
 
 public class TitleImgDTO {
 	private int boardNo;
-	private int fileSeq;
 	private String fileName;
 	private String oriFileName;
 	private String filePath;
 	private long fileSize;
 	
-	public TitleImgDTO() {}
-	public TitleImgDTO(int boardNo, int fileSeq, String fileName, String oriFileName, String filePath,
-			long fileSize) {
+	public TitleImgDTO() {
+		super();
+	}
+	public TitleImgDTO(int boardNo, String fileName, String oriFileName, String filePath, long fileSize) {
+		super();
 		this.boardNo = boardNo;
-		this.fileSeq = fileSeq;
 		this.fileName = fileName;
 		this.oriFileName = oriFileName;
 		this.filePath = filePath;
 		this.fileSize = fileSize;
 	}
+	
+	
+	// 메인 페이지 마감임박 3개 사진 파일 이름과 위치경로 가져오기 위함.
+	public TitleImgDTO(int boardNo, String fileName, String filePath) {
+		super();
+		this.boardNo = boardNo;
+		this.fileName = fileName;
+		this.filePath = filePath;
+	}
+	
+	
 	public int getBoardNo() {
 		return boardNo;
 	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
-	}
-	public int getFileSeq() {
-		return fileSeq;
-	}
-	public void setFileSeq(int fileSeq) {
-		this.fileSeq = fileSeq;
 	}
 	public String getFileName() {
 		return fileName;
@@ -54,5 +59,5 @@ public class TitleImgDTO {
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
-	
+
 }
