@@ -179,7 +179,7 @@ public class BoardDAO {
 				String bank = rs.getString("b_bank");
 				String account = rs.getString("b_account");
 				String dueDate = rs.getString("b_due_date");
-				String contents = rs.getString("b_contents1")+rs.getString("b_contents2")+rs.getString("b_contents3");
+				String contents = rs.getString("b_contents");
 				int viewCount = rs.getInt("b_viewcount");
 				String writeDate = rs.getString("b_writedate");
 				int recommend = rs.getInt("b_recommend");
