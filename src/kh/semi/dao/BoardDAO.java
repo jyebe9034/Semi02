@@ -13,7 +13,6 @@ import java.util.Map;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.BoardListDTO;
 import kh.semi.dto.TitleImgDTO;
-import kh.semi.dto.UfileDTO;
 
 
 import kh.semi.dto.CommentDTO;

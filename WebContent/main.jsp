@@ -175,20 +175,12 @@
 	</div>
 	<hr>
 
-<<<<<<< HEAD
-	<div class="card-deck">
-		<div class="card">
-			<img src="photo_image/boy wrester.jpg" class="card-img-top"alt="...">
-			<div class="card-body">
-				<h5 class="card-title">식물인간 아버지를 지키는 소년 레슬러 동호</h5>
-=======
 	<div class="container">
 		<div class="row">
 			<div class="step1 col-lg-3 col-md-6 col-sm-6 col-xs-6"
 				style="background-color: #8be1ef">
 				<h1>1</h1>
 				<h4>후원 요청 글과 함께 은행명, 계좌번호를 입력하면</h4>
->>>>>>> 14cb027a58c50e3ecaab21290062e72db1d3d33c
 			</div>
 			<div class="step2 col-lg-3 col-md-6 col-sm-6 col-xs-6"
 				style="background-color: #60d6ea">
@@ -215,21 +207,12 @@
 				<div id="imgBox1" class="imgBox"></div>
 				<div class="card-body">
 					<h6 class="card-title">
-<<<<<<< HEAD
 						<span id="title1">${list[0].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text" align="left">
 						모금 마감일 <br> <span id="dueDate1">${duedate[0]}</span><br> 모금현황<br>
 						<span id="percentage1">${percentage[0]}</span>
-=======
-						<span id="title1"></span>
-					</h6>
-					<hr>
-					<p class="card-text" align="left">
-						모금 마감일 <br> <span id="dueDate1"></span><br> 모금현황<p></p><br>
-						<span id="percentage1"></span>
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card1" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -243,21 +226,12 @@
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
-<<<<<<< HEAD
 						<span id="title2">${list[1].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate2">${duedate[1]}</span><br> 모금현황<br>
 						<span id="percentage2">${percentage[1]}</span>
-=======
-						<span id="title2"></span>
-					</h6>
-					<hr>
-					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate2"></span> <br> 모금현황<p></p><br>
-						<span id="percentage2"></span>
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card2" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -271,21 +245,12 @@
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
-<<<<<<< HEAD
 						<span id="title3">${list[2].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate3">${duedate[2]}</span><br> 모금현황<br>
 						<span id="percentage3">${percentage[2]}</span>
-=======
-						<span id="title3"></span>
-					</h6>
-					<hr>
-					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate3"></span><br> 모금현황<p></p><br>
-						<span id="percentage3"></span>
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card3" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -306,8 +271,6 @@
 	</div>
 	
 	<script>
-<<<<<<< HEAD
-=======
 
 		$.ajax({
 			url : "card1.board",
@@ -339,7 +302,7 @@
 			$("#percentage3").text(resp.percentage3 + "%");
 		});
 		
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
+
 		$.ajax({
 			url : "totalAmountDonors.board",
 			dataType : "json"
