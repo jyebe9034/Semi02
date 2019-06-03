@@ -313,6 +313,7 @@
 	<form action="List.board" method=post id=searchBox>
 			<input type=hidden flag=search> 
 				<select name="searchOption" id="dropdownforSearch">
+					<option>==검색방법==</option>
 					<option name="searchOption" value="title">제목</option>
 					<option name="searchOption" value="contents">내용</option>
 					<option name="searchOption" value="all">제목+내용</option>

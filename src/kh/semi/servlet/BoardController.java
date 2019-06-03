@@ -269,39 +269,35 @@ public class BoardController extends HttpServlet {
 				try {
 					String searchOption = request.getParameter("searchOption");
 					String searchWord = request.getParameter("searchWord");
-					int currentPage = Integer.parseInt(request.getParameter("currentPage"));					
+					int currentPage = Integer.parseInt(request.getParameter("currentPage"));		
+		
 					System.out.println("searchOption : " + searchOption);
 					System.out.println("searchWord : " + searchWord);
 					System.out.println("currentPage : " + currentPage);
 //					int endNum = currentPage * 8;
 //					int startNum = endNum - 7;
-					int recordTotalCount = 0;
+					int boardRecordTotalCount = 0;
 					if(searchOption.equals("title")) {
 						searchOption = "b_title";
-						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						System.out.println("recordTotalCount : " + recordTotalCount);
 						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));
 						
 					}else if(searchOption.equals("contents")) {
 						searchOption = " B_CONTENTS1 || b_contents2 ||b_contents3";
-						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						System.out.println("게시글 개수(내용) : " + recordTotalCount);
+						boardRecordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						System.out.println("게시글 개수(내용) : " + boardRecordTotalCount);
 						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));	
 						
 					}else if(searchOption.equals("all")) {
 						searchOption = "b_title || B_CONTENTS1 || b_contents2 ||b_contents3";
-						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						System.out.println("게시글 개수(내용) : " + recordTotalCount);
-						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));
-						
+
 					}else{	
-						recordTotalCount = dao.totalRecordNum();
-						System.out.println("게시글 개수 : " + recordTotalCount);
+						boardRecordTotalCount = dao.totalRecordNum();
+						System.out.println("게시글 개수 : " + boardRecordTotalCount);
 						request.setAttribute("board", dao.selectByPage(currentPage));
 					}
 					
 					/*페이지*/	
-					Map<String, Integer> getNavi = dao.getNavi(currentPage, recordTotalCount);
+					Map<String, Integer> getNavi = dao.getNavi(currentPage, boardRecordTotalCount);
 					request.setAttribute("getNavi", getNavi);
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
 					

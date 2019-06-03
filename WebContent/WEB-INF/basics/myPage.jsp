@@ -18,184 +18,188 @@
 
 <style>
 body {
-	font-family: "Nanum Gothic";
-	height: 100%;
+   font-family: "Nanum Gothic";
+   height: 100%;
 }
 
 .wrapper {
-	width: 400px;
-	margin: auto;
-	padding: 40px;
-	border: 1px solid #e4e4e4;
-	border-radius: 5px;
+   width: 400px;
+   margin: auto;
+   padding: 40px;
+   border: 1px solid #e4e4e4;
+   border-radius: 5px;
 }
 
 .top_wrapper {
-	display: flex;
-	justify-content: space-between;
-	height: 40px;
-	align-items: center;
-	position: relative;
-	margin: auto;
+   display: flex;
+   justify-content: space-between;
+   height: 40px;
+   align-items: center;
+   position: relative;
+   margin: auto;
 }
 
 a {
-	font-weight: bold;
+   font-weight: bold;
 }
 
 a:hover {
-	color: #000000;
+   color: #000000;
 }
 
 .title {
-	margin-bottom: 30px;
+   margin-bottom: 30px;
 }
 
 .btn-primary {
-	margin: 20px 0px 20px;
-	background-color: #1ebdd8;
-	border-color: #1ebdd8;
-	color: #FFF;
+   margin: 20px 0px 20px;
+   background-color: #1ebdd8;
+   border-color: #1ebdd8;
+   color: #FFF;
 }
 
 .btn-primary:hover, .btn-primary:focus {
-	border-color: #28a39f;
-	background-color: #28a39f;
-	color: #FFF;
+   border-color: #28a39f;
+   background-color: #28a39f;
+   color: #FFF;
 }
 
 .btn-primary:active, .btn-primary:visited, .btn-primary:active:focus,
-	.btn-primary:active:hover {
-	border-color: #639d34;
-	background-color: #639d34;
-	color: #FFF;
+   .btn-primary:active:hover {
+   border-color: #639d34;
+   background-color: #639d34;
+   color: #FFF;
 }
 
 #zip {
-	display: inline-block;
-	margin-top: 20px;
+   display: inline-block;
+   margin-top: 20px;
 }
 
 #inputZip {
-	display: inline-block;
+   display: inline-block;
 }
 
 .helper {
-	font-size: 12px;
+   font-size: 12px;
 }
 
 #pw_form, #pw_match, #emailCheck {
-	font-size: 12px;
+   font-size: 12px;
 }
 
 #divBtnJoin {
-	text-align: center;
+   text-align: center;
 }
 
 #checkPassword {
-	margin-bottom: 5px;
+   margin-bottom: 5px;
 }
 
 #inputEmail, #inputPassword, #phone {
-	display: inline-block;
+   display: inline-block;
 }
 
 .menubar ul {
-	margin: auto;
+   margin: auto;
 }
 
 .menubar li {
-	width: 130px;
+   width: 130px;
 }
 
 .myhr1 {
-	border: 0;
-	height: 1px;
-	background-color:;
+   border: 0;
+   height: 1px;
+   background-color:;
 }
 
 .first {
-	letter-spacing: 1px;
-	margin-left: 3em;
-	display: block;
-	color: gray;
-	line-height: 21px;
+   letter-spacing: 1px;
+   margin-left: 3em;
+   display: block;
+   color: gray;
+   line-height: 21px;
 }
 
 .first-pw {
-	letter-spacing: 1px;
-	margin-left: 3em;
-	display: block;
-	color: gray;
-	line-height: 35px;
+   letter-spacing: 1px;
+   margin-left: 3em;
+   display: block;
+   color: gray;
+   line-height: 35px;
 }
 
 .first-phone {
-	letter-spacing: 1px;
-	margin-left: 3em;
-	display: block;
-	color: gray;
-	line-height: 35px;
+   letter-spacing: 1px;
+   margin-left: 3em;
+   display: block;
+   color: gray;
+   line-height: 35px;
 }
 
 .second {
-	font-weight: 600;
-	margin-left: 1.6em;
-	background-color: white;
-	border-color: white;
+   font-weight: 600;
+   margin-left: 1.6em;
+   background-color: white;
+   border-color: white;
 }
 
 .white {
-	border: 0px;
-	margin-right: 2em;
-	height: 30px;
-	font-weight: 600;
+   border: 0px;
+   margin-right: 2em;
+   height: 30px;
+   font-weight: 600;
 }
 
 .wrap {
-	border: 1.5px solid #c4c4c490;
-	padding: 50px;
+   border: 1.5px solid #c4c4c490;
+   padding: 50px;
 }
 
 #top {
-	border-color: whitesmoke
+   border-color: whitesmoke
 }
 
 .update {
-	position: relative;
-	top: 30px;
-	left: 45%;
+   position: relative;
+   top: 30px;
+   left: 45%;
 }
 
 #address1, #address2 {
-	width: 270px;
+   width: 270px;
 }
 
 #zipcode {
-	background-color: white
+   background-color: white
 }
 
 .head {
-	font-size: 18px;
-	font-weight: bold;
-	text-align: center;
+   font-size: 18px;
+   font-weight: bold;
+   text-align: center;
 }
 
 .contents {
-	text-align: center;
+   text-align: center;
 }
 
 .underline {
-	border: solid 1px lightgrey;
-	width: 150px;
-	margin-top: 0px;
-	margin-bottom: 40px;
+   border: solid 1px lightgrey;
+   width: 150px;
+   margin-top: 0px;
+   margin-bottom: 40px;
 }
 
 .numBox li a {
-	color: lightslategray;
+   color: lightslategray;
 }
-	</style>
+#address1,#address2,#phone{
+	background-color:"white";
+
+}
+   </style>
 </head>
 <body>
 
@@ -216,10 +220,20 @@ a:hover {
                   주세요</a></li>
             <li class="nav-item"><a class="nav-link"
                href="textList.board?currentPage=1">후원 게시판</a></li>
-            <li class="nav-item"><a class="nav-link"
-               href="LoginForm.members">로그인</a></li>
-            <li class="nav-item"><a class="nav-link"
-               href="JoinForm.members">회원가입</a></li>
+            				<c:choose>
+					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+						<li class="nav-item"><a class="nav-link"
+							href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="Logout.members">로그아웃</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link"
+							href="LoginForm.members">로그인</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="JoinForm.members">회원가입</a></li>
+					</c:otherwise>
+				</c:choose>
          </ul>
       </div>
    </nav>
@@ -229,24 +243,29 @@ a:hover {
    
    
 <br><br><br>
+
+<c:choose>
+
+<c:when test="${dto!=null }">
+
 <div class="container wrap">
   <h3>내 정보</h3>
   <hr  class="myhr1">
   <div class="row">
-    <div class="col-lg-2 col-md-12"><span class="first">이메일</span></div>
-    <div class="col-lg-10 col-md-12"><span class="second">kjjmmm123@naver.com</span></div>
+    <div class="col-2"><span class="first">이메일</span></div>
+    <div class="col-10"><span class="second">${dto.email }</span></div>
   </div>
   <hr>
   <div class="row">
     <div class="col-2"><span class="first">이름</span></div>
-    <div class="col-10"><span class="second">김지민</span></div>
+    <div class="col-10"><span class="second">${dto.name }</span></div>
   </div>
    <hr>
     <div class="row">
     <div class="col-2"><span class="first-phone">연락처</span></div>
         <div class="col-10"><span><form class="form-inline">
   <div class="form-group">
-    <input type="text" id="phone" class="form-control mx-sm-3 second" value="010-3955-3402">
+    <input type="text" id="phone" class="form-control mx-sm-3 second" value="${dto.phone }">
   </div>
 </form></span></div>
   </div>
@@ -256,7 +275,7 @@ a:hover {
     <div class="col-2"><span class="first-pw">주소</span></div>
     <div class="col-10"><span><form class="form-inline">
   <div class="form-group">
-    <input type="text" id="zipcode" class="form-control mx-sm-3 second" readonly>
+    <input type="text" id="zipcode" class="form-control mx-sm-3 second" value="${dto.zipcode }" readonly>
   </div>
 </form></span></div>
   </div>
@@ -265,7 +284,7 @@ a:hover {
     <div class="col-2"><span class="first-pw"></span></div>
     <div class="col-10"><span><form class="form-inline">
   <div class="form-group">
-    <input type="text" id="address1" class="second form-control mx-sm-3">
+    <input type="text" id="address1" class="second form-control mx-sm-3" value="${dto.address1 }">
   </div>
 </form></span></div>
   </div>
@@ -275,17 +294,80 @@ a:hover {
     <div class="col-2"></div>
     <div class="col-10"><span><form class="form-inline">
   <div class="form-group">
-    <input type="text" id="address2" class="second form-control mx-sm-3">
+    <input type="text" id="address2" class="second form-control mx-sm-3" value="${dto.address2 }">
 
   </div>
 </form></span></div>
   </div>
       <div class="row"><div class="col-12">
-   <button type="button" class="btn btn-info update">정보 수정</button>
+   <a href="myPageUpdateLocation.members"><button type="button" class="btn btn-info update">정보 수정</button></a>
    </div>
   </div>
   
 </div>
+</c:when>
+
+<c:otherwise>
+
+<div class="container wrap">
+  <h3>내 정보</h3>
+  <hr  class="myhr1">
+  <div class="row">
+    <div class="col-2"><span class="first">이메일</span></div>
+    <div class="col-10"><span class="second">${realcontents.email}${navercontents.email }</span></div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-2"><span class="first">이름</span></div>
+    <div class="col-10"><span class="second">${realcontents.name }${navercontents.name }</span></div>
+  </div>
+   <hr>
+    <div class="row">
+    <div class="col-2"><span class="first-phone">연락처</span></div>
+        <div class="col-10"><span><form class="form-inline">
+  <div class="form-group">
+    <input type="text" id="phone" class="form-control mx-sm-3 second"  value="${realcontents.phone }" readonly>
+  </div>
+</form></span></div>
+  </div>
+
+     <hr>
+      <div class="row">
+    <div class="col-2"><span class="first-pw">주소</span></div>
+    <div class="col-10"><span><form class="form-inline">
+  <div class="form-group">
+    <input type="text" id="zipcode" class="form-control mx-sm-3 second" value="${realcontents.zipCode }" readonly>
+  </div>
+</form></span></div>
+  </div>
+     <br>
+      <div class="row">
+    <div class="col-2"><span class="first-pw"></span></div>
+    <div class="col-10"><span><form class="form-inline">
+  <div class="form-group">
+    <input type="text" id="address1" class="second form-control mx-sm-3" value="${realcontents.address1 }" readonly>
+  </div>
+</form></span></div>
+  </div>
+  <br>
+
+      <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10"><span><form class="form-inline">
+  <div class="form-group">
+    <input type="text" id="address2" class="second form-control mx-sm-3" value="${realcontents.address2 }" readonly>
+
+  </div>
+</form></span></div>
+  </div>
+      <div class="row"><div class="col-12">
+   <a href="myPageUpdateLocationForNaver.members"><button type="button" class="btn btn-info update">정보 수정</button></a>
+   </div>
+  </div>
+</div>
+
+</c:otherwise>
+</c:choose>
 <br><br><br>
 <div class="container wrap">
   <h3>내가 도와준 글</h3>
@@ -307,8 +389,8 @@ a:hover {
 <!--          <div class="col-xl-2 col-lg-2 d-none d-lg-block">5월 31일 13시 51분</div> -->
 <!--          <div class="col-xl-2 col-lg-2 d-lg-block d-none">임창훈</div> -->
 <!--       </div> -->
-  	 <div class="row contents">
-      	<c:forEach var="support" items="${mySupport }">
+      <div class="row contents">
+         <c:forEach var="support" items="${mySupport }">
          <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${support.boardNo }</div>
          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${support.title }</div>
          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${support.pAmount }</div>
@@ -316,15 +398,15 @@ a:hover {
          <div class="col-xl-2 col-lg-2 d-lg-block d-none">${support.writer }</div>
          </c:forEach>
       </div>
-      		<div class="row  p-0 m-0" class="numBox">
-			<div class="col-12 d-flex justify-content-center">
-				<nav aria-label="Page navigation example">
-					<ul class="pagination pagination-sm">
-								${getNaviforMS }
-					</ul>
-				</nav>		
-			</div>
-		</div>
+            <div class="row  p-0 m-0" class="numBox">
+         <div class="col-12 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+               <ul class="pagination pagination-sm">
+                        ${getNaviforMS }
+               </ul>
+            </nav>      
+         </div>
+      </div>
    </div>
 </div>
 <br><br><br>
@@ -341,82 +423,29 @@ a:hover {
       </div>
       <br>
       <div class="row contents">
-	       <c:forEach var="Articles" items="${myArticles}">
-		         <div class="col-lg-1 col-md-4 col-sm-4">${Articles.boardNo }</div>
-		         <div class="col-lg-4 col-md-4 col-sm-4">${Articles.title }</div>
-		         <div class="col-lg-3 col-md-4 col-sm-4">${Articles.writer }</div>
-		         <div class="col-lg-3 d-none d-lg-block">${Articles.writeDate }</div>
-		         <div class="col-lg-1 d-lg-block d-none">${Articles.viewCount }</div>
-	        </c:forEach>
+          <c:forEach var="Articles" items="${myArticles}">
+               <div class="col-lg-1 col-md-4 col-sm-4">${Articles.boardNo }</div>
+               <div class="col-lg-4 col-md-4 col-sm-4">${Articles.title }</div>
+               <div class="col-lg-3 col-md-4 col-sm-4">${Articles.writer }</div>
+               <div class="col-lg-3 d-none d-lg-block">${Articles.writeDate }</div>
+               <div class="col-lg-1 d-lg-block d-none">${Articles.viewCount }</div>
+           </c:forEach>
       </div>
            
   </div>
-		<div class="row  p-0 m-0" class="numBox">
-			<div class="col-12 d-flex justify-content-center">
-				<nav aria-label="Page navigation example">
-					<ul class="pagination pagination-sm">
-								${getNavi }
-					</ul>
-				</nav>		
-			</div>
-		</div>
+      <div class="row  p-0 m-0" class="numBox">
+         <div class="col-12 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+               <ul class="pagination pagination-sm">
+                        ${getNavi }
+               </ul>
+            </nav>      
+         </div>
+      </div>
 </div>
-	<br><br>
+   <br><br>
 <script>
-    
-          document.getElementById("addressbt").onclick = function() {
-         new daum.Postcode(
-               {
-                  oncomplete : function(data) {
-                     // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                     // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                     // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                     var addr = ''; // 주소 변수
-                     var extraAddr = ''; // 참고항목 변수
-
-                     //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                     if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                     } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                     }
-
-                     // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                     if (data.userSelectedType === 'R') {
-                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                        if (data.bname !== ''
-                              && /[동|로|가]$/g.test(data.bname)) {
-                           extraAddr += data.bname;
-                        }
-                        // 건물명이 있고, 공동주택일 경우 추가한다.
-                        if (data.buildingName !== ''
-                              && data.apartment === 'Y') {
-                           extraAddr += (extraAddr !== '' ? ', '
-                                 + data.buildingName
-                                 : data.buildingName);
-                        }
-                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                        if (extraAddr !== '') {
-                           extraAddr = ' (' + extraAddr + ')';
-                        }
-                        // 조합된 참고항목을 해당 필드에 넣는다.
-                        document.getElementById("address1").value = extraAddr;
-
-                     } else {
-                        document.getElementById("address1").value = '';
-                     }
-
-                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                     document.getElementById('zipcode').value = data.zonecode;
-                     document.getElementById("address1").value = addr;
-                     // 커서를 상세주소 필드로 이동한다.
-                     document.getElementById("address2").focus();
-                  }
-               }).open();
-      }
-    
     </script>
 </body>
 </html>

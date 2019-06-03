@@ -192,6 +192,7 @@
 					<c:when test="${sessionScope.loginEmail != null}">
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="LoginForm.members">로그인</a></li>

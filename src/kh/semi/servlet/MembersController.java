@@ -159,12 +159,15 @@ public class MembersController extends HttpServlet {
 				if (responseCode == 200) {
 					String ip = request.getRemoteAddr();
 					MemberDTO dto = dao.NaverContentsParse(res.toString(), ip);
+					
+					String email = dto.getEmail();
 					if (dao.isIdExist(dto)) {
-						request.getSession().setAttribute("loginEmail", dto.getEmail());
+						MemberDTO realcontents = dao.getContents(dto);
+						request.getSession().setAttribute("realcontents", realcontents);
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
-						request.getSession().setAttribute("loginEmail", dto.getEmail());
+						request.getSession().setAttribute("navercontents", dto);
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					}
 				}
@@ -174,7 +177,163 @@ public class MembersController extends HttpServlet {
 				response.sendRedirect("error.html");
 			}
 
-		}else if(cmd.equals("/Mypage.members")) {
+		}else if(cmd.equals("/kakaoLogin.members")) {
+			String nickname = request.getParameter("contents");
+			String ip = request.getRemoteAddr();
+			
+			String[] contents = nickname.split(",");
+			
+			String id = "k_"+contents[0];
+			String nickName = contents[1];
+			
+			System.out.println(id + " : " + nickName + " : "+ ip);
+			
+			MemberDTO dto = new MemberDTO();
+			
+			dto.setIpAddress(ip);
+			dto.setEmail(id);
+			dto.setName(nickName);
+			dto.setJoinDate(null);
+			dto.setAdmin(null);
+			
+			try {
+				
+				if (dao.isIdExist(dto)) {
+					
+					MemberDTO realcontents = dao.getContents(dto);
+					request.getSession().setAttribute("realcontents", realcontents);
+					request.getRequestDispatcher("main.jsp").forward(request, response);
+					
+				} else {
+					
+					dao.insertNaverMember(dto);
+					request.getSession().setAttribute("navercontents", dto);
+					request.getRequestDispatcher("main.jsp").forward(request, response);
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}else if(cmd.equals("/myPageUpdate.members")) {
+			
+			String phone = request.getParameter("phone");
+			String pw = dao.testSHA256(request.getParameter("pw"));
+			String zipcode = request.getParameter("zipcode");
+			String add1 = request.getParameter("address1");
+			String add2 = request.getParameter("address2");
+			String email = (String)request.getSession().getAttribute("loginEmail");
+			
+			MemberDTO dto = new MemberDTO();
+			
+			dto.setPhone(phone);
+			dto.setPw(pw);
+			dto.setZipCode(zipcode);
+			dto.setAddress1(add1);
+			dto.setAddress2(add2);
+			dto.setEmail(email);
+			
+			try {
+				int result = dao.updateContents(dto);
+				request.getSession().setAttribute("result", result);
+				request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("error.html");
+			}
+
+			
+		}else if(cmd.equals("/myPageUpdateForNaver.members")) {
+			
+			String phone = request.getParameter("phone");
+			String zipcode = request.getParameter("zipcode");
+			String add1 = request.getParameter("address1");
+			String add2 = request.getParameter("address2");
+
+			MemberDTO contents = (MemberDTO)request.getSession().getAttribute("navercontents");
+			MemberDTO aftercontents = (MemberDTO)request.getSession().getAttribute("realcontents");
+			
+
+			if(contents==null) {
+				String naverandkakaoEmail = aftercontents.getEmail();
+				
+				MemberDTO dto = new MemberDTO();
+				
+				dto.setPhone(phone);
+				dto.setZipCode(zipcode);
+				dto.setAddress1(add1);
+				dto.setAddress2(add2);
+				dto.setEmail(naverandkakaoEmail);
+
+				try {
+					int result = dao.updateContentsForNaver(dto);
+					request.getSession().setAttribute("result", result);
+					request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.sendRedirect("error.html");
+				}
+			}else {
+				String naverandkakaoEmail = contents.getEmail();
+
+				System.out.println(naverandkakaoEmail);
+				
+				MemberDTO dto = new MemberDTO();
+				
+				dto.setPhone(phone);
+				dto.setZipCode(zipcode);
+				dto.setAddress1(add1);
+				dto.setAddress2(add2);
+				dto.setEmail(naverandkakaoEmail);
+
+				try {
+					int result = dao.updateContentsForNaver(dto);
+					request.getSession().setAttribute("result", result);
+					request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.sendRedirect("error.html");
+				}
+			}
+
+		}else if(cmd.equals("/myPageUpdateComplete.members")) {
+			
+			request.getSession().invalidate();
+			request.getRequestDispatcher("main.jsp").forward(request, response);
+			
+		}else if(cmd.equals("/myPage.members")) {
+			
+			String email = (String)request.getSession().getAttribute("loginEmail");
+			MemberDTO realcontents = (MemberDTO)request.getSession().getAttribute("realcontents");
+			MemberDTO navercontents = (MemberDTO)request.getSession().getAttribute("navercontents");
+			
+			System.out.println(email);
+			System.out.println(realcontents);
+			System.out.println(navercontents);
+			
+			if(email==null) {
+				
+				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+				
+			}else {
+				try {
+					MemberDTO dto = dao.getContents(email);
+					request.getSession().setAttribute("dto",dto);
+					request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}else if(cmd.equals("/myPageUpdateLocation.members")){
+			request.getRequestDispatcher("/WEB-INF/basics/myPageUpdate.jsp").forward(request, response);
+		}else if(cmd.equals("/myPageUpdateLocationForNaver.members")) {
+			request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateForNaver.jsp").forward(request, response);
+		}else if(cmd.equals("/")) {
 			//String email = (String) request.getSession().getAttribute("loginEmail");
 			String email = "email5@email.mail";
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
