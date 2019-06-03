@@ -27,7 +27,6 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dao.PaymentDAO;
-import kh.semi.dao.TitleImgDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.CommentDTO;
 import kh.semi.dto.PaymentDTO;
@@ -51,29 +50,11 @@ public class BoardController extends HttpServlet {
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO dao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-		TitleImgDAO tdao = new TitleImgDAO();
 		BoardDTO dto = new BoardDTO();
 		TitleImgDTO tdto = new TitleImgDTO();
 
 		try {
 			if(cmd.contentEquals("/titleImagesMain.board")) {
-				List<BoardDTO> list1 = dao.getDataForMain();
-				int bNo1 = list1.get(0).getBoardNo();
-				int bNo2 = list1.get(1).getBoardNo();
-				int bNo3 = list1.get(2).getBoardNo();
-				
-				List<TitleImgDTO> list2 = tdao.getTitleImgMain(bNo1, bNo2, bNo3);
-				String fName1 = list2.get(0).getFileName();
-				String fPath1 = list2.get(0).getFilePath();
-				String imgTag1 = fPath1 + fName1;
-				
-				String fName2 = list2.get(1).getFileName();
-				String fPath2 = list2.get(1).getFilePath();
-				String imgTag2 = fPath2 + fName2;
-				
-				String fName3 = list2.get(2).getFileName();
-				String fPath3 = list2.get(2).getFilePath();
-				String imgTag3 = fPath3 + fName3;
 			
 			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
 				
