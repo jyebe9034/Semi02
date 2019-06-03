@@ -346,7 +346,7 @@ public class BoardDAO {
 		}
 	}
 
-	public Map<String, Integer> getCommentNavi(int currentPage, int recordTotalCount) {
+	public Map<String, Integer> getCommentNavi(int currentPage, int recordTotalCount) { //해용 페이지
 		// 가지고 있는 게시글의 수에 맞는 페이지의 개수를 구함.
 		int pageTotalCount = recordTotalCount / recordCountPerPage;
 		if(recordTotalCount % recordCountPerPage > 0) {
@@ -405,7 +405,7 @@ public class BoardDAO {
 				String bank = rs.getString("b_bank");
 				String account = rs.getString("b_account");
 				String dueDate = rs.getString("b_due_date");
-				String contents = rs.getString("b_contents1")+rs.getString("b_contents2")+rs.getString("b_contents3");
+				String contents = rs.getString("b_contents");
 				int viewCount = rs.getInt("b_viewcount");
 				String writeDate = rs.getString("b_writedate");
 				int recommend = rs.getInt("b_recommend");
@@ -456,7 +456,7 @@ public class BoardDAO {
 
 	      Map<String, Integer> pageNavi = new HashMap<>();
 	      pageNavi.put("currentPage", currentPage);
-	      pageNavi.put("recordTotalCount", boardRecordTotalCount);
+	      pageNavi.put("boardRecordTotalCount", boardRecordTotalCount);
 	      pageNavi.put("recordCountPerPage", recordCountPerPage);
 	      pageNavi.put("naviCountPerPage", naviCountPerPage);
 	      pageNavi.put("pageTotalCount", pageTotalCount);
