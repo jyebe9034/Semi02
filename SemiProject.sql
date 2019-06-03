@@ -28,8 +28,8 @@ commit;
 
 create table board(
     b_no number primary key,
-    b_email varchar(30) not null,
     b_title varchar(100) not null,
+    b_email varchar(30) not null,
     b_writer varchar(20) not null,
     b_amount number not null,
     b_bank varchar(20) not null,
