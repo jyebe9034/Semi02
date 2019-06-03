@@ -21,12 +21,11 @@
 	body{
 		font-family: "Nanum Gothic";
 		height: 100%;
-		text-align: center;
 	}
 	div{
         box-sizing: border-box;
     }
-	nav{
+	.navbar{
 		position: relative;
 		height: 60px;
 	}
@@ -68,6 +67,9 @@
 	}
 	#all-btns{
 		height: 50px;
+	}
+	.form-group{
+		text-align: center;
 	}
 	.noti{
 		font-size: 20px;
@@ -126,6 +128,7 @@
 		line-height: 45px;
 		float: right;
 		margin-left: 15px;
+		text-align: center;
 	}
 	#f_sns{
 		position: absolute;
@@ -170,10 +173,11 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a class="nav-link anker" href="write.board">후원해 주세요</a></li>
-				<li class="nav-item nav-li"><a class="nav-link anker" href="textList.board?currentPage=1">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null}">
+					<c:when test="${sessionScope.loginEmail != null}">
+						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
@@ -220,7 +224,7 @@
 			<div class="form-group">
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
-						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌로!</label>
+						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌만 가능합니다!</label>
 					</div>
 				    <select class="custom-select" name="select">
 					    <option value="신한" selected>신한</option>
@@ -266,7 +270,7 @@
 			<img id="kakao" class="sns" src="photo_image/ka.png">
 			<img class="sns" src="photo_image/fa.png">
 			<img id="insta" class="sns" src="photo_image/kk.png">
-			<a href="/"><div id="suggest">후원 신청</div></a>
+			<a href="write.board"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
@@ -274,15 +278,9 @@
 	<script>
 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
 	    	$("img").each(function(index, item){
-<<<<<<< HEAD
-	    		
 	    		var src = $(this).attr("src");
 	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
 	    		}else if(src == null){
-=======
-	    		var src = $(this).attr("src");
-	    		if(src == "foryou.jpg" || src == "ka.png" || src == "fa.png" || src == "kk.png"){	
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 	    		}else{
 	    			$.ajax({
 						url: "deleteImage.board",
@@ -334,12 +332,8 @@
         }
         
         function deleteFile(src) {
-<<<<<<< HEAD
         	if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         	}else if(src == null){
-=======
-        	if(src == "foryou.jpg" || src == "ka.png" || src == "fa.png" || src == "kk.png"){
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
         	}else{
         		$.ajax({
                     data: {src : src},
@@ -360,12 +354,8 @@
         $("#cancel").on("click", function(){ // 취소 버튼을 눌렀을 때 서버측의 사직 삭제
         	$("img").each(function(index, item){
         		var src = $(this).attr("src");
-<<<<<<< HEAD
         		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         		}else if(src == null){
-=======
-        		if(src == "foryou.jpg" || src == "ka.png" || src == "fa.png" || src == "kk.png"){
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
         		}else{
         			$.ajax({
         				url: "deleteImage.board",
@@ -375,11 +365,7 @@
         			})	
         		}
         	})
-<<<<<<< HEAD
         	location.href="Main.members";
-=======
-        	location.href="main.jsp";
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
         })
 	</script>
 </body>
