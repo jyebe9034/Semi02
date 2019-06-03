@@ -115,7 +115,7 @@ public class BoardDAO {
 		}
 	}
 
-//*게시판*//=================================================================================================
+//*게시판*//==============================================================================================================================
 	//totalCount//
 	/*(1)전체 게시글의 개수*/
 	public int totalRecordNum() throws Exception{
@@ -208,6 +208,159 @@ public class BoardDAO {
 		ps.setString(1, "%"+searchWord+"%");
 		return ps;
 	}
+	public List<BoardListDTO> searchList(String searchOption, String searchWord, int currentPage) throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = this.psForSearchList(con, searchOption, searchWord, currentPage);
+				ResultSet rs = ps.executeQuery();
+				){
+			List<BoardListDTO> result = new ArrayList<>();
+			while(rs.next()) {
+				int boardNo = rs.getInt("b_no");
+				String email = rs.getString("b_email");
+				String title = rs.getString("b_title");
+				String writer = rs.getString("b_writer");
+				int amount = rs.getInt("b_amount");
+				String bank = rs.getString("b_bank");
+				String account = rs.getString("b_account");
+				String dueDate = rs.getString("b_due_date");
+				String contents = rs.getString("b_contents");
+				int viewCount = rs.getInt("b_viewcount");
+				String writeDate = rs.getString("b_writedate");
+				int recommend = rs.getInt("b_recommend");
+				int sumAmount = rs.getInt("b_sum_amount");
+				String fileName = rs.getString("t_fileName");
+				String oriFileName = rs.getString("t_oriFileName");					
+				String filePath = rs.getString("t_filePath");
+				long fileSize = rs.getLong("t_fileSize");				
+
+				BoardListDTO dto = new BoardListDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,
+						fileName,oriFileName,filePath,fileSize);
+				result.add(dto);
+			}
+			return result;
+		}	
+	}
+	
+	/*페이지 네비게이터*/
+	public String getNavi(int currentPage) throws Exception {
+
+		int recordTotalCount = totalRecordNum();
+		
+		int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
+		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
+		  
+	
+		//가지고 있는 게시글의 수에 맞는 페이지의 개수를 구한다.
+		/*총 페이지의 개수*///10으로 나눴을 때 나머지가 있으면 1을 더하고, 없으면 그대로.
+		//int pageTotalCount = 0;
+		int pageTotalCount = recordTotalCount / recordCountPerPage;
+		if(recordTotalCount % recordCountPerPage > 0) {
+			//pageTotalCount = recordTotalCount / recordCountPerPage + 1;	
+			pageTotalCount++;
+		}
+	
+		//현재  페이지 오류 검출 및 정정
+		/*보안코드 : 현재페이지가 1보다 작다면 1로, 전체페이지보다 크다면 전체페이지(pageTotalCount)로 표시하겠다*/
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+		
+		//현재 위치한 페이지를 기반으로 네비의 시작 지점과 끝 지점을 구한다.
+		/*네이게이터의 시작*/
+		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
+		//startNavi = (currentPage - 1)/10 * 10 + 1; 
+		/*네이게이터의 끝*/
+		int endNavi = startNavi + (naviCountPerPage - 1); 
+		//endNavi = startNavi + 9; 
+		
+		//네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		System.out.println("현재 위치 : " + currentPage);
+		System.out.println("네비 시작 : " + startNavi);
+		System.out.println("네비 끝 : " + endNavi);
+		
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if(startNavi == 1) { 
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		if(needPrev) {
+			int prevStartNavi = startNavi-1;
+			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?currentPage="+ prevStartNavi +"\"" + 
+					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
+					"						</a></li>");
+			
+		}
+		for(int i = startNavi; i <= endNavi; i++) {
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?currentPage="+i+"\">" + i + "</a></li>");
+		}
+		if(needNext) {
+			int nextEndNavi = endNavi+1;
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?currentPage="+ nextEndNavi++ +"\""+ 
+					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
+					"						</a></li>");
+		}
+		
+		return sb.toString();
+	}
+//	public Map<String, Integer> getNavi(int currentPage, int boardRecordTotalCount) {
+//	      // 가지고 있는 게시글의 수에 맞는 페이지의 개수를 구함.
+//	      int pageTotalCount = boardRecordTotalCount / recordCountPerPage;
+//	      if(boardRecordTotalCount % recordCountPerPage > 0) {
+//	         pageTotalCount++;
+//	      }
+//	      // 현재 페이지 오류 검출 및 정정
+//	      if(currentPage < 1) {
+//	         currentPage = 1;
+//	      }
+//	      else if(currentPage > pageTotalCount) {
+//	         currentPage = pageTotalCount;
+//	      }
+//	      // 네비게이터 시작과 끝
+//	      int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage + 1;
+//	      int endNavi = startNavi + (naviCountPerPage - 1);
+//	      // 네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
+//	      if(endNavi > pageTotalCount) {
+//	         endNavi = pageTotalCount;
+//	      }
+//	      int needPrev = 1;   // 1이면 true, -1이면 false
+//	      int needNext = 1;
+//
+//	      if(startNavi == 1) {
+//	         needPrev = -1;
+//	      }
+//	      if(endNavi == pageTotalCount) {
+//	         needNext = -1;
+//	      }
+//
+//	      Map<String, Integer> pageNavi = new HashMap<>();
+//	      pageNavi.put("currentPage", currentPage);
+//	      pageNavi.put("boardRecordTotalCount", boardRecordTotalCount);
+//	      pageNavi.put("recordCountPerPage", recordCountPerPage);
+//	      pageNavi.put("naviCountPerPage", naviCountPerPage);
+//	      pageNavi.put("pageTotalCount", pageTotalCount);
+//	      pageNavi.put("startNavi", startNavi);
+//	      pageNavi.put("endNavi", endNavi);
+//	      pageNavi.put("needPrev", needPrev);
+//	      pageNavi.put("needNext", needNext);
+//
+//	      return pageNavi;
+//	   }
+	
+	
+//============================================================================================================================	
 	
 	public int insertTitleImg(TitleImgDTO dto) throws Exception {
 		String sql = "insert into title_img values(?, ?, ?, ?, ?)";
@@ -389,169 +542,8 @@ public class BoardDAO {
 
 		return pageNavi;
 	}
-	public List<BoardListDTO> searchList(String searchOption, String searchWord, int currentPage) throws Exception{
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement ps = this.psForSearchList(con, searchOption, searchWord, currentPage);
-				ResultSet rs = ps.executeQuery();
-				){
-			List<BoardListDTO> result = new ArrayList<>();
-			while(rs.next()) {
-				int boardNo = rs.getInt("b_no");
-				String email = rs.getString("b_email");
-				String title = rs.getString("b_title");
-				String writer = rs.getString("b_writer");
-				int amount = rs.getInt("b_amount");
-				String bank = rs.getString("b_bank");
-				String account = rs.getString("b_account");
-				String dueDate = rs.getString("b_due_date");
-				String contents = rs.getString("b_contents");
-				int viewCount = rs.getInt("b_viewcount");
-				String writeDate = rs.getString("b_writedate");
-				int recommend = rs.getInt("b_recommend");
-				int sumAmount = rs.getInt("b_sum_amount");
-				String fileName = rs.getString("t_fileName");
-				String oriFileName = rs.getString("t_oriFileName");					
-				String filePath = rs.getString("t_filePath");
-				long fileSize = rs.getLong("t_fileSize");				
 
-				BoardListDTO dto = new BoardListDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,
-						fileName,oriFileName,filePath,fileSize);
-				result.add(dto);
-			}
-			return result;
-		}	
-	}
-	
-	/*페이지 네비게이터*/
-	public Map<String, Integer> getNavi(int currentPage, int boardRecordTotalCount) {
-	      // 가지고 있는 게시글의 수에 맞는 페이지의 개수를 구함.
-	      int pageTotalCount = boardRecordTotalCount / recordCountPerPage;
-	      if(boardRecordTotalCount % recordCountPerPage > 0) {
-	         pageTotalCount++;
-	      }
-	      // 현재 페이지 오류 검출 및 정정
-	      if(currentPage < 1) {
-	         currentPage = 1;
-	      }
-	      else if(currentPage > pageTotalCount) {
-	         currentPage = pageTotalCount;
-	      }
-	      // 네비게이터 시작과 끝
-	      int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage + 1;
-	      int endNavi = startNavi + (naviCountPerPage - 1);
-	      // 네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
-	      if(endNavi > pageTotalCount) {
-	         endNavi = pageTotalCount;
-	      }
-	      int needPrev = 1;   // 1이면 true, -1이면 false
-	      int needNext = 1;
 
-	      if(startNavi == 1) {
-	         needPrev = -1;
-	      }
-	      if(endNavi == pageTotalCount) {
-	         needNext = -1;
-	      }
-
-	      Map<String, Integer> pageNavi = new HashMap<>();
-	      pageNavi.put("currentPage", currentPage);
-	      pageNavi.put("boardRecordTotalCount", boardRecordTotalCount);
-	      pageNavi.put("recordCountPerPage", recordCountPerPage);
-	      pageNavi.put("naviCountPerPage", naviCountPerPage);
-	      pageNavi.put("pageTotalCount", pageTotalCount);
-	      pageNavi.put("startNavi", startNavi);
-	      pageNavi.put("endNavi", endNavi);
-	      pageNavi.put("needPrev", needPrev);
-	      pageNavi.put("needNext", needNext);
-
-	      return pageNavi;
-	   }
-
-	/*(2)내용으로 검색*/ //searchContents
-//		public PreparedStatement psForSearchContents(Connection con, String searchWord, int startNum, int endNum) throws Exception{
-//			String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.* from board where B_contents1 || b_contents2 ||b_contents3 like '%?%') where rown between ? and ?";
-//			PreparedStatement ps = con.prepareStatement(sql);
-//			ps.setString(1, searchWord);
-//			ps.setInt(2, startNum);
-//			ps.setInt(3, endNum);
-//			return ps;
-//		}
-//		public List<BoardListDTO> searchContents(String searchWord, int startNum, int endNum) throws Exception{
-//			try(
-//					Connection con = this.getConnection();
-//					PreparedStatement ps = this.psForSearchContents(con, searchWord, startNum, endNum);
-//					ResultSet rs = ps.executeQuery();
-//					){
-//				List<BoardListDTO> result = new ArrayList<>();
-//				while(rs.next()) {
-//					int boardNo = rs.getInt("b_no");
-//					String email = rs.getString("b_email");
-//					String title = rs.getString("b_title");
-//					String writer = rs.getString("b_writer");
-//					int amount = rs.getInt("b_amount");
-//					String bank = rs.getString("b_bank");
-//					String account = rs.getString("b_account");
-//					String dueDate = rs.getString("b_due_date");
-//					String contents = rs.getString("b_contents1")+rs.getString("b_contents2")+rs.getString("b_contents3");
-//					int viewCount = rs.getInt("b_viewcount");
-//					String writeDate = rs.getString("b_writedate");
-//					int recommend = rs.getInt("b_recommend");
-//					int sumAmount = rs.getInt("b_sum_amount");
-//					int fileSeq = rs.getInt("t_fileSeq");
-//					String fileName = rs.getString("t_fileName");
-//					String oriFileName = rs.getString("t_oriFileName");					
-//					String filePath = rs.getString("t_filePath");
-//					long fileSize = rs.getLong("t_fileSize");				
-//
-//					BoardListDTO dto = new BoardListDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,fileSeq,
-//							fileName,oriFileName,filePath,fileSize);
-//				}
-//				return result;
-//			}		
-//		}	
-	/*(3)제목+내용으로 검색*/ //searchAll
-//		public PreparedStatement psForSearchAll(Connection con, String searchOption, String searchWord, int startNum, int endNum) throws Exception{
-//			String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.* from board where "+searchOption+" like '%?%') where rown between ? and ?";
-//			PreparedStatement ps = con.prepareStatement(sql);
-//			ps.setString(1, searchWord);
-//			ps.setInt(2, startNum);
-//			ps.setInt(3, endNum);
-//			return ps;
-//		}
-//		public List<BoardListDTO> searchAll(String searchWord, int startNum, int endNum) throws Exception{
-//			try(
-//					Connection con = this.getConnection();
-//					PreparedStatement ps = this.psForSearchContents(con, searchWord, startNum, endNum);
-//					ResultSet rs = ps.executeQuery();
-//					){
-//				List<BoardListDTO> result = new ArrayList<>();
-//				while(rs.next()) {
-//					int boardNo = rs.getInt("b_no");
-//					String email = rs.getString("b_email");
-//					String title = rs.getString("b_title");
-//					String writer = rs.getString("b_writer");
-//					int amount = rs.getInt("b_amount");
-//					String bank = rs.getString("b_bank");
-//					String account = rs.getString("b_account");
-//					String dueDate = rs.getString("b_due_date");
-//					String contents = rs.getString("b_contents1")+rs.getString("b_contents2")+rs.getString("b_contents3");
-//					int viewCount = rs.getInt("b_viewcount");
-//					String writeDate = rs.getString("b_writedate");
-//					int recommend = rs.getInt("b_recommend");
-//					int sumAmount = rs.getInt("b_sum_amount");
-//					int fileSeq = rs.getInt("t_fileSeq");
-//					String fileName = rs.getString("t_fileName");
-//					String oriFileName = rs.getString("t_oriFileName");					
-//					String filePath = rs.getString("t_filePath");
-//					long fileSize = rs.getLong("t_fileSize");				
-//
-//					BoardListDTO dto = new BoardListDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,fileSeq,
-//							fileName,oriFileName,filePath,fileSize);
-//				}
-//				return result;
-//			}		
-//		}	
 
 	
 }

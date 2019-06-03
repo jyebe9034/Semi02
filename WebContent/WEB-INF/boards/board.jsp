@@ -167,34 +167,10 @@ a:hover {
 		})
 		
 		$(".searchBtn").on("click",function(){
-	       	 $.ajax({
-					url:"List.board",		
-					type:"post",
-					data:{
-						currentPage:1,
-						searchOption:$("option").val(),
-						searchWord:$(".searchWord").val()
-					}
-				}).done(function(resp){
-					console.log(resp); 			    	
-				});
+	       
 		})
 		
-		$(".page-link").on("click",function(){
-			var paging = $(this).attr("paging");
-			$.ajax({
-					url:"List.board",		
-					type:"post",
-					data:{
-						currentPage:paging,
-						searchOption:$("#dropdownforSearch option").val(),
-						searchWord:$(".searchWord").val()
-					}
-				}).done(function(resp){
-				
-					console.log(resp); 			    	
-				});
-			})
+		
 			
 			
 	
@@ -248,7 +224,7 @@ a:hover {
 	<form action="List.board" method=post id=searchBox>
 			<input type=hidden flag=search> 
 				<select name="searchOption" id="dropdownforSearch">
-					<option>==검색방법==</option>
+<!-- 					<option>==검색방법==</option> -->
 					<option name="searchOption" value="title">제목</option>
 					<option name="searchOption" value="contents">내용</option>
 					<option name="searchOption" value="all">제목+내용</option>
@@ -294,13 +270,13 @@ a:hover {
             <ul class="pagination pagination-sm justify-content-center m-0">
                <c:if test="${getNavi.needPrev == 1 }">
                   <li class="page-item"><a class="page-link"
-                     paging="${getNavi.startNavi - 1}"
+                     boardPage="${getNavi.startNavi - 1}"
                      aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                   </a></li>
                </c:if>
                <c:if test="${getNavi.currentPage > 1 }">
                   <li class="page-item"><a class="page-link"
-                     paging="${getNavi.currentPage - 1}"
+                     boardPage="${getNavi.currentPage - 1}"
                      aria-label="Previous"> <span aria-hidden="true">&lt;</span>
                   </a></li>
                </c:if>
@@ -308,19 +284,19 @@ a:hover {
                <c:forEach var="i" begin="${getNavi.startNavi}"
                   end="${getNavi.endNavi}">
                   <li class="page-item"><a class="page-link pageNumber"
-                     paging="${i}">${i}</a></li>
+                     boardPage="${i}">${i}</a></li>
                </c:forEach>
                
                <c:if test="${getNavi.currentPage < getNavi.pageTotalCount }">
                   <li class="page-item"><a class="page-link"
-                     paging="${getNavi.currentPage + 1}"
+                     boardPage="${getNavi.currentPage + 1}"
                      aria-label="Previous"> <span aria-hidden="true">&gt;</span>
                   </a></li>
                </c:if>
 
                <c:if test="${getNavi.needNext == 1 }">
                   <li class="page-item"><a class="page-link"
-                     paging="${getNavi.endNavi + 1}"
+                     boardPage="${getNavi.endNavi + 1}"
                      aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                   </a></li>
                </c:if>
