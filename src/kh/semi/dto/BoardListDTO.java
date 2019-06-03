@@ -1,10 +1,7 @@
 package kh.semi.dto;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class BoardDTO {
+public class BoardListDTO {
+	/*board*/
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
 	private String email;
 	private String title;
@@ -13,20 +10,24 @@ public class BoardDTO {
 	private String bank;
 	private String account;
 	private String contents;
-	private Timestamp dueDate;
+	private String dueDate;
 	private int viewCount;
-	private Timestamp writeDate;	
+	private String writeDate;	
 	private int recommend;
-	private int sumAmount;	
-	// 총 13개
+	private int sumAmount;
+	/*title_img*/
+	private String fileName;
+	private String oriFileName;
+	private String filePath;
+	private long fileSize;
+	//총 18개
 	
-	
-	public BoardDTO() {
+	public BoardListDTO() {
 		super();
 	}
-	public BoardDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
-			String contents, Timestamp dueDate, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
-		super();
+	public BoardListDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
+			String contents, String dueDate, int viewCount, String writeDate, int recommend, int sumAmount,
+			String fileName, String oriFileName, String filePath, long fileSize) {
 		this.boardNo = boardNo;
 		this.email = email;
 		this.title = title;
@@ -40,15 +41,11 @@ public class BoardDTO {
 		this.writeDate = writeDate;
 		this.recommend = recommend;
 		this.sumAmount = sumAmount;
+		this.fileName = fileName;
+		this.oriFileName = oriFileName;
+		this.filePath = filePath;
+		this.fileSize = fileSize;
 	}
-	public BoardDTO(String title, int amount, Timestamp dueDate, int sumAmount) {
-		super();
-		this.title = title;
-		this.amount = amount;
-		this.dueDate = dueDate;
-		this.sumAmount = sumAmount;
-	}
-
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -97,10 +94,10 @@ public class BoardDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public Timestamp getDueDate() {
+	public String getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
 	public int getViewCount() {
@@ -109,10 +106,10 @@ public class BoardDTO {
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
-	public Timestamp getWriteDate() {
+	public String getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(Timestamp writeDate) {
+	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
 	public int getRecommend() {
@@ -127,12 +124,31 @@ public class BoardDTO {
 	public void setSumAmount(int sumAmount) {
 		this.sumAmount = sumAmount;
 	}
-
-	public String getFormedDate() {
-		long writeTime = this.writeDate.getTime();
-		long dueTime = this.dueDate.getTime();
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		return sdf.format(writeTime) + " ~ " + sdf.format(dueTime);
+	public String getFileName() {
+		return fileName;
 	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getOriFileName() {
+		return oriFileName;
+	}
+	public void setOriFileName(String oriFileName) {
+		this.oriFileName = oriFileName;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	
+	
+	
 }

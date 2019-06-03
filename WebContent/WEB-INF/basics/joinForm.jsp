@@ -90,8 +90,11 @@ a:hover {
 #checkPassword{
 	margin-bottom:5px;
 }
-#inputEmail{
+#inputEmail, #inputNum{
 	display:inline-block;
+}
+#btnInputNum{
+	display: none;
 }
 ul {
 	margin: auto;
@@ -135,26 +138,30 @@ li {
 			<div class="title">
 				<h3>회원가입</h3>
 			</div>
-			
+			<p style="font-size:12px">*표시는 필수항목입니다.</p>
 			<div class="form-group">
 				<input type="email" class="form-control" id="inputEmail" name="email"
-					placeholder="이메일 계정" style="width:70%" required>
+					placeholder="*이메일 계정" style="width:70%" required>
 				<button type="button" id="btnConfirmEmail"
 					class="btn btn-outline-info">인증하기</button>
 				<p id="emailCheck"></p>
+				<input type="hidden" class="form-control" id="inputNum"
+					placeholder="*인증번호" style="width:70%" flag="false" required>
+				<button type="button" id="btnInputNum"
+					class="btn btn-outline-info">확인</button>
 			</div>
 			<div id="divPw" class="form-group">
 				<input type="password" class="form-control" id="inputPassword" name="pw"
-					placeholder="비밀번호" required><em class="helper">영문, 숫자, 특수문자
+					placeholder="*비밀번호" required><em class="helper">영문, 숫자, 특수문자
 					(!@#$%^&*+=-)를 조합한 8자 이상</em><p id="pw_form"> </p>
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control" id="checkPassword"
-					placeholder="비밀번호 확인" required><p id="pw_match"></p>
+					placeholder="*비밀번호 확인" required><p id="pw_match"></p>
 			</div>
 			<div class="form-group">
 				<input type="text" class="form-control" id="name" name="name"
-					placeholder="이름" required>
+					placeholder="*이름" required>
 			</div>
 			<div class="form-group">
 				<input type="text" class="form-control" id="phone" name="phone"
@@ -180,18 +187,14 @@ li {
 	</form>
 
 	<script>
-		$("#btnJoin").on("click", function(){
+		$("#btnConfirmEmail").on("click", function(){
+			if($("#inputNum").attr("flag") == "true"){
+				alert("이미 인증이 완료되었습니다.");
+				return;
+			}
 			if($("#inputEmail").val() == ""){
 				alert("이메일을 입력해주세요.");
-			}
-			else if($("#pw_match").text() != ""){
-				alert("비밀번호를 다시 확인해주세요.");
-			}
-			else if($("#name").val() == ""){
-				alert("이름을 입력해주세요.");
-			}
-			else{
-				alert("메일 발송중입니다. 잠시만 기다려주세요.");
+			}else{
 				$.ajax({
 					url: "SendMail.members",
 					type: "post",
@@ -203,16 +206,45 @@ li {
 						alert("이메일 주소가 잘못되었습니다. 다시 입력해주세요.");
 					}
 					else{	// 메일 발송을 성공했을 때
-						var inputNum = prompt("입력하신 이메일로 메일이 발송되었습니다. 확인하신 후 인증번호를 입력해주세요.");
-						if(inputNum == resp){
-							$("#joinForm").submit();
-						}
-						else if(resp){
-							alert("인증번호가 일치하지 않습니다.");
-							location.href = "JoinForm.members";
-						}
+						alert("입력하신 이메일로 메일이 발송되었습니다. 확인하신 후 인증번호를 입력해주세요.");
+						$("#inputNum").attr("type", "text");
+						$("#btnInputNum").css("display", "inline-block");
+						$("#btnInputNum").on("click", function(){
+							var inputNum = $("#inputNum").val();
+							if(inputNum == resp){
+								$("#inputNum").attr("flag", true);
+								alert("인증되었습니다.");
+								$("#inputEmail").attr("readonly", "true");
+								$("#inputNum").attr("type", "hidden");
+								$("#btnInputNum").css("display", "none");
+							}
+							else if(resp){
+								alert("인증번호가 일치하지 않습니다.");
+								$("#inputNum").attr("flag", false);
+								$("#inputNum").val("");
+							}
+						})
+						
 					}
 				});
+			}
+		})
+	
+		$("#btnJoin").on("click", function(){
+			if($("#inputEmail").val() == ""){
+				alert("이메일을 입력해주세요.");
+			}
+			else if($("#inputNum").attr("flag") == "false"){
+				alert("이메일 인증을 완료해주세요.");
+			}
+			else if($("#pw_match").text() != ""){
+				alert("비밀번호를 다시 확인해주세요.");
+			}
+			else if($("#name").val() == ""){
+				alert("이름을 입력해주세요.");
+			}
+			else{
+				$("#joinForm").submit();
 			}
 		})
 		

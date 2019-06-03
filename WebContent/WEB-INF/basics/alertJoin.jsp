@@ -17,6 +17,7 @@
 </head>
 <body>
 	<script>
+
 		if(${result} > 0){
 			alert("회원이 되신걸 환영합니다!!");
 			location.href = "LoginForm.members";

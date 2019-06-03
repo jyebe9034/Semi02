@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kh.semi.dao.BoardDAO;
+import kh.semi.dao.MemberDAO;
+import kh.semi.dto.BoardDTO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
 
@@ -29,10 +35,33 @@ public class MembersController extends HttpServlet {
 		String ctxPath = request.getContextPath();
 		String cmd = reqUri.substring(ctxPath.length());
 		MemberDAO dao = new MemberDAO();
+		BoardDAO bdao = new BoardDAO();
 
 		if (cmd.equals("/Main.members")) {
-			request.getRequestDispatcher("main.jsp").forward(request, response);
-
+			List<BoardDTO> list;
+			try {
+				list = bdao.getDataForMain();
+				request.setAttribute("list", list);
+				for(int i = 0; i < list.size(); i++) {
+					String[] strArr = new String[3];
+					double[] douArr = new double[3];
+					
+					int goalAmount = list.get(i).getAmount();
+					Timestamp dueDate = list.get(i).getDueDate();
+					long dueTime = dueDate.getTime();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					strArr[i] = sdf.format(dueTime);
+					int sumAmount = list.get(i).getSumAmount();
+					douArr[i] = Math.floor((double)sumAmount / goalAmount * 100);
+					if(i == list.size()-1) {
+						request.setAttribute("duedate", strArr);
+						request.setAttribute("percentage", douArr);
+					}
+				}
+				request.getRequestDispatcher("main.jsp").forward(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
 			
@@ -131,11 +160,11 @@ public class MembersController extends HttpServlet {
 					String ip = request.getRemoteAddr();
 					MemberDTO dto = dao.NaverContentsParse(res.toString(), ip);
 					if (dao.isIdExist(dto)) {
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
-						request.getSession().setAttribute("navercontents", dto);
+						request.getSession().setAttribute("loginEmail", dto.getEmail());
 						request.getRequestDispatcher("main.jsp").forward(request, response);
 					}
 				}
@@ -145,9 +174,36 @@ public class MembersController extends HttpServlet {
 				response.sendRedirect("error.html");
 			}
 
+		}else if(cmd.equals("/Mypage.members")) {
+			//String email = (String) request.getSession().getAttribute("loginEmail");
+			String email = "email5@email.mail";
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			System.out.println(currentPage);
+				
+			try {	
+				//내가 후원한 글 목록---------------------------------------------------------------
+				int endNumforMS = currentPage * 5;
+				int startNumforMS = endNumforMS - 4;
+				request.setAttribute("mySupport", dao.mySupport(email, startNumforMS, endNumforMS));
+				/*페이지*/
+				request.setAttribute("getNaviforMS", dao.getNaviforMySupport(currentPage));
+				//내가 쓴 글 목록------------------------------------------------------------------
+				int endNum = currentPage * 5;
+				int startNum = endNum - 4;
+				request.setAttribute("myArticles",dao.myArticles(email, startNum, endNum));
+				/*페이지*/	
+				String getNavi = dao.getNavi(currentPage);
+				request.setAttribute("getNavi", getNavi);
+				//---------------------------------------------------------------------------
+				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+			}catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("error.html");
+			}
 		}
-	}
 
+	
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
