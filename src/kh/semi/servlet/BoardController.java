@@ -97,7 +97,7 @@ public class BoardController extends HttpServlet {
 
 				String rootPath = request.getSession().getServletContext().getRealPath("/");
 				String email = (String)request.getSession().getAttribute("loginEmail");
-//				dto.setEmail(email);
+				dto.setEmail(email);
 
 				File tempFile = new File(rootPath+email);
 				if(!tempFile.exists()) {

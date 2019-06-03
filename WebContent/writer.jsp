@@ -274,10 +274,15 @@
 	<script>
 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
 	    	$("img").each(function(index, item){
+<<<<<<< HEAD
 	    		
 	    		var src = $(this).attr("src");
 	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
 	    		}else if(src == null){
+=======
+	    		var src = $(this).attr("src");
+	    		if(src == "foryou.jpg" || src == "ka.png" || src == "fa.png" || src == "kk.png"){	
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 	    		}else{
 	    			$.ajax({
 						url: "deleteImage.board",
@@ -329,8 +334,12 @@
         }
         
         function deleteFile(src) {
+<<<<<<< HEAD
         	if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         	}else if(src == null){
+=======
+        	if(src == "foryou.jpg" || src == "ka.png" || src == "fa.png" || src == "kk.png"){
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
         	}else{
         		$.ajax({
                     data: {src : src},
@@ -351,8 +360,12 @@
         $("#cancel").on("click", function(){ // 취소 버튼을 눌렀을 때 서버측의 사직 삭제
         	$("img").each(function(index, item){
         		var src = $(this).attr("src");
+<<<<<<< HEAD
         		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         		}else if(src == null){
+=======
+        		if(src == "foryou.jpg" || src == "ka.png" || src == "fa.png" || src == "kk.png"){
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
         		}else{
         			$.ajax({
         				url: "deleteImage.board",
@@ -362,7 +375,11 @@
         			})	
         		}
         	})
+<<<<<<< HEAD
         	location.href="Main.members";
+=======
+        	location.href="main.jsp";
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
         })
 	</script>
 </body>

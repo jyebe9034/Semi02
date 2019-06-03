@@ -207,12 +207,21 @@
 				<div id="imgBox1" class="imgBox"></div>
 				<div class="card-body">
 					<h6 class="card-title">
+<<<<<<< HEAD
 						<span id="title1">${list[0].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text" align="left">
 						모금 마감일 <br> <span id="dueDate1">${duedate[0]}</span><br> 모금현황<br>
 						<span id="percentage1">${percentage[0]}</span>
+=======
+						<span id="title1"></span>
+					</h6>
+					<hr>
+					<p class="card-text" align="left">
+						모금 마감일 <br> <span id="dueDate1"></span><br> 모금현황<p></p><br>
+						<span id="percentage1"></span>
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card1" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -226,12 +235,21 @@
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
+<<<<<<< HEAD
 						<span id="title2">${list[1].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate2">${duedate[1]}</span><br> 모금현황<br>
 						<span id="percentage2">${percentage[1]}</span>
+=======
+						<span id="title2"></span>
+					</h6>
+					<hr>
+					<p class="card-text">
+						모금 마감일 <br> <span id="dueDate2"></span> <br> 모금현황<p></p><br>
+						<span id="percentage2"></span>
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card2" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -245,12 +263,21 @@
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
+<<<<<<< HEAD
 						<span id="title3">${list[2].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate3">${duedate[2]}</span><br> 모금현황<br>
 						<span id="percentage3">${percentage[2]}</span>
+=======
+						<span id="title3"></span>
+					</h6>
+					<hr>
+					<p class="card-text">
+						모금 마감일 <br> <span id="dueDate3"></span><br> 모금현황<p></p><br>
+						<span id="percentage3"></span>
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card3" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -271,6 +298,40 @@
 	</div>
 	
 	<script>
+<<<<<<< HEAD
+=======
+
+		$.ajax({
+			url : "card1.board",
+			dataType : "json"
+		}).done(function(resp) {
+			$("#title1").text(resp.title1);
+			$("#dueDate1").text(resp.dueDate1);
+			$("#card1").css("width", resp.percentage1 + "%");
+			$("#percentage1").text(resp.percentage1 + "%");
+		});
+		
+		$.ajax({
+			url : "card2.board",
+			dataType : "json"
+		}).done(function(resp) {
+			$("#title2").text(resp.title2);
+			$("#dueDate2").text(resp.dueDate2);
+			$("#card2").css("width", resp.percentage2 + "%");
+			$("#percentage2").text(resp.percentage2 + "%");
+		});
+		
+		$.ajax({
+			url : "card3.board",
+			dataType : "json"
+		}).done(function(resp) {
+			$("#title3").text(resp.title3);
+			$("#dueDate3").text(resp.dueDate3);
+			$("#card3").css("width", resp.percentage3 + "%");
+			$("#percentage3").text(resp.percentage3 + "%");
+		});
+		
+>>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 		$.ajax({
 			url : "totalAmountDonors.board",
 			dataType : "json"

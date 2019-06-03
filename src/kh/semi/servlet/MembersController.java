@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.BoardDTO;
+import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
 
 @WebServlet("*.members")
@@ -57,11 +58,10 @@ public class MembersController extends HttpServlet {
 						request.setAttribute("percentage", douArr);
 					}
 				}
+				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
-			request.getRequestDispatcher("main.jsp").forward(request, response);
-
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
 			
