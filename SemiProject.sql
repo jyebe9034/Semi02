@@ -28,16 +28,14 @@ commit;
 
 create table board(
     b_no number primary key,
-    b_email varchar(30) not null,
     b_title varchar(100) not null,
+    b_email varchar(30) not null,
     b_writer varchar(20) not null,
     b_amount number not null,
     b_bank varchar(20) not null,
     b_account varchar(30) not null,
     b_due_date timestamp not null,
-    b_contents1 varchar(4000) not null,
-    b_contents2 varchar(4000),
-    b_contents3 varchar(4000),
+    b_contents long not null,
     b_viewcount number default 0,
     b_writedate timestamp default sysdate not null,
     b_recommend number default 0 not null,
@@ -58,13 +56,11 @@ commit;
 --------------------------------------------------------------------------------
 
 create table title_img(
-    t_b_no number,
-    t_fileSeq number primary key,
+    t_b_no number not null,
     t_fileName varchar(300) not null,
     t_oriFileName varchar(300) not null,
     t_filePath varchar(300) not null,
-    t_fileSize number not null,
-    constraint t_b_no_fk foreign key(t_b_no) references board(b_no) on delete cascade
+    t_fileSize number not null
 );
 --drop table title_img;
 
