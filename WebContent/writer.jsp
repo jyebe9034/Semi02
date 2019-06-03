@@ -362,7 +362,7 @@
         			})	
         		}
         	})
-        	location.href="main.jsp";
+        	location.href="Main.members";
         })
 	</script>
 </body>

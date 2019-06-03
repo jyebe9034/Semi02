@@ -271,36 +271,6 @@
 	</div>
 	
 	<script>
-// 		$.ajax({
-// 			url : "card1.board",
-// 			dataType : "json"
-// 		}).done(function(resp) {
-// 			$("#title1").text(resp.title1);
-// 			$("#dueDate1").text(resp.dueDate1);
-// 			$("#card1").css("width", resp.percentage1 + "%");
-// 			$("#percentage1").text(resp.percentage1 + "%");
-// 		});
-		
-// 		$.ajax({
-// 			url : "card2.board",
-// 			dataType : "json"
-// 		}).done(function(resp) {
-// 			$("#title2").text(resp.title2);
-// 			$("#dueDate2").text(resp.dueDate2);
-// 			$("#card2").css("width", resp.percentage2 + "%");
-// 			$("#percentage2").text(resp.percentage2 + "%");
-// 		});
-		
-// 		$.ajax({
-// 			url : "card3.board",
-// 			dataType : "json"
-// 		}).done(function(resp) {
-// 			$("#title3").text(resp.title3);
-// 			$("#dueDate3").text(resp.dueDate3);
-// 			$("#card3").css("width", resp.percentage3 + "%");
-// 			$("#percentage3").text(resp.percentage3 + "%");
-// 		});
-		
 		$.ajax({
 			url : "totalAmountDonors.board",
 			dataType : "json"

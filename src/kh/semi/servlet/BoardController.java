@@ -73,72 +73,7 @@ public class BoardController extends HttpServlet {
 				String fName3 = list2.get(2).getFileName();
 				String fPath3 = list2.get(2).getFilePath();
 				String imgTag3 = fPath3 + fName3;
-				
-//			}else if(cmd.contentEquals("/card1.board")) {
-//				List<BoardDTO> list = dao.getDataForMain();
-//				for(BoardDTO d : list) {
-//					int goalAmount = d.getAmount();
-//					Timestamp dueDate = d.getDueDate();
-//					long dueTime = dueDate.getTime();
-//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//					String dueDateStr = sdf.format(dueTime);
-//					int sumAmount = d.getSumAmount();
-//					double percentage = Math.floor((double)sumAmount / goalAmount * 100);
-//				}
-//				String title1 = list.get(0).getTitle();
-//				int goalAmount1 = list.get(0).getAmount();
-//				
-//				Timestamp dueDate1 = list.get(0).getDueDate();
-//				long dueTime1 = dueDate1.getTime();
-//				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-//				String dueDateStr1 = sdf1.format(dueTime1);
-//				
-//				int sumAmount1 = list.get(0).getSumAmount();
-//				double percentage1 = Math.floor((double)sumAmount1 / goalAmount1 * 100);
-//				// 마감 임박 1
-//
-//				JsonObject obj1 = new JsonObject();
-//				obj1.addProperty("title1", title1);
-//				obj1.addProperty("dueDate1",dueDateStr1);
-//				obj1.addProperty("percentage1",percentage1);
-//				pw.print(obj1.toString());
-//				
-//			}else if(cmd.contentEquals("/card2.board")) {
-//				List<BoardDTO> list = dao.getDataForMain();
-//				
-//				String title2 = list.get(1).getTitle();
-//				int goalAmount2 = list.get(1).getAmount();
-//				Timestamp dueDate2 = list.get(1).getDueDate();
-//				long dueTime2 = dueDate2.getTime();
-//				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-//				String dueDateStr2 = sdf2.format(dueTime2);
-//				int sumAmount2 = list.get(1).getSumAmount();
-//				double percentage2 = Math.floor((double)sumAmount2 / goalAmount2 * 100);
-//				 // 마감 임박2
-//				
-//				JsonObject obj2 = new JsonObject();
-//				obj2.addProperty("title2", title2);
-//				obj2.addProperty("dueDate2",dueDateStr2);
-//				obj2.addProperty("percentage2",percentage2);
-//				pw.print(obj2.toString());
-//			}else if(cmd.contentEquals("/card3.board")) {
-//				List<BoardDTO> list = dao.getDataForMain();
-//				
-//				String title3 = list.get(2).getTitle();
-//				int goalAmount3 = list.get(2).getAmount();
-//				Timestamp dueDate3 = list.get(2).getDueDate();
-//				long dueTime3 = dueDate3.getTime();
-//				SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
-//				String dueDateStr3 = sdf3.format(dueTime3);
-//				int sumAmount3 = list.get(2).getSumAmount();
-//				double percentage3 = Math.floor((double)sumAmount3 / goalAmount3 * 100);
-//				 // 마감 임박 3
-//				
-//				JsonObject obj3 = new JsonObject();
-//				obj3.addProperty("title3", title3);
-//				obj3.addProperty("dueDate3",dueDateStr3);
-//				obj3.addProperty("percentage3",percentage3);
-//				pw.print(obj3.toString());
+			
 			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
 				
 				int totalAmount = pdao.getTotalAmount();
