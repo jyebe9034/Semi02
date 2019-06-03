@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -279,6 +280,54 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
 				
+			}else if(cmd.equals("/List.board")){//게시판 목록
+				try {
+					String searchOption = request.getParameter("searchOption");
+					String searchWord = request.getParameter("searchWord");
+					int currentPage = Integer.parseInt(request.getParameter("currentPage"));					
+					System.out.println("searchOption : " + searchOption);
+					System.out.println("searchWord : " + searchWord);
+					System.out.println("currentPage : " + currentPage);
+//					int endNum = currentPage * 8;
+//					int startNum = endNum - 7;
+					int recordTotalCount = 0;
+					if(searchOption.equals("title")) {
+						searchOption = "b_title";
+						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						System.out.println("recordTotalCount : " + recordTotalCount);
+						
+						
+						
+						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));
+					}else if(searchOption.equals("contents")) {
+						searchOption = " B_CONTENTS1 || b_contents2 ||b_contents3";
+						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						System.out.println("게시글 개수(내용) : " + recordTotalCount);
+						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));	
+					}else if(searchOption.equals("all")) {
+						searchOption = "b_title || B_CONTENTS1 || b_contents2 ||b_contents3";
+						recordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						System.out.println("게시글 개수(내용) : " + recordTotalCount);
+						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));						
+					}else{	
+						recordTotalCount = dao.totalRecordNum();
+						System.out.println("게시글 개수 : " + recordTotalCount);
+						request.setAttribute("board", dao.selectByPage(currentPage));
+					}
+					
+					/*페이지*/	
+					Map<String, Integer> getNavi = dao.getNavi(currentPage, recordTotalCount);
+					request.setAttribute("getNavi", getNavi);
+					
+					
+					
+					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
+				}catch(Exception e) {				
+					e.printStackTrace();
+					//response.sendRedirect("error.html");
+				}
+			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
+				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);				
 			}else if(cmd.equals("/Payment.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String name = request.getParameter("name");

@@ -116,15 +116,15 @@
 		</button>
 		<div class="collapse navbar-collapse navbar-fixed-top" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link"
-					href="Introduce.members">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="write.board">후원해
-						주세요</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="textList.board?currentPage=1">후원 게시판</a></li>
-
+				<li class="nav-item"><a class="nav-link" href="Introduce.members">소개</a></li>
+				<li class="nav-item"><a class="nav-link" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item"><a class="nav-link" href="write.board">후원해 주세요</a></li>
+				<li class="nav-item"><a class="nav-link" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
+						<li class="nav-item"><a class="nav-link"
+							href="Mypage.members">마이 페이지</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="Logout.members">로그아웃</a></li>
 					</c:when>
@@ -207,21 +207,12 @@
 				<div id="imgBox1" class="imgBox"></div>
 				<div class="card-body">
 					<h6 class="card-title">
-<<<<<<< HEAD
 						<span id="title1">${list[0].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text" align="left">
 						모금 마감일 <br> <span id="dueDate1">${duedate[0]}</span><br> 모금현황<br>
 						<span id="percentage1">${percentage[0]}</span>
-=======
-						<span id="title1"></span>
-					</h6>
-					<hr>
-					<p class="card-text" align="left">
-						모금 마감일 <br> <span id="dueDate1"></span><br> 모금현황<p></p><br>
-						<span id="percentage1"></span>
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card1" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -235,21 +226,12 @@
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
-<<<<<<< HEAD
 						<span id="title2">${list[1].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate2">${duedate[1]}</span><br> 모금현황<br>
 						<span id="percentage2">${percentage[1]}</span>
-=======
-						<span id="title2"></span>
-					</h6>
-					<hr>
-					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate2"></span> <br> 모금현황<p></p><br>
-						<span id="percentage2"></span>
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card2" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -263,21 +245,12 @@
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
-<<<<<<< HEAD
 						<span id="title3">${list[2].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate3">${duedate[2]}</span><br> 모금현황<br>
 						<span id="percentage3">${percentage[2]}</span>
-=======
-						<span id="title3"></span>
-					</h6>
-					<hr>
-					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate3"></span><br> 모금현황<p></p><br>
-						<span id="percentage3"></span>
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
 					<div class="progress">
 						<div id="card3" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
@@ -298,8 +271,6 @@
 	</div>
 	
 	<script>
-<<<<<<< HEAD
-=======
 
 		$.ajax({
 			url : "card1.board",
@@ -331,7 +302,7 @@
 			$("#percentage3").text(resp.percentage3 + "%");
 		});
 		
->>>>>>> b5ab377ade6d0aae1e00754f07a8f7cbd4bee6c4
+
 		$.ajax({
 			url : "totalAmountDonors.board",
 			dataType : "json"

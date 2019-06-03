@@ -174,9 +174,36 @@ public class MembersController extends HttpServlet {
 				response.sendRedirect("error.html");
 			}
 
+		}else if(cmd.equals("/Mypage.members")) {
+			//String email = (String) request.getSession().getAttribute("loginEmail");
+			String email = "email5@email.mail";
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			System.out.println(currentPage);
+				
+			try {	
+				//내가 후원한 글 목록---------------------------------------------------------------
+				int endNumforMS = currentPage * 5;
+				int startNumforMS = endNumforMS - 4;
+				request.setAttribute("mySupport", dao.mySupport(email, startNumforMS, endNumforMS));
+				/*페이지*/
+				request.setAttribute("getNaviforMS", dao.getNaviforMySupport(currentPage));
+				//내가 쓴 글 목록------------------------------------------------------------------
+				int endNum = currentPage * 5;
+				int startNum = endNum - 4;
+				request.setAttribute("myArticles",dao.myArticles(email, startNum, endNum));
+				/*페이지*/	
+				String getNavi = dao.getNavi(currentPage);
+				request.setAttribute("getNavi", getNavi);
+				//---------------------------------------------------------------------------
+				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+			}catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("error.html");
+			}
 		}
-	}
 
+	
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

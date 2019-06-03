@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import kh.semi.dto.BoardDTO;
 import kh.semi.dto.TitleImgDTO;
 
 public class TitleImgDAO {
@@ -34,7 +35,8 @@ public class TitleImgDAO {
 			return result;
 		}
 	}
-	
+
+
 	public PreparedStatement pstatForGetTitleImgMain(Connection con, int bNo1, int bNo2, int bNo3) throws Exception {
 		String sql = "select * from title_img where t_b_no in (?,?,?)";
 		PreparedStatement pstat = con.prepareStatement(sql);
@@ -60,3 +62,5 @@ public class TitleImgDAO {
 		}
 	}
 }
+
+
