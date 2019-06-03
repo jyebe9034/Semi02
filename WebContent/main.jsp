@@ -98,11 +98,13 @@ li {
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="Introduce.members">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="write.board">후원해 주세요</a></li>
-				<li class="nav-item"><a class="nav-link" href="textList.board?currentPage=1">후원 게시판</a></li>
+				<li class="nav-item"><a class="nav-link" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item"><a class="nav-link" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null}">
+						<li class="nav-item"><a class="nav-link"
+							href="Mypage.members">마이 페이지</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="Logout.members">로그아웃</a></li>
 					</c:when>
@@ -158,7 +160,7 @@ li {
 
 	<div class="card-deck">
 		<div class="card">
-			<img src="photo_image/boy wrestler.jpg" class="card-img-top"alt="...">
+			<img src="photo_image/boy wrester.jpg" class="card-img-top"alt="...">
 			<div class="card-body">
 				<h5 class="card-title">식물인간 아버지를 지키는 소년 레슬러 동호</h5>
 			</div>

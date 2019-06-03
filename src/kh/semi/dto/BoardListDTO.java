@@ -1,9 +1,7 @@
 package kh.semi.dto;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-
-public class BoardDTO {
+public class BoardListDTO {
+	/*board*/
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
 	private String email;
 	private String title;
@@ -16,17 +14,20 @@ public class BoardDTO {
 	private int viewCount;
 	private String writeDate;	
 	private int recommend;
-	private int sumAmount;	
-	// 총 13개
+	private int sumAmount;
+	/*title_img*/
+	private String fileName;
+	private String oriFileName;
+	private String filePath;
+	private long fileSize;
+	//총 18개
 	
-	public int getBoardNo() {
-		return boardNo;
-	}
-	public BoardDTO() {
+	public BoardListDTO() {
 		super();
 	}
-	public BoardDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
-			String contents, String dueDate, int viewCount, String writeDate, int recommend, int sumAmount) {
+	public BoardListDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
+			String contents, String dueDate, int viewCount, String writeDate, int recommend, int sumAmount,
+			String fileName, String oriFileName, String filePath, long fileSize) {
 		this.boardNo = boardNo;
 		this.email = email;
 		this.title = title;
@@ -40,6 +41,13 @@ public class BoardDTO {
 		this.writeDate = writeDate;
 		this.recommend = recommend;
 		this.sumAmount = sumAmount;
+		this.fileName = fileName;
+		this.oriFileName = oriFileName;
+		this.filePath = filePath;
+		this.fileSize = fileSize;
+	}
+	public int getBoardNo() {
+		return boardNo;
 	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
@@ -116,28 +124,31 @@ public class BoardDTO {
 	public void setSumAmount(int sumAmount) {
 		this.sumAmount = sumAmount;
 	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getOriFileName() {
+		return oriFileName;
+	}
+	public void setOriFileName(String oriFileName) {
+		this.oriFileName = oriFileName;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
 	
 	
 	
-
-//	public String getFormedTime() {
-//		long currentTime = System.currentTimeMillis();
-//		long writeTime = this.writedate.getTime();
-//		
-//		if(currentTime - writeTime <= (1000 * 60)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 + " 초 전";
-//		}else if((1000 * 60) <= currentTime - writeTime && 
-//				currentTime - writeTime <= (1000 * 60 * 60)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 / 60 + " 분 전";
-//		}else if(currentTime - writeTime >= (1000 * 60 * 60) &&
-//				currentTime - writeTime <= (1000 * 60 * 60 * 24)) {
-//			long time = currentTime - writeTime;
-//			return time / 1000 / 60 / 60 + " 시간 전";
-//		}else {
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//			return sdf.format(writeTime);
-//		}
-//	}
 }

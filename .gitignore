@@ -4,3 +4,4 @@
 *.mp4
 *.class
 MANIFEST.MF
+/build/

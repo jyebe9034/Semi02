@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
+import kh.semi.dto.BoardDTO;
 import kh.semi.dto.TitleImgDTO;
 
 public class TitleImgDAO {
@@ -33,6 +36,7 @@ public class TitleImgDAO {
 		}
 	}
 	
+	/*대표사진 한개만 꺼내기*/
 //	public PreparedStatement pstatForGetTitleImg(Connection con, int boardNo) throws Exception {
 //		String sql = "select * from title_img where t_b_no=?";
 //		PreparedStatement pstat = con.prepareStatement(sql);
@@ -52,4 +56,34 @@ public class TitleImgDAO {
 //		}
 //		return null;
 //	}
+
+	
+	
+/*대표사진 8개씩 꺼내기*/
+	public PreparedStatement psForGetTitleImages(Connection con, int startNum, int endNum) throws Exception{
+		String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.* from board) where rown between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, startNum);
+		ps.setInt(2, endNum);
+		return ps;
+	}
+	public List<TitleImgDTO> getTitleImages(int startNum, int endNum) throws Exception{
+
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = this.psForGetTitleImages(con, startNum, endNum);
+				ResultSet rs = ps.executeQuery();	
+				){
+			List<TitleImgDTO> result = new ArrayList<>();
+			while(rs.next()) {
+			TitleImgDTO dto = new TitleImgDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+			result.add(dto);
+		}
+			return result;
+		}
+	}
+	
+	
 }
+
+
