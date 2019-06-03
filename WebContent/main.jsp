@@ -6,148 +6,101 @@
 <head>
 <meta charset="UTF-8">
 <title>도움닿기</title>
-<link
-	href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
-body {
-	font-family: "Nanum Gothic";
-	height: 100%;
-}
-
-.progress {
-	width: 200px;
-}
-
-.progress-bar {
-	background-color: orange;
-}
-
-.wrapper {
-	display: inline-block;
-}
-
-a {
-	font-weight: bold;
-}
-
-a:hover {
-	color: #000000;
-}
-
-ul {
-	margin: auto;
-}
-
-li {
-	width: 130px;
-}
-
-.hope {
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.nav_link {
-	font-family: "Nanum Gothic";
-}
-
-.btn-primary {
-	margin: 20px 0px 20px;
-	background-color: #1ebdd8;
-	border-color: #1ebdd8;
-	color: #FFF;
-}
-
-.btn-primary:hover, .btn-primary:focus {
-	border-color: #28a39f;
-	background-color: #28a39f;
-	color: #FFF;
-}
-
-.carousel {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
-
-.img_carousel {
-	max-height: 730px;
-	object-fit: cover;
-}
-/* .wrapper{ */
-/* 	width:1100px; */
-/* 	margin:auto; */
-/* } */
-/* .card-img-top{ */
-/* 	border-radius:10px; */
-/* 	height:207px; */
-/* } */
-/* .forBtnDonate{ */
-/* 	text-align:center; */
-/* } */
-.card {
-	border-radius: 10px;
-	min-width: 300px;
-}
-/* .card-deck{ */
-/* 	display:flex; */
-/* } */
-.container_card {
-	margin: auto;
-}
-
-/* .wrapper_step{ */
-/* 	margin-left:200px; */
-/* 	margin-right:200px; */
-/* 	display:flex; */
-/* 	flex-wrap:wrap; */
-/* 	justify-content : center; */
-/* } */
-.jumbotron {
-	background-image: url("photo_image/redheartbluesky.jpg");
-	background-size: cover;
-	font-family: "Jua";
-	text-align: center;
-	margin-top: 40px;
-}
-
-.step1, .step2, .step3, .step4 {
-	width: 200px;
-	height: 200px;
-	border-radius: 10px;
-	font-family: "Jua";
-	padding: 10px;
-}
-
-.text {
-	vertical-align: middle;
-	font-family: "Jua";
-}
-
-.navbar {
-	position: relative;
-}
-
-.logo {
-	position: absolute;
-	top: 15%;
-	left: 10%;
-}
-
-#navbarNav {
-	line-height: 40px;
-}
+	body {
+		font-family: "Nanum Gothic";
+		height: 100%;
+	}
+	.progress {
+		width: 200px;
+	}
+	.progress-bar {
+		background-color: orange;
+	}
+	.wrapper {
+		display: inline-block;
+	}
+	a {
+		font-weight: bold;
+	}
+	a:hover {
+		color: #000000;
+	}
+	ul {
+		margin: auto;
+	}
+	li {
+		width: 130px;
+	}
+	.hope {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.nav_link {
+		font-family: "Nanum Gothic";
+	}
+	.btn-primary {
+		margin: 20px 0px 20px;
+		background-color: #1ebdd8;
+		border-color: #1ebdd8;
+		color: #FFF;
+	}
+	.btn-primary:hover, .btn-primary:focus {
+		border-color: #28a39f;
+		background-color: #28a39f;
+		color: #FFF;
+	}
+	.carousel {
+		width: 100%;
+		height: 100%;
+		margin: auto;
+	}
+	.img_carousel {
+		max-height: 730px;
+		object-fit: cover;
+	}
+	.card {
+		border-radius: 10px;
+		min-width: 300px;
+	}
+	.container_card {
+		margin: auto;
+	}
+	.jumbotron {
+		background-image: url("photo_image/redheartbluesky.jpg");
+		background-size: cover;
+		font-family: "Jua";
+		text-align: center;
+		margin-top: 40px;
+	}
+	.step1, .step2, .step3, .step4 {
+		width: 200px;
+		height: 200px;
+		border-radius: 10px;
+		font-family: "Jua";
+		padding: 10px;
+	}
+	.text {
+		vertical-align: middle;
+		font-family: "Jua";
+	}
+	.navbar {
+		position: relative;
+	}
+	.logo {
+		position: absolute;
+		top: 15%;
+		left: 10%;
+	}
+	#navbarNav {
+		line-height: 40px;
+	}
 </style>
 </head>
 <body>
@@ -221,13 +174,6 @@ li {
 		</a>
 	</div>
 	<hr>
-	<!-- 		<div class="wrapper_step"> -->
-	<!-- 			<div class="step1" style="background-color:#8be1ef"><h1>1</h1><h4>후원 요청 글과 함께 은행명, 계좌번호를 입력하면</h4></div> -->
-	<!-- 			<div class="step2" style="background-color:#60d6ea"><h1>2</h1><h4>후원 게시판에 글이 등록이 되고</h4></div> -->
-	<!-- 			<div class="step3" style="background-color:#3bd3ed;"><h1>3</h1><h4>후원자분들이 기부금을 결제하면</h4></div> -->
-	<!-- 			<div class="step4" style="background-color:#1ebdd8;"><h1>4</h1><h4>모금 마감일에 모금액 전액이 일괄적으로 후원 요청자분께 전달됩니다.</h4></div> -->
-	<!-- 		</div> -->
-
 
 	<div class="container">
 		<div class="row">
@@ -317,15 +263,9 @@ li {
 	<div class="jumbotron">
 		<h1 class="display-4">2019년 도움닿기 후원 현황</h1>
 		<p class="lead">
-		<h2>여러분의 사랑이 이렇게 모아졌습니다.</h2>
-		<br>
-		<h2>
-			<span id="amount"></span>
-		</h2>
-		<br>
-		<h2>
-			현재 후원자수 : <span id="countDonors"></span>
-		</h2>
+			<h2>여러분의 사랑이 이렇게 모아졌습니다.</h2><br>
+			<h2><span id="amount"></span></h2><br>
+			<h2>현재 후원자수 : <span id="countDonors"></span></h2>
 		</p>
 		<hr class="my-4">
 	</div>
@@ -361,7 +301,6 @@ li {
 			$("#card3").css("width", resp.percentage3 + "%");
 			$("#percentage3").text(resp.percentage3 + "%");
 		});
-		
 		
 		$.ajax({
 			url : "totalAmountDonors.board",

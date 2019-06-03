@@ -2,6 +2,7 @@ package kh.semi.dto;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class BoardDTO {
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
@@ -19,7 +20,6 @@ public class BoardDTO {
 	private int sumAmount;	
 	// 총 13개
 	
-
 	public BoardDTO() {
 		super();
 	}
