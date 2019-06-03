@@ -161,7 +161,7 @@ li{
 					style="font-size: 18px; font-weight: bold;">로그인</button>
  <%
     String clientId = "9fcJ6ehu7V7mEFnBQABz";//애플리케이션 클라이언트 아이디값";
-    String redirectURI = URLEncoder.encode("http://localhost:8080/SemiProject/naverLogin.members", "UTF-8");
+    String redirectURI = URLEncoder.encode("http://localhost/naverLogin.members", "UTF-8");
     SecureRandom random = new SecureRandom();
     String state = new BigInteger(130, random).toString();
     String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
