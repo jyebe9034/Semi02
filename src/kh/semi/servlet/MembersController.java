@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.BoardDTO;
-import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
 import kh.semi.dto.TitleImgDTO;
 

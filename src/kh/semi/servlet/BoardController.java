@@ -46,6 +46,7 @@ public class BoardController extends HttpServlet {
 		String contextPath = request.getContextPath();
 
 		String cmd = requestURI.substring(contextPath.length());
+		System.out.println(cmd);
 
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO dao = new BoardDAO();
@@ -55,12 +56,12 @@ public class BoardController extends HttpServlet {
 
 		try {
 			if(cmd.contentEquals("/titleImagesMain.board")) {
-				
+
 			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
-				
+
 				int totalAmount = pdao.getTotalAmount();
 				int countDonors = pdao.getNumberOfDonors();
-				
+
 				JsonObject obj = new JsonObject();
 				obj.addProperty("totalAmount", totalAmount);
 				obj.addProperty("countDonors", countDonors);
@@ -68,7 +69,7 @@ public class BoardController extends HttpServlet {
 
 			}else if(cmd.contentEquals("/write.board")) {
 				request.getRequestDispatcher("/WEB-INF/boards/writer.jsp").forward(request, response);
-				
+
 			}else if(cmd.equals("/writer.board")) { // 사용자가 입력한 값을 받아서 BoardDAO로 보내주는 부분
 				request.getSession().setAttribute("flag", "true");
 				int maxSize = 10 * 1024 * 1024;
@@ -108,7 +109,7 @@ public class BoardController extends HttpServlet {
 
 					File oldFile = new File(savePath + "/" + uploadFile);
 					File newFile = new File(savePath  + "/" + newFileName);
-					
+
 					if(!oldFile.renameTo(newFile)) {
 						DataOutputStream dos = new DataOutputStream(new FileOutputStream(newFile));
 						DataInputStream dis = new DataInputStream(new FileInputStream(oldFile));
@@ -122,7 +123,7 @@ public class BoardController extends HttpServlet {
 						dis.close();
 						oldFile.delete();
 					}
-					
+
 					dto.setTitle(multi.getParameter("title"));
 					dto.setWriter(multi.getParameter("writer"));
 					dto.setAmount(Integer.parseInt(multi.getParameter("amount")));
@@ -182,7 +183,7 @@ public class BoardController extends HttpServlet {
 
 					File oldFile = new File(savePath + "/" + uploadFile);
 					File newFile = new File(savePath  + "/" + newFileName);
-					
+
 					if(!oldFile.renameTo(newFile)) {
 						DataOutputStream dos = new DataOutputStream(new FileOutputStream(newFile));
 						DataInputStream dis = new DataInputStream(new FileInputStream(oldFile));
@@ -211,7 +212,6 @@ public class BoardController extends HttpServlet {
 				}
 
 				String test = (String)request.getSession().getAttribute("flag");
-				System.out.println("test : " + test);
 				if(test.equals("false")) {
 					String rootPath = this.getServletContext().getRealPath("/");
 					String fileUrl = request.getParameter("src");
@@ -226,7 +226,7 @@ public class BoardController extends HttpServlet {
 					pw.print(deleteFile);
 				}
 				request.getSession().setAttribute("flag", "false");
-				
+
 			}else if(cmd.equals("/Read.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				System.out.println(boardNo);
@@ -272,7 +272,6 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("title", title);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
-				
 			}else if(cmd.equals("/List.board")){ //게시판 목록
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
@@ -308,8 +307,7 @@ public class BoardController extends HttpServlet {
 					//response.sendRedirect("error.html");
 				}
 			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
-				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);		
-				
+				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);
 			}else if(cmd.equals("/Payment.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String name = request.getParameter("name");
@@ -347,7 +345,7 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/RecommendCheck.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-				
+
 				try {
 					pw.print(dao.recommendCheck(email, boardNo));
 				}catch(Exception e) {
@@ -357,13 +355,12 @@ public class BoardController extends HttpServlet {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String comment = request.getParameter("comment");
-				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-				
+
 				try {
 					String name = mdao.selectByEmail(email).get(0);
-					
+
 					dao.insertComment(email, name, boardNo, comment);
-					CommentDTO result = dao.selectCommentsByBoardNo(currentPage, boardNo).get(0);
+					CommentDTO result = dao.selectCommentsByBoardNo(1, boardNo).get(0);
 					Gson gson = new Gson();
 					pw.print(gson.toJson(result));
 				}catch(Exception e) {
@@ -372,11 +369,19 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/DeleteComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String writeDate = request.getParameter("writeDate");
-				System.out.println(email + " : " + writeDate);
-				
+
 				int result = dao.deleteComment(email, writeDate);
-				System.out.println(result);
 				pw.print(result);
+			}else if(cmd.equals("/ModifyComment.board")) {
+				String email = (String)request.getSession().getAttribute("loginEmail");
+				String comment = request.getParameter("comment");
+				String writeDate = request.getParameter("writeDate");
+
+				try {
+					int result = dao.updateComment(email, comment, writeDate);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
