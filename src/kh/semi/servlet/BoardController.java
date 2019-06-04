@@ -26,7 +26,6 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dao.PaymentDAO;
-import kh.semi.dao.TitleImgDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.CommentDTO;
 import kh.semi.dto.PaymentDTO;
@@ -46,45 +45,28 @@ public class BoardController extends HttpServlet {
 		String contextPath = request.getContextPath();
 
 		String cmd = requestURI.substring(contextPath.length());
+		System.out.println(cmd);
 
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO dao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-		TitleImgDAO tdao = new TitleImgDAO();
 		BoardDTO dto = new BoardDTO();
 		TitleImgDTO tdto = new TitleImgDTO();
 
 		try {
 			if(cmd.contentEquals("/titleImagesMain.board")) {
-				List<BoardDTO> list1 = dao.getDataForMain();
-				int bNo1 = list1.get(0).getBoardNo();
-				int bNo2 = list1.get(1).getBoardNo();
-				int bNo3 = list1.get(2).getBoardNo();
-				
-				List<TitleImgDTO> list2 = tdao.getTitleImgMain(bNo1, bNo2, bNo3);
-				String fName1 = list2.get(0).getFileName();
-				String fPath1 = list2.get(0).getFilePath();
-				String imgTag1 = fPath1 + fName1;
-				
-				String fName2 = list2.get(1).getFileName();
-				String fPath2 = list2.get(1).getFilePath();
-				String imgTag2 = fPath2 + fName2;
-				
-				String fName3 = list2.get(2).getFileName();
-				String fPath3 = list2.get(2).getFilePath();
-				String imgTag3 = fPath3 + fName3;
-				
+
 			}else if(cmd.contentEquals("/card1.board")) {
 				List<BoardDTO> list = dao.getDataForMain();
-							
+
 				String title1 = list.get(0).getTitle();
 				int goalAmount1 = list.get(0).getAmount();
-				
+
 				Timestamp dueDate1 = list.get(0).getDueDate();
 				long dueTime1 = dueDate1.getTime();
 				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 				String dueDateStr1 = sdf1.format(dueTime1);
-				
+
 				int sumAmount1 = list.get(0).getSumAmount();
 				double percentage1 = Math.floor((double)sumAmount1 / goalAmount1 * 100);
 				// 마감 임박 1
@@ -96,7 +78,7 @@ public class BoardController extends HttpServlet {
 				pw.print(obj1.toString());
 			}else if(cmd.contentEquals("/card2.board")) {
 				List<BoardDTO> list = dao.getDataForMain();
-				
+
 				String title2 = list.get(1).getTitle();
 				int goalAmount2 = list.get(1).getAmount();
 				Timestamp dueDate2 = list.get(1).getDueDate();
@@ -105,8 +87,8 @@ public class BoardController extends HttpServlet {
 				String dueDateStr2 = sdf2.format(dueTime2);
 				int sumAmount2 = list.get(1).getSumAmount();
 				double percentage2 = Math.floor((double)sumAmount2 / goalAmount2 * 100);
-				 // 마감 임박2
-				
+				// 마감 임박2
+
 				JsonObject obj2 = new JsonObject();
 				obj2.addProperty("title2", title2);
 				obj2.addProperty("dueDate2",dueDateStr2);
@@ -114,7 +96,7 @@ public class BoardController extends HttpServlet {
 				pw.print(obj2.toString());
 			}else if(cmd.contentEquals("/card3.board")) {
 				List<BoardDTO> list = dao.getDataForMain();
-				
+
 				String title3 = list.get(2).getTitle();
 				int goalAmount3 = list.get(2).getAmount();
 				Timestamp dueDate3 = list.get(2).getDueDate();
@@ -123,18 +105,18 @@ public class BoardController extends HttpServlet {
 				String dueDateStr3 = sdf3.format(dueTime3);
 				int sumAmount3 = list.get(2).getSumAmount();
 				double percentage3 = Math.floor((double)sumAmount3 / goalAmount3 * 100);
-				 // 마감 임박 3
-				
+				// 마감 임박 3
+
 				JsonObject obj3 = new JsonObject();
 				obj3.addProperty("title3", title3);
 				obj3.addProperty("dueDate3",dueDateStr3);
 				obj3.addProperty("percentage3",percentage3);
 				pw.print(obj3.toString());
 			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
-				
+
 				int totalAmount = pdao.getTotalAmount();
 				int countDonors = pdao.getNumberOfDonors();
-				
+
 				JsonObject obj = new JsonObject();
 				obj.addProperty("totalAmount", totalAmount);
 				obj.addProperty("countDonors", countDonors);
@@ -142,7 +124,7 @@ public class BoardController extends HttpServlet {
 
 			}else if(cmd.contentEquals("/write.board")) {
 				request.getRequestDispatcher("/WEB-INF/boards/writer.jsp").forward(request, response);
-				
+
 			}else if(cmd.equals("/writer.board")) { // 사용자가 입력한 값을 받아서 BoardDAO로 보내주는 부분
 				request.getSession().setAttribute("flag", "true");
 				int maxSize = 10 * 1024 * 1024;
@@ -175,14 +157,14 @@ public class BoardController extends HttpServlet {
 
 				try {
 					MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-					
+
 					uploadFile = multi.getFilesystemName("filename");
 					newFileName = currentTime + "." + uploadFile.substring(uploadFile.lastIndexOf(".")+1);
 					tdto.setFileName(newFileName);
 
 					File oldFile = new File(savePath + "/" + uploadFile);
 					File newFile = new File(savePath  + "/" + newFileName);
-					
+
 					if(!oldFile.renameTo(newFile)) {
 						DataOutputStream dos = new DataOutputStream(new FileOutputStream(newFile));
 						DataInputStream dis = new DataInputStream(new FileInputStream(oldFile));
@@ -196,7 +178,7 @@ public class BoardController extends HttpServlet {
 						dis.close();
 						oldFile.delete();
 					}
-					
+
 					dto.setTitle(multi.getParameter("title"));
 					dto.setWriter(multi.getParameter("writer"));
 					dto.setAmount(Integer.parseInt(multi.getParameter("amount")));
@@ -252,7 +234,7 @@ public class BoardController extends HttpServlet {
 
 					File oldFile = new File(savePath + "/" + uploadFile);
 					File newFile = new File(savePath  + "/" + newFileName);
-					
+
 					if(!oldFile.renameTo(newFile)) {
 						DataOutputStream dos = new DataOutputStream(new FileOutputStream(newFile));
 						DataInputStream dis = new DataInputStream(new FileInputStream(oldFile));
@@ -281,7 +263,6 @@ public class BoardController extends HttpServlet {
 				}
 
 				String test = (String)request.getSession().getAttribute("flag");
-				System.out.println("test : " + test);
 				if(test.equals("false")) {
 					String rootPath = this.getServletContext().getRealPath("/");
 					String fileUrl = request.getParameter("src");
@@ -296,25 +277,34 @@ public class BoardController extends HttpServlet {
 					pw.print(deleteFile);
 				}
 				request.getSession().setAttribute("flag", "false");
-				
+
 			}else if(cmd.equals("/Read.board")) {
-				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
 				BoardDTO article = dao.selectOneArticle(boardNo);
 				List<CommentDTO> comments = dao.selectCommentsByBoardNo(commentPage, boardNo);
-				
+				dao.updateViewCount(boardNo);
+
 				double amount = article.getAmount();
 				double sumAmount = article.getSumAmount();
 				double percentage = Math.floor((double)sumAmount / amount * 100);
 
-//				TitleImgDTO titleImg = dao.getTitleImg(boardNo);
-				//				response.setCharacterEncoding("UTF-8");
-				//				request.setCharacterEncoding("UTF-8");
-				//				request.setAttribute("titleImg", "files\\" + titleImg.getFileName());
-				//				System.out.println("files\\" + titleImg.getFileName());
+				TitleImgDTO titleImg = dao.getTitleImg(boardNo);
+				response.setCharacterEncoding("UTF-8");
+				request.setCharacterEncoding("UTF-8");
+
+//				String str = titleImg.getFilePath();
+//				String result = str.replaceAll("D:.+?Project.+?Project.+?","");
+//
+//				System.out.println(result);
+//				
+//				request.setAttribute("titleImg", "files\\" + titleImg.getFileName());
+//				System.out.println("files\\" + titleImg.getFileName());
 
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
+				request.setAttribute("pageNavi", dao.getCommentNavi(commentPage, dao.selectAllComments(boardNo)));
+				request.setAttribute("commentPage", commentPage);
 				request.setAttribute("comments", comments);
 				request.setAttribute("percentage", percentage);
 				request.setAttribute("boardNo", boardNo);
@@ -334,7 +324,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("title", title);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
-				
+
 			}else if(cmd.equals("/Payment.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String name = request.getParameter("name");
@@ -372,7 +362,7 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/RecommendCheck.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-				
+
 				try {
 					pw.print(dao.recommendCheck(email, boardNo));
 				}catch(Exception e) {
@@ -382,13 +372,12 @@ public class BoardController extends HttpServlet {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String comment = request.getParameter("comment");
-				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-				
+
 				try {
 					String name = mdao.selectByEmail(email).get(0);
-					
+
 					dao.insertComment(email, name, boardNo, comment);
-					CommentDTO result = dao.selectCommentsByBoardNo(currentPage, boardNo).get(0);
+					CommentDTO result = dao.selectCommentsByBoardNo(1, boardNo).get(0);
 					Gson gson = new Gson();
 					pw.print(gson.toJson(result));
 				}catch(Exception e) {
@@ -397,11 +386,19 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/DeleteComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String writeDate = request.getParameter("writeDate");
-				System.out.println(email + " : " + writeDate);
-				
+
 				int result = dao.deleteComment(email, writeDate);
-				System.out.println(result);
 				pw.print(result);
+			}else if(cmd.equals("/ModifyComment.board")) {
+				String email = (String)request.getSession().getAttribute("loginEmail");
+				String comment = request.getParameter("comment");
+				String writeDate = request.getParameter("writeDate");
+
+				try {
+					int result = dao.updateComment(email, comment, writeDate);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

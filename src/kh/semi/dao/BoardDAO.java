@@ -56,10 +56,10 @@ public class BoardDAO {
 		}
 	}
 	public int insertBoard(BoardDTO dto)throws Exception{
-		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,?,?,default,default,default,default)";
+		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,default,default,default,default)";
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement pstat = this.pstatForGetDataForMain(con);
+				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();
 				){
 			pstat.setString(1,dto.getTitle());
@@ -108,18 +108,17 @@ public class BoardDAO {
 			return null;
 		}
 	}
-
+	
 	public int insertTitleImg(TitleImgDTO dto) throws Exception {
-		String sql = "insert into title_img values(?, t_fileSeq_seq.nextval, ?, ?, ?, ?)";
+		String sql = "insert into title_img values(t_b_no_seq.nextval, ?, ?, ?, ?)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				){
-			pstat.setInt(1, dto.getBoardNo());
-			pstat.setString(2, dto.getFileName());
-			pstat.setString(3, dto.getOriFileName());
-			pstat.setString(4, dto.getFilePath());
-			pstat.setLong(5, dto.getFileSize());
+			pstat.setString(1, dto.getFileName());
+			pstat.setString(2, dto.getOriFileName());
+			pstat.setString(3, dto.getFilePath());
+			pstat.setLong(4, dto.getFileSize());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -131,6 +130,62 @@ public class BoardDAO {
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, boardNo);
 		return pstat;
+	}
+	public TitleImgDTO getTitleImg(int boardNo) throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = this.pstatForGetTitleImg(con, boardNo);
+				ResultSet rs = pstat.executeQuery();
+				){
+			if(rs.next()) {
+				int boardNoResult = rs.getInt(1);
+				String fileName = rs.getString(2);
+				String oriFileName = rs.getString(3);
+				String filePath = rs.getString(4);
+				long fileSize = rs.getLong(5);
+				TitleImgDTO dto = new TitleImgDTO(boardNo, fileName, oriFileName, filePath, fileSize);
+				return dto;
+			}
+			return null;
+		}
+	}
+
+	private PreparedStatement pstatForGetTitleImg(Connection con, int bNo1, int bNo2, int bNo3) throws Exception {
+		String sql = "select * from title_img where t_b_no in (?,?,?)";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, bNo1);
+		pstat.setInt(2, bNo2);
+		pstat.setInt(3, bNo3);
+		return pstat;
+	}
+
+	public List<TitleImgDTO> getTitleImg(int bNo1, int bNo2, int bNo3) throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = this.pstatForGetTitleImg(con, bNo1, bNo2, bNo3);
+				ResultSet rs = pstat.executeQuery();
+				){
+			List<TitleImgDTO> list = new ArrayList<>();
+			while(rs.next()) {
+				int tbNo = rs.getInt("t_b_no");
+				String tFileName = rs.getString("t_fileName");
+				String tFilePath = rs.getString("t_filePath");
+				TitleImgDTO dto = new TitleImgDTO(tbNo,tFileName,tFilePath);
+				list.add(dto);
+			}
+			return list;
+		}
+	}
+	public int updateViewCount(int boardNo) throws Exception {
+		String sql = "update board set b_viewcount=b_viewcount+1 where b_no=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setInt(1, boardNo);
+			int result = pstat.executeUpdate();
+			return result;
+		}
 	}
 
 	public int updateSumAccount(int amount, int boardNo) throws Exception {
@@ -209,6 +264,20 @@ public class BoardDAO {
 		}
 	}
 
+	public int selectAllComments(int boardNo) throws Exception {
+		String sql = "select * from comments where c_b_no=" + boardNo + " order by c_write_date desc";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();
+				){
+			int commentsSize = 0;
+			while(rs.next()) {
+				commentsSize++;
+			}
+			return commentsSize;
+		}
+	}
 	public List<CommentDTO> selectCommentsByBoardNo(int commentPage, int boardNo) throws Exception {
 		String sql = "select * from comments where c_b_no=" + boardNo + " order by c_write_date desc";
 		try(
@@ -227,7 +296,6 @@ public class BoardDAO {
 			if(toIndex > result.size()) {
 				toIndex = result.size();
 			}
-
 			return result.subList(fromIndex-1, toIndex);
 		}
 	}
@@ -246,7 +314,22 @@ public class BoardDAO {
 		}
 	}
 
-	public Map<String, Integer> getNavi(int currentPage, int recordTotalCount) {
+	public int updateComment(String email, String comment, String writeDate) throws Exception {
+		String sql = "update comments set c_comment=? where c_email=? and c_write_date=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, comment);
+			pstat.setString(2, email);
+			pstat.setTimestamp(3, Timestamp.valueOf(writeDate));
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+
+	public Map<String, Integer> getCommentNavi(int currentPage, int recordTotalCount) {
 		// 가지고 있는 게시글의 수에 맞는 페이지의 개수를 구함.
 		int pageTotalCount = recordTotalCount / recordCountPerPage;
 		if(recordTotalCount % recordCountPerPage > 0) {

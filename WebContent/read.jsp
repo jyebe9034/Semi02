@@ -103,8 +103,15 @@ li {
 .commentsBox>div{
 	border: 0.5px solid #00000030;
 }
-.deleteCommentBtn{
+.deleteCommentBtn, .modifyCommentBtn, .modifyCompleteBtn{
 	cursor: pointer;
+}
+.page-item{
+	width: 30px;
+	text-align: center;
+}
+.page-link{
+	color: #1ebdd8;
 }
 .fixedMenu{
 	position: fixed;
@@ -137,29 +144,29 @@ li {
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-light navbar-fixed-top">
+	<nav class="navbar navbar-expand-md navbar-light">
 		<div class="logo">
-			<a class="navbar-brand" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
+		data-target="#navbarNav" aria-controls="navbarNav"
+		aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="Introduce.members">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="write.board">후원해 주세요</a></li>
-				<li class="nav-item"><a class="nav-link" href="textList.board?currentPage=1">후원 게시판</a></li>
-
+			<ul class="navbar-nav nav-ul">
+				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+   
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item"><a class="nav-link"
-							href="Logout.members">로그아웃</a></li>
+					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+						<li class="nav-item nav-li"><a id="logos" class="nav-link anker ml-1 mr-3" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker ml-4" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item"><a class="nav-link" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="JoinForm.members">회원가입</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -195,7 +202,7 @@ li {
 				<a class="btn btn-primary" href="Board.board?currentPage=1">목록</a>
 				<a class="btn btn-primary" href="Main.members">메인</a>
 				<c:if test="${sessionScope.loginEmail == result.email }">
-					<a class="btn btn-primary" href="Main.members">삭제</a>
+					<a class="btn btn-primary" href="Main.members">수정</a>
 				</c:if>
 			</div>
 		</div>
@@ -211,12 +218,16 @@ li {
 	    <div class="commentsBox row col-12">
 	   		<c:forEach var="com" items="${comments }">
 	   			<div class="row col-12 p-3 m-3">
-	    			<div class="col-md-7 col-9">${com.comment }</div>
+	    			<div class="col-md-7 col-9 comment">${com.comment }</div>
 	    			<div class="col-md-2 col-2">${com.name }</div>
 	    			<c:choose>
 	    				<c:when test="${sessionScope.loginEmail == com.email }">
 	    					<div class="col-md-2 d-none d-md-block">${com.formedTime }</div>
-	    					<div class="col-1"><span class="deleteCommentBtn" writeDate="${com.writeDate }">X</span></div>
+	    					<div class="col-1">
+	    						<span class="modifyCommentBtn" writeDate="${com.writeDate }">✎</span>
+	    						<span class="modifyCompleteBtn" writeDate="${com.writeDate }"></span>
+	    						<span class="deleteCommentBtn" writeDate="${com.writeDate }">✗</span> <!-- ✕ ✖ × ✗ -->
+	    					</div>
 	    				</c:when>
 	    				<c:otherwise>
 	    					<div class="col-md-3 d-none d-md-block">${com.formedTime }</div>
@@ -226,41 +237,39 @@ li {
 	    	</c:forEach>
 	    </div>
 	    <nav aria-label="Page navigation example">
-				<ul class="pagination pagination-sm justify-content-center m-0">
-					<c:if test="${pageNavi.needPrev == 1 }">
-						<li class="page-item"><a class="page-link"
-							href="Board.board?currentPage=${pageNavi.startNavi - 1}"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-					</c:if>
-					<c:if test="${pageNavi.currentPage > 1 }">
-						<li class="page-item"><a class="page-link"
-							href="Board.board?currentPage=${pageNavi.currentPage - 1}"
-							aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-						</a></li>
-					</c:if>
+			<ul class="pagination pagination-sm justify-content-center m-0">
+				<c:if test="${pageNavi.needPrev == 1 }">
+					<li class="page-item"><a class="page-link pageNum"
+						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.startNavi - 1}"
+						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+					</a></li>
+				</c:if>
+				<c:if test="${pageNavi.currentPage > 1 }">
+					<li class="page-item"><a class="page-link"
+						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.currentPage - 1}"
+						aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+					</a></li>
+				</c:if>
 
-					<c:forEach var="i" begin="${pageNavi.startNavi}"
-						end="${pageNavi.endNavi}">
-						<li class="page-item"><a class="page-link pageNumber"
-							href="Board.board?currentPage=${i }">${i}</a></li>
-					</c:forEach>
+				<c:forEach var="i" begin="${pageNavi.startNavi}" end="${pageNavi.endNavi}">
+					<li class="page-item"><a class="page-link pageNumber"
+						href="Read.board?boardNo=${result.boardNo }&commentPage=${i }">${i}</a></li>
+				</c:forEach>
 					
-					<c:if test="${pageNavi.currentPage < pageNavi.pageTotalCount }">
-						<li class="page-item"><a class="page-link"
-							href="Board.board?currentPage=${pageNavi.currentPage + 1}"
-							aria-label="Previous"> <span aria-hidden="true">&gt;</span>
-						</a></li>
-					</c:if>
-
-					<c:if test="${pageNavi.needNext == 1 }">
-						<li class="page-item"><a class="page-link"
-							href="Board.board?currentPage=${pageNavi.endNavi + 1}"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
-					</c:if>
-				</ul>
-			</nav>
+				<c:if test="${pageNavi.currentPage < pageNavi.pageTotalCount }">
+					<li class="page-item"><a class="page-link"
+						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.currentPage + 1}"
+						aria-label="Previous"> <span aria-hidden="true">&gt;</span>
+					</a></li>
+				</c:if>
+				<c:if test="${pageNavi.needNext == 1 }">
+					<li class="page-item"><a class="page-link"
+						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.endNavi + 1}"
+						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+				</c:if>
+			</ul>
+		</nav>
 	</div>
 	
 	<div class="fixedMenu">
@@ -286,10 +295,15 @@ li {
 		$(function(){
 			var docHeight = $(document).height();
 			var winHeight = $(window).height();
-			
 			if(docHeight != winHeight){
 				$(".fixedMenu").css("display", "block");
 			}
+			$(".pageNumber").each(function(item){
+				if(${commentPage} == $(this).text()){
+					$(this).css("background-color", "#1ebdd8");
+					$(this).css("color", "white");
+				}
+			})
 		})
 		$(".donateBtn").on("click", function(){
 			if(${sessionScope.loginEmail == null}){
@@ -352,10 +366,10 @@ li {
 					}).done(function(resp){
 						$("#inputComment").html("");
 						$(".commentsBox").prepend("<div class='row col-12 p-3 m-3'></div>");
-						$(".commentsBox>div:first-child").prepend("<div class='col-1'><span class='deleteCommentBtn' writeDate='" + resp.writeDate +"'>X</span></div>");
+						$(".commentsBox>div:first-child").prepend("<div class='col-1'><span class='modifyCommentBtn' writeDate='" + resp.writeDate + "'>✎ </span><span class='modifyCompleteBtn' writeDate='" + resp.writeDate + "'></span><span class='deleteCommentBtn' writeDate='" + resp.writeDate +"'>✗</span></div>");
 						$(".commentsBox>div:first-child").prepend("<div class='col-md-2 d-none d-md-block'>방금 전</div>");
 					    $(".commentsBox>div:first-child").prepend("<div class='col-md-2 col-2'>"+ resp.name +"</div>");
-						$(".commentsBox>div:first-child").prepend("<div class='col-md-7 col-9'>"+ resp.comment +"</div>");
+						$(".commentsBox>div:first-child").prepend("<div class='col-md-7 col-9 comment'>"+ resp.comment +"</div>");
 					});
 				}
 			}
@@ -380,6 +394,32 @@ li {
 				});
 			}
 		});
+		
+		$(".modifyCommentBtn").on("click", function(){
+			var writeDate = $(this).attr("writeDate");
+			var comment = $(this).parent().siblings(".comment");
+			var btn = $(this);
+			var modifyComplete = btn.siblings(".modifyCompleteBtn");
+			btn.text("");	// ✓✔
+			modifyComplete.text("✓");
+			comment.attr("contenteditable", true);
+			comment.focus();
+			btn.siblings(".modifyCompleteBtn").on("click", function(){
+				$.ajax({
+					url: "ModifyComment.board",
+					type: "post",
+					data: {
+						comment: comment.text(),
+						writeDate: writeDate
+					}
+				}).done(function(){
+					comment.attr("contenteditable", false);
+					btn.text("✎");
+					modifyComplete.text("");
+				});
+				return;
+			});
+		})
 		
 		$(window).scroll(function() {
 			var scrollHeight = $(document).height();
