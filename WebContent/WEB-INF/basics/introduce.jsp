@@ -49,10 +49,6 @@
     .card-text{
         font-size: 20px;
     }
-    #footer{
-		position: absolute;
-		bottom: 0;
-}
 </style>
 </head>
 <body>

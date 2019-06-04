@@ -53,6 +53,10 @@
         margin-bottom: 10px;
         margin-top: 10px;
     }
+    .issue{
+    	color: #ef3621;
+    	font-size: 13px;
+    }
 </style>
 </head>
 <body>
@@ -77,7 +81,6 @@
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
 						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -114,11 +117,17 @@
 			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">목표 금액은 최소 10,000원 이상!</div>
-				<input type="number" class="form-control" name="amount" placeholder="한번 입력된 금액은 변경할 수 없어요 :)" min="10000" max="10000000" required>
+				<input id="amount" type="number" class="form-control" name="amount" placeholder="한번 입력된 금액은 변경할 수 없어요 :)" min="10000" max="10000000" required>
+			</div>
+			<div class="form-group">
+				<div id="lessAmount" class="issue"></div>
 			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">마감일은 내가 원하는 대로!</div>
-				<input type="date" class="form-control"  name="dueDate" required>
+				<input id="dueDate" type="date" class="form-control" name="dueDate" required>
+			</div>
+			<div class="form-group">
+				<div id="today" class="issue"></div>
 			</div>
 			<div class="form-group">
 				<div class="input-group mb-3">
@@ -175,6 +184,29 @@
 	</div>
 	
 	<script>
+		$("#amount").on("input", function(){
+			var amount = parseInt($("#amount").val());
+			if(amount < 10000){
+				$("#lessAmount").html("10000원 이상의 금액을 입력해주세요.");
+			}else{
+				$("#lessAmount").html("");	
+			}
+		})
+        
+        $("#dueDate").on("change",function(){
+            var today = new Date();
+            var dueDate = $(this).val();
+            var dueArr = dueDate.split("-");
+            var dateObj = new Date(dueArr[0], Number(dueArr[1])-1, dueArr[2]);
+            
+            var between = Math.ceil((dateObj.getTime() - today.getTime())/1000/60/60/24);
+            if(between < 7){
+            	$("#today").html("마감일은 일주일 이후의 날짜로 선택해주세요.");
+            }else{
+            	$("#today").html("");
+            }
+        })
+	
 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
 	    	$("img").each(function(index, item){
 	    		var src = $(this).attr("src");
