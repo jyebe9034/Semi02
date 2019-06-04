@@ -263,7 +263,7 @@ public class MemberDAO {
 				PreparedStatement pstat = con.prepareStatement(sql);
 				){
 			pstat.setString(1, dto.getEmail());
-			pstat.setString(2, testSHA256(dto.getPw()));
+			pstat.setString(2, dto.getPw());
 			pstat.setString(3, dto.getName());
 			pstat.setString(4, dto.getPhone());
 			pstat.setString(5, dto.getZipCode());
@@ -325,8 +325,8 @@ public class MemberDAO {
 		String sql = "select * from members where m_email=? and m_pw=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setString(1, email);
-		pstat.setString(2, testSHA256(pw));
-
+//		pstat.setString(2, testSHA256(pw)); 임창훈 이거 주석없애기
+		pstat.setString(2, pw);
 		return pstat;
 	}
 
@@ -417,6 +417,20 @@ public class MemberDAO {
 		int ranNum = (int)(Math.random()*(999999-100000+1)+100000);
 
 		return ranNum;
+	}
+	
+	public String managerOrVisiter(String email)throws Exception{
+		String sql = "select m_admin from members where m_email=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, email);
+			ResultSet rs = pstat.executeQuery();
+			rs.next();
+			String admin = rs.getString("m_admin");
+			return admin;
+		}
 	}
 	
 	///*마이페이지*/------------------------------------------------------------------------

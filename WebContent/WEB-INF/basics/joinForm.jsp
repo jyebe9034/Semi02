@@ -10,10 +10,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<<<<<<< HEAD
-<link
-	href="https://fonts.googleapis.com/css?family=Do+Hyeon|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
+
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
@@ -295,17 +292,9 @@ ul {
 </style>
 </head>
 <body>
-<<<<<<< HEAD
-
-	<nav class="navbar navbar-expand-md navbar-light">
-		<div class="logo">
-			<a class="navbar-brand" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-=======
 	<nav class="navbar navbar-expand-md navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
->>>>>>> 72826b65c7d7bb79bf49ec339dcaa1b317e43d3c
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
@@ -313,19 +302,6 @@ ul {
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
-<<<<<<< HEAD
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link"
-					href="Introduce.members">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="write.board">후원해
-						주세요</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="textList.board?currentPage=1">후원 게시판</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="LoginForm.members">로그인</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="JoinForm.members">회원가입</a></li>
-=======
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
@@ -341,7 +317,6 @@ ul {
 						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
 					</c:otherwise>
 				</c:choose>
->>>>>>> 72826b65c7d7bb79bf49ec339dcaa1b317e43d3c
 			</ul>
 		</div>
 	</nav>
@@ -402,10 +377,7 @@ ul {
 			</div>
 		</div>
 	</form>
-<<<<<<< HEAD
 
-
-=======
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -422,7 +394,6 @@ ul {
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
 	
->>>>>>> 72826b65c7d7bb79bf49ec339dcaa1b317e43d3c
 	<script>
 		$("#btnConfirmEmail").on("click", function() {
 			if ($("#inputNum").attr("flag") == "true") {
