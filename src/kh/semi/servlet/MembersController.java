@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +17,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kh.semi.dao.BoardDAO;
+import kh.semi.dao.MemberDAO;
+import kh.semi.dto.BoardDTO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
+import kh.semi.dto.TitleImgDTO;
 
 @WebServlet("*.members")
 public class MembersController extends HttpServlet {
@@ -29,13 +36,59 @@ public class MembersController extends HttpServlet {
 		String ctxPath = request.getContextPath();
 		String cmd = reqUri.substring(ctxPath.length());
 		MemberDAO dao = new MemberDAO();
+		BoardDAO bdao = new BoardDAO();
 
 		if (cmd.equals("/Main.members")) {
-			request.getRequestDispatcher("main.jsp").forward(request, response);
+			List<BoardDTO> list;
+			try {
+				list = bdao.getDataForMain();
+				request.setAttribute("list", list);
+				String[] strArr = new String[3];
+				int[] intArr = new int[3];
+				for(int i = 0; i < list.size(); i++) {
+					int goalAmount = list.get(i).getAmount();
+					Timestamp dueDate = list.get(i).getDueDate();
+					long dueTime = dueDate.getTime();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					strArr[i] = sdf.format(dueTime);
+					int sumAmount = list.get(i).getSumAmount();
+					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
+				}
+				request.setAttribute("duedate", strArr);
+				request.setAttribute("percentage", intArr);
+				System.out.println(intArr[0] +" : "+ intArr[1] +" : "+ intArr[2]);
+				
+				int bNo1 = list.get(0).getBoardNo();
+				int bNo2 = list.get(1).getBoardNo();
+				int bNo3 = list.get(2).getBoardNo();
+				List<TitleImgDTO> imgList = bdao.getTitleImg(bNo1,bNo2,bNo3);
+				String[] imgSrc = new String[3];
+				for(int i=0; i < imgList.size(); i++) {
+					if(imgList.get(i).getBoardNo() == bNo1) {
+						String str = imgList.get(i).getFilePath();
+						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+						imgSrc[0] = result + "/" + imgList.get(i).getFileName();
+					}else if(imgList.get(i).getBoardNo() == bNo2) {
+						String str = imgList.get(i).getFilePath();
+						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+						imgSrc[1] = result + "/" + imgList.get(i).getFileName();
+					}else if(imgList.get(i).getBoardNo() == bNo3) {
+						String str = imgList.get(i).getFilePath();
+						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+						imgSrc[2] = result + "/" + imgList.get(i).getFileName();
+					}
+				}
+				request.setAttribute("imgSrc", imgSrc);
 
+
+				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
+
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
-			
+
 		}else if (cmd.equals("/JoinForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/joinForm.jsp").forward(request, response);
 

@@ -26,7 +26,6 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dao.PaymentDAO;
-import kh.semi.dao.TitleImgDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.CommentDTO;
 import kh.semi.dto.PaymentDTO;
@@ -50,12 +49,12 @@ public class BoardController extends HttpServlet {
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO dao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-		TitleImgDAO tdao = new TitleImgDAO();
 		BoardDTO dto = new BoardDTO();
 		TitleImgDTO tdto = new TitleImgDTO();
 
 		try {
 			if(cmd.contentEquals("/titleImagesMain.board")) {
+
 //				List<BoardDTO> list1 = dao.getDataForMain();
 //				int bNo1 = list1.get(0).getBoardNo();
 //				int bNo2 = list1.get(1).getBoardNo();
@@ -74,62 +73,6 @@ public class BoardController extends HttpServlet {
 //				String fPath3 = list2.get(2).getFilePath();
 //				String imgTag3 = fPath3 + fName3;
 				
-			}else if(cmd.contentEquals("/card1.board")) {
-				List<BoardDTO> list = dao.getDataForMain();
-							
-				String title1 = list.get(0).getTitle();
-				int goalAmount1 = list.get(0).getAmount();
-				
-				Timestamp dueDate1 = list.get(0).getDueDate();
-				long dueTime1 = dueDate1.getTime();
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				String dueDateStr1 = sdf1.format(dueTime1);
-				
-				int sumAmount1 = list.get(0).getSumAmount();
-				double percentage1 = Math.floor((double)sumAmount1 / goalAmount1 * 100);
-				// 마감 임박 1
-
-				JsonObject obj1 = new JsonObject();
-				obj1.addProperty("title1", title1);
-				obj1.addProperty("dueDate1",dueDateStr1);
-				obj1.addProperty("percentage1",percentage1);
-				pw.print(obj1.toString());
-			}else if(cmd.contentEquals("/card2.board")) {
-				List<BoardDTO> list = dao.getDataForMain();
-				
-				String title2 = list.get(1).getTitle();
-				int goalAmount2 = list.get(1).getAmount();
-				Timestamp dueDate2 = list.get(1).getDueDate();
-				long dueTime2 = dueDate2.getTime();
-				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-				String dueDateStr2 = sdf2.format(dueTime2);
-				int sumAmount2 = list.get(1).getSumAmount();
-				double percentage2 = Math.floor((double)sumAmount2 / goalAmount2 * 100);
-				 // 마감 임박2
-				
-				JsonObject obj2 = new JsonObject();
-				obj2.addProperty("title2", title2);
-				obj2.addProperty("dueDate2",dueDateStr2);
-				obj2.addProperty("percentage2",percentage2);
-				pw.print(obj2.toString());
-			}else if(cmd.contentEquals("/card3.board")) {
-				List<BoardDTO> list = dao.getDataForMain();
-				
-				String title3 = list.get(2).getTitle();
-				int goalAmount3 = list.get(2).getAmount();
-				Timestamp dueDate3 = list.get(2).getDueDate();
-				long dueTime3 = dueDate3.getTime();
-				SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
-				String dueDateStr3 = sdf3.format(dueTime3);
-				int sumAmount3 = list.get(2).getSumAmount();
-				double percentage3 = Math.floor((double)sumAmount3 / goalAmount3 * 100);
-				 // 마감 임박 3
-				
-				JsonObject obj3 = new JsonObject();
-				obj3.addProperty("title3", title3);
-				obj3.addProperty("dueDate3",dueDateStr3);
-				obj3.addProperty("percentage3",percentage3);
-				pw.print(obj3.toString());
 			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
 				
 				int totalAmount = pdao.getTotalAmount();
@@ -154,7 +97,7 @@ public class BoardController extends HttpServlet {
 				String rootPath = request.getSession().getServletContext().getRealPath("/");
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				dto.setEmail(email);
-
+				System.out.println(email);
 				File tempFile = new File(rootPath+email);
 				if(!tempFile.exists()) {
 					tempFile.mkdir();
@@ -175,8 +118,8 @@ public class BoardController extends HttpServlet {
 
 				try {
 					MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-					
 					uploadFile = multi.getFilesystemName("filename");
+					tdto.setOriFileName(uploadFile);
 					newFileName = currentTime + "." + uploadFile.substring(uploadFile.lastIndexOf(".")+1);
 					tdto.setFileName(newFileName);
 

@@ -223,7 +223,10 @@ li {
 	#navbarNav {
 		line-height: 40px;
 	}
-
+	.imgTag{
+		border-radius:10px;
+	}
+	
 </style>
 </head>
 <body>
@@ -328,56 +331,58 @@ li {
 	<div class="container container_card">
 		<div class="row rowcard">
 			<div class="card col-lg-4 col-md-12 col-sm-12">
-				<div id="imgBox1" class="imgBox"></div>
+				<div id="imgBox1" class="imgBox">
+					<img src="${imgSrc[0] }" class="imgTag" width="100%">
+				</div>
 				<div class="card-body">
 					<h6 class="card-title">
-						<span id="title1"></span>
+						<span id="title1">${list[0].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text" align="left">
-						모금 마감일 <br> <span id="dueDate1"></span><br> 모금현황<br>
-						<span id="percentage1"></span>
+						모금 마감일 <br> <span id="dueDate1">${duedate[0]}</span><br> 모금현황<br>
+						<span id="percentage1">${percentage[0]}%</span>
 					<div class="progress">
 						<div id="card1" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[0]}%"></div>
 					</div>
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
 				</div>
 			</div>
 			<div class="card col-lg-4 col-md-12 col-sm-12">
 				<div id="imgBox2" class="imgBox">
-					<img src="" class="card-img-top" alt="...">
+					<img src="${imgSrc[1] }" class="imgTag" width="100%" alt="...">
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
-						<span id="title2"></span>
+						<span id="title2">${list[1].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate2"></span> <br> 모금현황<br>
-						<span id="percentage2"></span>
+						모금 마감일 <br> <span id="dueDate2">${duedate[1]}</span><br> 모금현황<br>
+						<span id="percentage2">${percentage[1]}%</span>
 					<div class="progress">
 						<div id="card2" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[1]}%"></div>
 					</div>
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
 				</div>
 			</div>
 			<div class="card col-lg-4 col-md-12 col-sm-12">
 				<div id="imgBox3" class="imgBox">
-					<img src="" class="card-img-top" alt="...">
+					<img src="${imgSrc[2] }" class="imgTag" width="100%" alt="...">
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
-						<span id="title3"></span>
+						<span id="title3">${list[2].title}</span>
 					</h6>
 					<hr>
 					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate3"></span><br> 모금현황<br>
-						<span id="percentage3"></span>
+						모금 마감일 <br> <span id="dueDate3">${duedate[2]}</span><br> 모금현황<br>
+						<span id="percentage3">${percentage[2]}%</span>
 					<div class="progress">
 						<div id="card3" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[2]}%"></div>
 					</div>
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
 				</div>
@@ -394,57 +399,12 @@ li {
 		</p>
 		<hr class="my-4">
 	</div>
-	
-				<div id="footer">
-	            <div id="f_logo_wrap">
-					<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-				</div>
-				<div id="f_info_wrap">
-					<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
-				</div>
-				<div id="f_sns">
-					<img id="kakao" class="sns" src="ka.png">
-					<img class="sns" src="fa.png">
-					<img id="insta" class="sns" src="kk.png">
-					<a href="/"><div id="suggest">후원 신청</div></a>
-				</div>
-				<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
-	        </div>
+
 
 	<script>
 
 		$.ajax({
-			url : "card1.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#title1").text(resp.title1);
-			$("#dueDate1").text(resp.dueDate1);
-			$("#card1").css("width", resp.percentage1 + "%");
-			$("#percentage1").text(resp.percentage1 + "%");
-		});
-		
-		$.ajax({
-			url : "card2.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#title2").text(resp.title2);
-			$("#dueDate2").text(resp.dueDate2);
-			$("#card2").css("width", resp.percentage2 + "%");
-			$("#percentage2").text(resp.percentage2 + "%");
-		});
-		
-		$.ajax({
-			url : "card3.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#title3").text(resp.title3);
-			$("#dueDate3").text(resp.dueDate3);
-			$("#card3").css("width", resp.percentage3 + "%");
-			$("#percentage3").text(resp.percentage3 + "%");
-		});
-		
-		$.ajax({
-			url : "totalAmountDonors.board",
+			url : "totalAmountDonors.board", 
 			dataType : "json"
 		}).done(function(resp) {
 			$("#amount").text(resp.totalAmount + " 원");

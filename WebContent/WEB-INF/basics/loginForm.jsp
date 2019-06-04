@@ -185,22 +185,5 @@ li {
 		</div>
 	</div>
 
-	<div id="footer">
-		<div id="f_logo_wrap">
-			<a id="f_logo" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-		</div>
-		<div id="f_info_wrap">
-			<div id="f_info">
-				행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
-			</div>
-		</div>
-		<div id="f_sns">
-			<img id="kakao" class="sns" src="ka.png"> <img class="sns"
-				src="fa.png"> <img id="insta" class="sns" src="kk.png">
-			<a href="/"><div id="suggest">후원 신청</div></a>
-		</div>
-		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
-	</div>
 </body>
 </html>

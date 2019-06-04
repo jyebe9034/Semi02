@@ -28,12 +28,57 @@ public class BoardDAO {
 		return DriverManager.getConnection(url,user,pw);
 	}
 
+	public int insertTitleImg(TitleImgDTO dto) throws Exception {
+		String sql = "insert into title_img values(t_b_no_seq.nextval, ?, ?, ?, ?)";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, dto.getFileName());
+			pstat.setString(2, dto.getOriFileName());
+			pstat.setString(3, dto.getFilePath());
+			pstat.setLong(4, dto.getFileSize());
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	private PreparedStatement pstatForGetTitleImg(Connection con, int bNo1, int bNo2, int bNo3) throws Exception {
+		String sql = "select * from title_img where t_b_no in (?,?,?)";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, bNo1);
+		pstat.setInt(2, bNo2);
+		pstat.setInt(3, bNo3);
+		return pstat;
+	}
+	
+	public List<TitleImgDTO> getTitleImg(int bNo1, int bNo2, int bNo3) throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = this.pstatForGetTitleImg(con, bNo1, bNo2, bNo3);
+				ResultSet rs = pstat.executeQuery();
+				){
+			List<TitleImgDTO> list = new ArrayList<>();
+			while(rs.next()) {
+				int tbNo = rs.getInt("t_b_no");
+				String tFileName = rs.getString("t_fileName");
+				String tFilePath = rs.getString("t_filePath");
+				TitleImgDTO dto = new TitleImgDTO(tbNo,tFileName,tFilePath);
+				list.add(dto);
+			}
+			return list;
+		}
+	}
+	
+	
 	public PreparedStatement pstatForGetDataForMain(Connection con)throws Exception{
 		String sql = "select b_due_date-sysdate as d_day, b_no, b_title, b_amount, "
 				+ "b_due_date, b_sum_amount from board where b_due_date-sysdate like '+%' order by d_day";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		return pstat;
 	}
+	
 	public List<BoardDTO> getDataForMain() throws Exception{
 		try(
 				Connection con = this.getConnection();
@@ -60,9 +105,8 @@ public class BoardDAO {
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
-			 
 				){
-			pstat.executeUpdate();
+		
 			pstat.setString(1,dto.getTitle());
 			pstat.setString(2,dto.getEmail());
 			pstat.setString(3,dto.getWriter());
@@ -110,29 +154,6 @@ public class BoardDAO {
 		}
 	}
 
-	public int insertTitleImg(TitleImgDTO dto) throws Exception {
-		String sql = "insert into title_img values(?, t_fileSeq_seq.nextval, ?, ?, ?, ?)";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setInt(1, dto.getBoardNo());
-			pstat.setString(2, dto.getFileName());
-			pstat.setString(3, dto.getOriFileName());
-			pstat.setString(4, dto.getFilePath());
-			pstat.setLong(5, dto.getFileSize());
-			int result = pstat.executeUpdate();
-			con.commit();
-			return result;
-		}
-	}
-
-	private PreparedStatement pstatForGetTitleImg(Connection con, int boardNo) throws Exception {
-		String sql = "select * from title_img where t_b_no=?";
-		PreparedStatement pstat = con.prepareStatement(sql);
-		pstat.setInt(1, boardNo);
-		return pstat;
-	}
 
 	public int updateSumAccount(int amount, int boardNo) throws Exception {
 		String sql = "update board set b_sum_amount=b_sum_amount+? where b_No=?";
