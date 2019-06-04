@@ -118,6 +118,7 @@ public class BoardDAO {
 			pstat.setString(6,dto.getAccount());
 			pstat.setTimestamp(7, dto.getDueDate());
 			pstat.setString(8, dto.getContents());
+			System.out.println(dto.getTitle()+":"+dto.getEmail()+":"+dto.getWriter()+":"+dto.getAmount()+":"+dto.getBank()+":"+dto.getAccount()+":"+dto.getDueDate()+":"+dto.getContents());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;

@@ -77,7 +77,6 @@ public class MembersController extends HttpServlet {
 						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
 						imgSrc[2] = result + "/" + imgList.get(i).getFileName();
 					}
-					
 				}
 				request.setAttribute("imgSrc", imgSrc);
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);

@@ -17,45 +17,10 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
+<link rel="stylesheet" href="nav_footer.css">
 <style>
-	body{
-		font-family: "Nanum Gothic";
-		height: 100%;
-		text-align: center;
-	}
-	div{
-        box-sizing: border-box;
-    }
-	nav{
-		position: relative;
-		height: 60px;
-	}
-	.logo{
-		position: absolute;
-		top: 10%;
-		left: 15%;
-	}
-	#navbarNav{
-		position: relative;
-		top: 30%;
-		left: 50%;
-	}
-	#toggle{
-		position: absolute;
-		top: 30%;
-		right: 5%;
-	}
 	.wrapper{
 		display: inline-block;
-	}
-	.anker{
-		font-weight: bold;
-	}
-	.anker:hover{
-		color: #000000;
-	}
-	.nav-li{
-		width: 130px;
 	}
 	#image{
 		max-height: 700px;
@@ -68,6 +33,9 @@
 	}
 	#all-btns{
 		height: 50px;
+	}
+	.form-group{
+		text-align: center;
 	}
 	.noti{
 		font-size: 20px;
@@ -85,106 +53,43 @@
         margin-bottom: 10px;
         margin-top: 10px;
     }
-    #footer{
-        height: 200px;
-        width: 100%;
-        background-color: #2d3f53;
-        align-items: center;
-        position: relative;
-        margin-top: 30px;
-	}
-	#f_logo{
-		color: #98ddde;
-        text-decoration: none;
-	}
-	#f_logo_wrap{
-        position: absolute;
-        left: 15%;
-        top: 20%;
-	}
-	#f_info_wrap{
-		position: absolute;
-		right: 15%;
-		top: 20%;
-	}
-	#f_info{
-		color: gray;
-		text-align: right;
-		font-size: 13px;
-		float: left;
-		padding-top: 5px;
-		margin-right: 10px;
-	}
-	#suggest{
-		display: inline-block;
-		background-color: #fa7268;
-		border-radius: 10%;
-		color: white; 
-		width: 90px;
-		height: 45px;
-		text-decoration: none;
-		line-height: 45px;
-		float: right;
-		margin-left: 15px;
-	}
-	#f_sns{
-		position: absolute;
-		right: 15%;
-		top: 47%;
-	}
-	.sns{
-		width: 30px;
-		height: 30px;
-		margin: 3px;
-	}
-	#kakao{
-		width: 40px;
-		height: 40px;
-	}
-	#insta{
-		width: 32px;
-		height: 32px;
-		margin-left: 8px;
-	}
-	#copyright{
-		color: gray;
-		position: absolute;
-		right: 15%;
-		top: 70%;
-		font-size: 13px;
-		margin-top: 5px;
-	}
+    .issue{
+    	color: #ef3621;
+    	font-size: 13px;
+    }
 </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-light">
-      <div class="logo">
-         <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-      </div>
-      <button class="navbar-toggler" type="button" data-toggle="collapse"
-         data-target="#navbarNav" aria-controls="navbarNav"
-         aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-         <ul class="navbar-nav nav-ul">
-            <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-            <li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-            <li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-   
-            <c:choose>
-               <c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-                  <li class="nav-item nav-li"><a id="logos" class="nav-link anker ml-1 mr-3" href="myPage.members">마이 페이지</a></li>
-                  <li class="nav-item nav-li"><a class="nav-link anker ml-4" href="Logout.members">로그아웃</a></li>
-               </c:when>
-               <c:otherwise>
-                  <li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-                  <li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
-               </c:otherwise>
-            </c:choose>
-         </ul>
-      </div>
-   </nav>
+	<nav class="navbar navbar-expand-md navbar-light">
+		<div class="logo">
+			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="toggle">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav nav-ul">
+				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption==allPages&searchWord==allPages">후원 게시판</a></li>
+	
+				<c:choose>
+					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</nav>
 	<hr>
 	<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
 		<div class="carousel-inner">
@@ -212,16 +117,22 @@
 			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">목표 금액은 최소 10,000원 이상!</div>
-				<input type="number" class="form-control" name="amount" placeholder="한번 입력된 금액은 변경할 수 없어요 :)" min="10000" max="10000000" required>
+				<input id="amount" type="number" class="form-control" name="amount" placeholder="한번 입력된 금액은 변경할 수 없어요 :)" min="10000" max="10000000" required>
+			</div>
+			<div class="form-group">
+				<div id="lessAmount" class="issue"></div>
 			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">마감일은 내가 원하는 대로!</div>
-				<input type="date" class="form-control"  name="dueDate" required>
+				<input id="dueDate" type="date" class="form-control" name="dueDate" required>
+			</div>
+			<div class="form-group">
+				<div id="today" class="issue"></div>
 			</div>
 			<div class="form-group">
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
-						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌로!</label>
+						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌만 가능합니다!</label>
 					</div>
 				    <select class="custom-select" name="select">
 					    <option value="신한" selected>신한</option>
@@ -267,12 +178,35 @@
 			<img id="kakao" class="sns" src="photo_image/ka.png">
 			<img class="sns" src="photo_image/fa.png">
 			<img id="insta" class="sns" src="photo_image/kk.png">
-			<a href="/"><div id="suggest">후원 신청</div></a>
+			<a href="write.board"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
 	
 	<script>
+		$("#amount").on("input", function(){
+			var amount = parseInt($("#amount").val());
+			if(amount < 10000){
+				$("#lessAmount").html("10000원 이상의 금액을 입력해주세요.");
+			}else{
+				$("#lessAmount").html("");	
+			}
+		})
+        
+        $("#dueDate").on("change",function(){
+            var today = new Date();
+            var dueDate = $(this).val();
+            var dueArr = dueDate.split("-");
+            var dateObj = new Date(dueArr[0], Number(dueArr[1])-1, dueArr[2]);
+            
+            var between = Math.ceil((dateObj.getTime() - today.getTime())/1000/60/60/24);
+            if(between < 7){
+            	$("#today").html("마감일은 일주일 이후의 날짜로 선택해주세요.");
+            }else{
+            	$("#today").html("");
+            }
+        })
+	
 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
 	    	$("img").each(function(index, item){
 	    		var src = $(this).attr("src");
@@ -331,7 +265,6 @@
         function deleteFile(src) {
         	if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         	}else if(src == null){
-
         	}else{
         		$.ajax({
                     data: {src : src},
@@ -354,7 +287,6 @@
         		var src = $(this).attr("src");
         		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         		}else if(src == null){
-
         		}else{
         			$.ajax({
         				url: "deleteImage.board",
