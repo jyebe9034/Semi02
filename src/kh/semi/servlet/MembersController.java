@@ -57,6 +57,7 @@ public class MembersController extends HttpServlet {
 						request.setAttribute("duedate", strArr);
 						request.setAttribute("percentage", douArr);
 					}
+					
 				}
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 			}catch(Exception e) {
@@ -105,6 +106,7 @@ public class MembersController extends HttpServlet {
 			}
 		}else if(cmd.contentEquals("/LoginForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/loginForm.jsp").forward(request, response);
+			
 		} else if (cmd.equals("/Login.members")) {
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");
@@ -164,11 +166,11 @@ public class MembersController extends HttpServlet {
 					if (dao.isIdExist(dto)) {
 						MemberDTO realcontents = dao.getContents(dto);
 						request.getSession().setAttribute("realcontents", realcontents);
-						request.getRequestDispatcher("main.jsp").forward(request, response);
+						request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
 						request.getSession().setAttribute("navercontents", dto);
-						request.getRequestDispatcher("main.jsp").forward(request, response);
+						request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					}
 				}
 			} catch (Exception e) {
@@ -198,17 +200,17 @@ public class MembersController extends HttpServlet {
 			
 			try {
 				
-				if (dao.isIdExist(dto)) {
+				if (dao.isIdExist(dto)) { // 이미 한번 로그인 한 경우
 					
 					MemberDTO realcontents = dao.getContents(dto);
 					request.getSession().setAttribute("realcontents", realcontents);
-					request.getRequestDispatcher("main.jsp").forward(request, response);
+					request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					
-				} else {
+				} else { // 카카오나 네이버 로그인을 처음한 경우
 					
 					dao.insertNaverMember(dto);
 					request.getSession().setAttribute("navercontents", dto);
-					request.getRequestDispatcher("main.jsp").forward(request, response);
+					request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 				}
 				
 			} catch (Exception e) {
@@ -303,7 +305,7 @@ public class MembersController extends HttpServlet {
 		}else if(cmd.equals("/myPageUpdateComplete.members")) {
 			
 			request.getSession().invalidate();
-			request.getRequestDispatcher("main.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 			
 		}else if(cmd.equals("/myPage.members")) {
 			

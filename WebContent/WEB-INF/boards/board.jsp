@@ -21,15 +21,21 @@
 		position: relative;
 		height: 60px;
 	}
+	#logos{
+		width: 140px;
+	}
 	.logo{
 		position: absolute;
 		top: 10%;
 		left: 15%;
 	}
-	#navbarNav{
+	#navbarNav {
+		max-width: 500px;
+		line-height: 40px;
 		position: relative;
 		top: 30%;
-		left: 50%;
+		left: 55%;
+		text-align: center;
 	}
 	#toggle{
 		position: absolute;
@@ -52,7 +58,7 @@
 		color: #000000;
 	}
 	.nav-li{
-		width: 130px;
+		width: 110px;
 	}
 	.boardName {
 		text-align: center;
@@ -284,17 +290,18 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li"><a class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="JoinForm.members">회원가입</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
