@@ -58,27 +58,27 @@ public class MembersController extends HttpServlet {
 				request.setAttribute("percentage", intArr);
 				System.out.println(intArr[0] +" : "+ intArr[1] +" : "+ intArr[2]);
 				
-				int bNo1 = list.get(0).getBoardNo();
-				int bNo2 = list.get(1).getBoardNo();
-				int bNo3 = list.get(2).getBoardNo();
-				List<TitleImgDTO> imgList = bdao.getTitleImg(bNo1,bNo2,bNo3);
-				String[] imgSrc = new String[3];
-				for(int i=0; i < imgList.size(); i++) {
-					if(imgList.get(i).getBoardNo() == bNo1) {
-						String str = imgList.get(i).getFilePath();
-						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
-						imgSrc[0] = result + "/" + imgList.get(i).getFileName();
-					}else if(imgList.get(i).getBoardNo() == bNo2) {
-						String str = imgList.get(i).getFilePath();
-						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
-						imgSrc[1] = result + "/" + imgList.get(i).getFileName();
-					}else if(imgList.get(i).getBoardNo() == bNo3) {
-						String str = imgList.get(i).getFilePath();
-						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
-						imgSrc[2] = result + "/" + imgList.get(i).getFileName();
-					}
-				}
-				request.setAttribute("imgSrc", imgSrc);
+//				int bNo1 = list.get(0).getBoardNo();
+//				int bNo2 = list.get(1).getBoardNo();
+//				int bNo3 = list.get(2).getBoardNo();
+//				List<TitleImgDTO> imgList = bdao.getTitleImg(bNo1,bNo2,bNo3);
+//				String[] imgSrc = new String[3];
+//				for(int i=0; i < imgList.size(); i++) {
+//					if(imgList.get(i).getBoardNo() == bNo1) {
+//						String str = imgList.get(i).getFilePath();
+//						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+//						imgSrc[0] = result + "/" + imgList.get(i).getFileName();
+//					}else if(imgList.get(i).getBoardNo() == bNo2) {
+//						String str = imgList.get(i).getFilePath();
+//						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+//						imgSrc[1] = result + "/" + imgList.get(i).getFileName();
+//					}else if(imgList.get(i).getBoardNo() == bNo3) {
+//						String str = imgList.get(i).getFilePath();
+//						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+//						imgSrc[2] = result + "/" + imgList.get(i).getFileName();
+//					}
+//				}
+//				request.setAttribute("imgSrc", imgSrc);
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 
 			}catch(Exception e) {

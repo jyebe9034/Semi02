@@ -123,7 +123,6 @@ public class BoardDAO {
 			con.commit();
 			return result;
 		}
-
 	}
 
 	private PreparedStatement pstatForSelectOneArticle(Connection con, int boardNo)throws Exception{

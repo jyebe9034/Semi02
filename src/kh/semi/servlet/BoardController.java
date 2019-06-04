@@ -79,7 +79,7 @@ public class BoardController extends HttpServlet {
 
 				String rootPath = request.getSession().getServletContext().getRealPath("/");
 				String email = (String)request.getSession().getAttribute("loginEmail");
-				dto.setEmail(email); // 자꾸 null이 들어가서 잠시 주석처리 해 둔 것!!
+				dto.setEmail(email);
 
 				File tempFile = new File(rootPath+email);
 				if(!tempFile.exists()) {
