@@ -228,23 +228,31 @@ public class BoardController extends HttpServlet {
 				request.getSession().setAttribute("flag", "false");
 				
 			}else if(cmd.equals("/Read.board")) {
-				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+				System.out.println(boardNo);
+				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
 				BoardDTO article = dao.selectOneArticle(boardNo);
 				List<CommentDTO> comments = dao.selectCommentsByBoardNo(commentPage, boardNo);
-				
+				dao.updateViewCount(boardNo);
+
 				double amount = article.getAmount();
 				double sumAmount = article.getSumAmount();
 				double percentage = Math.floor((double)sumAmount / amount * 100);
 
-//				TitleImgDTO titleImg = dao.getTitleImg(boardNo);
-				//				response.setCharacterEncoding("UTF-8");
-				//				request.setCharacterEncoding("UTF-8");
-				//				request.setAttribute("titleImg", "files\\" + titleImg.getFileName());
-				//				System.out.println("files\\" + titleImg.getFileName());
+				TitleImgDTO titleImg = dao.getTitleImg(boardNo);
+				response.setCharacterEncoding("UTF-8");
+				request.setCharacterEncoding("UTF-8");
 
+				String str = titleImg.getFilePath();
+				
+				String result = str.replaceAll("D:.+?Project.+?Project.+?","");
+				//String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+				
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
-
+				
+				request.setAttribute("titleImg", result+"/"+titleImg.getFileName());
+				request.setAttribute("pageNavi", dao.getCommentNavi(commentPage, dao.selectAllComments(boardNo)));
+				request.setAttribute("commentPage", commentPage);
 				request.setAttribute("comments", comments);
 				request.setAttribute("percentage", percentage);
 				request.setAttribute("boardNo", boardNo);

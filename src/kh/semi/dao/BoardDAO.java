@@ -48,6 +48,32 @@ public class BoardDAO {
 		}
 	}
 	
+	// read 페이지에서 필요함
+	private PreparedStatement pstatForGetTitleImg(Connection con, int boardNo) throws Exception {
+		String sql = "select * from title_img where t_b_no=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, boardNo);
+		return pstat;
+	}
+	public TitleImgDTO getTitleImg(int boardNo) throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = this.pstatForGetTitleImg(con, boardNo);
+				ResultSet rs = pstat.executeQuery();
+				){
+			if(rs.next()) {
+				int boardNoResult = rs.getInt(1);
+				String fileName = rs.getString(2);
+				String oriFileName = rs.getString(3);
+				String filePath = rs.getString(4);
+				long fileSize = rs.getLong(5);
+				TitleImgDTO dto = new TitleImgDTO(boardNo, fileName, oriFileName, filePath, fileSize);
+				return dto;
+			}
+			return null;
+		}
+	}
+	
 	private PreparedStatement pstatForGetTitleImg(Connection con, int bNo1, int bNo2, int bNo3) throws Exception {
 		String sql = "select * from title_img where t_b_no in (?,?,?)";
 		PreparedStatement pstat = con.prepareStatement(sql);
@@ -110,7 +136,6 @@ public class BoardDAO {
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				){
-		
 			pstat.setString(1,dto.getTitle());
 			pstat.setString(2,dto.getEmail());
 			pstat.setString(3,dto.getWriter());
@@ -200,7 +225,6 @@ public class BoardDAO {
 		}
 	}
 
-	//-------------------------목록
 	/*(1)전체 게시판 목록*/
 	public PreparedStatement psForSelectByPage(Connection con, int startNum, int endNum) throws Exception{
 		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)) where rown between ? and ?";
@@ -259,6 +283,7 @@ public class BoardDAO {
 		ps.setString(3, "%"+searchWord+"%");
 		return ps;
 	}
+	
 	public List<BoardListDTO> searchList(int currentPage, String searchOption, String searchWord) throws Exception{
 		int endNum = currentPage *recordCountPerPage;
 		int startNum = endNum - (recordCountPerPage-1);
@@ -372,8 +397,6 @@ public class BoardDAO {
 //============================================================================================================================	
 	
 
-
-
 	public int updateSumAccount(int amount, int boardNo) throws Exception {
 		String sql = "update board set b_sum_amount=b_sum_amount+? where b_No=?";
 		try(
@@ -434,6 +457,18 @@ public class BoardDAO {
 		}
 	}
 
+	public int updateViewCount(int boardNo) throws Exception {
+		String sql = "update board set b_viewcount=b_viewcount+1 where b_no=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setInt(1, boardNo);
+			int result = pstat.executeUpdate();
+			return result;
+		}
+	}
+	
 	public int insertComment(String email, String name, int boardNo, String comment) throws Exception {
 		String sql = "insert into comments values(?, ?, ?, ?, default)";
 		try(
@@ -450,6 +485,20 @@ public class BoardDAO {
 		}
 	}
 
+	public int selectAllComments(int boardNo) throws Exception {
+		String sql = "select * from comments where c_b_no=" + boardNo + " order by c_write_date desc";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();
+				){
+			int commentsSize = 0;
+			while(rs.next()) {
+				commentsSize++;
+			}
+			return commentsSize;
+		}
+	}
 	public List<CommentDTO> selectCommentsByBoardNo(int commentPage, int boardNo) throws Exception {
 		String sql = "select * from comments where c_b_no=" + boardNo + " order by c_write_date desc";
 		try(
@@ -468,7 +517,6 @@ public class BoardDAO {
 			if(toIndex > result.size()) {
 				toIndex = result.size();
 			}
-
 			return result.subList(fromIndex-1, toIndex);
 		}
 	}
@@ -481,6 +529,21 @@ public class BoardDAO {
 				){
 			pstat.setString(1, email);
 			pstat.setTimestamp(2, Timestamp.valueOf(writeDate));
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+
+	public int updateComment(String email, String comment, String writeDate) throws Exception {
+		String sql = "update comments set c_comment=? where c_email=? and c_write_date=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, comment);
+			pstat.setString(2, email);
+			pstat.setTimestamp(3, Timestamp.valueOf(writeDate));
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -530,8 +593,6 @@ public class BoardDAO {
 
 		return pageNavi;
 	}
-
-
 
 }
 
