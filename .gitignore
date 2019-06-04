@@ -2,4 +2,10 @@
 .project
 .settings
 *.mp4
+<<<<<<< HEAD
 *.class
+=======
+*.class
+MANIFEST.MF
+/build/
+>>>>>>> abc53b894660d35b1e20eb456faefef4129335d9
