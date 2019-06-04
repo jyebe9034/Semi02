@@ -63,13 +63,16 @@
 	}
 	
 	/*검색*/
-	.dropdown {
+	#dropdownforSearch {
 		float: left;
+        height: 30px;
+        margin-top: 3px;
 	}
 	
 	.searchWord {
-		float: left;
+/*		float: left;*/
 		width: 250px;
+        height: 30px;
 	}
 	
 	#searchBox {
@@ -240,30 +243,27 @@
 		})
 		
 		$(".searchBtn").on("click",function(){
-	       
+	       if($(".searchWord").val()==""){
+	    	   alert("검색할 내용을 입력해주세요.");
+	       }
 		})
 		
-<<<<<<< HEAD
-		
-			
-			
-	
-=======
-		$(".page-link").on("click",function(){
-			var paging = $(this).attr("paging");
-			$.ajax({
-					url:"List.board",		
-					type:"post",
-					data:{
-						currentPage:paging,
-						searchOption:$("#dropdownforSearch option").val(),
-						searchWord:$(".searchWord").val()
-						}
-			}).done(function(resp){
-				console.log(resp); 			    	
-			});
-		})
->>>>>>> 26bdac9bdc2f20f77e6001808d0adb2992442a88
+
+// 		$(".page-link").on("click",function(){
+// 			var paging = $(this).attr("paging");
+// 			$.ajax({
+// 					url:"List.board",		
+// 					type:"post",
+// 					data:{
+// 						currentPage:paging,
+// 						searchOption:$("#dropdownforSearch option").val(),
+// 						searchWord:$(".searchWord").val()
+// 						}
+// 			}).done(function(resp){
+// 				console.log(resp); 			    	
+// 			});
+// 		})
+
 	})
 </script>
 </head>
@@ -306,33 +306,26 @@
 
 		<!--검색창-->
 		<div class="row d-flex justify-content-end">
-<!-- 			<form action="List.board?currentPage=1" method=post id=searchBox> -->
-	<form action="List.board" method=post id=searchBox>
-			<input type=hidden flag=search> 
+			<form action="List.board?currentPage=1" method=post id=searchBox>
 				<select name="searchOption" id="dropdownforSearch">
-<!-- 					<option>==검색방법==</option> -->
+					<option>검색방법</option>
 					<option name="searchOption" value="title">제목</option>
 					<option name="searchOption" value="contents">내용</option>
 					<option name="searchOption" value="all">제목+내용</option>
 				</select> 
-<!-- 				<input type="text" class="form-control searchWord" -->
-<!-- 					placeholder="검색할 내용 입력" aria-label="Username" -->
-<!-- 					aria-describedby="basic-addon1"> -->
 				<input type="text" name="searchWord" class="searchWord" placeholder="검색할 내용 입력">
 				<button type="submit" class="btn searchBtn">검색</button>
 			</form>
-			</div>
-
 		</div>
+
+	</div>
 
 		<!--글목록-->
 		<div class="row listRow">
 			<c:forEach var="list" items="${board }">
 				<div class="col-lg-3 col-md-6 col-sm-12">
 					<div class="card list">
-<!-- 						<img src=${list.filePath}>  -->
-								이미지
-<!-- 							사진꺼내는거 나중에 지혜꺼 완성되면 다시 테스트 해보기!! -->
+						<img src=${list.filePath}> 
 						<div class="card-body">
 							<h5 class="card-title">${list.title }</h5>
 							<p class="card-text">${list.writer }</p>
@@ -349,45 +342,18 @@
 				</div>
 			</c:forEach>
 		</div>
-	</div>
+	
 
 	<!--페이지네비게이터 -->
-<nav aria-label="Page navigation example" class="pageNavi">
-            <ul class="pagination pagination-sm justify-content-center m-0">
-               <c:if test="${getNavi.needPrev == 1 }">
-                  <li class="page-item"><a class="page-link"
-                     boardPage="${getNavi.startNavi - 1}"
-                     aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-                  </a></li>
-               </c:if>
-               <c:if test="${getNavi.currentPage > 1 }">
-                  <li class="page-item"><a class="page-link"
-                     boardPage="${getNavi.currentPage - 1}"
-                     aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-                  </a></li>
-               </c:if>
-
-               <c:forEach var="i" begin="${getNavi.startNavi}"
-                  end="${getNavi.endNavi}">
-                  <li class="page-item"><a class="page-link pageNumber"
-                     boardPage="${i}">${i}</a></li>
-               </c:forEach>
-               
-               <c:if test="${getNavi.currentPage < getNavi.pageTotalCount }">
-                  <li class="page-item"><a class="page-link"
-                     boardPage="${getNavi.currentPage + 1}"
-                     aria-label="Previous"> <span aria-hidden="true">&gt;</span>
-                  </a></li>
-               </c:if>
-
-               <c:if test="${getNavi.needNext == 1 }">
-                  <li class="page-item"><a class="page-link"
-                     boardPage="${getNavi.endNavi + 1}"
-                     aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-                  </a></li>
-               </c:if>
-            </ul>
-         </nav>
+		<div class="row  p-0 m-0" id="num_box">
+			<div class="col-12 d-flex justify-content-center">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination pagination-sm">
+								${getNavi }
+					</ul>
+				</nav>		
+			</div>
+		</div>
 	<!--하단 버튼들 -->
 	<div class="row p-0 m-0" id="bottom">
 		<div class="col-12 bottonBtns d-flex justify-content-center">

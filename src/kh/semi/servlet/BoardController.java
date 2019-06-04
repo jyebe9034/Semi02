@@ -267,38 +267,32 @@ public class BoardController extends HttpServlet {
 				
 			}else if(cmd.equals("/List.board")){ //게시판 목록
 				try {
-					String searchOption = request.getParameter("searchOption");
-					String searchWord = request.getParameter("searchWord");
-					int currentPage = Integer.parseInt(request.getParameter("currentPage"));		
-		
+					String searchOption = request.getParameter("searchOption"); //검색 종류
+					String searchWord = request.getParameter("searchWord"); //검색어
+					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
+					
 					System.out.println("searchOption : " + searchOption);
 					System.out.println("searchWord : " + searchWord);
 					System.out.println("currentPage : " + currentPage);
-//					int endNum = currentPage * 8;
-//					int startNum = endNum - 7;
-					int boardRecordTotalCount = 0;
-					if(searchOption.equals("title")) {
+			
+					int totalRecordCount = 0; //=recordTotalCount
+					if(searchOption.equals("title")) { //제목으로 검색
 						searchOption = "b_title";
-						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));
-						
-					}else if(searchOption.equals("contents")) {
-						searchOption = " B_CONTENTS1 || b_contents2 ||b_contents3";
-						boardRecordTotalCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						System.out.println("게시글 개수(내용) : " + boardRecordTotalCount);
-						request.setAttribute("board", dao.searchList(searchOption, searchWord, currentPage));	
-						
-					}else if(searchOption.equals("all")) {
-						searchOption = "b_title || B_CONTENTS1 || b_contents2 ||b_contents3";
-
-					}else{	
-						boardRecordTotalCount = dao.totalRecordNum();
-						System.out.println("게시글 개수 : " + boardRecordTotalCount);
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));					
+					}else if(searchOption.equals("contents")) { //내용으로 검색
+						searchOption = "b_contents";
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
+					}else if(searchOption.equals("all")) { //제목+내용으로 검색
+						searchOption = "b_title || B_CONTENTS";
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
+					}else{ //전체 글 목록
+						totalRecordCount = dao.totalRecordNum();
 						request.setAttribute("board", dao.selectByPage(currentPage));
 					}
-					
-					/*페이지*/	
-					Map<String, Integer> getNavi = dao.getNavi(currentPage, boardRecordTotalCount);
-					request.setAttribute("getNavi", getNavi);
+					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount));
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
 					
 				}catch(Exception e) {				

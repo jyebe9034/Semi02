@@ -116,7 +116,7 @@ public class BoardDAO {
 	}
 
 //*게시판*//==============================================================================================================================
-	//totalCount//
+	//totalCount//전체글개수----------------
 	/*(1)전체 게시글의 개수*/
 	public int totalRecordNum() throws Exception{
 	//	String sql = "select * from board order by b_no desc";
@@ -154,18 +154,22 @@ public class BoardDAO {
 			return result;
 		}
 	}
-	
+	//-------------------------목록
 	/*(1)전체 게시판 목록*/
-	public PreparedStatement psForSelectByPage(Connection con, int currentPage) throws Exception{
-		String sql = "select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)";
+	public PreparedStatement psForSelectByPage(Connection con, int startNum, int endNum) throws Exception{
+		//String sql = "select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)";
+		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)) where rown between ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, startNum);
+		ps.setInt(2, endNum);
 		return ps;
 	}
 	public List<BoardListDTO> selectByPage(int currentPage) throws Exception{
-
+		int endNum = currentPage *recordCountPerPage;
+		int startNum = endNum - (recordCountPerPage-1);
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement ps = this.psForSelectByPage(con, currentPage);
+				PreparedStatement ps = this.psForSelectByPage(con, startNum, endNum);
 				ResultSet rs = ps.executeQuery();	
 				){
 			List<BoardListDTO> result = new ArrayList<>();
@@ -201,17 +205,21 @@ public class BoardDAO {
 	
 	/*검색*///검색어=searchWord
 	/*(2)searchOption으로 검색했을 때 게시글 목록*/
-	public PreparedStatement psForSearchList(Connection con, String searchOption, String searchWord, int currentPage) throws Exception{
-		String sql = "select * from board t1 join title_img t2 on (t1.b_no = t2.t_b_no) where "+searchOption+" like ? order by b_no desc";
+	public PreparedStatement psForSearchList(Connection con, int startNum, int endNum, String searchOption, String searchWord) throws Exception{
+		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)) where rown between ? and ? and "+searchOption+" LIKE ?";
 
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, "%"+searchWord+"%");
+		ps.setInt(1, startNum);
+		ps.setInt(2, endNum);
+		ps.setString(3, "%"+searchWord+"%");
 		return ps;
 	}
-	public List<BoardListDTO> searchList(String searchOption, String searchWord, int currentPage) throws Exception{
+	public List<BoardListDTO> searchList(int currentPage, String searchOption, String searchWord) throws Exception{
+		int endNum = currentPage *recordCountPerPage;
+		int startNum = endNum - (recordCountPerPage-1);
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement ps = this.psForSearchList(con, searchOption, searchWord, currentPage);
+				PreparedStatement ps = this.psForSearchList(con, startNum, endNum, searchOption, searchWord);
 				ResultSet rs = ps.executeQuery();
 				){
 			List<BoardListDTO> result = new ArrayList<>();
@@ -242,10 +250,11 @@ public class BoardDAO {
 		}	
 	}
 	
+	//----페이지
 	/*페이지 네비게이터*/
-	public String getNavi(int currentPage) throws Exception {
+	public String getNavi(int currentPage, int totalRecordCount) throws Exception {
 
-		int recordTotalCount = totalRecordNum();
+		int recordTotalCount = totalRecordCount;
 		
 		int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
 		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
@@ -256,7 +265,6 @@ public class BoardDAO {
 		//int pageTotalCount = 0;
 		int pageTotalCount = recordTotalCount / recordCountPerPage;
 		if(recordTotalCount % recordCountPerPage > 0) {
-			//pageTotalCount = recordTotalCount / recordCountPerPage + 1;	
 			pageTotalCount++;
 		}
 	
@@ -271,7 +279,6 @@ public class BoardDAO {
 		//현재 위치한 페이지를 기반으로 네비의 시작 지점과 끝 지점을 구한다.
 		/*네이게이터의 시작*/
 		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
-		//startNavi = (currentPage - 1)/10 * 10 + 1; 
 		/*네이게이터의 끝*/
 		int endNavi = startNavi + (naviCountPerPage - 1); 
 		//endNavi = startNavi + 9; 
@@ -298,81 +305,37 @@ public class BoardDAO {
 		StringBuilder sb = new StringBuilder();
 		if(needPrev) {
 			int prevStartNavi = startNavi-1;
-			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?currentPage="+ prevStartNavi +"\"" + 
+			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption==null&&searchWord==null&&currentPage="+ prevStartNavi +"\"" + 
 					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
 					"						</a></li>");
 			
 		}
 		for(int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?currentPage="+i+"\">" + i + "</a></li>");
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption==null&&searchWord==null&&currentPage="+i+"\">" + i + "</a></li>");
 		}
 		if(needNext) {
 			int nextEndNavi = endNavi+1;
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?currentPage="+ nextEndNavi++ +"\""+ 
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption==null&&searchWord==null&&currentPage="+ nextEndNavi++ +"\""+ 
 					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
 					"						</a></li>");
 		}
 		
 		return sb.toString();
 	}
-//	public Map<String, Integer> getNavi(int currentPage, int boardRecordTotalCount) {
-//	      // 가지고 있는 게시글의 수에 맞는 페이지의 개수를 구함.
-//	      int pageTotalCount = boardRecordTotalCount / recordCountPerPage;
-//	      if(boardRecordTotalCount % recordCountPerPage > 0) {
-//	         pageTotalCount++;
-//	      }
-//	      // 현재 페이지 오류 검출 및 정정
-//	      if(currentPage < 1) {
-//	         currentPage = 1;
-//	      }
-//	      else if(currentPage > pageTotalCount) {
-//	         currentPage = pageTotalCount;
-//	      }
-//	      // 네비게이터 시작과 끝
-//	      int startNavi = ((currentPage-1)/naviCountPerPage)*naviCountPerPage + 1;
-//	      int endNavi = startNavi + (naviCountPerPage - 1);
-//	      // 네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
-//	      if(endNavi > pageTotalCount) {
-//	         endNavi = pageTotalCount;
-//	      }
-//	      int needPrev = 1;   // 1이면 true, -1이면 false
-//	      int needNext = 1;
-//
-//	      if(startNavi == 1) {
-//	         needPrev = -1;
-//	      }
-//	      if(endNavi == pageTotalCount) {
-//	         needNext = -1;
-//	      }
-//
-//	      Map<String, Integer> pageNavi = new HashMap<>();
-//	      pageNavi.put("currentPage", currentPage);
-//	      pageNavi.put("boardRecordTotalCount", boardRecordTotalCount);
-//	      pageNavi.put("recordCountPerPage", recordCountPerPage);
-//	      pageNavi.put("naviCountPerPage", naviCountPerPage);
-//	      pageNavi.put("pageTotalCount", pageTotalCount);
-//	      pageNavi.put("startNavi", startNavi);
-//	      pageNavi.put("endNavi", endNavi);
-//	      pageNavi.put("needPrev", needPrev);
-//	      pageNavi.put("needNext", needNext);
-//
-//	      return pageNavi;
-//	   }
-	
+
 	
 //============================================================================================================================	
 	
 	public int insertTitleImg(TitleImgDTO dto) throws Exception {
-		String sql = "insert into title_img values(?, ?, ?, ?, ?)";
+		String sql = "insert into title_img values(t_b_no_seq.nextval, ?, ?, ?, ?)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				){
-			pstat.setInt(1, dto.getBoardNo());
-			pstat.setString(2, dto.getFileName());
-			pstat.setString(3, dto.getOriFileName());
-			pstat.setString(4, dto.getFilePath());
-			pstat.setLong(5, dto.getFileSize());
+			pstat.setString(1, dto.getFileName());
+			pstat.setString(2, dto.getOriFileName());
+			pstat.setString(3, dto.getFilePath());
+			pstat.setLong(4, dto.getFileSize());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
