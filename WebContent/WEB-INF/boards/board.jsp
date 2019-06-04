@@ -288,6 +288,7 @@
 		
 		$(".article").on("click", function(){
 			var boardNo = $(this).attr("boardNo");
+			alert(boardNo);
 			location.href="Read.board?boardNo="+boardNo+"&commentPage=1";
 		})
 	</script>

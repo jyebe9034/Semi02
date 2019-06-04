@@ -16,7 +16,7 @@ create table members(
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))
 );
---drop table members;
+drop table members;
 
 select * from members;
 
@@ -41,16 +41,23 @@ create table board(
     b_recommend number default 0 not null,
     b_sum_amount number default 0
 );
---drop table board;
+drop table board;
 
 create sequence b_no_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
---drop sequence b_no_seq;
+drop sequence b_no_seq;
+
+select b_no_seq.currval from dual;
 
 select * from board;
+
+insert into board values(
+    b_no_seq.nextval, '피곤해요ㅠㅠ', 'junhaeyong95@naver.com','전해용', 1000000, '신한', '123123123456',
+    '191225', '빨리 자고싶어요<br>시원한 맥주한잔 하고~~ 크흐<br>폭신폭신한 침대에 누워서<br>선풍기바람 솔솔!!', default, default, default, default
+);
 
 commit;
 --------------------------------------------------------------------------------
@@ -62,14 +69,14 @@ create table title_img(
     t_filePath varchar(300) not null,
     t_fileSize number not null
 );
---drop table title_img;
+drop table title_img;
 
-create sequence t_fileSeq_seq
+create sequence t_b_no_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
---drop sequence t_fileSeq_seq;
+drop sequence t_b_no_seq;
 
 select * from title_img;
 
@@ -98,7 +105,7 @@ create table recommend(
     r_b_no number not null,
     r_b_title varchar(100) not null
 );
---drop table recommend;
+drop table recommend;
 
 select * from recommend;
 
@@ -113,7 +120,7 @@ create table comments(
     c_comment varchar(1000) not null,
     c_write_date timestamp default sysdate not null
 );
---drop table comments;
+drop table comments;
 
 select * from comments;
 
