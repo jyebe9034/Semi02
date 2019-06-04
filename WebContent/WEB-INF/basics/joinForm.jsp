@@ -10,7 +10,6 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<<<<<<< HEAD
 <link
 	href="https://fonts.googleapis.com/css?family=Do+Hyeon|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
 	rel="stylesheet">
@@ -107,33 +106,6 @@ a:hover {
 ul {
 	margin: auto;
 }
-=======
-<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>	
-<style>
-	body {
-		font-family: "Nanum Gothic";
-		height: 100%;
-	}
-	
-	.wrapper {
-		width: 400px;
-		margin: auto;
-		padding: 40px;
-		border: 1px solid #e4e4e4;
-		border-radius: 5px;
-	}
-	
-	.top_wrapper {
-		display: flex;
-		justify-content: space-between;
-		height: 40px;
-		align-items: center;
-		position: relative;
-		margin: auto;
-	}
->>>>>>> 72826b65c7d7bb79bf49ec339dcaa1b317e43d3c
-
 	.anker{
 		font-weight: bold;
 	}
@@ -295,56 +267,35 @@ ul {
 </style>
 </head>
 <body>
-<<<<<<< HEAD
 
-	<nav class="navbar navbar-expand-md navbar-light">
-		<div class="logo">
-			<a class="navbar-brand" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-=======
-	<nav class="navbar navbar-expand-md navbar-light">
-		<div class="logo">
-			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
->>>>>>> 72826b65c7d7bb79bf49ec339dcaa1b317e43d3c
-		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-<<<<<<< HEAD
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link"
-					href="Introduce.members">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="write.board">후원해
-						주세요</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="textList.board?currentPage=1">후원 게시판</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="LoginForm.members">로그인</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="JoinForm.members">회원가입</a></li>
-=======
-			<ul class="navbar-nav nav-ul">
-				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-		
-				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
-					</c:otherwise>
-				</c:choose>
->>>>>>> 72826b65c7d7bb79bf49ec339dcaa1b317e43d3c
-			</ul>
-		</div>
-	</nav>
+<nav class="navbar navbar-expand-md navbar-light">
+      <div class="logo">
+         <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+         data-target="#navbarNav" aria-controls="navbarNav"
+         aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav nav-ul">
+            <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+            <li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+            <li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+   
+            <c:choose>
+               <c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+                  <li class="nav-item nav-li"><a id="logos" class="nav-link anker ml-1 mr-3" href="myPage.members">마이 페이지</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-4" href="Logout.members">로그아웃</a></li>
+               </c:when>
+               <c:otherwise>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+               </c:otherwise>
+            </c:choose>
+         </ul>
+      </div>
+   </nav>
 	<hr>
 
 	<form action="Join.members" id="joinForm" method="post">
@@ -402,10 +353,7 @@ ul {
 			</div>
 		</div>
 	</form>
-<<<<<<< HEAD
 
-
-=======
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -421,8 +369,7 @@ ul {
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
->>>>>>> 72826b65c7d7bb79bf49ec339dcaa1b317e43d3c
+
 	<script>
 		$("#btnConfirmEmail").on("click", function() {
 			if ($("#inputNum").attr("flag") == "true") {

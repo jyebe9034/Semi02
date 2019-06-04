@@ -76,7 +76,6 @@
 	}
 	
 	.searchWord {
-/*		float: left;*/
 		width: 250px;
         height: 30px;
 	}
@@ -87,7 +86,6 @@
 	}
 	
 	.searchBtn {
-		/*                margin-left: 1px;*/
 		background-color: #1ebdd8;
 		border-color: #1ebdd8;
 		color: #FFF;
@@ -236,6 +234,7 @@
 </style>
 <script>
 	$(function(){
+	
 		$.ajax({
 			url : "Fund",
 			type : "post",
@@ -247,63 +246,55 @@
 		$("#goMainBtn").on("click",function(){
 			location.href="Main.members";
 		})
-		
-		$(".searchBtn").on("click",function(){
-	       if($(".searchWord").val()==""){
-	    	   alert("검색할 내용을 입력해주세요.");
-	       }
+		$("#writeBtn").on("click", function(){
+			location.href="write.board";
 		})
 		
-
-// 		$(".page-link").on("click",function(){
-// 			var paging = $(this).attr("paging");
-// 			$.ajax({
-// 					url:"List.board",		
-// 					type:"post",
-// 					data:{
-// 						currentPage:paging,
-// 						searchOption:$("#dropdownforSearch option").val(),
-// 						searchWord:$(".searchWord").val()
-// 						}
-// 			}).done(function(resp){
-// 				console.log(resp); 			    	
-// 			});
-// 		})
+		$(".searchBtn").on("click",function(){		
+			var searchWord = $(".searchWord").val();
+			var searchOption = $("#dropdownforSearch option:selected").val();
+	       if(searchWord==""){
+	    	   alert("검색할 내용을 입력해주세요.");
+	       }else if(searchOption=="none"){
+	    	   alert("검색방법을 선택해주세요.");
+	       }else{
+	    	   location.href="List.board?currentPage=1&&searchOption="+searchOption+"&&searchWord="+searchWord;
+	       }
+		})
 
 	})
 </script>
 </head>
 <body>
 	<!--상단 메뉴바-->
-	<nav class="navbar navbar-expand-md navbar-light">
-		<div class="logo">
-			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav nav-ul">
-				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-	
-				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
-	</nav>
+<nav class="navbar navbar-expand-md navbar-light">
+      <div class="logo">
+         <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+         data-target="#navbarNav" aria-controls="navbarNav"
+         aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav nav-ul">
+            <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+            <li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+            <li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption=allPages&&searchWord=allPages">후원 게시판</a></li>
+   
+            <c:choose>
+               <c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+                  <li class="nav-item nav-li"><a id="logos" class="nav-link anker ml-1 mr-3" href="myPage.members">마이 페이지</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-4" href="Logout.members">로그아웃</a></li>
+               </c:when>
+               <c:otherwise>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+               </c:otherwise>
+            </c:choose>
+         </ul>
+      </div>
+   </nav>
 
 	<div class="boardName">
 		<p>게시판</p>
@@ -313,16 +304,14 @@
 
 		<!--검색창-->
 		<div class="row d-flex justify-content-end">
-			<form action="List.board?currentPage=1" method=post id=searchBox>
 				<select name="searchOption" id="dropdownforSearch">
-					<option>검색방법</option>
-					<option name="searchOption" value="title">제목</option>
-					<option name="searchOption" value="contents">내용</option>
-					<option name="searchOption" value="all">제목+내용</option>
+					<option name="searchOption" class="searchOption" value="none">검색방법</option>
+					<option name="searchOption" class="searchOption" value="b_title">제목</option>
+					<option name="searchOption" class="searchOption" value="b_contents">내용</option>
+					<option name="searchOption" class="searchOption" value="b_title || B_CONTENTS">제목+내용</option>
 				</select> 
 				<input type="text" name="searchWord" class="searchWord" placeholder="검색할 내용 입력">
 				<button type="submit" class="btn searchBtn">검색</button>
-			</form>
 		</div>
 
 	</div>
@@ -384,15 +373,6 @@
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
-	<script>
-		$("#goMainBtn").on("click", function(){
-			location.href="Main.members";
-		})
-	
-		$("#writeBtn").on("click", function(){
-			location.href="write.board";
-		})
-	</script>
+
 </body>
 </html>

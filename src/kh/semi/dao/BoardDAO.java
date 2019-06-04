@@ -20,7 +20,6 @@ import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
 	static int recordCountPerPage = 8;
-	static int boardRecordCountPerPage = 10;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 
@@ -164,7 +163,6 @@ public class BoardDAO {
 	//totalCount//전체글개수----------------
 	/*(1)전체 게시글의 개수*/
 	public int totalRecordNum() throws Exception{
-		//	String sql = "select * from board order by b_no desc";
 		String sql = "select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)";
 		try(
 				Connection con = this.getConnection();
@@ -180,7 +178,6 @@ public class BoardDAO {
 	}
 	/*(2)searchOption으로 검색했을 때 전체 게시글 개수*/
 	public PreparedStatement psForSearchOption(Connection con, String searchOption, String searchWord) throws Exception{
-		//String sql = "select * from board where " + searchOption + " like ? order by b_no desc";
 		String sql = "select * from board t1 join title_img t2 on (t1.b_no = t2.t_b_no) where "+searchOption+" like ? order by b_no desc";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, "%"+searchWord+"%");
@@ -199,11 +196,9 @@ public class BoardDAO {
 			return result;
 		}
 	}
-
-	//-------------------------목록
+	
 	/*(1)전체 게시판 목록*/
 	public PreparedStatement psForSelectByPage(Connection con, int startNum, int endNum) throws Exception{
-		//String sql = "select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)";
 		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)) where rown between ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, startNum);
@@ -296,80 +291,66 @@ public class BoardDAO {
 		}	
 	}
 	
-	//----페이지
 	/*페이지 네비게이터*/
-	public String getNavi(int currentPage, int totalRecordCount) throws Exception {
+		public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord) throws Exception {
 
-		int recordTotalCount = totalRecordCount;
-		
-		int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
-		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
-		  
-	
-		//가지고 있는 게시글의 수에 맞는 페이지의 개수를 구한다.
-		/*총 페이지의 개수*///10으로 나눴을 때 나머지가 있으면 1을 더하고, 없으면 그대로.
-		//int pageTotalCount = 0;
-		int pageTotalCount = recordTotalCount / recordCountPerPage;
-		if(recordTotalCount % recordCountPerPage > 0) {
-			pageTotalCount++;
-		}
-	
-		//현재  페이지 오류 검출 및 정정
-		/*보안코드 : 현재페이지가 1보다 작다면 1로, 전체페이지보다 크다면 전체페이지(pageTotalCount)로 표시하겠다*/
-		if(currentPage < 1) {
-			currentPage = 1;
-		}else if(currentPage > pageTotalCount) {
-			currentPage = pageTotalCount;
-		}
-		
-		//현재 위치한 페이지를 기반으로 네비의 시작 지점과 끝 지점을 구한다.
-		/*네이게이터의 시작*/
-		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
-		/*네이게이터의 끝*/
-		int endNavi = startNavi + (naviCountPerPage - 1); 
-		//endNavi = startNavi + 9; 
-		
-		//네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
-		if(endNavi > pageTotalCount) {
-			endNavi = pageTotalCount;
-		}
-		
-		System.out.println("현재 위치 : " + currentPage);
-		System.out.println("네비 시작 : " + startNavi);
-		System.out.println("네비 끝 : " + endNavi);
-		
-		boolean needPrev = true;
-		boolean needNext = true;
-
-		if(startNavi == 1) { 
-			needPrev = false;
-		}
-		if(endNavi == pageTotalCount) {
-			needNext = false;
-		}
-
-		StringBuilder sb = new StringBuilder();
-		if(needPrev) {
-			int prevStartNavi = startNavi-1;
-			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption==null&&searchWord==null&&currentPage="+ prevStartNavi +"\"" + 
-					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
-					"						</a></li>");
+			int recordTotalCount = totalRecordCount;
 			
-		}
-		for(int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption==null&&searchWord==null&&currentPage="+i+"\">" + i + "</a></li>");
-		}
-		if(needNext) {
-			int nextEndNavi = endNavi+1;
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption==null&&searchWord==null&&currentPage="+ nextEndNavi++ +"\""+ 
-					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
-					"						</a></li>");
-		}
+			int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
+			int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
+			  
+			int pageTotalCount = recordTotalCount / recordCountPerPage;
+			if(recordTotalCount % recordCountPerPage > 0) {
+				pageTotalCount++;
+			}
 		
-		return sb.toString();
-	}
+			//현재  페이지 오류 검출 및 정정
+			/*보안코드 : 현재페이지가 1보다 작다면 1로, 전체페이지보다 크다면 전체페이지(pageTotalCount)로 표시하겠다*/
+			if(currentPage < 1) {
+				currentPage = 1;
+			}else if(currentPage > pageTotalCount) {
+				currentPage = pageTotalCount;
+			}
+			int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
+			int endNavi = startNavi + (naviCountPerPage - 1); 
+			
+			if(endNavi > pageTotalCount) {
+				endNavi = pageTotalCount;
+			}
+			
+			System.out.println("현재 위치 : " + currentPage);
+			System.out.println("네비 시작 : " + startNavi);
+			System.out.println("네비 끝 : " + endNavi);
+			
+			boolean needPrev = true;
+			boolean needNext = true;
 
-	
+			if(startNavi == 1) { 
+				needPrev = false;
+			}
+			if(endNavi == pageTotalCount) {
+				needNext = false;
+			}
+
+			StringBuilder sb = new StringBuilder();
+			if(needPrev) {
+				int prevStartNavi = startNavi-1;
+				sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&&searchWord="+searchWord+"&&currentPage="+ prevStartNavi +"\"" + 
+						"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
+						"						</a></li>");		
+			}
+			for(int i = startNavi; i <= endNavi; i++) {
+				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&&searchWord="+searchWord+"&&currentPage="+i+"\">" + i + "</a></li>");
+			}
+			if(needNext) {
+				int nextEndNavi = endNavi+1;
+				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&&searchWord="+searchWord+"&&currentPage="+ nextEndNavi++ +"\""+ 
+						"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
+						"						</a></li>");
+			}
+			
+			return sb.toString();
+		}
 //============================================================================================================================	
 	
 

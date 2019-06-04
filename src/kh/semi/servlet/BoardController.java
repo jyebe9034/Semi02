@@ -276,28 +276,18 @@ public class BoardController extends HttpServlet {
 					System.out.println("currentPage : " + currentPage);
 			
 					int totalRecordCount = 0; //=recordTotalCount
-					if(searchOption.equals("title")) { //제목으로 검색
-						searchOption = "b_title";
-						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));					
-					}else if(searchOption.equals("contents")) { //내용으로 검색
-						searchOption = "b_contents";
-						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
-					}else if(searchOption.equals("all")) { //제목+내용으로 검색
-						searchOption = "b_title || B_CONTENTS";
-						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
-					}else{ //전체 글 목록
+					if(searchOption.equals("allPages")){ //전체 글 목록
 						totalRecordCount = dao.totalRecordNum();
 						request.setAttribute("board", dao.selectByPage(currentPage));
+					}else {
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));	
 					}
-					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount));
+					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord));
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
 					
 				}catch(Exception e) {				
 					e.printStackTrace();
-					//response.sendRedirect("error.html");
 				}
 			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
 				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);		

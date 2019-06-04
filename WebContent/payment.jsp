@@ -94,26 +94,34 @@ li {
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-md navbar-light navbar-fixed-top">
-		<div class="logo">
-			<a class="navbar-brand" href="main.jsp"><img src="logo/bridge_logo2.png"
-				width="150px"></a>
-		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="#">소개</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">후원안내</a></li>
-				<li class="nav-item"><a class="nav-link" href="to_write.board">후원해 주세요</a></li>
-				<li class="nav-item"><a class="nav-link" href="textList.board?currentPage=1">후원 게시판</a></li>
-				<li class="nav-item"><a class="nav-link" href="Logout.members">로그아웃</a></li>
-			</ul>
-		</div>
-	</nav>
+<nav class="navbar navbar-expand-md navbar-light">
+      <div class="logo">
+         <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+         data-target="#navbarNav" aria-controls="navbarNav"
+         aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav nav-ul">
+            <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+            <li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+            <li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+   
+            <c:choose>
+               <c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+                  <li class="nav-item nav-li"><a id="logos" class="nav-link anker ml-1 mr-3" href="myPage.members">마이 페이지</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-4" href="Logout.members">로그아웃</a></li>
+               </c:when>
+               <c:otherwise>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+               </c:otherwise>
+            </c:choose>
+         </ul>
+      </div>
+   </nav>
 	
 	<form action="Payment.board" id="payForm" method="post">
 		<div class="wrapper">
