@@ -46,6 +46,7 @@ public class MembersController extends HttpServlet {
 				String[] strArr = new String[3];
 				int[] intArr = new int[3];
 
+				request.setAttribute("listSize", list.size());
 				List<TitleImgDTO> imgList = new ArrayList<>();
 				for(int i = 0; i < list.size(); i++) {
 					int goalAmount = list.get(i).getAmount();

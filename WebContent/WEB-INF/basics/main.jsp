@@ -223,27 +223,32 @@
 	<hr>
 	<div class="container container_card">
 		<div class="row rowcard">
-			<c:forEach var="i" begin="0" end="2">
-				<div class="card col-lg-4 col-md-12 col-sm-12">
-					<div class="imgBox">
-						<img src="${imgSrc[i] }" class="imgTag" width="100%">
-					</div>
-					<div class="card-body">
-						<h6 class="card-title">
-							<span>${list[i].title}</span>
-						</h6>
-						<hr>
-						<p class="card-text" align="left">
-							모금 마감일 <br> <span>${duedate[i]}</span><br> 모금현황<br>
-							<span>${percentage[i]}%</span>
-						<div class="progress">
-							<div class="progress-bar" role="progressbar"
-								aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[i]}%"></div>
+			<c:choose>
+			<c:when test="${listSize == 0 }"></c:when>
+			<c:otherwise>
+				<c:forEach var="i" begin="0" end="${listSize }">
+					<div class="card col-lg-4 col-md-12 col-sm-12">
+						<div class="imgBox">
+							<img src="${imgSrc[i] }" class="imgTag" width="100%">
 						</div>
-						<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&commentPage=1">후원하기</a></div>
+						<div class="card-body">
+							<h6 class="card-title">
+								<span>${list[i].title}</span>
+							</h6>
+							<hr>
+							<p class="card-text" align="left">
+								모금 마감일 <br> <span>${duedate[i]}</span><br> 모금현황<br>
+								<span>${percentage[i]}%</span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar"
+									aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[i]}%"></div>
+							</div>
+							<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&commentPage=1">후원하기</a></div>
+						</div>
 					</div>
-				</div>
-			</c:forEach>
+				</c:forEach>
+			</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 
