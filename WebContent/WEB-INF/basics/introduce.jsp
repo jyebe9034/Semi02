@@ -11,9 +11,11 @@
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <style>
-	
 	div{
     	box-sizing: border-box;
+	}
+	#image{
+		max-height: 700px;
 	}
 	.introMain{
 	    max-height: 850px;
@@ -25,25 +27,45 @@
 		font-family: "Nanum Gothic";
 		height: 100%;
 	}
+	div{
+        box-sizing: border-box;
+    }
+	.navbar{
+		position: relative;
+		height: 60px;
+	}
+	#logos{
+		width: 140px;
+	}
+	.logo{
+		position: absolute;
+		top: 10%;
+		left: 15%;
+	}
+	#navbarNav {
+		max-width: 500px;
+		line-height: 40px;
+		position: relative;
+		top: 30%;
+		left: 55%;
+		text-align: center;
+	}
+	#toggle{
+		position: absolute;
+		top: 30%;
+		right: 5%;
+	}
 	.wrapper {
 		display: inline-block;
 	}
-	.navA{
+	.anker{
 		font-weight: bold;
-		color: #fcfcfc;
 	}
-	.navA:hover {
+	.anker:hover{
 		color: #000000;
-		text-decoration: none;
 	}
-	ul {
-		margin: auto;
-	}
-	li {
-		width: 130px;
-	}
-	.nav_link {
-		font-family: "Nanum Gothic";
+	.nav-li{
+		width: 110px;
 	}
 	.btn-primary {
 		margin: 20px 0px 20px;
@@ -57,214 +79,156 @@
 		color: #FFF;
 	}
 	#wrap{
-		width:900px;
-		height:400px;
 		position: relative;
-		background-image:url("giveyou01.jpg");
-		background-size:cover;
-		padding-left:0px;
-		padding-right:0px;
-	}
-	.bg{ 
-		 background-color:rgba(0, 0, 0, 0.5); /*살짝 투명한 검정으로 배경색*/ 
-		 width:100%; 
-		 height:400px; 
-		 position: absolute; /*다른 요소들 위로 겹쳐질 수 있게함*/ 
-
-	}
-
-	#text01{
-		position: absolute;
-		top: 33%;
-		left: 40%;
-        color: #fcfcfc;      
-	}
-	#text02{
-		position: absolute;
-		top: 55%;
-		left: 33%;
-		color: #fcfcfc;
 	}
 	.card-title{
 		font-size: 30px;
         font-weight: bold;
 	}
-/*     .card-text{ */
-/*         padding-left: 400px; */
-/*         padding-right: 400px; */
-/*         font-size: 20px; */
-/*     } */
-    #lastmenu1{
-        float: left;
-        margin: 120px;
-        padding-left: 500px;
-        font-family: 'Poiret One', cursive;
-    }
-    #lastmenu2{
-        float: left;
-        margin: 50px;
-        padding-left: 50px;
-        font-family: 'Poiret One', cursive;
-    }
-    #lastmenu3{
-        float: left;
-        margin: 120px;
-        padding-left: 50px;
-        font-family: 'Poiret One', cursive;
+    .card-text{
+        font-size: 20px;
     }
     #footer{
-        height: 250px;
+        height: 200px;
         width: 100%;
         background-color: #2d3f53;
         align-items: center;
         position: relative;
+        margin-top: 30px;
 	}
-    .sublast1{
-        list-style: none;
+	#f_logo{
+		color: #98ddde;
+        text-decoration: none;
+	}
+	#f_logo_wrap{
         position: absolute;
-        top: 40px;
-        padding: 10px;
-    }
-    .sublast2{
-        list-style: none;
-        position: absolute;
-        top: 40px;
-        padding: 10px;
-    }
-    .sublast3{
-        list-style: none;
-        position: absolute;
-        top: 40px;
-        padding: 10px;
-    }
-    .sub-last{
-    	width: 200px;
-    	font-weight: light;
-    }
-    .sub-last:hover{
-    	color : #fa7268;
-    }
-    .sub-last1{
-    	width: 200px;
-        padding: 10px;
-        font-size: 20px;
-        color: #95afbf;
-    }
-    .sub-last2{
-        padding: 5px;
-    }
-    .sub-last3{
-        padding: 10px;
-    }
-    #footerMenu01{
-    	color: #fcfcfc;
-    }
-    #footerMenu02{
-    	color: #fcfcfc;
-    }
-    #footerMenu03{
-    	color: #fcfcfc;
-    }
-    #footerMenu04{
-    	color: #fcfcfc;
-    }
-    #footerMenu05{
-    	color: #fcfcfc;
-    }
-    #footerMenu06{
-    	color: #fcfcfc;
-    }
-    #footerMenu07{
-    	color: #fcfcfc;
-    }
-    #footerMenu08{
-    	color: #fcfcfc;
-    }
-    #footerMenu09{
-    	color: #fcfcfc;
-    }
+        left: 15%;
+        top: 20%;
+	}
+	#f_info_wrap{
+		position: absolute;
+		right: 15%;
+		top: 20%;
+	}
+	#f_info{
+		color: gray;
+		text-align: right;
+		font-size: 13px;
+		float: left;
+		padding-top: 5px;
+		margin-right: 10px;
+	}
+	#suggest{
+		display: inline-block;
+		background-color: #fa7268;
+		border-radius: 10%;
+		color: white; 
+		width: 90px;
+		height: 45px;
+		text-decoration: none;
+		line-height: 50px;
+		float: right;
+		margin-left: 15px;
+		text-align: center;
+	}
+	#f_sns{
+		position: absolute;
+		right: 15%;
+		top: 47%;
+	}
+	.sns{
+		width: 30px;
+		height: 30px;
+		margin: 3px;
+	}
+	#kakao{
+		width: 40px;
+		height: 40px;
+	}
+	#insta{
+		width: 32px;
+		height: 32px;
+		margin-left: 8px;
+	}
+	#copyright{
+		color: gray;
+		position: absolute;
+		right: 15%;
+		top: 70%;
+		font-size: 13px;
+		margin-top: 5px;
+	}
 </style>
 </head>
 <body>
 	<div id="root">
-		<div id="wrapper">
-			<nav class="navbar navbar-expand-md navbar-light navbar-fixed-top">
-				<div class="logo">
-					<a class="navbar-brand" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-				</div>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarNav" aria-controls="navbarNav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link navA" href="Introduce.members">소개</a></li>
-						<li class="nav-item"><a class="nav-link navA" href="#">후원안내</a></li>
-						<li class="nav-item"><a class="nav-link navA" href="write.board">후원해 주세요</a></li>
-						<li class="nav-item"><a class="nav-link navA" href="textList.board?currentPage=1">후원 게시판</a></li>
+		<nav class="navbar navbar-expand-md navbar-light">
+			<div class="logo">
+				<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+			</div>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav nav-ul">
+					<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+					<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+					<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 		
-						<c:choose>
-							<c:when test="${sessionScope.loginEmail != null || navercontents.name != null}">
-								<li class="nav-item"><a class="nav-link navA"
-									href="Logout.members">로그아웃</a></li>
-							</c:when>
-							<c:otherwise>
-								<li class="nav-item"><a class="nav-link navA" href="LoginForm.members">로그인</a></li>
-								<li class="nav-item"><a class="nav-link navA" href="JoinForm.members">회원가입</a></li>
-							</c:otherwise>
-						</c:choose>
-					</ul>
-				</div>
-			</nav>
-			<div id="mainPhoto" class="container">
-				<div class="row">
-					<div id="wrap" class="col-12">
-<!-- 						<img src="giveyou01.jpg" class="introMain p-0 m-0"> -->
-						<div class="bg"></div>
-						<h1 id="text01">도움닿기란?</h1>
-						<h3 id="text02">"도움닫기 + 닿다" 의 합성어</h3>
-					</div>
+					<c:choose>
+						<c:when test="${sessionScope.loginEmail != null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+	
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+							<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</div>
+		</nav>
+		<hr>
+		<div id="wrapper">
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+				<div class="carousel-inner">
+				    <div class="carousel-item active">
+				        <img id="image" src="photo_image/editGiveyou.PNG" class="d-block w-100" alt="이미지를 찾을 수 없습니다.">
+				    </div>
 				</div>
 			</div>
 			
 			<div class="card text-center">
 			  <div class="card-body">
-			    <h5 class="card-title">도움닿기는</h5><br>
-			    
-			    <p class="card-text text-center">여러분의 기부가 도움이 필요한 사람들에게 닿아<br>
-				그들이 도움닫기 하여 더 높이 더 멀리 나아갈 수 있도록 하고 싶은 마음들이 모여 만들어진<br> 열린 기부 공간입니다.</p>
-				
-				<p class="card-text text-center">후원 요청 글은 회원에 한해 자유롭게 게시판에 올릴 수 있습니다.<br> 
-				기부된 금액은 100% 대상자에게 전달됩니다.<br> 후원 금액은 마감일까지 모금된 뒤 마감일에 대상자에게 전달됩니다.</p>
+			  	<div id="wrap">
+				    <h5 class="card-title">도움닿기는</h5><br>
+				    
+				    <p class="card-text text-center">여러분의 기부가 도움이 필요한 사람들에게 닿아<br>
+					그들이 도움닫기 하여 더 높이 더 멀리 나아갈 수 있도록 하고 싶은 마음들이 모여 만들어진<br> 열린 기부 공간입니다.</p>
+					
+					<p class="card-text text-center">후원 요청 글은 회원에 한해 자유롭게 게시판에 올릴 수 있습니다.<br> 
+					기부된 금액은 100% 대상자에게 전달됩니다.<br> 후원 금액은 마감일까지 모금된 뒤 마감일에 대상자에게 전달됩니다.</p>
+			  	</div>
 			  </div>
 			</div>
 			
 			<div id="footer">
-	            <div id="lastmenu1">
-	                <ul class="sublast1">
-	                    <li class="sub-last1"> Hello, Getaway </li>
-	                    <li id="footerMenu01" class="sub-last"><a href=""> About </a></li>
-	                    <li id="footerMenu02" class="sub-last"><a href=""> FAQ </a></li>
-	                    <li id="footerMenu03" class="sub-last"><a href=""> Contact Us </a></li>
-	                </ul>
-	            </div>
-	            <div id="lastmenu2">
-	                <ul class="sublast2">
-	                    <li class="sub-last1"> Ways to Escape </li>
-	                    <li id="footerMenu04" class="sub-last"><a href=""> Multi-Night Packs </a></li>
-	                    <li id="footerMenu05" class="sub-last"><a href=""> Student Program </a></li>
-	                    <li id="footerMenu06" class="sub-last"><a href=""> Artist Fellowships </a></li>
-	                </ul>
-	            </div>
-	            <div id="lastmenu3">
-	                <ul class="sublast3">
-	                    <li class="sub-last1"> The Getaway Way </li>
-	                    <li id="footerMenu07" class="sub-last"><a href=""> The Journal </a></li>
-	                    <li id="footerMenu08" class="sub-last"><a href=""> The Getaway Podcast </a></li>
-	                    <li id="footerMenu09" class="sub-last"><a href=""> The Book </a></li>
-	                </ul>
-	            </div>
+	            <div id="f_logo_wrap">
+					<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+				</div>
+				<div id="f_info_wrap">
+					<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
+				</div>
+				<div id="f_sns">
+					<img id="kakao" class="sns" src="photo_image/ka.png">
+					<img class="sns" src="photo_image/fa.png">
+					<img id="insta" class="sns" src="photo_image/kk.png">
+					<a href="write.board"><div id="suggest">후원 신청</div></a>
+				</div>
+				<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	        </div>
 		</div>
 	</div>

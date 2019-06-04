@@ -1,64 +1,68 @@
 package kh.semi.dto;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class BoardDTO {
+public class BoardListDTO {
+	/*board*/
 	private int boardNo; // 숫자 주키 (DB가 만들어 줘)
-	private String title;
 	private String email;
+	private String title;
 	private String writer;
 	private int amount;
 	private String bank;
 	private String account;
-	private Timestamp dueDate;
 	private String contents;
+	private String dueDate;
 	private int viewCount;
-	private Timestamp writeDate;	
+	private String writeDate;	
 	private int recommend;
-	private int sumAmount;	
-	// 총
+	private int sumAmount;
+	/*title_img*/
+	private String fileName;
+	private String oriFileName;
+	private String filePath;
+	private long fileSize;
+	//총 18개
 	
-	
-	public BoardDTO() {
+	public BoardListDTO() {
 		super();
 	}
-	public BoardDTO(int boardNo, String title, String email, String writer, int amount, String bank, String account,
-			Timestamp dueDate, String contents, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
-		super();
+	public BoardListDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
+			String contents, String dueDate, int viewCount, String writeDate, int recommend, int sumAmount,
+			String fileName, String oriFileName, String filePath, long fileSize) {
 		this.boardNo = boardNo;
-		this.title = title;
 		this.email = email;
+		this.title = title;
 		this.writer = writer;
 		this.amount = amount;
 		this.bank = bank;
 		this.account = account;
-		this.dueDate = dueDate;
 		this.contents = contents;
+		this.dueDate = dueDate;
 		this.viewCount = viewCount;
 		this.writeDate = writeDate;
 		this.recommend = recommend;
 		this.sumAmount = sumAmount;
+		this.fileName = fileName;
+		this.oriFileName = oriFileName;
+		this.filePath = filePath;
+		this.fileSize = fileSize;
 	}
-	
 	public int getBoardNo() {
 		return boardNo;
 	}
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getWriter() {
 		return writer;
@@ -84,17 +88,17 @@ public class BoardDTO {
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public Timestamp getDueDate() {
-		return dueDate;
-	}
-	public void setDueDate(Timestamp dueDate) {
-		this.dueDate = dueDate;
-	}
 	public String getContents() {
 		return contents;
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+	public String getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
 	}
 	public int getViewCount() {
 		return viewCount;
@@ -102,10 +106,10 @@ public class BoardDTO {
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
-	public Timestamp getWriteDate() {
+	public String getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(Timestamp writeDate) {
+	public void setWriteDate(String writeDate) {
 		this.writeDate = writeDate;
 	}
 	public int getRecommend() {
@@ -120,15 +124,31 @@ public class BoardDTO {
 	public void setSumAmount(int sumAmount) {
 		this.sumAmount = sumAmount;
 	}
-
-	public String getFormedDate() {
-		long writeTime = this.writeDate.getTime();
-		long dueTime = this.dueDate.getTime();
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		return sdf.format(writeTime) + " ~ " + sdf.format(dueTime);
+	public String getFileName() {
+		return fileName;
 	}
-
-
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getOriFileName() {
+		return oriFileName;
+	}
+	public void setOriFileName(String oriFileName) {
+		this.oriFileName = oriFileName;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public long getFileSize() {
+		return fileSize;
+	}
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	
+	
 	
 }

@@ -16,6 +16,31 @@ public class MemberDTO {
 	
 	public MemberDTO() {}
 	
+	public MemberDTO(String email, String name, String ipAddress) {
+		this.email = email;
+		this.name = name;
+		this.ipAddress = ipAddress;
+	}
+
+	public MemberDTO(String email, String pw, String phone, String zipCode,
+			String address1, String address2) {
+		this.email = email;
+		this.pw = pw;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address1 = address1;
+		this.address2 = address2;
+	}
+	public MemberDTO(String email, String phone, String zipCode,
+			String address1, String address2) {
+		this.email = email;
+		this.phone = phone;
+		this.zipCode = zipCode;
+		this.address1 = address1;
+		this.address2 = address2;
+
+	}
+	
 	public MemberDTO(String email, String name, Timestamp joinDate, String ipAddress, String admin) {
 		this.email = email;
 		this.name = name;

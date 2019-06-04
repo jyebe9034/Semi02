@@ -3,5 +3,5 @@
 .settings
 *.mp4
 *.class
-/build/
 MANIFEST.MF
+/build/
