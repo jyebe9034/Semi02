@@ -9,39 +9,9 @@
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+
+<link rel="stylesheet" href="nav_footer.css">
 <style>
-	body {
-		font-family: "Nanum Gothic";
-		height: 100%;
-	}
-	div{
-        box-sizing: border-box;
-    }
-	.navbar{
-		position: relative;
-		height: 60px;
-	}
-	#logos{
-		width: 140px;
-	}
-	.logo{
-		position: absolute;
-		top: 10%;
-		left: 15%;
-	}
-	#navbarNav {
-		max-width: 500px;
-		line-height: 40px;
-		position: relative;
-		top: 30%;
-		left: 55%;
-		text-align: center;
-	}
-	#toggle{
-		position: absolute;
-		top: 30%;
-		right: 5%;
-	}
 	.progress {
 		width: 200px;
 	}
@@ -50,15 +20,6 @@
 	}
 	.wrapper {
 		display: inline-block;
-	}
-	.anker{
-		font-weight: bold;
-	}
-	.anker:hover{
-		color: #000000;
-	}
-	.nav-li{
-		width: 110px;
 	}
 	.boardName {
 		text-align: center;
@@ -101,10 +62,6 @@
 	
 	.listBox {
 		margin-bottom: 50px;
-	}
-	
-	.listRow {
-		
 	}
 	
 	.list {
@@ -163,75 +120,8 @@
 		background-color: #28a39f;
 		color: #FFF;
 	}
-	#footer{
-        height: 200px;
-        width: 100%;
-        background-color: #2d3f53;
-        align-items: center;
-        position: relative;
-        margin-top: 30px;
-	}
-	#f_logo{
-		color: #98ddde;
-        text-decoration: none;
-	}
-	#f_logo_wrap{
-        position: absolute;
-        left: 15%;
-        top: 20%;
-	}
-	#f_info_wrap{
-		position: absolute;
-		right: 15%;
-		top: 20%;
-	}
-	#f_info{
-		color: gray;
-		text-align: right;
-		font-size: 13px;
-		float: left;
-		padding-top: 5px;
-		margin-right: 10px;
-	}
-	#suggest{
-		display: inline-block;
-		background-color: #fa7268;
-		border-radius: 10%;
-		color: white; 
-		width: 90px;
-		height: 45px;
-		text-decoration: none;
-		line-height: 45px;
-		float: right;
-		margin-left: 15px;
-		text-align: center;
-	}
-	#f_sns{
-		position: absolute;
-		right: 15%;
-		top: 47%;
-	}
-	.sns{
-		width: 30px;
-		height: 30px;
-		margin: 3px;
-	}
-	#kakao{
-		width: 40px;
-		height: 40px;
-	}
-	#insta{
-		width: 32px;
-		height: 32px;
-		margin-left: 8px;
-	}
-	#copyright{
-		color: gray;
-		position: absolute;
-		right: 15%;
-		top: 70%;
-		font-size: 13px;
-		margin-top: 5px;
+	.article{
+		cursor: pointer;
 	}
 </style>
 <script>
@@ -279,11 +169,13 @@
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div id="toggle">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
@@ -291,9 +183,9 @@
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 	
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
 					</c:when>
 					<c:otherwise>
@@ -330,7 +222,7 @@
 		<!--글목록-->
 		<div class="row listRow">
 			<c:forEach var="list" items="${board }">
-				<div class="col-lg-3 col-md-6 col-sm-12">
+				<div class="col-lg-3 col-md-6 col-sm-12 article" boardNo="${list.boardNo}">
 					<div class="card list">
 						<img src=${list.filePath}> 
 						<div class="card-body">
@@ -392,6 +284,11 @@
 	
 		$("#writeBtn").on("click", function(){
 			location.href="write.board";
+		})
+		
+		$(".article").on("click", function(){
+			var boardNo = $(this).attr("boardNo");
+			location.href="Read.board?boardNo="+boardNo+"&commentPage=1";
 		})
 	</script>
 </body>
