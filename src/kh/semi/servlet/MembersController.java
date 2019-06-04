@@ -22,6 +22,7 @@ import kh.semi.dao.MemberDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
+import kh.semi.dto.TitleImgDTO;
 
 @WebServlet("*.members")
 public class MembersController extends HttpServlet {
@@ -42,29 +43,51 @@ public class MembersController extends HttpServlet {
 			try {
 				list = bdao.getDataForMain();
 				request.setAttribute("list", list);
+				String[] strArr = new String[3];
+				int[] intArr = new int[3];
 				for(int i = 0; i < list.size(); i++) {
-					String[] strArr = new String[3];
-					double[] douArr = new double[3];
-					
 					int goalAmount = list.get(i).getAmount();
 					Timestamp dueDate = list.get(i).getDueDate();
 					long dueTime = dueDate.getTime();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					strArr[i] = sdf.format(dueTime);
 					int sumAmount = list.get(i).getSumAmount();
-					douArr[i] = Math.floor((double)sumAmount / goalAmount * 100);
-					if(i == list.size()-1) {
-						request.setAttribute("duedate", strArr);
-						request.setAttribute("percentage", douArr);
-					}
+					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
 				}
+				request.setAttribute("duedate", strArr);
+				request.setAttribute("percentage", intArr);
+				System.out.println(intArr[0] +" : "+ intArr[1] +" : "+ intArr[2]);
+				
+				int bNo1 = list.get(0).getBoardNo();
+				int bNo2 = list.get(1).getBoardNo();
+				int bNo3 = list.get(2).getBoardNo();
+				List<TitleImgDTO> imgList = bdao.getTitleImg(bNo1,bNo2,bNo3);
+				String[] imgSrc = new String[3];
+				for(int i=0; i < imgList.size(); i++) {
+					if(imgList.get(i).getBoardNo() == bNo1) {
+						String str = imgList.get(i).getFilePath();
+						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+						imgSrc[0] = result + "/" + imgList.get(i).getFileName();
+					}else if(imgList.get(i).getBoardNo() == bNo2) {
+						String str = imgList.get(i).getFilePath();
+						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+						imgSrc[1] = result + "/" + imgList.get(i).getFileName();
+					}else if(imgList.get(i).getBoardNo() == bNo3) {
+						String str = imgList.get(i).getFilePath();
+						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+						imgSrc[2] = result + "/" + imgList.get(i).getFileName();
+					}
+					
+				}
+				request.setAttribute("imgSrc", imgSrc);
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
+
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
-			
+
 		}else if (cmd.equals("/JoinForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/joinForm.jsp").forward(request, response);
 
@@ -105,6 +128,7 @@ public class MembersController extends HttpServlet {
 			}
 		}else if(cmd.contentEquals("/LoginForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/loginForm.jsp").forward(request, response);
+			
 		} else if (cmd.equals("/Login.members")) {
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");
@@ -164,11 +188,11 @@ public class MembersController extends HttpServlet {
 					if (dao.isIdExist(dto)) {
 						MemberDTO realcontents = dao.getContents(dto);
 						request.getSession().setAttribute("realcontents", realcontents);
-						request.getRequestDispatcher("main.jsp").forward(request, response);
+						request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
 						request.getSession().setAttribute("navercontents", dto);
-						request.getRequestDispatcher("main.jsp").forward(request, response);
+						request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					}
 				}
 			} catch (Exception e) {
@@ -198,17 +222,17 @@ public class MembersController extends HttpServlet {
 			
 			try {
 				
-				if (dao.isIdExist(dto)) {
+				if (dao.isIdExist(dto)) { // 이미 한번 로그인 한 경우
 					
 					MemberDTO realcontents = dao.getContents(dto);
 					request.getSession().setAttribute("realcontents", realcontents);
-					request.getRequestDispatcher("main.jsp").forward(request, response);
+					request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					
-				} else {
+				} else { // 카카오나 네이버 로그인을 처음한 경우
 					
 					dao.insertNaverMember(dto);
 					request.getSession().setAttribute("navercontents", dto);
-					request.getRequestDispatcher("main.jsp").forward(request, response);
+					request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 				}
 				
 			} catch (Exception e) {
@@ -303,7 +327,7 @@ public class MembersController extends HttpServlet {
 		}else if(cmd.equals("/myPageUpdateComplete.members")) {
 			
 			request.getSession().invalidate();
-			request.getRequestDispatcher("main.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 			
 		}else if(cmd.equals("/myPage.members")) {
 			

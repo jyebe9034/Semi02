@@ -11,7 +11,7 @@ create table members(
     m_phone varchar(20),
     m_zipcode varchar(20),
     m_address1 varchar(100),
-    m_addredd2 varchar(100),
+    m_address2 varchar(100),
     m_joindate timestamp default sysdate not null,
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))

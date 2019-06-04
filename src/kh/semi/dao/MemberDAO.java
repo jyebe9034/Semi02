@@ -558,6 +558,7 @@ public class MemberDAO {
 			while(rs.next()) {
 				int boardNo = rs.getInt("b_no");
 				String title = rs.getString("b_title");
+				String tmepEmail = rs.getString("b_email");
 				String writer = rs.getString("b_writer");
 				int amount = rs.getInt("b_amount");
 				String bank = rs.getString("b_bank");
@@ -568,7 +569,7 @@ public class MemberDAO {
 				Timestamp writeDate = rs.getTimestamp("b_writedate");
 				int recommend = rs.getInt("b_recommend");
 				int sumAmount = rs.getInt("b_sum_amount");
-				BoardDTO dto = new BoardDTO(boardNo,email,title,writer,amount,bank,account,contents,dueDate,viewCount,writeDate,recommend,sumAmount);
+				BoardDTO dto = new BoardDTO(boardNo,title,tmepEmail,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount);
 				result.add(dto);
 			}
 			return result;
@@ -659,8 +660,8 @@ class MyAuthentication extends Authenticator {
 
 	PasswordAuthentication pa;
 	public MyAuthentication(){
-		String id = "@gmail.com";       // 구글 ID
-		String pw = "";          // 구글 비밀번호
+		String id = "jaeyong.lee55@gmail.com";       // 구글 ID
+		String pw = "Beaman!61329";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);
 	}

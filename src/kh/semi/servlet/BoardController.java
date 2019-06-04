@@ -67,7 +67,7 @@ public class BoardController extends HttpServlet {
 				pw.print(obj.toString());
 
 			}else if(cmd.contentEquals("/write.board")) {
-				request.getRequestDispatcher("/WEB-INF/boards/writer.jsp").forward(request, response);
+				request.getRequestDispatcher("/writer.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/writer.board")) { // 사용자가 입력한 값을 받아서 BoardDAO로 보내주는 부분
 				request.getSession().setAttribute("flag", "true");
@@ -79,7 +79,7 @@ public class BoardController extends HttpServlet {
 
 				String rootPath = request.getSession().getServletContext().getRealPath("/");
 				String email = (String)request.getSession().getAttribute("loginEmail");
-//				dto.setEmail(email); 자꾸 null이 들어가서 잠시 주석처리 해 둔 것!!
+				dto.setEmail(email); // 자꾸 null이 들어가서 잠시 주석처리 해 둔 것!!
 
 				File tempFile = new File(rootPath+email);
 				if(!tempFile.exists()) {

@@ -21,29 +21,24 @@
 	body{
 		font-family: "Nanum Gothic";
 		height: 100%;
+		text-align: center;
 	}
 	div{
         box-sizing: border-box;
     }
-	.navbar{
+	nav{
 		position: relative;
 		height: 60px;
-	}
-	#logos{
-		width: 140px;
 	}
 	.logo{
 		position: absolute;
 		top: 10%;
 		left: 15%;
 	}
-	#navbarNav {
-		max-width: 500px;
-		line-height: 40px;
+	#navbarNav{
 		position: relative;
 		top: 30%;
-		left: 55%;
-		text-align: center;
+		left: 50%;
 	}
 	#toggle{
 		position: absolute;
@@ -60,7 +55,7 @@
 		color: #000000;
 	}
 	.nav-li{
-		width: 110px;
+		width: 130px;
 	}
 	#image{
 		max-height: 700px;
@@ -73,9 +68,6 @@
 	}
 	#all-btns{
 		height: 50px;
-	}
-	.form-group{
-		text-align: center;
 	}
 	.noti{
 		font-size: 20px;
@@ -134,7 +126,6 @@
 		line-height: 45px;
 		float: right;
 		margin-left: 15px;
-		text-align: center;
 	}
 	#f_sns{
 		position: absolute;
@@ -170,7 +161,7 @@
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
+		<button id="toggle" class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -178,18 +169,16 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-	
-				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+				<li class="nav-item nav-li"><a class="nav-link anker" href="write.board">후원해 주세요</a></li>
+				<li class="nav-item nav-li"><a class="nav-link anker" href="textList.board?currentPage=1">후원 게시판</a></li>
 
+				<c:choose>
+					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null}">
+						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="LoginForm.members">로그인</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="JoinForm.members">회원가입</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -231,7 +220,7 @@
 			<div class="form-group">
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
-						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌만 가능합니다!</label>
+						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌로!</label>
 					</div>
 				    <select class="custom-select" name="select">
 					    <option value="신한" selected>신한</option>
@@ -277,7 +266,7 @@
 			<img id="kakao" class="sns" src="photo_image/ka.png">
 			<img class="sns" src="photo_image/fa.png">
 			<img id="insta" class="sns" src="photo_image/kk.png">
-			<a href="write.board"><div id="suggest">후원 신청</div></a>
+			<a href="/"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
@@ -341,6 +330,7 @@
         function deleteFile(src) {
         	if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         	}else if(src == null){
+
         	}else{
         		$.ajax({
                     data: {src : src},
@@ -363,6 +353,7 @@
         		var src = $(this).attr("src");
         		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
         		}else if(src == null){
+
         		}else{
         			$.ajax({
         				url: "deleteImage.board",

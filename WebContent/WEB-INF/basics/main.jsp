@@ -10,9 +10,131 @@
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
+body {
+	font-family: "Nanum Gothic";
+	height: 100%;
+}
+
+.progress {
+	width: 200px;
+}
+
+.progress-bar {
+	background-color: orange;
+}
+
+.wrapper {
+	display: inline-block;
+}
+
+a {
+	font-weight: bold;
+}
+
+a:hover {
+	color: #000000;
+}
+
+ul {
+	margin: auto;
+}
+
+li {
+	width: 130px;
+}
+
+.hope {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.nav_link {
+	font-family: "Nanum Gothic";
+}
+
+.btn-primary {
+	margin: 20px 0px 20px;
+	background-color: #1ebdd8;
+	border-color: #1ebdd8;
+	color: #FFF;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+	border-color: #28a39f;
+	background-color: #28a39f;
+	color: #FFF;
+}
+
+.carousel {
+	width: 100%;
+	height: 100%;
+	margin: auto;
+}
+
+.img_carousel {
+	max-height: 730px;
+	object-fit: cover;
+}
+
+/* .card-img-top{ */
+/* 	border-radius:10px; */
+/* 	height:207px; */
+/* } */
+
+.card {
+	border-radius: 10px;
+	min-width: 300px;
+}
+
+.container_card {
+	margin: auto;
+}
+
+
+.jumbotron {
+	background-image: url("photo_image/redheartbluesky.jpg");
+	background-size: cover;
+	font-family: "Jua";
+	text-align: center;
+	margin-top: 40px;
+}
+
+.step1, .step2, .step3, .step4 {
+	width: 200px;
+	height: 200px;
+	border-radius: 10px;
+	font-family: "Jua";
+	padding: 10px;
+}
+
+.text {
+	vertical-align: middle;
+	font-family: "Jua";
+}
+
+/* .navbar { */
+/* 	position: relative; */
+/* } */
+
+/* .logo { */
+/* 	position: absolute; */
+/* 	top: 15%; */
+/* 	left: 10%; */
+/* } */
+
+#navbarNav {
+	line-height: 40px;
+}
+
+.logo{
+	margin-left:100px;
+}
+
 	body {
 		font-family: "Nanum Gothic";
 		height: 100%;
@@ -33,7 +155,7 @@
 		color: #000000;
 	}
 	.nav-li{
-		width: 130px;
+		width: 110px;
 	}
 	.btn-primary {
 		margin: 20px 0px 20px;
@@ -84,16 +206,21 @@
 		position: relative;
 		height: 60px;
 	}
+	#logos{
+		width: 140px;
+	}
 	.logo {
 		position: absolute;
 		top: 10%;
 		left: 15%;
 	}
 	#navbarNav {
+		max-width: 500px;
 		line-height: 40px;
 		position: relative;
 		top: 30%;
-		left: 50%;
+		left: 55%;
+		text-align: center;
 	}
 	#toggle{
 		position: absolute;
@@ -170,6 +297,10 @@
 		font-size: 13px;
 		margin-top: 5px;
 	}
+	.imgTag{
+		border-radius:10px;
+	}
+	
 </style>
 </head>
 <body>
@@ -185,18 +316,22 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li"><a class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 	
 				<c:choose>
+
 					<c:when test="${sessionScope.loginEmail != null}">
+
+						<li class="nav-item"><a class="nav-link"
+							href="Logout.members">로그아웃</a></li>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="JoinForm.members">회원가입</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -238,7 +373,6 @@
 		</a>
 	</div>
 	<hr>
-
 	<div class="container">
 		<div class="row">
 			<div class="step1 col-lg-3 col-md-6 col-sm-6 col-xs-6"
@@ -268,7 +402,9 @@
 	<div class="container container_card">
 		<div class="row rowcard">
 			<div class="card col-lg-4 col-md-12 col-sm-12">
-				<div id="imgBox1" class="imgBox"></div>
+				<div id="imgBox1" class="imgBox">
+					<img src="${imgSrc[0] }" class="imgTag" width="100%">
+				</div>
 				<div class="card-body">
 					<h6 class="card-title">
 						<span id="title1">${list[0].title}</span>
@@ -276,17 +412,17 @@
 					<hr>
 					<p class="card-text" align="left">
 						모금 마감일 <br> <span id="dueDate1">${duedate[0]}</span><br> 모금현황<br>
-						<span id="percentage1">${percentage[0]}</span>
+						<span id="percentage1">${percentage[0]}%</span>
 					<div class="progress">
 						<div id="card1" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[0]}%"></div>
 					</div>
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
 				</div>
 			</div>
 			<div class="card col-lg-4 col-md-12 col-sm-12">
 				<div id="imgBox2" class="imgBox">
-					<img src="" class="card-img-top" alt="...">
+					<img src="${imgSrc[1] }" class="imgTag" width="100%" alt="...">
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
@@ -295,17 +431,17 @@
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate2">${duedate[1]}</span><br> 모금현황<br>
-						<span id="percentage2">${percentage[1]}</span>
+						<span id="percentage2">${percentage[1]}%</span>
 					<div class="progress">
 						<div id="card2" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[1]}%"></div>
 					</div>
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
 				</div>
 			</div>
 			<div class="card col-lg-4 col-md-12 col-sm-12">
 				<div id="imgBox3" class="imgBox">
-					<img src="" class="card-img-top" alt="...">
+					<img src="${imgSrc[2] }" class="imgTag" width="100%" alt="...">
 				</div>
 				<div class="card-body">
 					<h6 class="card-title">
@@ -314,16 +450,17 @@
 					<hr>
 					<p class="card-text">
 						모금 마감일 <br> <span id="dueDate3">${duedate[2]}</span><br> 모금현황<br>
-						<span id="percentage3">${percentage[2]}</span>
+						<span id="percentage3">${percentage[2]}%</span>
 					<div class="progress">
 						<div id="card3" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[2]}%"></div>
 					</div>
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<div class="jumbotron">
 		<h1 class="display-4">2019년 도움닿기 후원 현황</h1>
 		<p class="lead">
@@ -333,7 +470,6 @@
 		</p>
 		<hr class="my-4">
 	</div>
-	
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -349,9 +485,10 @@
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
-	
+
 	<script>
+
+	
 		$.ajax({
 			url : "totalAmountDonors.board",
 			dataType : "json"
@@ -368,6 +505,8 @@
 			$("#imgBox2").html(resp.imgTag2);
 			$("#imgBox3").html(resp.imgTag3);
 		});
+
 	</script>
+
 </body>
 </html>
