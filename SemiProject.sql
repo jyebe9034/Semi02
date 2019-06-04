@@ -11,12 +11,12 @@ create table members(
     m_phone varchar(20),
     m_zipcode varchar(20),
     m_address1 varchar(100),
-    m_addredd2 varchar(100),
+    m_address2 varchar(100),
     m_joindate timestamp default sysdate not null,
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))
 );
---drop table members;
+drop table members;
 
 select * from members;
 
@@ -63,14 +63,20 @@ commit;
 --------------------------------------------------------------------------------
 
 create table title_img(
-    t_b_no number,
+    t_b_no number not null,
     t_fileName varchar(300) not null,
     t_oriFileName varchar(300) not null,
     t_filePath varchar(300) not null,
-    t_fileSize number not null,
-    constraint t_b_no_fk foreign key(t_b_no) references board(b_no) on delete cascade
+    t_fileSize number not null
 );
 drop table title_img;
+
+create sequence t_b_no_seq
+start with 1
+increment by 1
+nocache
+nomaxvalue;
+drop sequence t_b_no_seq;
 
 select * from title_img;
 
@@ -114,7 +120,7 @@ create table comments(
     c_comment varchar(1000) not null,
     c_write_date timestamp default sysdate not null
 );
---drop table comments;
+drop table comments;
 
 select * from comments;
 

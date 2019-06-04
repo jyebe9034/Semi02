@@ -7,6 +7,10 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +18,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
+import kh.semi.dto.BoardDTO;
 import kh.semi.dto.MemberDTO;
+import kh.semi.dto.TitleImgDTO;
 
 @WebServlet("*.members")
 public class MembersController extends HttpServlet {
@@ -29,13 +36,46 @@ public class MembersController extends HttpServlet {
 		String ctxPath = request.getContextPath();
 		String cmd = reqUri.substring(ctxPath.length());
 		MemberDAO dao = new MemberDAO();
+		BoardDAO bdao = new BoardDAO();
 
 		if (cmd.equals("/Main.members")) {
-			request.getRequestDispatcher("main.jsp").forward(request, response);
+			List<BoardDTO> list;
+			try {
+				list = bdao.getDataForMain();
+				request.setAttribute("list", list);
+				String[] strArr = new String[3];
+				int[] intArr = new int[3];
 
+				List<TitleImgDTO> imgList = new ArrayList<>();
+				for(int i = 0; i < list.size(); i++) {
+					int goalAmount = list.get(i).getAmount();
+					Timestamp dueDate = list.get(i).getDueDate();
+					long dueTime = dueDate.getTime();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					strArr[i] = sdf.format(dueTime);
+					int sumAmount = list.get(i).getSumAmount();
+					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
+					imgList.add(bdao.getTitleImg(list.get(i).getBoardNo()));
+					System.out.println(bdao.getTitleImg(list.get(i).getBoardNo()).getFileName());
+				}
+				request.setAttribute("duedate", strArr);
+				request.setAttribute("percentage", intArr);
+
+				String[] imgSrc = new String[3];
+				for(int i=0; i < imgList.size(); i++) {
+					String str = imgList.get(i).getFilePath();
+					String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
+				}
+				request.setAttribute("imgSrc", imgSrc);
+				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
+
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
-			
+
 		}else if (cmd.equals("/JoinForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/joinForm.jsp").forward(request, response);
 
@@ -76,6 +116,7 @@ public class MembersController extends HttpServlet {
 			}
 		}else if(cmd.contentEquals("/LoginForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/loginForm.jsp").forward(request, response);
+
 		} else if (cmd.equals("/Login.members")) {
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");
@@ -130,13 +171,16 @@ public class MembersController extends HttpServlet {
 				if (responseCode == 200) {
 					String ip = request.getRemoteAddr();
 					MemberDTO dto = dao.NaverContentsParse(res.toString(), ip);
+
+					String email = dto.getEmail();
 					if (dao.isIdExist(dto)) {
-						request.getSession().setAttribute("loginEmail", dto.getEmail());
-						request.getRequestDispatcher("main.jsp").forward(request, response);
+						MemberDTO realcontents = dao.getContents(dto);
+						request.getSession().setAttribute("realcontents", realcontents);
+						request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					} else {
 						dao.insertNaverMember(dto);
-						request.getSession().setAttribute("loginEmail", dto.getEmail());
-						request.getRequestDispatcher("main.jsp").forward(request, response);
+						request.getSession().setAttribute("navercontents", dto);
+						request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 					}
 				}
 			} catch (Exception e) {
@@ -145,9 +189,192 @@ public class MembersController extends HttpServlet {
 				response.sendRedirect("error.html");
 			}
 
-		}
-	}
+		}else if(cmd.equals("/kakaoLogin.members")) {
+			String nickname = request.getParameter("contents");
+			String ip = request.getRemoteAddr();
 
+			String[] contents = nickname.split(",");
+
+			String id = "k_"+contents[0];
+			String nickName = contents[1];
+
+			System.out.println(id + " : " + nickName + " : "+ ip);
+
+			MemberDTO dto = new MemberDTO();
+
+			dto.setIpAddress(ip);
+			dto.setEmail(id);
+			dto.setName(nickName);
+			dto.setJoinDate(null);
+			dto.setAdmin(null);
+
+			try {
+
+				if (dao.isIdExist(dto)) { // 이미 한번 로그인 한 경우
+
+					MemberDTO realcontents = dao.getContents(dto);
+					request.getSession().setAttribute("realcontents", realcontents);
+					request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
+
+				} else { // 카카오나 네이버 로그인을 처음한 경우
+
+					dao.insertNaverMember(dto);
+					request.getSession().setAttribute("navercontents", dto);
+					request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
+				}
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}else if(cmd.equals("/myPageUpdate.members")) {
+
+			String phone = request.getParameter("phone");
+			String pw = dao.testSHA256(request.getParameter("pw"));
+			String zipcode = request.getParameter("zipcode");
+			String add1 = request.getParameter("address1");
+			String add2 = request.getParameter("address2");
+			String email = (String)request.getSession().getAttribute("loginEmail");
+
+			MemberDTO dto = new MemberDTO();
+
+			dto.setPhone(phone);
+			dto.setPw(pw);
+			dto.setZipCode(zipcode);
+			dto.setAddress1(add1);
+			dto.setAddress2(add2);
+			dto.setEmail(email);
+
+			try {
+				int result = dao.updateContents(dto);
+				request.getSession().setAttribute("result", result);
+				request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("error.html");
+			}
+
+
+		}else if(cmd.equals("/myPageUpdateForNaver.members")) {
+
+			String phone = request.getParameter("phone");
+			String zipcode = request.getParameter("zipcode");
+			String add1 = request.getParameter("address1");
+			String add2 = request.getParameter("address2");
+
+			MemberDTO contents = (MemberDTO)request.getSession().getAttribute("navercontents");
+			MemberDTO aftercontents = (MemberDTO)request.getSession().getAttribute("realcontents");
+
+
+			if(contents==null) {
+				String naverandkakaoEmail = aftercontents.getEmail();
+
+				MemberDTO dto = new MemberDTO();
+
+				dto.setPhone(phone);
+				dto.setZipCode(zipcode);
+				dto.setAddress1(add1);
+				dto.setAddress2(add2);
+				dto.setEmail(naverandkakaoEmail);
+
+				try {
+					int result = dao.updateContentsForNaver(dto);
+					request.getSession().setAttribute("result", result);
+					request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.sendRedirect("error.html");
+				}
+			}else {
+				String naverandkakaoEmail = contents.getEmail();
+
+				System.out.println(naverandkakaoEmail);
+
+				MemberDTO dto = new MemberDTO();
+
+				dto.setPhone(phone);
+				dto.setZipCode(zipcode);
+				dto.setAddress1(add1);
+				dto.setAddress2(add2);
+				dto.setEmail(naverandkakaoEmail);
+
+				try {
+					int result = dao.updateContentsForNaver(dto);
+					request.getSession().setAttribute("result", result);
+					request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.sendRedirect("error.html");
+				}
+			}
+
+		}else if(cmd.equals("/myPageUpdateComplete.members")) {
+
+			request.getSession().invalidate();
+			request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
+
+		}else if(cmd.equals("/myPage.members")) {
+
+			String email = (String)request.getSession().getAttribute("loginEmail");
+			MemberDTO realcontents = (MemberDTO)request.getSession().getAttribute("realcontents");
+			MemberDTO navercontents = (MemberDTO)request.getSession().getAttribute("navercontents");
+
+			System.out.println(email);
+			System.out.println(realcontents);
+			System.out.println(navercontents);
+
+			if(email==null) {
+
+				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+
+			}else {
+				try {
+					MemberDTO dto = dao.getContents(email);
+					request.getSession().setAttribute("dto",dto);
+					request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}else if(cmd.equals("/myPageUpdateLocation.members")){
+			request.getRequestDispatcher("/WEB-INF/basics/myPageUpdate.jsp").forward(request, response);
+		}else if(cmd.equals("/myPageUpdateLocationForNaver.members")) {
+			request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateForNaver.jsp").forward(request, response);
+		}else if(cmd.equals("/")) {
+			//String email = (String) request.getSession().getAttribute("loginEmail");
+			String email = "email5@email.mail";
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			System.out.println(currentPage);
+
+			try {	
+				//내가 후원한 글 목록---------------------------------------------------------------
+				int endNumforMS = currentPage * 5;
+				int startNumforMS = endNumforMS - 4;
+				request.setAttribute("mySupport", dao.mySupport(email, startNumforMS, endNumforMS));
+				/*페이지*/
+				request.setAttribute("getNaviforMS", dao.getNaviforMySupport(currentPage));
+				//내가 쓴 글 목록------------------------------------------------------------------
+				int endNum = currentPage * 5;
+				int startNum = endNum - 4;
+				request.setAttribute("myArticles",dao.myArticles(email, startNum, endNum));
+				/*페이지*/	
+				String getNavi = dao.getNavi(currentPage);
+				request.setAttribute("getNavi", getNavi);
+				//---------------------------------------------------------------------------
+				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+			}catch (Exception e) {
+				e.printStackTrace();
+				response.sendRedirect("error.html");
+			}
+		}
+
+
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

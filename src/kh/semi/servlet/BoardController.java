@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,62 +57,6 @@ public class BoardController extends HttpServlet {
 		try {
 			if(cmd.contentEquals("/titleImagesMain.board")) {
 
-			}else if(cmd.contentEquals("/card1.board")) {
-				List<BoardDTO> list = dao.getDataForMain();
-
-				String title1 = list.get(0).getTitle();
-				int goalAmount1 = list.get(0).getAmount();
-
-				Timestamp dueDate1 = list.get(0).getDueDate();
-				long dueTime1 = dueDate1.getTime();
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				String dueDateStr1 = sdf1.format(dueTime1);
-
-				int sumAmount1 = list.get(0).getSumAmount();
-				double percentage1 = Math.floor((double)sumAmount1 / goalAmount1 * 100);
-				// 마감 임박 1
-
-				JsonObject obj1 = new JsonObject();
-				obj1.addProperty("title1", title1);
-				obj1.addProperty("dueDate1",dueDateStr1);
-				obj1.addProperty("percentage1",percentage1);
-				pw.print(obj1.toString());
-			}else if(cmd.contentEquals("/card2.board")) {
-				List<BoardDTO> list = dao.getDataForMain();
-
-				String title2 = list.get(1).getTitle();
-				int goalAmount2 = list.get(1).getAmount();
-				Timestamp dueDate2 = list.get(1).getDueDate();
-				long dueTime2 = dueDate2.getTime();
-				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-				String dueDateStr2 = sdf2.format(dueTime2);
-				int sumAmount2 = list.get(1).getSumAmount();
-				double percentage2 = Math.floor((double)sumAmount2 / goalAmount2 * 100);
-				// 마감 임박2
-
-				JsonObject obj2 = new JsonObject();
-				obj2.addProperty("title2", title2);
-				obj2.addProperty("dueDate2",dueDateStr2);
-				obj2.addProperty("percentage2",percentage2);
-				pw.print(obj2.toString());
-			}else if(cmd.contentEquals("/card3.board")) {
-				List<BoardDTO> list = dao.getDataForMain();
-
-				String title3 = list.get(2).getTitle();
-				int goalAmount3 = list.get(2).getAmount();
-				Timestamp dueDate3 = list.get(2).getDueDate();
-				long dueTime3 = dueDate3.getTime();
-				SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
-				String dueDateStr3 = sdf3.format(dueTime3);
-				int sumAmount3 = list.get(2).getSumAmount();
-				double percentage3 = Math.floor((double)sumAmount3 / goalAmount3 * 100);
-				// 마감 임박 3
-
-				JsonObject obj3 = new JsonObject();
-				obj3.addProperty("title3", title3);
-				obj3.addProperty("dueDate3",dueDateStr3);
-				obj3.addProperty("percentage3",percentage3);
-				pw.print(obj3.toString());
 			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
 
 				int totalAmount = pdao.getTotalAmount();
@@ -135,7 +80,7 @@ public class BoardController extends HttpServlet {
 
 				String rootPath = request.getSession().getServletContext().getRealPath("/");
 				String email = (String)request.getSession().getAttribute("loginEmail");
-				dto.setEmail(email);
+				dto.setEmail(email); // 자꾸 null이 들어가서 잠시 주석처리 해 둔 것!!
 
 				File tempFile = new File(rootPath+email);
 				if(!tempFile.exists()) {
@@ -157,8 +102,8 @@ public class BoardController extends HttpServlet {
 
 				try {
 					MultipartRequest multi = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-
 					uploadFile = multi.getFilesystemName("filename");
+					tdto.setOriFileName(uploadFile);
 					newFileName = currentTime + "." + uploadFile.substring(uploadFile.lastIndexOf(".")+1);
 					tdto.setFileName(newFileName);
 
@@ -190,14 +135,18 @@ public class BoardController extends HttpServlet {
 					try {
 						int result = dao.insertBoard(dto);
 						System.out.println("result : "+result);
+						request.setAttribute("board", result);
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
 					int result = dao.insertTitleImg(tdto);
-					System.out.println("titleresult : " + result);
+					System.out.println("title result : " + result);
+					request.setAttribute("titleImg", result);
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
+				request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
+	
 			}else if(cmd.equals("/uploadImage.board")) { // 서버 측 이미지 업로드 
 				request.getSession().setAttribute("flag", "false");
 				int maxSize = 10 * 1024 * 1024;
@@ -280,6 +229,7 @@ public class BoardController extends HttpServlet {
 
 			}else if(cmd.equals("/Read.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+				System.out.println(boardNo);
 				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
 				BoardDTO article = dao.selectOneArticle(boardNo);
 				List<CommentDTO> comments = dao.selectCommentsByBoardNo(commentPage, boardNo);
@@ -293,16 +243,14 @@ public class BoardController extends HttpServlet {
 				response.setCharacterEncoding("UTF-8");
 				request.setCharacterEncoding("UTF-8");
 
-//				String str = titleImg.getFilePath();
-//				String result = str.replaceAll("D:.+?Project.+?Project.+?","");
-//
-//				System.out.println(result);
-//				
-//				request.setAttribute("titleImg", "files\\" + titleImg.getFileName());
-//				System.out.println("files\\" + titleImg.getFileName());
-
+				String str = titleImg.getFilePath();
+				
+				String result = str.replaceAll("D:.+?Project.+?Project.+?","");
+				//String result = str.replaceAll("D:.+?mi.+?mi.+?","");
+				
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
-
+				
+				request.setAttribute("titleImg", result+"/"+titleImg.getFileName());
 				request.setAttribute("pageNavi", dao.getCommentNavi(commentPage, dao.selectAllComments(boardNo)));
 				request.setAttribute("commentPage", commentPage);
 				request.setAttribute("comments", comments);
@@ -324,7 +272,42 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("title", title);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
-
+			}else if(cmd.equals("/List.board")){ //게시판 목록
+				try {
+					String searchOption = request.getParameter("searchOption"); //검색 종류
+					String searchWord = request.getParameter("searchWord"); //검색어
+					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
+					
+					System.out.println("searchOption : " + searchOption);
+					System.out.println("searchWord : " + searchWord);
+					System.out.println("currentPage : " + currentPage);
+			
+					int totalRecordCount = 0; //=recordTotalCount
+					if(searchOption.equals("title")) { //제목으로 검색
+						searchOption = "b_title";
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));					
+					}else if(searchOption.equals("contents")) { //내용으로 검색
+						searchOption = "b_contents";
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
+					}else if(searchOption.equals("all")) { //제목+내용으로 검색
+						searchOption = "b_title || B_CONTENTS";
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
+					}else{ //전체 글 목록
+						totalRecordCount = dao.totalRecordNum();
+						request.setAttribute("board", dao.selectByPage(currentPage));
+					}
+					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount));
+					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
+					
+				}catch(Exception e) {				
+					e.printStackTrace();
+					//response.sendRedirect("error.html");
+				}
+			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
+				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);
 			}else if(cmd.equals("/Payment.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String name = request.getParameter("name");

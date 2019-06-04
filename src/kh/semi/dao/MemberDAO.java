@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,10 @@ import javax.mail.internet.MimeMessage;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kh.semi.dto.BoardDTO;
+import kh.semi.dto.BoardListDTO;
 import kh.semi.dto.MemberDTO;
+import kh.semi.dto.MySupportDTO;
 
 public class MemberDAO {
 	public Connection getConnection() throws Exception {
@@ -57,11 +61,128 @@ public class MemberDAO {
 	}
 
 
-	public int insertNaverMember(MemberDTO param) throws Exception{
+	public MemberDTO getContents(String email) throws Exception {
+
+		String sql = "select * from members where m_email = ?";
+
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+
+			pstat.setString(1, email);
+
+			try (ResultSet rs = pstat.executeQuery();) {
+
+				if (rs.next()) {
+
+					MemberDTO result = new MemberDTO();
+					
+					String id = rs.getString("m_email");
+					String name = rs.getString("m_name");
+					String phone = rs.getString("m_phone");
+					String zipcode = rs.getString("m_zipcode");
+					String add1 = rs.getString("m_address1");
+					String add2 = rs.getString("m_address2");
+					
+					result.setEmail(id);
+					result.setName(name);
+					result.setPhone(phone);
+					result.setZipCode(zipcode);
+					result.setAddress1(add1);
+					result.setAddress2(add2);
+					
+					return result;
+				}
+				
+				return null;
+			}
+		}
+	}
+	
+	
+	public MemberDTO getContents(MemberDTO dto) throws Exception {
+
+		String sql = "select * from members where m_email = ?";
+
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+
+			pstat.setString(1, dto.getEmail());
+
+			try (ResultSet rs = pstat.executeQuery();) {
+
+				if (rs.next()) {
+
+					MemberDTO result = new MemberDTO();
+					
+					String id = rs.getString("m_email");
+					String name = rs.getString("m_name");
+					String phone = rs.getString("m_phone");
+					String zipcode = rs.getString("m_zipcode");
+					String add1 = rs.getString("m_address1");
+					String add2 = rs.getString("m_address2");
+					
+					result.setEmail(id);
+					result.setName(name);
+					result.setPhone(phone);
+					result.setZipCode(zipcode);
+					result.setAddress1(add1);
+					result.setAddress2(add2);
+					
+					return result;
+				}
+
+				
+				return null;
+			}
+		}
+	}
+
+	public int updateContents(MemberDTO param) throws Exception {
+
+		String sql = "update members set M_phone=?,m_zipcode=?,m_address1=?,m_address2=?,m_pw=? where M_EMAIL=?";
+
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+
+			pstat.setString(1, param.getPhone());
+			pstat.setString(2, param.getZipCode());
+			pstat.setString(3, param.getAddress1());
+			pstat.setString(4, param.getAddress2());
+			pstat.setString(5, param.getPw());
+			pstat.setString(6, param.getEmail());
+
+			int result = pstat.executeUpdate();
+
+			con.commit();
+			return result;
+
+		}
+
+	}
+
+	public int updateContentsForNaver(MemberDTO param) throws Exception {
+
+		String sql = "update members set M_phone=?,m_zipcode=?,m_address1=?,m_address2=? where M_EMAIL=?";
+
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+
+			pstat.setString(1, param.getPhone());
+			pstat.setString(2, param.getZipCode());
+			pstat.setString(3, param.getAddress1());
+			pstat.setString(4, param.getAddress2());
+			pstat.setString(5, param.getEmail());
+
+			int result = pstat.executeUpdate();
+
+			con.commit();
+			return result;
+
+		}
+
+	}
+
+	public int insertNaverMember(MemberDTO param) throws Exception {
 
 		String sql = "insert into members (m_email,m_name,m_joindate,m_ipaddress,m_admin) values(?,?,default,?,'n')";
 
-		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
 			pstat.setString(1, param.getEmail());
 			pstat.setString(2, param.getName());
@@ -74,23 +195,22 @@ public class MemberDAO {
 		}
 	}
 
-	public boolean isIdExist(MemberDTO param) throws Exception{
+	public boolean isIdExist(MemberDTO param) throws Exception {
 
 		String sql = "select * from members where m_email = ?";
 
-		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
 			pstat.setString(1, param.getEmail());
 
-			try(ResultSet rs = pstat.executeQuery();){
-
+			try (ResultSet rs = pstat.executeQuery();) {
+				
 				return rs.next();
 			}
 		}
-
 	}
 
-	public MemberDTO NaverContentsParse(String res, String ipaddr) throws Exception{
+	public MemberDTO NaverContentsParse(String res, String ipaddr) throws Exception {
 
 		JsonParser parser = new JsonParser();
 		JsonObject ob = (JsonObject) parser.parse(res.toString());
@@ -101,14 +221,14 @@ public class MemberDAO {
 
 		String apiURL1 = "https://openapi.naver.com/v1/nid/me";
 		URL url1 = new URL(apiURL1);
-		HttpURLConnection con1 = (HttpURLConnection)url1.openConnection();
+		HttpURLConnection con1 = (HttpURLConnection) url1.openConnection();
 		con1.setRequestMethod("GET");
 		con1.setRequestProperty("Authorization", header);
 		int responseCode1 = con1.getResponseCode();
 		BufferedReader br1;
-		if(responseCode1==200) { // 정상 호출
+		if (responseCode1 == 200) { // 정상 호출
 			br1 = new BufferedReader(new InputStreamReader(con1.getInputStream()));
-		} else {  // 에러 발생
+		} else { // 에러 발생
 			br1 = new BufferedReader(new InputStreamReader(con1.getErrorStream()));
 		}
 		String inputLine1;
@@ -126,7 +246,7 @@ public class MemberDAO {
 		String name = Json_response.get("name").getAsString();
 		String email = Json_response.get("email").getAsString();
 
-		System.out.println(id +  name + email);
+		System.out.println(id + name + email);
 
 		MemberDTO dto = new MemberDTO();
 		dto.setEmail(email);
@@ -135,8 +255,6 @@ public class MemberDAO {
 
 		return dto;
 	}
-
-
 
 	public int insertMember(MemberDTO dto) throws Exception {
 		String sql = "insert into members values (?,?,?,?,?,?,?,default,?,?)";
@@ -300,14 +418,250 @@ public class MemberDAO {
 
 		return ranNum;
 	}
+	
+	///*마이페이지*/------------------------------------------------------------------------
+	/*내가 후원한 글 목록*/
+	private PreparedStatement psForMySupport(Connection con, String email, int startNumforMS, int endNumforMS)throws Exception{
+		String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.*,payment.* from board join payment on (b_no = p_b_no) where b_no in (select p_b_no from payment where p_email=?)) where rown between ? and ? order by b_no desc";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, email);
+		ps.setInt(2, startNumforMS);
+		ps.setInt(3, endNumforMS);
+		return ps;
+	}
+	public List<MySupportDTO> mySupport(String email, int startNumforMS, int endNumforMS)throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = psForMySupport(con, email,startNumforMS,endNumforMS);
+				ResultSet rs = ps.executeQuery();
+				){
+			List<MySupportDTO> result = new ArrayList<>();
+			while(rs.next()) {
+				int boardNo = rs.getInt("b_no");
+				String title = rs.getString("b_title");
+				String writer = rs.getString("b_writer");
+				int amount = rs.getInt("b_amount");
+				String bank = rs.getString("b_bank");
+				String account = rs.getString("b_account");
+				String dueDate = rs.getString("b_due_date");
+				String contents = rs.getString("b_contents1")+rs.getString("b_contents2")+rs.getString("b_contents3");
+				int viewCount = rs.getInt("b_viewcount");
+				String writeDate = rs.getString("b_writedate");
+				int recommend = rs.getInt("b_recommend");
+				int sumAmount = rs.getInt("b_sum_amount");
+				int pBoardNo = rs.getInt("p_b_no");
+				String pName =rs.getString("p_name");
+				String pPhone = rs.getString("p_phone");
+				int pAmount = rs.getInt("p_amount");
+				Timestamp pPaymentDate = rs.getTimestamp("p_payment_date");
+				MySupportDTO dto = new MySupportDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,pBoardNo,pName,pPhone,pAmount,pPaymentDate);
+				result.add(dto);
+			}
+			return result;
+		}
+	}
+	/*내가 후원한 게시글의 개수*///=recordTotalCount //////여기부터!!!!
+	public int totalSupportRecordNum(String email) throws Exception{
+		String sql = "select p_b_no from payment where p_email='" +email+ "' order by p_b_no desc";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();	
+				){
+			int result = 0;
+			while(rs.next()) {
+				result++;
+			}
+			return result;
+		}
+	}
+	
+	/*페이지 네비게이터(내가 후원한 글 목록)*/
+	public String getNaviforMySupport(int currentPage) throws Exception { //부트스트랩은 int로 받아야함	
+		int recordTotalCount = totalRecordNum();
+		
+		int recordCountPerPage = 5; //5개의 글이 보이게 한다.
+		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
+		  
+		int pageTotalCount = recordTotalCount / recordCountPerPage;
+		if(recordTotalCount % recordCountPerPage > 0) {
+			pageTotalCount++;
+		}
+
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+
+		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
+		int endNavi = startNavi + (naviCountPerPage - 1); 
+	
+		//네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		System.out.println("현재 위치 : " + currentPage);
+		System.out.println("네비 시작 : " + startNavi);
+		System.out.println("네비 끝 : " + endNavi);
+		
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if(startNavi == 1) { 
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		if(needPrev) {
+			int prevStartNavi = startNavi-1;
+			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ prevStartNavi +"\"" + 
+					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
+					"						</a></li>");
+			
+		}
+		for(int i = startNavi; i <= endNavi; i++) {
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+i+"\">" + i + "</a></li>");
+		}
+		if(needNext) {
+			int nextEndNavi = endNavi+1;
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ nextEndNavi++ +"\""+ 
+					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
+					"						</a></li>");
+		}
+		
+		return sb.toString();
+	}
+	//------------
+	
+	/*내가 쓴 글 목록*/
+	private PreparedStatement psForMyArticles(Connection con, String email, int startNum, int endNum)throws Exception{
+		String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.* from board where b_email=?) where rown between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, email);
+		ps.setInt(2, startNum);
+		ps.setInt(3, endNum);
+		return ps;
+	}
+
+	public List<BoardDTO> myArticles(String email, int startNum, int endNum)throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = psForMyArticles(con, email,startNum,endNum);
+				ResultSet rs = ps.executeQuery();
+				){
+			List<BoardDTO> result = new ArrayList<>();
+			while(rs.next()) {
+				int boardNo = rs.getInt("b_no");
+				String title = rs.getString("b_title");
+				String tmepEmail = rs.getString("b_email");
+				String writer = rs.getString("b_writer");
+				int amount = rs.getInt("b_amount");
+				String bank = rs.getString("b_bank");
+				String account = rs.getString("b_account");
+				Timestamp dueDate = rs.getTimestamp("b_due_date");
+				String contents = rs.getString("b_contents");
+				int viewCount = rs.getInt("b_viewcount");
+				Timestamp writeDate = rs.getTimestamp("b_writedate");
+				int recommend = rs.getInt("b_recommend");
+				int sumAmount = rs.getInt("b_sum_amount");
+				BoardDTO dto = new BoardDTO(boardNo,title,tmepEmail,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount);
+				result.add(dto);
+			}
+			return result;
+		}
+	}
+
+	
+	/*내가 쓴 게시글의 개수*///=recordTotalCount
+	public int totalRecordNum() throws Exception{
+		String sql = "select * from board where b_email='email@email.mail' order by b_no desc";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();	
+				){
+			int result = 0;
+			while(rs.next()) {
+				result++;
+			}
+			return result;
+		}
+	}
+	
+	/*페이지 네비게이터(내가쓴 글 목록)*/
+	public String getNavi(int currentPage) throws Exception { //부트스트랩은 int로 받아야함	
+		int recordTotalCount = totalRecordNum();
+		
+		int recordCountPerPage = 5; //5개의 글이 보이게 한다.
+		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
+		  
+		int pageTotalCount = recordTotalCount / recordCountPerPage;
+		if(recordTotalCount % recordCountPerPage > 0) {
+			pageTotalCount++;
+		}
+
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+
+		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
+		int endNavi = startNavi + (naviCountPerPage - 1); 
+	
+		//네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+		
+		System.out.println("현재 위치 : " + currentPage);
+		System.out.println("네비 시작 : " + startNavi);
+		System.out.println("네비 끝 : " + endNavi);
+		
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if(startNavi == 1) { 
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		if(needPrev) {
+			int prevStartNavi = startNavi-1;
+			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ prevStartNavi +"\"" + 
+					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
+					"						</a></li>");
+			
+		}
+		for(int i = startNavi; i <= endNavi; i++) {
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+i+"\">" + i + "</a></li>");
+		}
+		if(needNext) {
+			int nextEndNavi = endNavi+1;
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ nextEndNavi++ +"\""+ 
+					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
+					"						</a></li>");
+		}
+		
+		return sb.toString();
+	}
+	//-----------------------------------------------------------------------------------
 }
 
 class MyAuthentication extends Authenticator {
 
 	PasswordAuthentication pa;
 	public MyAuthentication(){
-		String id = "@gmail.com";       // 구글 ID
-		String pw = "";          // 구글 비밀번호
+		String id = "jaeyong.lee55@gmail.com";       // 구글 ID
+		String pw = "Beaman!61329";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);
 	}
@@ -316,3 +670,5 @@ class MyAuthentication extends Authenticator {
 		return pa;
 	}
 }
+
+
