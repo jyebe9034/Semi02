@@ -27,27 +27,6 @@ body {
 .progress-bar {
 	background-color: orange;
 }
-
-.wrapper {
-	display: inline-block;
-}
-
-a {
-	font-weight: bold;
-}
-
-a:hover {
-	color: #000000;
-}
-
-ul {
-	margin: auto;
-}
-
-li {
-	width: 130px;
-}
-
 .hope {
 	text-align: center;
 	margin-bottom: 20px;
@@ -126,10 +105,6 @@ li {
 /* 	top: 15%; */
 /* 	left: 10%; */
 /* } */
-
-#navbarNav {
-	line-height: 40px;
-}
 
 .logo{
 	margin-left:100px;
@@ -320,14 +295,9 @@ li {
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 	
 				<c:choose>
-
 					<c:when test="${sessionScope.loginEmail != null}">
-
-						<li class="nav-item"><a class="nav-link"
-							href="Logout.members">로그아웃</a></li>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
