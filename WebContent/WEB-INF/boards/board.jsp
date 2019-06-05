@@ -191,7 +191,7 @@
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
 						<c:if test="${sessionScope.admin==null}">
-							<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이페이지</a></li>
+							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						</c:if>	
 						<c:if test="${sessionScope.admin!=null}">
 							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>

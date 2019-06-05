@@ -3,9 +3,7 @@ package kh.semi.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Timer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,11 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import kh.semi.dao.ManagerDAO;
 import kh.semi.dto.BoardDTO;
-import kh.semi.dto.BoardDTO2;
-import kh.semi.dto.MemberDTO2;
+import kh.semi.dto.MemberDTO;
 import kh.semi.dto.PaymentDTO;
 import kh.semi.dto.TimePersonCountDTO;
-import kh.semi.scheduler.TimeVisiterCount;
 
 @WebServlet("*.manager")
 public class managerController extends HttpServlet {
@@ -48,8 +44,8 @@ public class managerController extends HttpServlet {
 			List<Object> bestViewCount = new ArrayList<>();
 			List<Object> worstViewCount = new ArrayList<>();
 			List<PaymentDTO> donationManyPeople = new ArrayList<>();
-			List<MemberDTO2> memberInfo = new ArrayList<>();
-			List<BoardDTO2> totalDonationProject = new ArrayList<>();
+			List<MemberDTO> memberInfo = new ArrayList<>();
+			List<BoardDTO> totalDonationProject = new ArrayList<>();
 			try {
 				visitPersonCount = dao.visitPersonCount();
 				totalMoney = dao.totalMoney();

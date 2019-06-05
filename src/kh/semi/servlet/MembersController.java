@@ -361,23 +361,69 @@ public class MembersController extends HttpServlet {
 		}else if(cmd.equals("/myPageUpdateComplete.members")) {
 
 			request.getSession().invalidate();
-			request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
-
+			request.getRequestDispatcher("/WEB-INF/basics/loginForm.jsp").forward(request, response);
+			
 		}else if(cmd.equals("/myPage.members")) {
 
 			String email = (String)request.getSession().getAttribute("loginEmail");
 			MemberDTO realcontents = (MemberDTO)request.getSession().getAttribute("realcontents");
 			MemberDTO navercontents = (MemberDTO)request.getSession().getAttribute("navercontents");
 
-			System.out.println(email);
-			System.out.println(realcontents);
-			System.out.println(navercontents);
-
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			int currentPage2 = Integer.parseInt(request.getParameter("currentPage2"));
+			
+			System.out.println("loginEmail = " + email);
+			System.out.println("realcontents = " + realcontents);
+			System.out.println("navercontents = " + navercontents);
+			System.out.println("currentPage = " + currentPage);
+			System.out.println("currentPage2 = " + currentPage2);
+			
 			if(email==null) {
 
-				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
-
+				if(realcontents==null) {
+				
+					String navercontents_email = navercontents.getEmail();
+					try {
+						request.setAttribute("getNavi", dao.getNaviforMySupport(currentPage, email));
+//						request.setAttribute("myDonateContents", dao.myDonateContents(navercontents_email, currentPage));
+						
+						request.setAttribute("getNavi2", dao.getNaviforMySupport2(currentPage2, navercontents_email));
+//						request.setAttribute("myDonateContents2", dao.myDonateContents2(navercontents_email, currentPage2));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+					
+				}else {
+					String realcontents_email = realcontents.getEmail();
+					try {
+						
+						request.setAttribute("getNavi", dao.getNaviforMySupport(currentPage, realcontents_email));
+//						request.setAttribute("myDonateContents", dao.myDonateContents(realcontents_email, currentPage));
+																		
+						request.setAttribute("getNavi2", dao.getNaviforMySupport2(currentPage2, realcontents_email));
+//						request.setAttribute("myDonateContents2", dao.myDonateContents2(realcontents_email, currentPage2));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
+				}
+				
 			}else {
+				
+				try {
+					request.setAttribute("getNavi", dao.getNaviforMySupport(currentPage, email));
+//					request.setAttribute("myDonateContents", dao.myDonateContents(email, currentPage));
+
+					request.setAttribute("getNavi2", dao.getNaviforMySupport2(currentPage2, email));
+//					request.setAttribute("myDonateContents2", dao.myDonateContents2(email, currentPage2));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				try {
 					MemberDTO dto = dao.getContents(email);
 					request.getSession().setAttribute("dto",dto);
@@ -391,32 +437,6 @@ public class MembersController extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/basics/myPageUpdate.jsp").forward(request, response);
 		}else if(cmd.equals("/myPageUpdateLocationForNaver.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateForNaver.jsp").forward(request, response);
-		}else if(cmd.equals("/")) {
-			//String email = (String) request.getSession().getAttribute("loginEmail");
-			String email = "email5@email.mail";
-			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			System.out.println(currentPage);
-
-			try {	
-				//내가 후원한 글 목록---------------------------------------------------------------
-				int endNumforMS = currentPage * 5;
-				int startNumforMS = endNumforMS - 4;
-				request.setAttribute("mySupport", dao.mySupport(email, startNumforMS, endNumforMS));
-				/*페이지*/
-				request.setAttribute("getNaviforMS", dao.getNaviforMySupport(currentPage));
-				//내가 쓴 글 목록------------------------------------------------------------------
-				int endNum = currentPage * 5;
-				int startNum = endNum - 4;
-				request.setAttribute("myArticles",dao.myArticles(email, startNum, endNum));
-				/*페이지*/	
-				String getNavi = dao.getNavi(currentPage);
-				request.setAttribute("getNavi", getNavi);
-				//---------------------------------------------------------------------------
-				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
-			}catch (Exception e) {
-				e.printStackTrace();
-				response.sendRedirect("error.html");
-			}
 		}
 
 
