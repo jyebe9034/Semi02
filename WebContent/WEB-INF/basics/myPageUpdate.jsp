@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Insert title here</title>
+        <title>도움닿기 - 회원 정보 수정</title>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <link rel="stylesheet"
@@ -174,18 +170,8 @@
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-	
-				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
-					</c:otherwise>
-				</c:choose>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+				<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -194,7 +180,6 @@
         <br><br><br>
 
         <form action="myPageUpdate.members" method="post">
-
             <div class="container wrap">
                 <h3>내 정보 관리</h3>
                 <br>
@@ -219,28 +204,30 @@
                         </span></span></div>
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col-2 d-md-block d-none"><span class="first-pw first">비밀번호</span></div>
-                    <div class="col-10"><span><span class="form-inline">
-                        <div class="form-group">
-                            <input type="password" id="inputPassword" class="form-control mx-sm-3 second" aria-describedby="passwordHelpInline" required>
-                            <small id="pw_form" class="text-mute">
-                            </small>
-                        </div>
-                        </span></span></div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-2 d-md-block d-none"><span class="first-pw"></span></div>
-                    <div class="col-10"><span><span class="form-inline">
-                        <div class="form-group">
-                            <input type="password" id="inputPasswordCheck" class="second form-control mx-sm-3" aria-describedby="passwordHelpInline" name="pw" required>
-                            <small id="pw_match" class="text-mute">
-                            </small>
-                        </div>
-                        </span></span></div>
-                </div>
-                <hr>
+                <c:if test="${dto.pw != null }">
+              	  <div class="row">
+              	      <div class="col-2 d-md-block d-none"><span class="first-pw first">비밀번호</span></div>
+              	      <div class="col-10"><span><span class="form-inline">
+              	          <div class="form-group">
+              	              <input type="password" id="inputPassword" class="form-control mx-sm-3 second" aria-describedby="passwordHelpInline" required>
+              	              <small id="pw_form" class="text-mute">
+              	              </small>
+              	          </div>
+              	          </span></span></div>
+              	  </div>
+              	  <br>
+              	  <div class="row">
+              	      <div class="col-2 d-md-block d-none"><span class="first-pw"></span></div>
+              	      <div class="col-10"><span><span class="form-inline">
+              	          <div class="form-group">
+              	              <input type="password" id="inputPasswordCheck" class="second form-control mx-sm-3" aria-describedby="passwordHelpInline" name="pw" required>
+              	              <small id="pw_match" class="text-mute">
+              	              </small>
+              	          </div>
+              	          </span></span></div>
+              	  </div>
+              	  <hr>
+                </c:if>
                 <div class="row">
                     <div class="col-2"><span class="first-pw first">주소</span></div>
                     <div class="col-10"><span><span class="form-inline">

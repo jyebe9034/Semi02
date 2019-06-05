@@ -55,19 +55,7 @@ public class BoardController extends HttpServlet {
 		TitleImgDTO tdto = new TitleImgDTO();
 
 		try {
-			if(cmd.contentEquals("/titleImagesMain.board")) {
-
-			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
-
-				int totalAmount = pdao.getTotalAmount();
-				int countDonors = pdao.getNumberOfDonors();
-
-				JsonObject obj = new JsonObject();
-				obj.addProperty("totalAmount", totalAmount);
-				obj.addProperty("countDonors", countDonors);
-				pw.print(obj.toString());
-
-			}else if(cmd.contentEquals("/write.board")) {
+			if(cmd.contentEquals("/write.board")) {
 				request.getRequestDispatcher("/WEB-INF/boards/writer.jsp").forward(request, response);
 
 			}else if(cmd.equals("/writer.board")) { // 사용자가 입력한 값을 받아서 BoardDAO로 보내주는 부분
@@ -291,6 +279,7 @@ public class BoardController extends HttpServlet {
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 						}
 						request.setAttribute("board", result);
+						request.setAttribute("board", dao.selectByPage(currentPage));
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
