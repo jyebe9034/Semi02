@@ -126,7 +126,6 @@
     background-color: #2d3f53;
     align-items: center;
     position: relative;
-    margin-top: 30px;
 }
 #f_logo{
 	color: #98ddde;
@@ -352,8 +351,7 @@
 		<div id="f_sns">
 			<img id="kakao" class="sns" src="photo_image/ka.png"> <img
 				class="sns" src="photo_image/fa.png"> <img id="insta"
-				class="sns" src="photo_image/kk.png"> <a href="write.board"><div
-					id="suggest">후원 신청</div></a>
+				class="sns" src="photo_image/kk.png"> <a href="write.board"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>

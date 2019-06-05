@@ -230,8 +230,9 @@ public class BoardController extends HttpServlet {
 
 				String str = titleImg.getFilePath();
 				
-				String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
+				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
 				//String result = str.replaceAll("D:.+?mi.+?mi.+?",""); 재용오빠꺼
+				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
 				
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 				
@@ -275,7 +276,8 @@ public class BoardController extends HttpServlet {
 						List<BoardListDTO> result = dao.selectByPage(currentPage);
 						for(int i = 0; i < result.size(); i++) {
 							String path = result.get(i).getFilePath();
-							String folder = path.replaceAll("D.+?3.+?","");
+							//String folder = path.replaceAll("D.+?3.+?","");
+							String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 						}
 						request.setAttribute("board", result);
@@ -283,8 +285,17 @@ public class BoardController extends HttpServlet {
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
-						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));	
+						List<BoardListDTO> result = dao.searchList(currentPage, searchOption, searchWord);
+						for(int i = 0; i < result.size(); i++) {
+							String path = result.get(i).getFilePath();
+							//String folder = path.replaceAll("D.+?3.+?","");
+							String folder = path.replaceAll("D:.+?mi.+?","");
+							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
+						}
+						request.setAttribute("board", result);
 					}
+				
+					
 					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord));
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
 					

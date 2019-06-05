@@ -63,7 +63,7 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-
+		
 		System.out.println(cmd);
 
 		if(cmd.equals("/First.members")) {
@@ -101,17 +101,17 @@ public class MembersController extends HttpServlet {
 					String str = imgList.get(i).getFilePath();
 					//					String result = str.replaceAll("D:.+?mi.+?mi.+?",""); 재용오빠꺼
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-					String result = str.replaceAll("D.+?3.+?","");
+					//String result = str.replaceAll("D.+?3.+?", "");
+					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
 
 				request.setAttribute("imgSrc", imgSrc);
-
+				
 				int totalAmount = pdao.getTotalAmount();
 				int countDonors = pdao.getNumberOfDonors();
 				request.setAttribute("totalAmount", totalAmount);
 				request.setAttribute("countDonors", countDonors);
-
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 
 			}catch(Exception e) {
