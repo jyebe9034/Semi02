@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
+import kh.semi.dao.PaymentDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.MemberDTO;
 import kh.semi.dto.TitleImgDTO;
@@ -58,6 +59,7 @@ public class MembersController extends HttpServlet {
 		String cmd = reqUri.substring(ctxPath.length());
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
+		PaymentDAO pdao = new PaymentDAO();
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
@@ -93,12 +95,18 @@ public class MembersController extends HttpServlet {
 					String str = imgList.get(i).getFilePath();
 					//					String result = str.replaceAll("D:.+?mi.+?mi.+?",""); 재용오빠꺼
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-					String result = str.replaceAll("D.+?3.+?", "");
+					//String result = str.replaceAll("D.+?3.+?", "");
+					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 					System.out.println("imgSrc : " + imgSrc[i]);
 				}
 
 				request.setAttribute("imgSrc", imgSrc);
+	            int totalAmount = pdao.getTotalAmount();
+	            int countDonors = pdao.getNumberOfDonors();
+	            request.setAttribute("totalAmount", totalAmount);
+	            request.setAttribute("countDonors", countDonors);
+	            
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 
 			} catch (Exception e) {
