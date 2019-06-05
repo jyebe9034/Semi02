@@ -162,7 +162,7 @@ a:hover {
 				<a href="<%=apiURL%>" id="naver"><img height="47" width="120"
 					src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
 					<a id="kakao-login-btn"></a>
-					<a href="http://developers.kakao.com/logout"></a>
+					<a href="http://developers.kakao.com/logout"></a> <!--이 코드는 왜 필요한 거지?-->
 				<div id="toJoin">
 					아직 계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="JoinForm.members"
 						id="a_join" style="color: black">가입하기</a>

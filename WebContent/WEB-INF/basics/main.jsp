@@ -67,15 +67,6 @@
 	text-align: center;
 	margin-top: 40px;
 }
-
-.step1, .step2, .step3, .step4 {
-	width: 200px;
-	height: 200px;
-	border-radius: 10px;
-	font-family: "Jua";
-	padding: 10px;
-}
-
 .text {
 	vertical-align: middle;
 	font-family: "Jua";
@@ -124,16 +115,12 @@
 		text-align: center;
 		margin-top: 40px;
 	}
-	.step1, .step2, .step3, .step4 {
+	.step {
 		width: 200px;
 		height: 200px;
 		border-radius: 10px;
 		font-family: "Jua";
 		padding: 10px;
-	}
-	.text {
-		vertical-align: middle;
-		font-family: "Jua";
 	}
 	.imgTag{
 		border-radius:10px;
@@ -163,7 +150,6 @@
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
 						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -211,22 +197,22 @@
 	<hr>
 	<div class="container">
 		<div class="row">
-			<div class="step1 col-lg-3 col-md-6 col-sm-6 col-xs-6"
+			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6"
 				style="background-color: #8be1ef">
 				<h1>1</h1>
 				<h4>후원 요청 글과 함께 은행명, 계좌번호를 입력하면</h4>
 			</div>
-			<div class="step2 col-lg-3 col-md-6 col-sm-6 col-xs-6"
+			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6"
 				style="background-color: #60d6ea">
 				<h1>2</h1>
 				<h4>후원 게시판에 글이 등록이 되고</h4>
 			</div>
-			<div class="step3 col-lg-3 col-md-6 col-sm-6 col-xs-6"
+			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6"
 				style="background-color: #3bd3ed;">
 				<h1>3</h1>
 				<h4>후원자분들이 기부금을 결제하면</h4>
 			</div>
-			<div class="step4 col-lg-3 col-md-6 col-sm-6 col-xs-6"
+			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6"
 				style="background-color: #1ebdd8;">
 				<h1>4</h1>
 				<h4>모금 마감일에 모금액 전액이 일괄적으로 후원 요청자분께 전달됩니다.</h4>
@@ -237,63 +223,32 @@
 	<hr>
 	<div class="container container_card">
 		<div class="row rowcard">
-			<div class="card col-lg-4 col-md-12 col-sm-12">
-				<div id="imgBox1" class="imgBox">
-					<img src="${imgSrc[0] }" class="imgTag" width="100%">
-				</div>
-				<div class="card-body">
-					<h6 class="card-title">
-						<span id="title1">${list[0].title}</span>
-					</h6>
-					<hr>
-					<p class="card-text" align="left">
-						모금 마감일 <br> <span id="dueDate1">${duedate[0]}</span><br> 모금현황<br>
-						<span id="percentage1">${percentage[0]}%</span>
-					<div class="progress">
-						<div id="card1" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[0]}%"></div>
+			<c:choose>
+			<c:when test="${listSize == 0 }"></c:when>
+			<c:otherwise>
+				<c:forEach var="i" begin="0" end="${listSize-1}">
+					<div class="card col-lg-4 col-md-12 col-sm-12">
+						<div class="imgBox">
+							<img src="${imgSrc[i] }" class="imgTag" width="100%">
+						</div>
+						<div class="card-body">
+							<h6 class="card-title">
+								<span>${list[i].title}</span>
+							</h6>
+							<hr>
+							<p class="card-text" align="left">
+								모금 마감일 <br> <span>${duedate[i]}</span><br> 모금현황<br>
+								<span>${percentage[i]}%</span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar"
+									aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[i]}%"></div>
+							</div>
+							<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&commentPage=1">후원하기</a></div>
+						</div>
 					</div>
-					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
-				</div>
-			</div>
-			<div class="card col-lg-4 col-md-12 col-sm-12">
-				<div id="imgBox2" class="imgBox">
-					<img src="${imgSrc[1] }" class="imgTag" width="100%" alt="...">
-				</div>
-				<div class="card-body">
-					<h6 class="card-title">
-						<span id="title2">${list[1].title}</span>
-					</h6>
-					<hr>
-					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate2">${duedate[1]}</span><br> 모금현황<br>
-						<span id="percentage2">${percentage[1]}%</span>
-					<div class="progress">
-						<div id="card2" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[1]}%"></div>
-					</div>
-					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
-				</div>
-			</div>
-			<div class="card col-lg-4 col-md-12 col-sm-12">
-				<div id="imgBox3" class="imgBox">
-					<img src="${imgSrc[2] }" class="imgTag" width="100%" alt="...">
-				</div>
-				<div class="card-body">
-					<h6 class="card-title">
-						<span id="title3">${list[2].title}</span>
-					</h6>
-					<hr>
-					<p class="card-text">
-						모금 마감일 <br> <span id="dueDate3">${duedate[2]}</span><br> 모금현황<br>
-						<span id="percentage3">${percentage[2]}%</span>
-					<div class="progress">
-						<div id="card3" class="progress-bar" role="progressbar"
-							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[2]}%"></div>
-					</div>
-					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
-				</div>
-			</div>
+				</c:forEach>
+			</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 

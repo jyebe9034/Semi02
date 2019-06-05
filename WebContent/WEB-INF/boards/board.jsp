@@ -222,10 +222,10 @@
 		<!--글목록-->
 		<div class="row listRow">
 			<c:forEach var="list" items="${board }">
-				<div class="col-lg-3 col-md-6 col-sm-12 article" boardNo="${list.boardNo}">
+				<div class="col-lg-3 col-md-6 col-sm-12">
 					<div class="card list">
-						<img src=${list.filePath}> 
-						<div class="card-body">
+						<img src="${list.newFilePath}"> 
+						<div class="card-body article" boardNo="${list.boardNo}">
 							<h5 class="card-title">${list.title }</h5>
 							<p class="card-text">${list.writer }</p>
 							<div class="progress">
@@ -288,6 +288,7 @@
 		
 		$(".article").on("click", function(){
 			var boardNo = $(this).attr("boardNo");
+			alert(boardNo);
 			location.href="Read.board?boardNo="+boardNo+"&commentPage=1";
 		})
 	</script>

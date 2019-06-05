@@ -253,7 +253,8 @@ ul {
 				alert("이메일을 입력해주세요.");
 			} else if ($("#inputNum").attr("flag") == "false") {
 				alert("이메일 인증을 완료해주세요.");
-			} else if ($("#pw_match").text() != "") {
+			}
+			else if($("#pw_match").text() != "" || $("#pw_form").text() != ""){
 				alert("비밀번호를 다시 확인해주세요.");
 			} else if ($("#name").val() == "") {
 				alert("이름을 입력해주세요.");
