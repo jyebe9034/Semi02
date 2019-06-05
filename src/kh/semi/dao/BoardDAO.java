@@ -247,21 +247,21 @@ public class BoardDAO {
 
 	/*검색*///검색어=searchWord
 	/*(2)searchOption으로 검색했을 때 게시글 목록*/
-	public PreparedStatement psForSearchList(Connection con, int startNum, int endNum, String searchOption, String searchWord) throws Exception{
-		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)) where rown between ? and ? and "+searchOption+" LIKE ?";
-
+	public PreparedStatement psForSearchList(Connection con, String searchOption, String searchWord, int startNum, int endNum) throws Exception{
+		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no) where "+searchOption+" LIKE ?) where rown between ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, startNum);
-		ps.setInt(2, endNum);
-		ps.setString(3, "%"+searchWord+"%");
+		ps.setString(1, "%"+searchWord+"%");
+		ps.setInt(2, startNum);
+		ps.setInt(3, endNum);	
 		return ps;
 	}
-	public List<BoardListDTO> searchList(int currentPage, String searchOption, String searchWord) throws Exception{
+	public List<BoardListDTO> searchList(int currentPage, String searchOption, String searchWord) throws Exception{		
 		int endNum = currentPage *recordCountPerPage;
 		int startNum = endNum - (recordCountPerPage-1);
+			
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement ps = this.psForSearchList(con, startNum, endNum, searchOption, searchWord);
+				PreparedStatement ps = this.psForSearchList(con, searchOption, searchWord, startNum, endNum);
 				ResultSet rs = ps.executeQuery();
 				){
 			List<BoardListDTO> result = new ArrayList<>();
@@ -294,7 +294,7 @@ public class BoardDAO {
 	
 	/*페이지 네비게이터*/
 		public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord) throws Exception {
-
+			
 			int recordTotalCount = totalRecordCount;
 			
 			int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
@@ -334,18 +334,21 @@ public class BoardDAO {
 			}
 
 			StringBuilder sb = new StringBuilder();
+			if(searchOption.contains(" ")) { //추가
+				searchOption = "b_title or b_contents";
+			}
 			if(needPrev) {
 				int prevStartNavi = startNavi-1;
-				sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&&searchWord="+searchWord+"&&currentPage="+ prevStartNavi +"\"" + 
+				sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ prevStartNavi +"\"" + 
 						"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
 						"						</a></li>");		
 			}
 			for(int i = startNavi; i <= endNavi; i++) {
-				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&&searchWord="+searchWord+"&&currentPage="+i+"\">" + i + "</a></li>");
+				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"\">" + i + "</a></li>");
 			}
 			if(needNext) {
 				int nextEndNavi = endNavi+1;
-				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&&searchWord="+searchWord+"&&currentPage="+ nextEndNavi++ +"\""+ 
+				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ nextEndNavi++ +"\""+ 
 						"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
 						"						</a></li>");
 			}

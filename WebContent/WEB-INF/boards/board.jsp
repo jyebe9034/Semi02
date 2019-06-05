@@ -56,6 +56,9 @@
 		background-color: #28a39f;
 		color: #FFF;
 	}
+	.noneListRow{
+		text-align: center;
+	}
 	
 	.listBox {
 		margin-bottom: 50px;
@@ -153,7 +156,7 @@
 	       }else if(searchOption=="none"){
 	    	   alert("검색방법을 선택해주세요.");
 	       }else{
-	    	   location.href="List.board?currentPage=1&&searchOption="+searchOption+"&&searchWord="+searchWord;
+	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
 	       }
 		})	
 		
@@ -177,7 +180,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption=allPages&&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
@@ -206,7 +209,7 @@
 					<option name="searchOption" class="searchOption" value="none">검색방법</option>
 					<option name="searchOption" class="searchOption" value="b_title">제목</option>
 					<option name="searchOption" class="searchOption" value="b_contents">내용</option>
-					<option name="searchOption" class="searchOption" value="b_title || B_CONTENTS">제목+내용</option>
+					<option name="searchOption" class="searchOption" value="b_title or b_contents">제목+내용</option>
 				</select> 
 				<input type="text" name="searchWord" class="searchWord" placeholder="검색할 내용 입력">
 				<button type="submit" class="btn searchBtn">검색</button>
@@ -215,27 +218,37 @@
 	</div>
 
 		<!--글목록-->
-		<div class="row listRow">
-			<c:forEach var="list" items="${board }">
-				<div class="col-lg-3 col-md-6 col-sm-12 article" boardNo="${list.boardNo}">
-					<div class="card list">
-						<img src=${list.filePath}> 
-						<div class="card-body">
-							<h5 class="card-title">${list.title }</h5>
-							<p class="card-text">${list.writer }</p>
-							<div class="progress">
-								<div id="card1" class="progress-bar" role="progressbar"
-									aria-valuenow="${percentage }" aria-valuemin="0"
-									aria-valuemax="100"></div>
+		<c:choose>
+			<c:when test="${totalRecordCount<1}">
+				<div class="row noneListRow"><p>검색 결과가 없습니다.</p></div>
+			</c:when>
+			<c:otherwise>
+					<div class="row listRow">
+						<c:forEach var="list" items="${board }">
+							<div class="col-lg-3 col-md-6 col-sm-12">
+								<div class="card list">
+									<img src=${list.filePath}> 
+									<div class="card-body article" boardNo="${list.boardNo}">
+										<h5 class="card-title">${list.title }</h5>
+										<p class="card-text">${list.writer }</p>
+										<div class="progress">
+											<div id="card1" class="progress-bar" role="progressbar"
+												aria-valuenow="${percentage }" aria-valuemin="0"
+												aria-valuemax="100"></div>
+										</div>
+										<div class="amount">
+											<small class="text-muted amount">${list.amount }</small>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="amount">
-								<small class="text-muted amount">${list.amount }</small>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
-				</div>
-			</c:forEach>
-		</div>
+			</c:otherwise>	
+		</c:choose>
+		
+		
+		
 	
 
 	<!--페이지네비게이터 -->
