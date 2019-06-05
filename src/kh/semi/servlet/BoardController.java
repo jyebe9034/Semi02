@@ -279,21 +279,13 @@ public class BoardController extends HttpServlet {
 					String searchWord = request.getParameter("searchWord"); //검색어
 					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
 					
+					if(searchOption.contains(" ")) { //추가
+						searchOption = "b_title || b_contents";
+					}
 					int totalRecordCount = 0; //=recordTotalCount
-					if(searchOption.equals("title")) { //제목으로 검색
-						searchOption = "b_title";
-						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));					
-					}else if(searchOption.equals("contents")) { //내용으로 검색
-						searchOption = "b_contents";
-						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
-					}else if(searchOption.equals("all")) { //제목+내용으로 검색
-						searchOption = "b_title || B_CONTENTS";
-						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
-						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));
-					}else{ //전체 글 목록
+					if(searchOption.equals("allPages")){ //전체 글 목록
 						totalRecordCount = dao.totalRecordNum();
+						
 						List<BoardListDTO> result = dao.selectByPage(currentPage);
 						for(int i = 0; i < result.size(); i++) {
 							String path = result.get(i).getFilePath();
@@ -301,13 +293,17 @@ public class BoardController extends HttpServlet {
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 						}
 						request.setAttribute("board", result);
+						request.setAttribute("board", dao.selectByPage(currentPage));
+					}else {
+						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("totalRecordCount", totalRecordCount);	 
+						request.setAttribute("board", dao.searchList(currentPage, searchOption, searchWord));	
 					}
-					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount));
+					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord));
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
 					
 				}catch(Exception e) {				
 					e.printStackTrace();
-					//response.sendRedirect("error.html");
 				}
 			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
 				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);

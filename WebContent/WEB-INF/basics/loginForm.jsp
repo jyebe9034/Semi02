@@ -130,6 +130,7 @@ a:hover {
 			</ul>
 		</div>
 	</nav>
+
 	<hr>
 	<div class="wrapper">
 		<div class="login_box">

@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+
 <link rel="stylesheet" href="nav_footer.css">
 <style>
 .wrapper {
@@ -100,6 +101,7 @@ a:hover {
 ul {
 	margin: auto;
 }
+
 </style>
 </head>
 <body>
@@ -134,6 +136,7 @@ ul {
 			</ul>
 		</div>
 	</nav>
+
 	<hr>
 
 	<form action="Join.members" id="joinForm" method="post">
@@ -207,7 +210,6 @@ ul {
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
 	<script>
 		$("#btnConfirmEmail").on("click", function() {
 			if ($("#inputNum").attr("flag") == "true") {
