@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>후원 게시판</title>
+<title>도움닿기 - 후원 게시판</title>
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
@@ -222,10 +222,10 @@
 		<!--글목록-->
 		<div class="row listRow">
 			<c:forEach var="list" items="${board }">
-				<div class="col-lg-3 col-md-6 col-sm-12 article" boardNo="${list.boardNo}">
+				<div class="col-lg-3 col-md-6 col-sm-12">
 					<div class="card list">
 						<img src=${list.filePath}> 
-						<div class="card-body">
+						<div class="card-body article" boardNo="${list.boardNo}">
 							<h5 class="card-title">${list.title }</h5>
 							<p class="card-text">${list.writer }</p>
 							<div class="progress">
@@ -288,8 +288,8 @@
 		
 		$(".article").on("click", function(){
 			var boardNo = $(this).attr("boardNo");
-			alert(boardNo);
-			location.href="Read.board?boardNo="+boardNo+"&commentPage=1";
+			var currentPage ="${currentPage }";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
 		})
 	</script>
 </body>
