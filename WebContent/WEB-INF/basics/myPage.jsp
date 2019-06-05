@@ -458,11 +458,11 @@ a:hover {
 			<!--       </div> -->
 			<div class="row contents">
 				<c:forEach var="myDonateContents" items="${myDonateContents }">
-					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.b_no }</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents.b_title }</div>
-					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.p_amount }원</div>
-					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.p_payment_date }</div>
-					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.writer }</div>
+					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents.boardTitle }</div>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
+					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.paymentDate }</div>
+					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.boardWriter }</div>
 					<hr>
 				</c:forEach>
 			</div>
@@ -494,11 +494,11 @@ a:hover {
 			<br>
 			<div class="row contents">
 				<c:forEach var="myDonateContents2" items="${myDonateContents2 }">
-					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.b_no }</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents2.b_title }</div>
-					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.b_sum_amount }원</div>
-					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.b_writedate }</div>
-					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.b_viewcount }</div>
+					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents2.title }</div>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
+					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.writeDate }</div>
+					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.viewCount }</div>
 					<hr>
 				</c:forEach>
 			</div>

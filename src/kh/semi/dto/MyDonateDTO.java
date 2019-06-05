@@ -4,54 +4,56 @@ import java.sql.Timestamp;
 
 public class MyDonateDTO {
 
-	private int b_no;
-	private String b_title;
-	private int p_amount;
-	private String p_payment_date;
-	private String writer;
-	
+	private int boardNo;
+	private String boardTitle;
+	private int paymentAmount;
+	private String paymentDate;
+	private String boardWriter;
+
 	public MyDonateDTO() {
 		super();
 	}
-	public MyDonateDTO(int b_no, String b_title, int p_amount, String p_payment_date, String writer) {
+	public MyDonateDTO(int boardNo, String boardTitle, int paymentAmount, String paymentDate, String boardWriter) {
 		super();
-		this.b_no = b_no;
-		this.b_title = b_title;
-		this.p_amount = p_amount;
-		this.p_payment_date = p_payment_date;
-		this.writer = writer;
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.paymentAmount = paymentAmount;
+		this.paymentDate = paymentDate;
+		this.boardWriter = boardWriter;
 	}
-	public int getB_no() {
-		return b_no;
+	public int getBoardNo() {
+		return boardNo;
 	}
-	public void setB_no(int b_no) {
-		this.b_no = b_no;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
-	public String getB_title() {
-		return b_title;
+	public String getBoardTitle() {
+		return boardTitle;
 	}
-	public void setB_title(String b_title) {
-		this.b_title = b_title;
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
 	}
-	public int getP_amount() {
-		return p_amount;
+	public int getPaymentAmount() {
+		return paymentAmount;
 	}
-	public void setP_amount(int p_amount) {
-		this.p_amount = p_amount;
+	public void setPaymentAmount(int paymentAmount) {
+		this.paymentAmount = paymentAmount;
 	}
-	public String getP_payment_date() {
-		return p_payment_date;
+	public String getPaymentDate() {
+		return paymentDate;
 	}
-	public void setP_payment_date(String p_payment_date) {
-		this.p_payment_date = p_payment_date;
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
 	}
-	public String getWriter() {
-		return writer;
+	public String getBoardWriter() {
+		return boardWriter;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setBoardWriter(String boardWriter) {
+		this.boardWriter = boardWriter;
 	}
+	
 
+	
 	
 	
 	
