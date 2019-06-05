@@ -10,7 +10,9 @@ import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,13 +25,35 @@ import kh.semi.dao.MemberDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.MemberDTO;
 import kh.semi.dto.TitleImgDTO;
+import kh.semi.scheduler.TimeVisiterCount;
 
 @WebServlet("*.members")
 public class MembersController extends HttpServlet {
+	public static int visitPerson;
+	public static int timePerson;
+	public static int oneStart;
+	public static int count;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
+
+
+		if(oneStart<1) {
+			oneStart++;
+			TimeVisiterCount visiterCount = new TimeVisiterCount();
+			Timer timer1 = new Timer();
+			Calendar date1 = Calendar.getInstance();
+			date1.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			date1.set(Calendar.AM_PM, Calendar.PM);
+			date1.set(Calendar.HOUR, 0);
+			date1.set(Calendar.MINUTE, 0);
+			date1.set(Calendar.SECOND, 0);
+			date1.set(Calendar.MILLISECOND, 0);
+			timer1.schedule(visiterCount,date1.getTime(),1000*10);//60초마다 저장
+			System.out.println("10초마다");
+
+		}
 
 		PrintWriter printWriter = response.getWriter();
 		String reqUri = request.getRequestURI();
@@ -38,10 +62,19 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 
-		if (cmd.equals("/Main.members")) {
+		
+		if(cmd.equals("/First.members")) {
+			visitPerson++;
+			timePerson++;
+			request.getRequestDispatcher("Main.members").forward(request, response);;
+		}
+		else if (cmd.equals("/Main.members")) {
+			request.getServletContext().setAttribute("visitPerson", visitPerson);
+			request.getServletContext().setAttribute("timePerson", timePerson);
 			List<BoardDTO> list;
 			try {
 				list = bdao.getDataForMain();
+				
 				request.setAttribute("list", list);
 				String[] strArr = new String[3];
 				int[] intArr = new int[3];
@@ -60,7 +93,7 @@ public class MembersController extends HttpServlet {
 				}
 				request.setAttribute("duedate", strArr);
 				request.setAttribute("percentage", intArr);
-
+				
 				String[] imgSrc = new String[3];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
@@ -69,6 +102,7 @@ public class MembersController extends HttpServlet {
 					String result = str.replaceAll("D.+?3.+?","");
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
+				
 				request.setAttribute("imgSrc", imgSrc);
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 
@@ -126,6 +160,11 @@ public class MembersController extends HttpServlet {
 				boolean result = dao.isLoginOk(email, pw);
 				if (result) {
 					request.getSession().setAttribute("loginEmail", email);
+					String admin = dao.managerOrVisiter(email);
+					if(admin.equals("y")) {
+						request.getSession().setAttribute("admin", admin);
+						System.out.println(admin);
+					}
 				}
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);

@@ -72,7 +72,14 @@
 		
 					<c:choose>
 						<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이페이지</a></li>
+						</c:if>
+						<c:choose>
+						<c:when test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="bar.manager">대시보드</a></li>
+						</c:when>
+					</c:choose>
 							<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 	
 						</c:when>

@@ -273,7 +273,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
 				
-			}else if(cmd.equals("/List.board")){ //게시판 목록
+			}else if(cmd.equals("/List.board")){ //후원 게시판 목록
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
 					String searchWord = request.getParameter("searchWord"); //검색어

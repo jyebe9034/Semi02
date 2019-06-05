@@ -157,7 +157,9 @@ li {
 			</div>
 			<div id="divBtnPay"><input type="button" id="btnPay" class="btn btn-primary" value="결제하기"></div>
 		</div>
+		
 	</form>
+	
 
 	<div id="footer">
 		<div id="f_logo_wrap">
