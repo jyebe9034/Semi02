@@ -14,7 +14,7 @@
 <meta name="author" content="">
 
 <title>SB Admin 2 - Dashboard</title>
-
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
 	type="text/css">
@@ -94,9 +94,8 @@
 				class="sidebar-brand d-flex align-items-center justify-content-center"
 				href="start.html">
 				<div class="sidebar-brand-icon rotate-n-15">
-					<i class="fas fa-laugh-wink"></i>
 				</div>
-				<div class="sidebar-brand-text mx-3">도움닿기</div>
+				<div class="sidebar-brand-text mx-3" style="font-family: 'Cute Font', cursive;" ><h3>도움닿기</h3></div>
 			</a>
 
 			<!-- Divider -->
@@ -120,14 +119,13 @@
 					class="fas fa-fw fa-cog"></i>
 				<!--왼쪽 그림--> <span>바로가기</span>
 			</a>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-					data-parent="#accordionSidebar">
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"	data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">페이지 바로가기</h6>
 						<a class="collapse-item" href="start.html">홈페이지</a> 
 						<a class="collapse-item" href="Introduce.members">소개 페이지</a>
 						<a class="collapse-item" href="TalentDonations.board">재능기부 게시판</a>
-						<a class="collapse-item" href="List.board">후원 게시판 페이지</a>
+						<a class="collapse-item" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판 페이지</a>
 						<a class="collapse-item" href="#">회원 정보 페이지</a>
 					</div>
 				</div></li>

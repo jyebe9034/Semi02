@@ -123,7 +123,9 @@
 	.article{
 		cursor: pointer;
 	}
-	
+	.check{
+		margin-left : 35px;
+	}
 </style>
 <script>
 	$(function(){
@@ -228,7 +230,7 @@
 	</div>
 
 		<!--글목록-->
-		<form action="BoardWriteDelete.manager">   <!-- 임창훈!!! -->
+		<form action="BoardWriteDelete.manager"> 
 		<div class="row listRow">
 			<c:forEach var="list" items="${board }">
 				<div class="col-lg-3 col-md-6 col-sm-12">

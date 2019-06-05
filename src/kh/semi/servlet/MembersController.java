@@ -49,9 +49,8 @@ public class MembersController extends HttpServlet {
 			date1.set(Calendar.MINUTE, 0);
 			date1.set(Calendar.SECOND, 0);
 			date1.set(Calendar.MILLISECOND, 0);
-			timer1.schedule(visiterCount,date1.getTime(),1000*10);//60초마다 저장
-			System.out.println("10초마다");
-
+			timer1.schedule(visiterCount,date1.getTime(),1000*1);//60초마다 저장
+			
 		}
 
 		PrintWriter printWriter = response.getWriter();

@@ -77,7 +77,7 @@
 						</c:if>
 						<c:choose>
 						<c:when test="${sessionScope.admin!=null}">
-							<li class="nav-item nav-li"><a class="nav-link anker" href="bar.manager">대시보드</a></li>
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
 						</c:when>
 					</c:choose>
 							<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>

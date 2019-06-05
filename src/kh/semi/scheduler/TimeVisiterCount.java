@@ -14,6 +14,7 @@ public class TimeVisiterCount extends TimerTask{
 	 @Override
 	 public void run() {
 			try {
+				System.out.println("1초마다");
 				SimpleDateFormat format = new SimpleDateFormat ("HHmmss");
 				Date time = new Date();
 				String time1 = format.format(time);

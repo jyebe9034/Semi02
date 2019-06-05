@@ -176,16 +176,16 @@ public class ManagerDAO {
 		}
 	}
 	
-	public List<MemberDTO2> memberInfo()throws Exception{
+	public List<MemberDTO> memberInfo()throws Exception{
 		String sql = "select m_email,m_name,m_phone,m_joindate,m_ipaddress from members";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();
 				){
-			List<MemberDTO2> li = new ArrayList<>();
+			List<MemberDTO> li = new ArrayList<>();
 			while(rs.next()) {
-				MemberDTO2 dto = new MemberDTO2(rs.getString(1),rs.getString(2),rs.getString(3),rs.getTimestamp(4),rs.getString(5));
+				MemberDTO dto = new MemberDTO(rs.getString(1),rs.getString(2),rs.getString(3),rs.getTimestamp(4),rs.getString(5));
 				li.add(dto);
 			}
 			return li;
@@ -237,20 +237,20 @@ public class ManagerDAO {
 		}
 	}
 	
-	public List<BoardDTO2> totalDonationProject()throws Exception{//모든 기부프로젝트 테이블
+	public List<BoardDTO> totalDonationProject()throws Exception{//모든 기부프로젝트 테이블
 		String sql = "select b_title,b_writer,b_due_date,b_writedate,b_sum_amount,b_amount from board";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();
 				){
-			List<BoardDTO2> li = new ArrayList<>();
+			List<BoardDTO> li = new ArrayList<>();
 			while(rs.next()) {
 				if(rs.getInt("b_sum_amount")==rs.getInt("b_amount")) {
-					BoardDTO2 dto = new BoardDTO2(rs.getString(1),rs.getString(2),rs.getTimestamp(3),rs.getTimestamp(4),rs.getInt(5),rs.getInt(6),true);
+					BoardDTO dto = new BoardDTO(rs.getString(1),rs.getString(2),rs.getTimestamp(3),rs.getTimestamp(4),rs.getInt(5),rs.getInt(6),true);
 					li.add(dto);
 				}else {
-					BoardDTO2 dto = new BoardDTO2(rs.getString(1),rs.getString(2),rs.getTimestamp(3),rs.getTimestamp(4),rs.getInt(5),rs.getInt(6),false);
+					BoardDTO dto = new BoardDTO(rs.getString(1),rs.getString(2),rs.getTimestamp(3),rs.getTimestamp(4),rs.getInt(5),rs.getInt(6),false);
 					li.add(dto);
 				}
 			}

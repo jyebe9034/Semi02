@@ -28,6 +28,11 @@ public class BoardDTO {
 		this.title = title;
 		this.recommend = recommend;
 	}	
+	public BoardDTO(String title, String account) {
+		super();
+		this.title = title;
+		this.account = account;
+	}
 	public BoardDTO(int boardNo, String title, String email, String writer, int amount, String bank, String account,
 			Timestamp dueDate, String contents, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
 		super();

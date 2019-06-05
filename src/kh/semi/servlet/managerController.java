@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import kh.semi.dao.ManagerDAO;
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.BoardDTO2;
+import kh.semi.dto.MemberDTO;
 import kh.semi.dto.MemberDTO2;
 import kh.semi.dto.PaymentDTO;
 import kh.semi.dto.TimePersonCountDTO;
@@ -48,8 +49,8 @@ public class managerController extends HttpServlet {
 			List<Object> bestViewCount = new ArrayList<>();
 			List<Object> worstViewCount = new ArrayList<>();
 			List<PaymentDTO> donationManyPeople = new ArrayList<>();
-			List<MemberDTO2> memberInfo = new ArrayList<>();
-			List<BoardDTO2> totalDonationProject = new ArrayList<>();
+			List<MemberDTO> memberInfo = new ArrayList<>();
+			List<BoardDTO> totalDonationProject = new ArrayList<>();
 			try {
 				visitPersonCount = dao.visitPersonCount();
 				totalMoney = dao.totalMoney();
@@ -86,6 +87,7 @@ public class managerController extends HttpServlet {
 			for(int i=0; i<value.length; i++) {
 				try {
 					int result = dao.BoardWriteDelete(value[i]);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
