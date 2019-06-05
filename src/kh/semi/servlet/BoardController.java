@@ -281,6 +281,7 @@ public class BoardController extends HttpServlet {
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 						}
 						request.setAttribute("board", result);
+						request.setAttribute("board", dao.selectByPage(currentPage));
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 

@@ -28,8 +28,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import kh.semi.dto.MemberDTO;
-import kh.semi.dto.MyDonateDTO;
-import kh.semi.dto.MyWriteDTO;
 
 public class MemberDAO {
 	public Connection getConnection() throws Exception {
@@ -72,20 +70,13 @@ public class MemberDAO {
 				if (rs.next()) {
 
 					MemberDTO result = new MemberDTO();
-					
-					String id = rs.getString("m_email");
-					String name = rs.getString("m_name");
-					String phone = rs.getString("m_phone");
-					String zipcode = rs.getString("m_zipcode");
-					String add1 = rs.getString("m_address1");
-					String add2 = rs.getString("m_address2");
-					
-					result.setEmail(id);
-					result.setName(name);
-					result.setPhone(phone);
-					result.setZipCode(zipcode);
-					result.setAddress1(add1);
-					result.setAddress2(add2);
+					result.setEmail(rs.getString("m_email"));
+					result.setPw(rs.getString("m_pw"));
+					result.setName(rs.getString("m_name"));
+					result.setPhone(rs.getString("m_phone"));
+					result.setZipCode(rs.getString("m_zipcode"));
+					result.setAddress1(rs.getString("m_address1"));
+					result.setAddress2(rs.getString("m_address2"));
 					
 					return result;
 				}
@@ -96,41 +87,8 @@ public class MemberDAO {
 	}
 	
 	
-	public MemberDTO getContents(MemberDTO dto) throws Exception {
 
-		String sql = "select * from members where m_email = ?";
 
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-
-			pstat.setString(1, dto.getEmail());
-
-			try (ResultSet rs = pstat.executeQuery();) {
-
-				if (rs.next()) {
-
-					MemberDTO result = new MemberDTO();
-					
-					String id = rs.getString("m_email");
-					String name = rs.getString("m_name");
-					String phone = rs.getString("m_phone");
-					String zipcode = rs.getString("m_zipcode");
-					String add1 = rs.getString("m_address1");
-					String add2 = rs.getString("m_address2");
-					
-					result.setEmail(id);
-					result.setName(name);
-					result.setPhone(phone);
-					result.setZipCode(zipcode);
-					result.setAddress1(add1);
-					result.setAddress2(add2);
-					
-					return result;
-				}
-
-				return null;
-			}
-		}
-	}
 	public int updateContents(MemberDTO param) throws Exception {
 
 		String sql = "update members set M_phone=?,m_zipcode=?,m_address1=?,m_address2=?,m_pw=? where M_EMAIL=?";
@@ -191,13 +149,13 @@ public class MemberDAO {
 		}
 	}
 
-	public boolean isIdExist(MemberDTO param) throws Exception {
+	public boolean isIdExist(String email) throws Exception {
 
 		String sql = "select * from members where m_email = ?";
 
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
-			pstat.setString(1, param.getEmail());
+			pstat.setString(1, email);
 
 			try (ResultSet rs = pstat.executeQuery();) {
 				
@@ -259,7 +217,7 @@ public class MemberDAO {
 				PreparedStatement pstat = con.prepareStatement(sql);
 				){
 			pstat.setString(1, dto.getEmail());
-			pstat.setString(2, dto.getPw());
+			pstat.setString(2, testSHA256(dto.getPw()));
 			pstat.setString(3, dto.getName());
 			pstat.setString(4, dto.getPhone());
 			pstat.setString(5, dto.getZipCode());
@@ -321,8 +279,7 @@ public class MemberDAO {
 		String sql = "select * from members where m_email=? and m_pw=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setString(1, email);
-//		pstat.setString(2, testSHA256(pw)); 임창훈 이거 주석없애기
-		pstat.setString(2, pw);
+		pstat.setString(2, testSHA256(pw));
 		return pstat;
 	}
 
@@ -622,33 +579,33 @@ public class MemberDAO {
 		return ps;
 	}
 
-	public List<MyWriteDTO> myDonateContents2(String email,int currentPage2) throws Exception {
-		
-		   int endNum = currentPage2*recordCountPerPage2;
-		   int startNum = endNum - (recordCountPerPage2-1);
-		      
-		try (Connection con = this.getConnection();
-				PreparedStatement ps = psForMyArticles2(con, email, startNum, endNum);
-				ResultSet rs = ps.executeQuery();) {
-			
-			List<MyWriteDTO> result = new ArrayList<>();
-			
-			while (rs.next()) {
-
-				int b_no = rs.getInt("b_no");
-				String b_title = rs.getString("b_title");
-				int b_sum_amount = rs.getInt("b_sum_amount");
-				String b_writedate = rs.getString("b_writedate");
-				int b_viewcount = rs.getInt("b_viewcount");
-
-				MyWriteDTO dto = new MyWriteDTO(b_no, b_title, b_sum_amount, b_writedate, b_viewcount);
-
-				result.add(dto);
-			}
-			return result;
-		}
-	}
-	
+//	public List<MyWriteDTO> myDonateContents2(String email,int currentPage2) throws Exception {
+//		
+//		   int endNum = currentPage2*recordCountPerPage2;
+//		   int startNum = endNum - (recordCountPerPage2-1);
+//		      
+//		try (Connection con = this.getConnection();
+//				PreparedStatement ps = psForMyArticles2(con, email, startNum, endNum);
+//				ResultSet rs = ps.executeQuery();) {
+//			
+//			List<MyWriteDTO> result = new ArrayList<>();
+//			
+//			while (rs.next()) {
+//
+//				int b_no = rs.getInt("b_no");
+//				String b_title = rs.getString("b_title");
+//				int b_sum_amount = rs.getInt("b_sum_amount");
+//				String b_writedate = rs.getString("b_writedate");
+//				int b_viewcount = rs.getInt("b_viewcount");
+//
+//				MyWriteDTO dto = new MyWriteDTO(b_no, b_title, b_sum_amount, b_writedate, b_viewcount);
+//
+//				result.add(dto);
+//			}
+//			return result;
+//		}
+//	}
+//	
 	
 	
 	
@@ -666,30 +623,30 @@ public class MemberDAO {
 		return ps;
 	}
 
-	public List<MyDonateDTO> myDonateContents(String email,int currentPage) throws Exception {
-		
-		   int endNum = currentPage*recordCountPerPage;
-		   int startNum = endNum - (recordCountPerPage-1);
-		      
-		try (Connection con = this.getConnection();
-				PreparedStatement ps = psForMyArticles(con, email, startNum, endNum);
-				ResultSet rs = ps.executeQuery();) {
-			List<MyDonateDTO> result = new ArrayList<>();
-			while (rs.next()) {
-
-				int b_no = rs.getInt("b_no");
-				String b_title = rs.getString("b_title");
-				int p_amount = rs.getInt("p_amount");
-				String p_payment_date = rs.getString("p_payment_date");
-				String b_writer = rs.getString("b_writer");
-
-				MyDonateDTO dto = new MyDonateDTO(b_no, b_title, p_amount, p_payment_date, b_writer);
-
-				result.add(dto);
-			}
-			return result;
-		}
-	}
+//	public List<MyDonateDTO> myDonateContents(String email,int currentPage) throws Exception {
+//		
+//		   int endNum = currentPage*recordCountPerPage;
+//		   int startNum = endNum - (recordCountPerPage-1);
+//		      
+//		try (Connection con = this.getConnection();
+//				PreparedStatement ps = psForMyArticles(con, email, startNum, endNum);
+//				ResultSet rs = ps.executeQuery();) {
+//			List<MyDonateDTO> result = new ArrayList<>();
+//			while (rs.next()) {
+//
+//				int b_no = rs.getInt("b_no");
+//				String b_title = rs.getString("b_title");
+//				int p_amount = rs.getInt("p_amount");
+//				String p_payment_date = rs.getString("p_payment_date");
+//				String b_writer = rs.getString("b_writer");
+//
+//				MyDonateDTO dto = new MyDonateDTO(b_no, b_title, p_amount, p_payment_date, b_writer);
+//
+//				result.add(dto);
+//			}
+//			return result;
+//		}
+//	}
 	
 	//-----------------------------------------------------------------------------------
 }
@@ -698,8 +655,8 @@ class MyAuthentication extends Authenticator {
 
 	PasswordAuthentication pa;
 	public MyAuthentication(){
-		String id = "jaeyong.lee55@gmail.com";       // 구글 ID
-		String pw = "Beaman!61329";          // 구글 비밀번호
+		String id = "junhaeyong95@gmail.com";       // 구글 ID
+		String pw = "wjsgodyd95!!";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);
 	}

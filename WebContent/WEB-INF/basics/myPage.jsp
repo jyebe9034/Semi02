@@ -221,19 +221,9 @@ a:hover {
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-	
-				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
-					</c:otherwise>
-				</c:choose>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+				<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -244,11 +234,6 @@ a:hover {
    
    
 <br><br><br>
-
-	<c:choose>
-
-		<c:when test="${dto!=null }">
-
 			<div class="container wrap">
 				<h3>내 정보</h3>
 				<hr class="myhr1">
@@ -335,101 +320,6 @@ a:hover {
 				</div>
 
 			</div>
-		</c:when>
-
-		<c:otherwise>
-
-			<div class="container wrap">
-				<h3>내 정보</h3>
-				<hr class="myhr1">
-				<div class="row">
-					<div class="col-2">
-						<span class="first">이메일</span>
-					</div>
-					<div class="col-10">
-						<span class="second">${realcontents.email}${navercontents.email }</span>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-2">
-						<span class="first">이름</span>
-					</div>
-					<div class="col-10">
-						<span class="second">${realcontents.name }${navercontents.name }</span>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-2">
-						<span class="first-phone">연락처</span>
-					</div>
-					<div class="col-10">
-						<span><form class="form-inline">
-								<div class="form-group">
-									<input type="text" id="phone"
-										class="form-control mx-sm-3 second"
-										value="${realcontents.phone }" readonly>
-								</div>
-							</form></span>
-					</div>
-				</div>
-
-				<hr>
-				<div class="row">
-					<div class="col-2">
-						<span class="first-pw">주소</span>
-					</div>
-					<div class="col-10">
-						<span><form class="form-inline">
-								<div class="form-group">
-									<input type="text" id="zipcode"
-										class="form-control mx-sm-3 second"
-										value="${realcontents.zipCode }" readonly>
-								</div>
-							</form></span>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-2">
-						<span class="first-pw"></span>
-					</div>
-					<div class="col-10">
-						<span><form class="form-inline">
-								<div class="form-group">
-									<input type="text" id="address1"
-										class="second form-control mx-sm-3"
-										value="${realcontents.address1 }" readonly>
-								</div>
-							</form></span>
-					</div>
-				</div>
-				<br>
-
-				<div class="row">
-					<div class="col-2"></div>
-					<div class="col-10">
-						<span><form class="form-inline">
-								<div class="form-group">
-									<input type="text" id="address2"
-										class="second form-control mx-sm-3"
-										value="${realcontents.address2 }" readonly>
-
-								</div>
-							</form></span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<a href="myPageUpdateLocationForNaver.members"><button
-								type="button" class="btn btn-info update">정보 수정</button></a>
-					</div>
-				</div>
-			</div>
-
-		</c:otherwise>
-	</c:choose>
 	<br>
 	<br>
 	<br>
@@ -458,11 +348,11 @@ a:hover {
 			<!--       </div> -->
 			<div class="row contents">
 				<c:forEach var="myDonateContents" items="${myDonateContents }">
-					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents.boardTitle }</div>
-					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
-					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.paymentDate }</div>
-					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.boardWriter }</div>
+					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.b_no }</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents.b_title }</div>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.p_amount }원</div>
+					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.p_payment_date }</div>
+					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.writer }</div>
 					<hr>
 				</c:forEach>
 			</div>
@@ -470,8 +360,7 @@ a:hover {
 			<div class="row  p-0 m-0" class="numBox">
 				<div class="col-12 d-flex justify-content-center">
 					<nav aria-label="Page navigation example">
-						<ul class="pagination pagination-sm">${getNavi}
-						</ul>
+						<ul class="pagination pagination-sm">${getNavi}</ul>
 					</nav>
 				</div>
 			</div>
@@ -494,11 +383,11 @@ a:hover {
 			<br>
 			<div class="row contents">
 				<c:forEach var="myDonateContents2" items="${myDonateContents2 }">
-					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents2.title }</div>
-					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
-					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.writeDate }</div>
-					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.viewCount }</div>
+					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.b_no }</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents2.b_title }</div>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.b_sum_amount }원</div>
+					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.b_writedate }</div>
+					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.b_viewcount }</div>
 					<hr>
 				</c:forEach>
 			</div>
@@ -530,9 +419,5 @@ a:hover {
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
-<script>
-
-    </script>
 </body>
 </html>
