@@ -1,0 +1,94 @@
+body {
+	font-family: "Nanum Gothic";
+	height: 100%;
+}
+a{
+   	font-weight: bold;
+   }
+.anker:hover{
+	color: #000000;
+}
+.nav-ul{
+	margin:auto;
+}
+.nav-link{
+	margin:10px 20px;
+	padding:0px;
+	font-family:"Nanum Gothic";
+	font-weight:bold;
+	text-align:right;
+}
+.logo{
+ 	margin-left:15%;
+}
+
+#footer{
+    height: 200px;
+    width: 100%;
+    background-color: #2d3f53;
+    align-items: center;
+    position: relative;
+    margin-top: 30px;
+}
+#f_logo{
+	color: #98ddde;
+    text-decoration: none;
+}
+#f_logo_wrap{
+    position: absolute;
+    left: 15%;
+    top: 20%;
+}
+#f_info_wrap{
+	position: absolute;
+	right: 15%;
+	top: 20%;
+}
+#f_info{
+	color: gray;
+	text-align: right;
+	font-size: 13px;
+	float: left;
+	padding-top: 5px;
+	margin-right: 10px;
+}
+#suggest{
+	display: inline-block;
+	background-color: #fa7268;
+	border-radius: 10%;
+	color: white; 
+	width: 90px;
+	height: 45px;
+	text-decoration: none;
+	line-height: 45px;
+	float: right;
+	margin-left: 15px;
+	text-align: center;
+}
+#f_sns{
+	position: absolute;
+	right: 15%;
+	top: 47%;
+}
+.sns{
+	width: 30px;
+	height: 30px;
+	margin: 3px;
+}
+#kakao{
+	width: 40px;
+	height: 40px;
+}
+#insta{
+	width: 32px;
+	height: 32px;
+	margin-left: 8px;
+}
+#copyright{
+	color: gray;
+	position: absolute;
+	right: 15%;
+	top: 70%;
+	font-size: 13px;
+	margin-top: 5px;
+}
