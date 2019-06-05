@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>후원 게시판</title>
+<title>도움닿기 - 후원 게시판</title>
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
@@ -146,7 +146,8 @@
 // 		지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
 		$(".article").on("click", function(){
 			var boardNo = $(this).attr("boardNo");
-			location.href="Read.board?boardNo="+boardNo+"&commentPage=1";
+			var currentPage ="${currentPage }";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
 		})
 //-----------------------------------------------------------------------------		
 		$(".searchBtn").on("click",function(){		
@@ -305,6 +306,7 @@
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
+
+		
 </body>
 </html>

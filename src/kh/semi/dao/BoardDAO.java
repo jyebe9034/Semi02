@@ -16,7 +16,8 @@ import kh.semi.dto.CommentDTO;
 import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
-	static int recordCountPerPage = 8;
+	static int recordCountPerPage = 10;
+	static int boardRecordCountPerPage = 10;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 

@@ -248,7 +248,7 @@
 								<div class="progress-bar" role="progressbar"
 									aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[i]}%"></div>
 							</div>
-							<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&commentPage=1">후원하기</a></div>
+							<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&currentPage=1&commentPage=1">후원하기</a></div>
 						</div>
 					</div>
 				</c:forEach>

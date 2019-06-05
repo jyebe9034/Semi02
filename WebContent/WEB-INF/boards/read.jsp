@@ -142,7 +142,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption=allPages&&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
@@ -184,7 +184,7 @@
 			<div class="contents col-12 m-3 p-3">${result.contents }</div>
 			<div class="btnBox col-md-9 col-sm-7 d-none d-sm-block"></div>
 			<div class="btnBox2 col-md-3 col-sm-5 col-12">
-				<a class="btn btn-primary" href="Board.board?currentPage=1">목록</a>
+				<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&&searchOption=allPages&&searchWord=allPages">목록</a>
 				<a class="btn btn-primary" href="Main.members">메인</a>
 				<c:if test="${sessionScope.loginEmail == result.email }">
 					<a class="btn btn-primary" href="Main.members">수정</a>
@@ -225,31 +225,31 @@
 			<ul class="pagination pagination-sm justify-content-center m-0">
 				<c:if test="${pageNavi.needPrev == 1 }">
 					<li class="page-item"><a class="page-link pageNum"
-						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.startNavi - 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.startNavi - 1}"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
 				</c:if>
 				<c:if test="${pageNavi.currentPage > 1 }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.currentPage - 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage - 1}"
 						aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 					</a></li>
 				</c:if>
 
 				<c:forEach var="i" begin="${pageNavi.startNavi}" end="${pageNavi.endNavi}">
 					<li class="page-item"><a class="page-link pageNumber"
-						href="Read.board?boardNo=${result.boardNo }&commentPage=${i }">${i}</a></li>
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${i }">${i}</a></li>
 				</c:forEach>
 					
 				<c:if test="${pageNavi.currentPage < pageNavi.pageTotalCount }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.currentPage + 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage + 1}"
 						aria-label="Previous"> <span aria-hidden="true">&gt;</span>
 					</a></li>
 				</c:if>
 				<c:if test="${pageNavi.needNext == 1 }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&commentPage=${pageNavi.endNavi + 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.endNavi + 1}"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a></li>
 				</c:if>
@@ -366,12 +366,13 @@
 							comment: $("#inputComment").html()
 						}
 					}).done(function(resp){
-						$("#inputComment").html("");
-						$(".commentsBox").prepend("<div class='row col-12 p-3 m-3'></div>");
-						$(".commentsBox>div:first-child").prepend("<div class='col-1'><span class='modifyCommentBtn' writeDate='" + resp.writeDate + "'>✎ </span><span class='modifyCompleteBtn' writeDate='" + resp.writeDate + "'></span><span class='deleteCommentBtn' writeDate='" + resp.writeDate +"'>✗</span></div>");
-						$(".commentsBox>div:first-child").prepend("<div class='col-md-2 d-none d-md-block'>방금 전</div>");
-					    $(".commentsBox>div:first-child").prepend("<div class='col-md-2 col-2'>"+ resp.name +"</div>");
-						$(".commentsBox>div:first-child").prepend("<div class='col-md-7 col-9 comment'>"+ resp.comment +"</div>");
+						location.reload();
+// 						$("#inputComment").html("");
+// 						$(".commentsBox").prepend("<div class='row col-12 p-3 m-3'></div>");
+// 						$(".commentsBox>div:first-child").prepend("<div class='col-1'><span class='modifyCommentBtn' writeDate='" + resp.writeDate + "'>✎ </span><span class='modifyCompleteBtn' writeDate='" + resp.writeDate + "'></span><span class='deleteCommentBtn' writeDate='" + resp.writeDate +"'>✗</span></div>");
+// 						$(".commentsBox>div:first-child").prepend("<div class='col-md-2 d-none d-md-block'>방금 전</div>");
+// 					    $(".commentsBox>div:first-child").prepend("<div class='col-md-2 col-2'>"+ resp.name +"</div>");
+// 						$(".commentsBox>div:first-child").prepend("<div class='col-md-7 col-9 comment'>"+ resp.comment +"</div>");
 					});
 				}
 			}
@@ -389,7 +390,8 @@
 				}).done(function(resp){
 					if(resp == "1"){
 						alert("삭제되었습니다.");
-						$(".commentsBox>div:first-child").css("display", "none");
+// 						$(".commentsBox>div:first-child").css("display", "none");
+						location.reload();
 					}else{
 						alert("삭제하실 수 없습니다.");
 					}

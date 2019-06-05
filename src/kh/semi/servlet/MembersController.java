@@ -61,6 +61,8 @@ public class MembersController extends HttpServlet {
 		String cmd = reqUri.substring(ctxPath.length());
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
+		
+		System.out.println(cmd);
 
 		
 		if(cmd.equals("/First.members")) {
