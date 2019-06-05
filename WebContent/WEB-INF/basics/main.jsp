@@ -144,7 +144,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption=allPages&&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
@@ -226,7 +226,7 @@
 			<c:choose>
 			<c:when test="${listSize == 0 }"></c:when>
 			<c:otherwise>
-				<c:forEach var="i" begin="0" end="${listSize }">
+				<c:forEach var="i" begin="0" end="${listSize - 1}">
 					<div class="card col-lg-4 col-md-12 col-sm-12">
 						<div class="imgBox">
 							<img src="${imgSrc[i] }" class="imgTag" width="100%">
@@ -243,7 +243,7 @@
 								<div class="progress-bar" role="progressbar"
 									aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[i]}%"></div>
 							</div>
-							<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&commentPage=1">후원하기</a></div>
+							<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&currentPage=1&commentPage=1">후원하기</a></div>
 						</div>
 					</div>
 				</c:forEach>

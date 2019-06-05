@@ -37,6 +37,8 @@ public class MembersController extends HttpServlet {
 		String cmd = reqUri.substring(ctxPath.length());
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
+		
+		System.out.println(cmd);
 
 		if (cmd.equals("/Main.members")) {
 			List<BoardDTO> list;
@@ -57,7 +59,6 @@ public class MembersController extends HttpServlet {
 					int sumAmount = list.get(i).getSumAmount();
 					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
 					imgList.add(bdao.getTitleImg(list.get(i).getBoardNo()));
-					System.out.println(bdao.getTitleImg(list.get(i).getBoardNo()).getFileName());
 				}
 				request.setAttribute("duedate", strArr);
 				request.setAttribute("percentage", intArr);
