@@ -72,7 +72,7 @@
         data.addColumn('boolean', '도달여부');
         data.addRows([
         	<c:forEach var='allDonationProject' items="${totalDonationProject}">
-        	['${allDonationProject.title}','${allDonationProject.writer}','${allDonationProject.writeDate}','${allDonationProject.dueDate}',  {v: ${allDonationProject.sumAmount}, f: '${allDonationProject.sumAmount}원'},{v: ${allDonationProject.amount}, f: '${allDonationProject.amount}원'},${allDonationProject.donationResult}],
+        	['${allDonationProject.title}','${allDonationProject.writer}','${allDonationProject.writeDate}','${allDonationProject.dueDate}',{v: ${allDonationProject.amount}, f: '${allDonationProject.amount}원'},{v: ${allDonationProject.sumAmount}, f: '${allDonationProject.sumAmount}원'},${allDonationProject.donationResult}],
 			</c:forEach>
         ]);
         var table = new google.visualization.Table(document.getElementById('table_div'));
@@ -92,7 +92,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="manager.jsp">
+				href="start.html">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class="fas fa-laugh-wink"></i>
 				</div>
@@ -104,7 +104,7 @@
 			
 			<!-- Nav Item - Dashboard -->
 			<li class="nav-item active"><a class="nav-link"
-				href="manager.jsp"> <i class="fas fa-fw fa-tachometer-alt"></i>
+				href="Bar.manager"> <i class="fas fa-fw fa-tachometer-alt"></i>
 					<span>Dashboard</span></a></li>
 
 			<!-- Divider -->
@@ -124,9 +124,10 @@
 					data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">페이지 바로가기</h6>
-						<a class="collapse-item" href="#">홈페이지</a> 
-						<a class="collapse-item" href="#">소개 페이지</a>
-						<a class="collapse-item" href="#">후원 게시판 페이지</a>
+						<a class="collapse-item" href="start.html">홈페이지</a> 
+						<a class="collapse-item" href="Introduce.members">소개 페이지</a>
+						<a class="collapse-item" href="TalentDonations.board">재능기부 게시판</a>
+						<a class="collapse-item" href="List.board">후원 게시판 페이지</a>
 						<a class="collapse-item" href="#">회원 정보 페이지</a>
 					</div>
 				</div></li>

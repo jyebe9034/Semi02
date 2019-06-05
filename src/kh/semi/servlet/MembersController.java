@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.BoardDTO;
-import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
 import kh.semi.dto.TitleImgDTO;
 import kh.semi.scheduler.TimeVisiterCount;
@@ -50,7 +49,8 @@ public class MembersController extends HttpServlet {
 			date1.set(Calendar.MINUTE, 0);
 			date1.set(Calendar.SECOND, 0);
 			date1.set(Calendar.MILLISECOND, 0);
-			timer1.schedule(visiterCount,date1.getTime(),1000*60);//60초마다 저장
+			timer1.schedule(visiterCount,date1.getTime(),1000*10);//60초마다 저장
+			System.out.println("10초마다");
 
 		}
 
@@ -61,9 +61,13 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 
-		if (cmd.equals("/Main.members")) {
+		
+		if(cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
+			request.getRequestDispatcher("Main.members").forward(request, response);;
+		}
+		else if (cmd.equals("/Main.members")) {
 			request.getServletContext().setAttribute("visitPerson", visitPerson);
 			request.getServletContext().setAttribute("timePerson", timePerson);
 			List<BoardDTO> list;

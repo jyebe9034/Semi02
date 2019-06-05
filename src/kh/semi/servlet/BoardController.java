@@ -67,7 +67,7 @@ public class BoardController extends HttpServlet {
 				pw.print(obj.toString());
 
 			}else if(cmd.contentEquals("/write.board")) {
-				request.getRequestDispatcher("/writer.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/boards/writer.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/writer.board")) { // 사용자가 입력한 값을 받아서 BoardDAO로 보내주는 부분
 				request.getSession().setAttribute("flag", "true");
@@ -265,7 +265,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
 				
-			}else if(cmd.equals("/List.board")){ //게시판 목록
+			}else if(cmd.equals("/List.board")){ //후원 게시판 목록
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
 					String searchWord = request.getParameter("searchWord"); //검색어

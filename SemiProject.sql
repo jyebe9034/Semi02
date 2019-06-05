@@ -69,6 +69,12 @@ start with 1
 increment by 1
 nocache
 nomaxvalue;
+
+create sequence t_b_no_seq
+start with 1
+increment by 1
+nocache
+nomaxvalue;
 --drop sequence t_fileSeq_seq;
 
 select * from title_img;

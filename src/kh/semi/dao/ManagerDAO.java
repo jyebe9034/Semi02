@@ -258,6 +258,18 @@ public class ManagerDAO {
 		}
 	}
 	
+	public int BoardWriteDelete(String value)throws Exception{
+		String sql = "delete from board where b_no=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, value);
+			int result = pstat.executeUpdate();
+			return result;
+		}
+	}
+	
 	
 	
 }

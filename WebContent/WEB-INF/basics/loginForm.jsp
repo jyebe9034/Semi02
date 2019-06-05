@@ -18,12 +18,9 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+<link rel="stylesheet" href="nav_footer.css">
 <style>
-body {
-	font-family: "Nanum Gothic";
-	height: 100%;
-}
-
 .login_box {
 	width: 400px;
 	margin: auto;
@@ -87,186 +84,16 @@ a:hover {
 .find_id {
 	text-align: right;
 }
-	body {
-		font-family: "Nanum Gothic";
-		height: 100%;
-	}
-	
-	.login_box {
-		width: 400px;
-		margin: auto;
-		padding: 40px;
-		border: 1px solid #e4e4e4;
-		border-radius: 5px;
-	}
-	
-	a:hover {
-		text-decoration: none;
-		font-weight: bold;
-	}
-	
-	#toJoin {
-		color: black;
-		text-align: center;
-		font-size: 15px;
-		text-decoration: none;
-		margin: 20px 0px 20px;
-	}
-	
-	.form-control::placeholder {
-		font-size: 15px;
-	}
-	
-	#forget_pw {
-		margin-top: 20px;
-		text-decoration: none;
-		font-size: 14px;
-	}
-	
-	.btn-primary {
-		margin: 20px 0px 20px;
-		background-color: #1ebdd8;
-		border-color: #1ebdd8;
-		color: #FFF;
-	}
-	
-	.btn-primary:hover, .btn-primary:focus {
-		border-color: #28a39f;
-		background-color: #28a39f;
-		color: #FFF;
-	}
-	
-	.btn-primary:active, .btn-primary:visited, .btn-primary:active:focus,
-		.btn-primary:active:hover {
-		border-color: #639d34;
-		background-color: #639d34;
-		color: #FFF;
-	}
-	
-	.title {
-		margin-bottom: 20px;
-	}
-	
-	.save_find {
-		font-size: 13px;
-		display: inline-block;
-	}
-	
-	.find_id {
-		text-align: right;
-	}
-	
 	.wrapper{
 		margin-top: 50px;
-	}
-	.anker{
-		font-weight: bold;
-	}
-	.anker:hover{
-		color: #000000;
-	}
-	.nav-li{
-		width: 110px;
-	}
-	.navbar {
-		position: relative;
-		height: 60px;
-	}
-	#logos{
-		width: 140px;
-	}
-	.logo {
-		position: absolute;
-		top: 10%;
-		left: 15%;
-	}
-	#navbarNav {
-		max-width: 500px;
-		line-height: 40px;
-		position: relative;
-		top: 30%;
-		left: 55%;
-		text-align: center;
-	}
-	#toggle{
-		position: absolute;
-		top: 30%;
-		right: 5%;
 	}
 	#kakao-login-btn{
 		width : 193px;
 		height : 47px;
 	}
 	#footer{
-        height: 200px;
-        width: 100%;
-        background-color: #2d3f53;
-        align-items: center;
-        position: absolute;
-        margin-top: 30px;
-        bottom: 0;
-	}
-	#f_logo{
-		color: #98ddde;
-        text-decoration: none;
-	}
-	#f_logo_wrap{
-        position: absolute;
-        left: 15%;
-        top: 20%;
-	}
-	#f_info_wrap{
 		position: absolute;
-		right: 15%;
-		top: 20%;
-	}
-	#f_info{
-		color: gray;
-		text-align: right;
-		font-size: 13px;
-		float: left;
-		padding-top: 5px;
-		margin-right: 10px;
-	}
-	#suggest{
-		display: inline-block;
-		background-color: #fa7268;
-		border-radius: 10%;
-		color: white; 
-		width: 90px;
-		height: 45px;
-		text-decoration: none;
-		line-height: 45px;
-		float: right;
-		margin-left: 15px;
-		text-align: center;
-	}
-	#f_sns{
-		position: absolute;
-		right: 15%;
-		top: 47%;
-	}
-	.sns{
-		width: 30px;
-		height: 30px;
-		margin: 3px;
-	}
-	#kakao{
-		width: 40px;
-		height: 40px;
-	}
-	#insta{
-		width: 32px;
-		height: 32px;
-		margin-left: 8px;
-	}
-	#copyright{
-		color: gray;
-		position: absolute;
-		right: 15%;
-		top: 70%;
-		font-size: 13px;
-		margin-top: 5px;
+		bottom: 0;
 	}
 </style>
 </head>
@@ -275,11 +102,13 @@ a:hover {
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div id="toggle">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
@@ -287,9 +116,10 @@ a:hover {
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 	
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이 페이지</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+						
+						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
 					</c:when>
 					<c:otherwise>

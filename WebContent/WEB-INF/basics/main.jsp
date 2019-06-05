@@ -14,40 +14,9 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="nav_footer.css">
 <style>
-body {
-	font-family: "Nanum Gothic";
-	height: 100%;
-}
-
-.progress {
-	width: 200px;
-}
-
-.progress-bar {
-	background-color: orange;
-}
-
-.wrapper {
-	display: inline-block;
-}
-
-a {
-	font-weight: bold;
-}
-
-a:hover {
-	color: #000000;
-}
-
-ul {
-	margin: auto;
-}
-
-li {
-	width: 130px;
-}
-
 .hope {
 	text-align: center;
 	margin-bottom: 20px;
@@ -81,11 +50,6 @@ li {
 	object-fit: cover;
 }
 
-/* .card-img-top{ */
-/* 	border-radius:10px; */
-/* 	height:207px; */
-/* } */
-
 .card {
 	border-radius: 10px;
 	min-width: 300px;
@@ -116,29 +80,7 @@ li {
 	vertical-align: middle;
 	font-family: "Jua";
 }
-
-/* .navbar { */
-/* 	position: relative; */
-/* } */
-
-/* .logo { */
-/* 	position: absolute; */
-/* 	top: 15%; */
-/* 	left: 10%; */
-/* } */
-
-#navbarNav {
-	line-height: 40px;
-}
-
-.logo{
-	margin-left:100px;
-}
-
-	body {
-		font-family: "Nanum Gothic";
-		height: 100%;
-	}
+	
 	.progress {
 		width: 200px;
 	}
@@ -147,15 +89,6 @@ li {
 	}
 	.wrapper {
 		display: inline-block;
-	}
-	.anker{
-		font-weight: bold;
-	}
-	.anker:hover{
-		color: #000000;
-	}
-	.nav-li{
-		width: 110px;
 	}
 	.btn-primary {
 		margin: 20px 0px 20px;
@@ -202,101 +135,6 @@ li {
 		vertical-align: middle;
 		font-family: "Jua";
 	}
-	.navbar {
-		position: relative;
-		height: 60px;
-	}
-	#logos{
-		width: 140px;
-	}
-	.logo {
-		position: absolute;
-		top: 10%;
-		left: 15%;
-	}
-	#navbarNav {
-		max-width: 500px;
-		line-height: 40px;
-		position: relative;
-		top: 30%;
-		left: 55%;
-		text-align: center;
-	}
-	#toggle{
-		position: absolute;
-		top: 30%;
-		right: 5%;
-	}
-	#footer{
-        height: 200px;
-        width: 100%;
-        background-color: #2d3f53;
-        align-items: center;
-        position: relative;
-        margin-top: 30px;
-	}
-	#f_logo{
-		color: #98ddde;
-        text-decoration: none;
-	}
-	#f_logo_wrap{
-        position: absolute;
-        left: 15%;
-        top: 20%;
-	}
-	#f_info_wrap{
-		position: absolute;
-		right: 15%;
-		top: 20%;
-	}
-	#f_info{
-		color: gray;
-		text-align: right;
-		font-size: 13px;
-		float: left;
-		padding-top: 5px;
-		margin-right: 10px;
-	}
-	#suggest{
-		display: inline-block;
-		background-color: #fa7268;
-		border-radius: 10%;
-		color: white; 
-		width: 90px;
-		height: 45px;
-		text-decoration: none;
-		line-height: 45px;
-		float: right;
-		margin-left: 15px;
-		text-align: center;
-	}
-	#f_sns{
-		position: absolute;
-		right: 15%;
-		top: 47%;
-	}
-	.sns{
-		width: 30px;
-		height: 30px;
-		margin: 3px;
-	}
-	#kakao{
-		width: 40px;
-		height: 40px;
-	}
-	#insta{
-		width: 32px;
-		height: 32px;
-		margin-left: 8px;
-	}
-	#copyright{
-		color: gray;
-		position: absolute;
-		right: 15%;
-		top: 70%;
-		font-size: 13px;
-		margin-top: 5px;
-	}
 	.imgTag{
 		border-radius:10px;
 	}
@@ -308,35 +146,30 @@ li {
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div id="toggle">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-	
-				<c:choose>
-
-					<c:when test="${sessionScope.loginEmail != null}">
-
-						<li class="nav-item"><a class="nav-link"
-							href="Logout.members">로그아웃</a></li>
+		
 					<c:choose>
-						<c:when test="${sessionScope.admin==null}">
+					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+						<c:if test="${sessionScope.admin==null}">
 							<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이페이지</a></li>
-						</c:when>
-					</c:choose>	
-					<c:choose>
-						<c:when test="${sessionScope.admin!=null}">
-							<li class="nav-item nav-li"><a class="nav-link anker" href="bar.manager">대시보드</a></li>
-						</c:when>
-					</c:choose>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
+						</c:if>
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
+						
+						
+						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -425,8 +258,13 @@ li {
 					<div class="progress">
 						<div id="card1" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[0]}%"></div>
-					</div>
+					</div>  <!-- 후원하기 보기 고객 관리자   -->
+					<c:if test="${sessionScope.admin==null}">
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
+					</c:if>
+					<c:if test="${sessionScope.admin!=null}">
+					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">보기</a></div>
+					</c:if>
 				</div>
 			</div>
 			<div class="card col-lg-4 col-md-12 col-sm-12">
@@ -445,7 +283,12 @@ li {
 						<div id="card2" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[1]}%"></div>
 					</div>
+					<c:if test="${sessionScope.admin==null}">
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
+					</c:if>
+					<c:if test="${sessionScope.admin!=null}">
+					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">보기</a></div>
+					</c:if>
 				</div>
 			</div>
 			<div class="card col-lg-4 col-md-12 col-sm-12">
@@ -464,7 +307,12 @@ li {
 						<div id="card3" class="progress-bar" role="progressbar"
 							aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[2]}%"></div>
 					</div>
+					<c:if test="${sessionScope.admin==null}">
 					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">후원하기</a></div>
+					</c:if>
+					<c:if test="${sessionScope.admin!=null}">
+					<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=1&commentPage=1">보기</a></div>
+					</c:if>
 				</div>
 			</div>
 		</div>

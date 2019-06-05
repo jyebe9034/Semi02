@@ -36,7 +36,7 @@ public class managerController extends HttpServlet {
 		String cmd = requestURI.substring(comtextPath.length());
 		ManagerDAO dao = new ManagerDAO();
 
-		if (cmd.equals("/bar.manager")) {
+		if (cmd.equals("/Bar.manager")) {
 			int visitPersonCount;
 			String totalMoney;
 			int nowingProjectCount;
@@ -77,10 +77,21 @@ public class managerController extends HttpServlet {
 				request.setAttribute("donationManyPeople", donationManyPeople);
 				request.setAttribute("memberInfo", memberInfo);
 				request.setAttribute("totalDonationProject", totalDonationProject);
-				request.getRequestDispatcher("manager.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/basics/manager.jsp").forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else if(cmd.equals("/BoardWriteDelete.manager")) {
+			String[] value = request.getParameterValues("checkDelete");
+			for(int i=0; i<value.length; i++) {
+				try {
+					int result = dao.BoardWriteDelete(value[i]);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			request.getRequestDispatcher("List.board?currentPage=1&&searchOption==null&&searchWord==null").forward(request, response);
+		
 		}
 	}
 

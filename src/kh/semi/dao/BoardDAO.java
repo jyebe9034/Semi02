@@ -203,7 +203,6 @@ public class BoardDAO {
 	//-------------------------목록
 	/*(1)전체 게시판 목록*/
 	public PreparedStatement psForSelectByPage(Connection con, int startNum, int endNum) throws Exception{
-		//String sql = "select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)";
 		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)) where rown between ? and ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, startNum);
