@@ -228,7 +228,6 @@ public class MembersController extends HttpServlet {
 					if (!dao.isIdExist(email)){	// 처음 로그인 하는 경우
 						dao.insertNaverMember(dto);
 					}
-
 					request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
