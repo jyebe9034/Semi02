@@ -127,12 +127,10 @@ public class MemberDAO {
 					return result;
 				}
 
-				
 				return null;
 			}
 		}
 	}
-
 	public int updateContents(MemberDTO param) throws Exception {
 
 		String sql = "update members set M_phone=?,m_zipcode=?,m_address1=?,m_address2=?,m_pw=? where M_EMAIL=?";

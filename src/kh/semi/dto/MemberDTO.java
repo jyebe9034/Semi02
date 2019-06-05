@@ -38,8 +38,8 @@ public class MemberDTO {
 		this.zipCode = zipCode;
 		this.address1 = address1;
 		this.address2 = address2;
-
 	}
+	
 	public MemberDTO(String email, String name, String phone, Timestamp joinDate, String ipAddress) {
 		super();
 		this.email = email;
