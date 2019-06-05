@@ -54,6 +54,7 @@
 <body>
 	<div id="root">
 		<nav class="navbar navbar-expand-md navbar-light">
+
 			<div class="logo">
 				<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 			</div>
@@ -91,6 +92,7 @@
 				</ul>
 			</div>
 		</nav>
+		
 		<hr>
 		<div id="wrapper">
 			<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
