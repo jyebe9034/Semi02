@@ -48,30 +48,27 @@ public class BoardDAO {
 		}
 	}
 	
-	private PreparedStatement pstatForGetTitleImg(Connection con, int bNo1, int bNo2, int bNo3) throws Exception {
-		String sql = "select * from title_img where t_b_no in (?,?,?)";
+	private PreparedStatement pstatForGetTitleImg(Connection con, int boardNo) throws Exception {
+		String sql = "select * from title_img where t_b_no =?";
 		PreparedStatement pstat = con.prepareStatement(sql);
-		pstat.setInt(1, bNo1);
-		pstat.setInt(2, bNo2);
-		pstat.setInt(3, bNo3);
+		pstat.setInt(1, boardNo);
 		return pstat;
 	}
 	
-	public List<TitleImgDTO> getTitleImg(int bNo1, int bNo2, int bNo3) throws Exception{
+	public TitleImgDTO getTitleImg(int boardNo) throws Exception{
 		try(
 				Connection con = this.getConnection();
-				PreparedStatement pstat = this.pstatForGetTitleImg(con, bNo1, bNo2, bNo3);
+				PreparedStatement pstat = this.pstatForGetTitleImg(con, boardNo);
 				ResultSet rs = pstat.executeQuery();
 				){
-			List<TitleImgDTO> list = new ArrayList<>();
-			while(rs.next()) {
+			if(rs.next()) {
 				int tbNo = rs.getInt("t_b_no");
 				String tFileName = rs.getString("t_fileName");
 				String tFilePath = rs.getString("t_filePath");
 				TitleImgDTO dto = new TitleImgDTO(tbNo,tFileName,tFilePath);
-				list.add(dto);
+				return dto;
 			}
-			return list;
+			return null;
 		}
 	}
 	

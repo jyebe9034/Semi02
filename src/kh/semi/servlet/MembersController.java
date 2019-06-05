@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import kh.semi.dao.BoardDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dto.BoardDTO;
-import kh.semi.dao.MemberDAO;
 import kh.semi.dto.MemberDTO;
 import kh.semi.dto.TitleImgDTO;
 
@@ -43,8 +43,10 @@ public class MembersController extends HttpServlet {
 			try {
 				list = bdao.getDataForMain();
 				request.setAttribute("list", list);
+				request.setAttribute("listSize", list.size());
 				String[] strArr = new String[3];
-				int[] intArr = new int[3];
+				int[] intArr = new int[3];				
+				List<TitleImgDTO> imgList = new ArrayList<>();
 				for(int i = 0; i < list.size(); i++) {
 					int goalAmount = list.get(i).getAmount();
 					Timestamp dueDate = list.get(i).getDueDate();
@@ -53,30 +55,18 @@ public class MembersController extends HttpServlet {
 					strArr[i] = sdf.format(dueTime);
 					int sumAmount = list.get(i).getSumAmount();
 					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
+					imgList.add(bdao.getTitleImg(list.get(i).getBoardNo()));
+		
 				}
 				request.setAttribute("duedate", strArr);
 				request.setAttribute("percentage", intArr);
 				System.out.println(intArr[0] +" : "+ intArr[1] +" : "+ intArr[2]);
 				
-				int bNo1 = list.get(0).getBoardNo();
-				int bNo2 = list.get(1).getBoardNo();
-				int bNo3 = list.get(2).getBoardNo();
-				List<TitleImgDTO> imgList = bdao.getTitleImg(bNo1,bNo2,bNo3);
 				String[] imgSrc = new String[3];
 				for(int i=0; i < imgList.size(); i++) {
-					if(imgList.get(i).getBoardNo() == bNo1) {
-						String str = imgList.get(i).getFilePath();
-						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
-						imgSrc[0] = result + "/" + imgList.get(i).getFileName();
-					}else if(imgList.get(i).getBoardNo() == bNo2) {
-						String str = imgList.get(i).getFilePath();
-						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
-						imgSrc[1] = result + "/" + imgList.get(i).getFileName();
-					}else if(imgList.get(i).getBoardNo() == bNo3) {
-						String str = imgList.get(i).getFilePath();
-						String result = str.replaceAll("D:.+?mi.+?mi.+?","");
-						imgSrc[2] = result + "/" + imgList.get(i).getFileName();
-					}
+					String str = imgList.get(i).getFilePath();
+					String result = str.replaceAll("D:.+?mi.+?mi02.+?","");
+					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
 				request.setAttribute("imgSrc", imgSrc);
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);

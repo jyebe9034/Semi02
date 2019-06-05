@@ -121,7 +121,7 @@
 		color: #FFF;
 	}
 	.article{
-		cursor: pointer;
+		cursor: pointer; 
 	}
 </style>
 <script>
