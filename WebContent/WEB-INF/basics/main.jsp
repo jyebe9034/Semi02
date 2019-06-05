@@ -7,10 +7,7 @@
 <meta charset="UTF-8">
 <title>도움닿기</title>
 <link
-	href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
+	href="https://fonts.googleapis.com/css?family=Cute+Font|Jeju+Gothic|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -20,9 +17,11 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="nav_footer.css">
+<!-- <link rel="stylesheet" href="nav_footer.css"> -->
 <style>
-
+body{
+	min-width:375px;
+}
 .progress {
 	width: 200px;
 }
@@ -74,6 +73,8 @@
 	font-family: "Jua";
 	text-align: center;
 	margin-top: 40px;
+	margin-bottom:0px;
+	padding:2rem 2rem;
 }
 
 .text {
@@ -101,6 +102,7 @@
  	padding: 10px; 
  	text-align:center; 
  	display:flex; 
+ 	justify-content:center;
 } 
 .forArrow{ 
 	line-height:110px;
@@ -128,7 +130,6 @@
     background-color: #2d3f53;
     align-items: center;
     position: relative;
-    margin-top: 30px;
 }
 #f_logo{
 	color: #98ddde;
@@ -279,7 +280,7 @@
 	<div class="container">
 		<div class="row rowStep">
 			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
-				<div>
+				<div style="display:inline-block;">
 				<img src="photo_image/write2.png">
 				<p></p>
 				<h4>후원 게시판에서 후원 요청 글 작성</h4>
@@ -287,7 +288,7 @@
 			</div>
 			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
 				<div class="forArrow"><img src="photo_image/arrow.png" style="margin-right:20px;"></div>
-				<div>
+				<div style="display:inline-block;">
 				<img src="photo_image/board.png">
 				<p></p>
 				<h4>게시판에 글 등록</h4>
@@ -295,7 +296,7 @@
 			</div>
 			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
 				<div class="forArrow"><img src="photo_image/arrow.png" style="margin-right:20px;"></div>
-				<div>
+				<div style="display:inline-block;">
 				<img src="photo_image/donate.png">
 				<p></p>
 				<h4>후원자분들의 기부금 결제</h4>
@@ -313,7 +314,7 @@
 	</div>
 
 	<hr>
-	<div class="aboveCard" style="font-family:Do Hyeon"><h2>여러분의 작은 도움이 그들에게 큰 힘이 됩니다.</h2></div>
+	<div class="aboveCard" style="font-family:Do Hyeon;"><h2>여러분의 작은 도움이 그들에게 큰 힘이 됩니다.</h2></div>
 	<div class="container container_card">
 		<div class="row rowcard">
 			<c:choose>
@@ -349,24 +350,15 @@
 		</div>
 	</div>
 
-	<div class="jumbotron">
-		<h1 class="display-4">2019년 도움닿기 후원 현황</h1>
-		<p class="lead">
-		<h2>여러분의 사랑이 이렇게 모아졌습니다.</h2>
-		<br>
-		<h2>
-			<span id="amount"></span>
-		</h2>
-		<br>
-		<h2>
-			현재 후원자수 : <span id="countDonors"></span>
-		</h2>
-		</p>
+	<div class="jumbotron" style="font-family:Do Hyeon">
+		<h1 class="display-5">2019년 도움닿기 후원 현황</h1>
+		<h2 class="display-4">${totalAmount }원</h2>
+		<h2 class="display-4">${countDonors }명</h2>
 	</div>
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+				style="font-family: Cute Font"><h1>도움닿기</h1></a>
 		</div>
 		<div id="f_info_wrap">
 			<div id="f_info">
@@ -382,24 +374,6 @@
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
 
-	<script>
-		$.ajax({
-			url : "totalAmountDonors.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#amount").text(resp.totalAmount + " 원");
-			$("#countDonors").text(resp.countDonors + " 명");
-		});
-		
-		$.ajax({
-			url : "titleImagesMain.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#imgBox1").html(resp.imgTag1);
-			$("#imgBox2").html(resp.imgTag2);
-			$("#imgBox3").html(resp.imgTag3);
-		});
-	</script>
 </body>
 </html>
 

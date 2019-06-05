@@ -56,16 +56,6 @@ public class BoardController extends HttpServlet {
 		try {
 			if(cmd.contentEquals("/titleImagesMain.board")) {
 				
-			}else if(cmd.contentEquals("/totalAmountDonors.board")) {
-				
-				int totalAmount = pdao.getTotalAmount();
-				int countDonors = pdao.getNumberOfDonors();
-				
-				JsonObject obj = new JsonObject();
-				obj.addProperty("totalAmount", totalAmount);
-				obj.addProperty("countDonors", countDonors);
-				pw.print(obj.toString());
-
 			}else if(cmd.contentEquals("/write.board")) {
 				request.getRequestDispatcher("/WEB-INF/boards/writer.jsp").forward(request, response);
 				
