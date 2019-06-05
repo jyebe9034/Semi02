@@ -109,13 +109,13 @@
 		color: #FFF;
 	}
 	
-	#writeBtn {
+	#writeBtn,#deleteBtn {
 		background-color: #1ebdd8;
 		border-color: #1ebdd8;
 		color: #FFF;
 	}
 	
-	#writeBtn:hover {
+	#writeBtn:hover,#deleteBtn:hover {
 		border-color: #28a39f;
 		background-color: #28a39f;
 		color: #FFF;
@@ -123,6 +123,7 @@
 	.article{
 		cursor: pointer;
 	}
+	
 </style>
 <script>
 	$(function(){
@@ -184,7 +185,14 @@
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Mypage.members">마이페이지</a></li>
+						</c:if>	
+					<c:choose>
+						<c:when test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:when>
+					</c:choose>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
 					</c:when>
@@ -220,11 +228,21 @@
 	</div>
 
 		<!--글목록-->
+		<form action="BoardWriteDelete.manager">   <!-- 임창훈!!! -->
 		<div class="row listRow">
 			<c:forEach var="list" items="${board }">
 				<div class="col-lg-3 col-md-6 col-sm-12">
+<<<<<<< HEAD
 					<div class="card list">
 						<img src="${list.newFilePath}"> 
+=======
+				<c:if test="${sessionScope.admin!=null}">		 
+						<div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
+					</c:if> 
+					<div class="card list">
+			
+						<img src=${list.filePath}>
+>>>>>>> c561f07276d79d4ffddb1ee7af5739a33cd5a250
 						<div class="card-body article" boardNo="${list.boardNo}">
 							<h5 class="card-title">${list.title }</h5>
 							<p class="card-text">${list.writer }</p>
@@ -257,9 +275,16 @@
 	<div class="row p-0 m-0" id="bottom">
 		<div class="col-12 bottonBtns d-flex justify-content-center">
 			<button type="button" class="btn" id="goMainBtn">메인으로</button>
+			<c:if test="${sessionScope.admin==null}">
 			<button type="button" class="btn" id="writeBtn">글쓰기</button>
+			</c:if>
+			<c:if test="${sessionScope.admin!=null}">
+			<button type="submit" class="btn" id="deleteBtn">삭제</button>
+			</c:if>
 		</div>
 	</div>
+	</form>
+	
 	
 	<div id="footer">
 		<div id="f_logo_wrap">
@@ -290,6 +315,10 @@
 			var boardNo = $(this).attr("boardNo");
 			alert(boardNo);
 			location.href="Read.board?boardNo="+boardNo+"&commentPage=1";
+		})
+		
+		$("#deleteBtn").on("click",function(){
+			
 		})
 	</script>
 </body>

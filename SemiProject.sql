@@ -20,8 +20,6 @@ drop table members;
 
 select * from members;
 
-select m_name, m_email, m_phone from members where m_email='junhaeyong95@naver.com';
-
 commit;
 
 --------------------------------------------------------------------------------
@@ -53,11 +51,6 @@ drop sequence b_no_seq;
 select b_no_seq.currval from dual;
 
 select * from board;
-
-insert into board values(
-    b_no_seq.nextval, '피곤해요ㅠㅠ', 'junhaeyong95@naver.com','전해용', 1000000, '신한', '123123123456',
-    '191225', '빨리 자고싶어요<br>시원한 맥주한잔 하고~~ 크흐<br>폭신폭신한 침대에 누워서<br>선풍기바람 솔솔!!', default, default, default, default
-);
 
 commit;
 --------------------------------------------------------------------------------
@@ -125,3 +118,41 @@ drop table comments;
 select * from comments;
 
 commit;
+
+--------------------------------------------------------------------------------
+
+create table visitPersonCount(
+    personcount number 
+);
+
+--------------------------------------------------------------------------------
+
+create table timepersoncount(
+    time1 number,
+time2 number,
+time3 number,
+time4 number,
+time5 number,
+time6 number,
+time7 number,
+time8 number,
+time9 number,
+time10 number,
+time11 number,
+time12 number,
+time13 number,
+time14 number,
+time15 number,
+time16 number,
+time17 number,
+time18 number,
+time19 number,
+time20 number,
+time21 number,
+time22 number,
+time23 number,
+time24 number
+);
+
+insert into members values('opopa159@naver.com','asdasd','임창훈','010-211-222','qwe','asd','zxc',sysdate,'asd','y');
+insert into members values('opopa1559@naver.com','asdasd','임창훈','010-211-222','qwe','asd','zxc',sysdate,'asd','n');
