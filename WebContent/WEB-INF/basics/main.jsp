@@ -126,7 +126,6 @@
     background-color: #2d3f53;
     align-items: center;
     position: relative;
-    margin-top: 30px;
 }
 #f_logo{
 	color: #98ddde;
@@ -335,20 +334,11 @@
 		</div>
 	</div>
 
-	<div class="jumbotron">
-		<h1 class="display-4">2019년 도움닿기 후원 현황</h1>
-		<p class="lead">
-		<h2>여러분의 사랑이 이렇게 모아졌습니다.</h2>
-		<br>
-		<h2>
-			<span id="amount"></span>
-		</h2>
-		<br>
-		<h2>
-			현재 후원자수 : <span id="countDonors"></span>
-		</h2>
-		</p>
-	</div>
+   <div class="jumbotron" style="font-family:Do Hyeon">
+      <h1 class="display-5">2019년 도움닿기 후원 현황</h1>
+      <h2 class="display-4">${totalAmount }원</h2>
+      <h2 class="display-4">${countDonors }명</h2>
+   </div>
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members"
@@ -368,24 +358,6 @@
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
 
-	<script>
-		$.ajax({
-			url : "totalAmountDonors.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#amount").text(resp.totalAmount + " 원");
-			$("#countDonors").text(resp.countDonors + " 명");
-		});
-		
-		$.ajax({
-			url : "titleImagesMain.board",
-			dataType : "json"
-		}).done(function(resp) {
-			$("#imgBox1").html(resp.imgTag1);
-			$("#imgBox2").html(resp.imgTag2);
-			$("#imgBox3").html(resp.imgTag3);
-		});
-	</script>
 </body>
 </html>
 
