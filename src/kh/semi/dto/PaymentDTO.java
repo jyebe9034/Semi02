@@ -9,8 +9,15 @@ public class PaymentDTO {
 	private String phone;
 	private int amount;
 	private Timestamp paymentDate;
+	private int sumAmount;
 	
 	public PaymentDTO() {}
+	
+	public PaymentDTO(String name, int sumAmount) {
+		super();
+		this.name = name;
+		this.sumAmount = sumAmount;
+	}
 	public PaymentDTO(int boardNo, String name, String email, String phone, int amount, Timestamp paymentDate) {
 		super();
 		this.boardNo = boardNo;
@@ -20,6 +27,19 @@ public class PaymentDTO {
 		this.amount = amount;
 		this.paymentDate = paymentDate;
 	}
+	
+	public PaymentDTO(int boardNo, String name, String email, String phone, int amount, Timestamp paymentDate,
+			int sumAmount) {
+		super();
+		this.boardNo = boardNo;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.amount = amount;
+		this.paymentDate = paymentDate;
+		this.sumAmount = sumAmount;
+	}
+
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -56,4 +76,13 @@ public class PaymentDTO {
 	public void setPaymentDate(Timestamp paymentDate) {
 		this.paymentDate = paymentDate;
 	}
+
+	public int getSumAmount() {
+		return sumAmount;
+	}
+
+	public void setSumAmount(int sumAmount) {
+		this.sumAmount = sumAmount;
+	}
+	
 }

@@ -57,6 +57,17 @@
     	color: #ef3621;
     	font-size: 13px;
     }
+    .btn-primary {
+		margin: 20px 0px 20px;
+		background-color: #1ebdd8;
+		border-color: #1ebdd8;
+		color: #FFF;
+	}
+	.btn-primary:hover, .btn-primary:focus {
+		border-color: #28a39f;
+		background-color: #28a39f;
+		color: #FFF;
+	}
 </style>
 </head>
 <body>
@@ -75,11 +86,12 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
@@ -90,7 +102,7 @@
 			</ul>
 		</div>
 	</nav>
-	<hr>
+	<hr style="margin:0px;">
 	<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
 		<div class="carousel-inner">
 		    <div class="carousel-item active">
@@ -102,29 +114,35 @@
 		<form action="writer.board" method="post" id="myform" enctype="multipart/form-data" accept-charset="UTF-8">
 			<div class="form-group">
 				<div class="noti mb-2">제목은 한눈에 쏙 들어오게!</div>
-				<input type="text" class="form-control" name="title" placeholder="제목을 입력해 주세요 :)" required>
+				<input id="myTitle" type="text" class="form-control" name="title" placeholder="제목은 최대 22자 까지만 가능합니다 :)" required>
+			</div>
+			<div class="form-group">
+				<div id="wrongTitle" class="issue"></div>
 			</div>
 			<div class="form-group"> 
 				<div class="noti mb-2">대표 사진은 신중하게 골라서!</div>
 				<div class="custom-file mb-1">
-			      <input type="file" class="custom-file-input" id="customFile" name="filename">
+			      <input id="myTitleImg" type="file" class="custom-file-input" id="customFile" name="filename">
 			      <label class="custom-file-label text-left" for="customFile">용량은 10MB까지만 올릴 수 있어요:)</label>
 			    </div>
 			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">작성자는 실명으로!</div>
-				<input type="text" class="form-control" name="writer" placeholder="신뢰를 바탕으로 모금액이 모이기 때문에 실명을 입력해 주세요 :)" required>
+				<input id="myWriter" type="text" class="form-control" name="writer" placeholder="신뢰를 바탕으로 모금액이 모이기 때문에 실명을 입력해 주세요 :)" required>
 			</div>
 			<div class="form-group">
-				<div class=" noti mb-2">목표 금액은 최소 10,000원 이상!</div>
-				<input id="amount" type="number" class="form-control" name="amount" placeholder="한번 입력된 금액은 변경할 수 없어요 :)" min="10000" max="10000000" required>
+				<div id="wrongName" class="issue"></div>
+			</div>
+			<div class="form-group">
+				<div class=" noti mb-2">목표 금액은 최소 10,000원 이상 최대 10,000,000원까지!</div>
+				<input id="myAmount" type="number" class="form-control" name="amount" placeholder="한번 입력된 금액은 변경할 수 없어요 :)" min="10000" max="10000000" required>
 			</div>
 			<div class="form-group">
 				<div id="lessAmount" class="issue"></div>
 			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">마감일은 내가 원하는 대로!</div>
-				<input id="dueDate" type="date" class="form-control" name="dueDate" required>
+				<input id="myDueDate" type="date" class="form-control" name="dueDate" required>
 			</div>
 			<div class="form-group">
 				<div id="today" class="issue"></div>
@@ -146,23 +164,27 @@
 						<option value="SC">SC</option>
 						<option value="수협">수협</option>
 						<option value="우체국">우체국</option>
+						<option value="카카오">카카오</option>
 				    </select>
 				</div>
-				<input type="text" class="form-control m-0" name="account" placeholder="계좌번호 '-' 제외하고 입력" required>
+				<input id="myAccount" type="text" class="form-control m-0" name="account" placeholder="계좌번호 '-' 제외하고 입력" required>
+			</div>
+			<div class="form-group">
+				<div id="wrongAccount" class="issue"></div>
 			</div>
 			<div class="form-group">
 				<div class="mb-2 noti">내용을 자유롭게 작성해 주세요 :) 사진을 추가로 올리는 것도 가능합니다.</div>
 			</div>
 			<div id="content">	
 				<div id="summernote" contenteditable="true"></div>
-				<input id="mycontent" type="hidden" name="contents">
+				<input id="myContent" type="hidden" name="contents">
 			</div>
 			<div id="all-btns">
 				<div class="btns">
-					<input type="button" id="sendit" class="btn btn-sm btn-outline-primary" value="등록">
+					<input type="button" id="sendit" class="btn btn-sm btn-primary" value="등록">
 				</div>
 				<div class="btns">
-					<input type="button" id="cancel" class="btn btn-sm btn-outline-primary" value="취소">
+					<input type="button" id="cancel" class="btn btn-sm btn-primary" value="취소">
 				</div>
 			</div>
 		</form>
@@ -184,16 +206,42 @@
 	</div>
 	
 	<script>
-		$("#amount").on("input", function(){
-			var amount = parseInt($("#amount").val());
+		$("#myTitle").on("input",function(){
+			var title = $("#myTitle").val();
+			var regex = /^[가-힣 .:)!?]{5,22}$/g
+			
+			var result = regex.exec(title);
+	        if(result == null){
+	             $("#wrongTitle").html("잘못된 제목 형식입니다.");
+	        }else{
+	        	 $("#wrongTitle").html("");
+	        }
+		})
+		
+		$("#myWriter").on("input", function(){
+			var writer = $("#myWriter").val();
+			var regex = /^[가-힣]{2,5}$/g
+			
+			var result = regex.exec(writer);
+	        if(result == null){
+	             $("#wrongName").html("잘못된 이름 형식입니다.");
+	        }else{
+	        	 $("#wrongName").html("");
+	        }
+		})
+	
+		$("#myAmount").on("input", function(){
+			var amount = parseInt($("#myAmount").val());
 			if(amount < 10000){
-				$("#lessAmount").html("10000원 이상의 금액을 입력해주세요.");
+				$("#lessAmount").html("10,000원 이상의 금액을 입력해주세요.");
+			}else if(amount > 10000000){
+				$("#lessAmount").html("10,000,000원 이하의 금액을 입력해주세요.");
 			}else{
 				$("#lessAmount").html("");	
 			}
 		})
         
-        $("#dueDate").on("change",function(){
+        $("#myDueDate").on("change",function(){
             var today = new Date();
             var dueDate = $(this).val();
             var dueArr = dueDate.split("-");
@@ -205,6 +253,18 @@
             }else{
             	$("#today").html("");
             }
+        })
+        
+        $("#myAccount").on("input",function(){
+        	var account = $("#myAccount").val();
+        	var regex = /^[\d]{12,15}$/g
+    			
+			var result = regex.exec(account);
+	        if(result == null){
+	             $("#wrongAccount").html("잘못된 계좌번호 형식입니다.");
+	        }else{
+	        	 $("#wrongAccount").html("");
+	        }
         })
 	
 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
@@ -224,8 +284,30 @@
 	    });
 	
 		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
-	        $("#mycontent").val($(".note-editable").html());
-	        $("#myform").submit();
+			if($("#myTitle").val().length > 22){
+				alert("제목은 최대 22자까지만 가능합니다.");
+				$(this).val("");
+			}else if($("#myTitleImg").val() == ""){
+				alert("대표사진을 입력해주세요.");
+			}else if($("#myWriter").val().length > 5){
+				alert("이름은 최대 5글자까지만 가능합니다.");
+				$(this).val("");
+			}else if(parseInt($("#myAmount").val()) < 10000 || parseInt($("#myAmount").val()) > 10000000){
+				alert("목표금액으로 적절한 금액을 입력해주세요.");
+				$(this).val("");
+			}else if($("#today").html() != ""){
+				alert("마감일로 적절한 날짜를 입력해주세요.");
+				$("#myDueDate").val("");
+				$(this).html("");
+			}else if($("#myAccount").val().length > 15){
+				alert("계좌번호는 최대 15글자까지만 가능합니다.");
+				$(this).val("");
+			}else if($(".note-editable").html() == "<p><br></p>"){
+				alert("내용을 입력해주세요.");
+			}else{
+				$("#myContent").val($(".note-editable").html());
+		        $("#myform").submit();	
+			}	
 	    })
 	     
 	    $('#summernote').summernote({

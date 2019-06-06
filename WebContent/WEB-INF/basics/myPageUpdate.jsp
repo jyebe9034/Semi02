@@ -128,12 +128,12 @@
                 font-weight: 600;
             }
             .wrap{
-                border: 3px solid #1ebdd850;
+                border: 3px solid #c4c4c490;
                 border-radius: 10px;
                 padding: 50px;
             }
             hr{
-                border-color: #1ebdd850;
+                border-color: #c4c4c490;
             }
             #top{
                 border-color: whitesmoke
@@ -147,8 +147,8 @@
                 width: 270px;
             }
             #zipcode{
-                background-color: #1ebdd830;
-                border-color: #1ebdd850;
+                background-color: #c4c4c450;
+                border-color: #c4c4c470;
             }
             #addressbt{
                 position: relative;
@@ -177,7 +177,7 @@
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
 					</c:when>
@@ -190,7 +190,7 @@
 		</div>
 	</nav>
       
-        <hr id="top">
+       <hr style="margin:0px; bordercolor:whitesmoke;">
         <br><br><br>
 
         <form action="myPageUpdate.members" method="post">
@@ -201,12 +201,12 @@
                 <hr  class="myhr1">
                 <div class="row">
                     <div class="col-2 d-md-block d-none"><span class="first">이메일</span></div>
-                    <div class="col-10 "><span class="second">kjjmmm123@naver.com</span></div>
+                    <div class="col-10 "><span class="second">${dto.email }</span></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-2 d-md-block d-none"><span class="first">이름</span></div>
-                    <div class="col-10"><span class="second">김지민</span></div>
+                    <div class="col-10"><span class="second">${dto.name }</span></div>
                 </div>
                 <hr>
                 <div class="row">
@@ -214,7 +214,7 @@
 
                     <div class="col-10"><span><span class="form-inline">
                         <div class="form-group">
-                            <input type="text" class="form-control mx-sm-3 second" name="phone" id="phone" required>
+                            <input type="text" class="form-control mx-sm-3 second" name="phone" id="phone" value="${dto.phone }" required>
                         </div>
                         </span></span></div>
                 </div>
@@ -245,7 +245,7 @@
                     <div class="col-2"><span class="first-pw first">주소</span></div>
                     <div class="col-10"><span><span class="form-inline">
                         <div class="form-group">
-                            <input type="text" id="zipcode" class="form-control mx-sm-3 second" readonly name="zipcode">
+                            <input type="text" id="zipcode" class="form-control mx-sm-3 second" readonly value="${dto.zipCode }" name="zipcode">
                             <button type="button" class="btn btn-info d-sm-block d-none" id="addressbt">찾기</button>
                         </div>
                         </span></span></div>
@@ -255,7 +255,7 @@
                     <div class="col-2"><span class="first-pw"></span></div>
                     <div class="col-10"><span><span class="form-inline">
                         <div class="form-group">
-                            <input type="text" id="address1" class="second form-control mx-sm-3" name="address1">
+                            <input type="text" id="address1" class="second form-control mx-sm-3" value="${dto.address1 }" name="address1">
                         </div>
                         </span></span></div>
                 </div>
@@ -265,7 +265,7 @@
                     <div class="col-2"><span class="first-pw first d-md-block d-none">상세 주소</span></div>
                     <div class="col-10"><span><span class="form-inline">
                         <div class="form-group">
-                            <input type="text" id="address2" class="second form-control mx-sm-3" name="address2">
+                            <input type="text" id="address2" class="second form-control mx-sm-3" name="address2" value="${dto.address2 }">
 
                         </div>
                         </span></span></div>
@@ -276,7 +276,7 @@
             </div>
             </div>
         </form>
-
+<br><br>
 		<div id="footer">
 			<div id="f_logo_wrap">
 				<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
