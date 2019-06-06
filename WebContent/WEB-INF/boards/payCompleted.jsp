@@ -104,8 +104,8 @@
 			<p>후원하신 금액 : ${payment.amount }원</p>
 		</div>
 		<div id="divBtn">
-			<a id="btnMyPage" class="btn btn-primary" href="Mypage.members">마이페이지</a>
-			<a id="btnBoard" class="btn btn-primary" href="List.board">후원게시판</a>
+			<a id="btnMyPage" class="btn btn-primary" href="myPage.members?currentPage=1&currentPage2=1">마이페이지</a>
+			<a id="btnBoard" class="btn btn-primary" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원게시판</a>
 			<a id="btnMain" class="btn btn-primary" href="Main.members">메인으로</a>
 		</div>
 	</div>
