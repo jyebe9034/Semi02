@@ -25,43 +25,45 @@ public class managerController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter write = response.getWriter();
-		
-		
+
+
 		String requestURI = request.getRequestURI();
 		String comtextPath = request.getContextPath();
 		String cmd = requestURI.substring(comtextPath.length());
 		ManagerDAO dao = new ManagerDAO();
 
 		if (cmd.equals("/Bar.manager")) {
-	         try {
-	            request.setAttribute("visitPersonCount", dao.visitPersonCount());
-	            request.setAttribute("totalMoney", dao.totalMoney());
-	            request.setAttribute("nowingProjectCount", dao.nowingProjectCount());
-	            request.setAttribute("joinMemberCount", dao.joinMemberCount());
-	            request.setAttribute("line", dao.timePersonCount());
-	            request.setAttribute("pie", dao.recommendTopFour());
-	            request.setAttribute("bestRecommendCount", dao.bestRecommendCount());
-	            request.setAttribute("worstRecommendCount", dao.worstRecommendCount());
-	            request.setAttribute("bestViewCount", dao.bestViewCount());
-	            request.setAttribute("worstViewCount", dao.worstViewCount());
-	            request.setAttribute("donationManyPeople", dao.donationTopThree());
-	            request.setAttribute("memberInfo", dao.memberInfo());
-	            request.setAttribute("totalDonationProject", dao.totalDonationProject());
-	            request.getRequestDispatcher("/WEB-INF/basics/manager.jsp").forward(request, response);
+			try {
+				request.setAttribute("visitPersonCount", dao.visitPersonCount());
+				request.setAttribute("totalMoney", dao.totalMoney());
+				request.setAttribute("nowingProjectCount", dao.nowingProjectCount());
+				request.setAttribute("joinMemberCount", dao.joinMemberCount());
+				request.setAttribute("line", dao.timePersonCount());
+				request.setAttribute("pie", dao.recommendTopFour());
+				request.setAttribute("bestRecommendCount", dao.bestRecommendCount());
+				request.setAttribute("worstRecommendCount", dao.worstRecommendCount());
+				request.setAttribute("bestViewCount", dao.bestViewCount());
+				request.setAttribute("worstViewCount", dao.worstViewCount());
+				request.setAttribute("donationManyPeople", dao.donationTopThree());
+				request.setAttribute("memberInfo", dao.memberInfo());
+				request.setAttribute("totalDonationProject", dao.totalDonationProject());
+				request.getRequestDispatcher("/WEB-INF/basics/manager.jsp").forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}else if(cmd.equals("/BoardWriteDelete.manager")) {
 			String[] value = request.getParameterValues("checkDelete");
-			for(int i=0; i<value.length; i++) {
-				try {
-					int result = dao.BoardWriteDelete(value[i]);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
+			if(value!=null) {
+				for(int i=0; i<value.length; i++) {
+					try {
+						int result = dao.BoardWriteDelete(value[i]);
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
-				request.getRequestDispatcher("List.board?currentPage=1&searchOption=allPages&searchWord=allPages").forward(request, response);//이걸로고침!!창훈
+			request.getRequestDispatcher("List.board?currentPage=1&searchOption=allPages&searchWord=allPages").forward(request, response);//이걸로고침!!창훈
 		}
 	}
 
