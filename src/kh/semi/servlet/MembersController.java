@@ -66,9 +66,12 @@ public class MembersController extends HttpServlet {
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
-			request.getRequestDispatcher("Main.members").forward(request, response);;
-		}
-		else if (cmd.equals("/Main.members")) {
+			request.getRequestDispatcher("Main.members").forward(request, response);
+			
+		}else if(cmd.contentEquals("/checkLogin.members")) {
+			request.getRequestDispatcher("/WEB-INF/basics/checkLogin.jsp").forward(request, response);
+			
+		}else if (cmd.equals("/Main.members")) {
 			request.getServletContext().setAttribute("visitPerson", visitPerson);
 			request.getServletContext().setAttribute("timePerson", timePerson);
 			List<BoardDTO> list;
