@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kh.semi.dto.BoardDTO;
-import kh.semi.dto.BoardDTO2;
-import kh.semi.dto.MemberDTO2;
+import kh.semi.dto.MemberDTO;
 import kh.semi.dto.PaymentDTO;
 import kh.semi.dto.TimePersonCountDTO;
 import kh.semi.servlet.MembersController;

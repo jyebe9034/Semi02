@@ -17,9 +17,8 @@ public class BoardListDTO {
 	private int sumAmount;
 	/*title_img*/
 	private String fileName;
-	private String oriFileName;
 	private String filePath;
-	private long fileSize;
+	private String newFilePath;
 	//총 18개
 	
 	public BoardListDTO() {
@@ -27,7 +26,8 @@ public class BoardListDTO {
 	}
 	public BoardListDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
 			String contents, String dueDate, int viewCount, String writeDate, int recommend, int sumAmount,
-			String fileName, String oriFileName, String filePath, long fileSize) {
+			String fileName, String filePath) {
+		super();
 		this.boardNo = boardNo;
 		this.email = email;
 		this.title = title;
@@ -42,9 +42,28 @@ public class BoardListDTO {
 		this.recommend = recommend;
 		this.sumAmount = sumAmount;
 		this.fileName = fileName;
-		this.oriFileName = oriFileName;
 		this.filePath = filePath;
-		this.fileSize = fileSize;
+	}
+	public BoardListDTO(int boardNo, String email, String title, String writer, int amount, String bank, String account,
+			String contents, String dueDate, int viewCount, String writeDate, int recommend, int sumAmount,
+			String fileName, String filePath, String newFilePath) {
+		super();
+		this.boardNo = boardNo;
+		this.email = email;
+		this.title = title;
+		this.writer = writer;
+		this.amount = amount;
+		this.bank = bank;
+		this.account = account;
+		this.contents = contents;
+		this.dueDate = dueDate;
+		this.viewCount = viewCount;
+		this.writeDate = writeDate;
+		this.recommend = recommend;
+		this.sumAmount = sumAmount;
+		this.fileName = fileName;
+		this.filePath = filePath;
+		this.newFilePath = newFilePath;
 	}
 	public int getBoardNo() {
 		return boardNo;
@@ -130,25 +149,17 @@ public class BoardListDTO {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public String getOriFileName() {
-		return oriFileName;
-	}
-	public void setOriFileName(String oriFileName) {
-		this.oriFileName = oriFileName;
-	}
 	public String getFilePath() {
 		return filePath;
 	}
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	public long getFileSize() {
-		return fileSize;
+	public String getNewFilePath() {
+		return newFilePath;
 	}
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
+	public void setNewFilePath(String newFilePath) {
+		this.newFilePath = newFilePath;
 	}
-	
-	
 	
 }

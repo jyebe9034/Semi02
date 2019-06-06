@@ -132,14 +132,14 @@
                 font-weight: 600;
             }
             .wrap{
-                border: 3px solid #1ebdd850;
+                border: 3px solid #c4c4c490;
                 border-radius: 10px;
                 padding: 50px;
 
 
             }
             hr{
-                border-color: #1ebdd850;
+                border-color: #c4c4c490;
             }
             #top{
                 border-color: whitesmoke
@@ -153,8 +153,8 @@
                 width: 270px;
             }
             #zipcode{
-                background-color: #1ebdd830;
-                border-color: #1ebdd850;
+                background-color: #c4c4c450;
+                border-color: #c4c4c470;
             }
             #addressbt{
                 position: relative;
@@ -183,7 +183,7 @@
 		
 					<c:choose>
 						<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 							<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 	
 						</c:when>
@@ -195,6 +195,7 @@
 				</ul>
 			</div>
 		</nav>
+
         <hr id="top">
         <br><br><br>
 
@@ -259,7 +260,22 @@
             </div>
             </div>
         </form>
-
+<br><br>
+	<div id="footer">
+		<div id="f_logo_wrap">
+			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="f_info_wrap">
+			<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
+		</div>
+		<div id="f_sns">
+			<img id="kakao" class="sns" src="photo_image/ka.png">
+			<img class="sns" src="photo_image/fa.png">
+			<img id="insta" class="sns" src="photo_image/kk.png">
+			<a href="write.board"><div id="suggest">후원 신청</div></a>
+		</div>
+		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+	</div>
     <script>
 
         document.getElementById("addressbt").onclick = function() {

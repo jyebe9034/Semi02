@@ -5,10 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>도움닿기 - 회원가입</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -100,6 +99,7 @@ a:hover {
 ul {
 	margin: auto;
 }
+
 </style>
 </head>
 <body>
@@ -118,11 +118,11 @@ ul {
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-	
+				 <li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
 					</c:when>
@@ -134,6 +134,7 @@ ul {
 			</ul>
 		</div>
 	</nav>
+
 	<hr>
 
 	<form action="Join.members" id="joinForm" method="post">
@@ -207,7 +208,6 @@ ul {
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
 	<script>
 		$("#btnConfirmEmail").on("click", function() {
 			if ($("#inputNum").attr("flag") == "true") {
@@ -255,7 +255,8 @@ ul {
 				alert("이메일을 입력해주세요.");
 			} else if ($("#inputNum").attr("flag") == "false") {
 				alert("이메일 인증을 완료해주세요.");
-			} else if ($("#pw_match").text() != "") {
+			}
+			else if($("#pw_match").text() != "" || $("#pw_form").text() != ""){
 				alert("비밀번호를 다시 확인해주세요.");
 			} else if ($("#name").val() == "") {
 				alert("이름을 입력해주세요.");
@@ -276,6 +277,7 @@ ul {
 				if (resp == "false") {
 					$("#emailCheck").css("color", "red");
 					$("#emailCheck").text("이미 가입된 이메일입니다.");
+					$("#btnConfirmEmail").prop("disabled", true);
 				} else {
 					$("#emailCheck").text("");
 				}
@@ -284,7 +286,7 @@ ul {
 
 		document.getElementById("inputPassword").oninput = function() {
 			var inputPw = document.getElementById("inputPassword").value;
-			var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+			var regex = /^[A-Za-z0-9!@#$%^&*()_-]{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
 			var result = regex.exec(inputPw);
 			if (result == null) {
 				document.getElementById("pw_form").innerHTML = "8자 이상 영문,숫자,특수문자를 사용하세요.";

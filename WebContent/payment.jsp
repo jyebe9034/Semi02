@@ -112,7 +112,6 @@ li {
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
 						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -190,6 +189,13 @@ li {
 			}
 		})
 		$("#btnPay").click(function() {
+			if($("#name").val() == ""){
+				alert("이름을 입력해주세요.");
+				return;
+			}else if($("#amount").val() == ""){
+				alert("금액을 선택해주세요");
+				return;
+			}
 			var IMP = window.IMP; // 생략가능
 			IMP.init('imp84992027'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 			IMP.request_pay({
@@ -253,7 +259,7 @@ li {
 				} else {
 					var msg = '결제에 실패하였습니다.';
 					msg += '에러내용 : ' + rsp.error_msg;
-					location.href = "Read.board?boardNo=" + ${boardNo};
+					location.href = "Read.board?boardNo=" + ${boardNo} + "&commentPage=1";
 				}
 			});
 		});

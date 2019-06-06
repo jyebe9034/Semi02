@@ -32,53 +32,7 @@
 
 </style>
 </head>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
-	
-	
-<script type="text/javascript"> //회원 게시판	
-      google.charts.load('current', {'packages':['table']});
-      google.charts.setOnLoadCallback(drawTable);
-      
-      function drawTable() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', '이메일');
-        data.addColumn('string', '이름');
-        data.addColumn('string', '전화번호');
-        data.addColumn('string', '가입일자');
-        data.addColumn('string', 'IP');
-        data.addRows([
-        	<c:forEach var='memberInfo' items="${memberInfo}">
-        	['${memberInfo.email}','${memberInfo.name}','${memberInfo.phone}','${memberInfo.joinDate}','${memberInfo.ipAddress}'],
-			</c:forEach>
-        ]);
-        var table = new google.visualization.Table(document.getElementById('table_member'));
-        table.draw(data, {showRowNumber: true, width: '100%', height: '330'});
-      }
-    </script>
 
-<script type="text/javascript"> //기부 게시판
-      google.charts.load('current', {'packages':['table']});
-      google.charts.setOnLoadCallback(drawTable);
- 
-      function drawTable() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', '기부 프로젝트 이름');
-        data.addColumn('string', '기부 신청자');
-        data.addColumn('string', '글 작성일자');
-        data.addColumn('string', '마감일');
-        data.addColumn('number', '현재모금액');
-        data.addColumn('number', '도달금액');
-        data.addColumn('boolean', '도달여부');
-        data.addRows([
-        	<c:forEach var='allDonationProject' items="${totalDonationProject}">
-        	['${allDonationProject.title}','${allDonationProject.writer}','${allDonationProject.writeDate}','${allDonationProject.dueDate}',{v: ${allDonationProject.amount}, f: '${allDonationProject.amount}원'},{v: ${allDonationProject.sumAmount}, f: '${allDonationProject.sumAmount}원'},${allDonationProject.donationResult}],
-			</c:forEach>
-        ]);
-        var table = new google.visualization.Table(document.getElementById('table_div'));
-        table.draw(data, {showRowNumber: true, width: '100%', height: '430'});
-      }
-    </script>
     
 <body id="page-top">
 
@@ -92,7 +46,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="start.html">
+				href="Main.members">
 				<div class="sidebar-brand-icon rotate-n-15">
 				</div>
 				<div class="sidebar-brand-text mx-3" style="font-family: 'Cute Font', cursive;" ><h3>도움닿기</h3></div>
@@ -125,8 +79,8 @@
 						<a class="collapse-item" href="start.html">홈페이지</a> 
 						<a class="collapse-item" href="Introduce.members">소개 페이지</a>
 						<a class="collapse-item" href="TalentDonations.board">재능기부 게시판</a>
-						<a class="collapse-item" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판 페이지</a>
-						<a class="collapse-item" href="#">회원 정보 페이지</a>
+						<a class="collapse-item" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판 페이지</a>
+						<a class="collapse-item" href="DetailMemberInfo.manager">회원 정보 페이지</a>
 					</div>
 				</div></li>
 
@@ -307,8 +261,10 @@
 					</div>
 					<!-- Content Row -->
 
-					<div class="row">
 
+<c:if test="${line!=null }">
+
+					<div class="row">
 						<!-- Area Chart -->
 						<div class="col-xl-8 col-lg-7">
 							<div class="card shadow mb-4" style="height: 27rem;">
@@ -440,6 +396,13 @@
 
 			</div>
 			<!-- End of Main Content -->
+</c:if>
+
+<c:if test="${line==null }">
+	
+	
+	
+</c:if>
 
 			<!-- Footer -->
 			<footer class="sticky-footer bg-white">
@@ -976,6 +939,55 @@ var myLineChart =new Chart(ctx,{
   }
 });
   </script>
+  
+  <script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
+	
+	
+<script type="text/javascript"> //회원 게시판	
+      google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(drawTable);
+      
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '이메일');
+        data.addColumn('string', '이름');
+        data.addColumn('string', '전화번호');
+        data.addColumn('string', '가입일자');
+        data.addColumn('string', 'IP');
+        data.addRows([
+        	<c:forEach var='memberInfo' items="${memberInfo}">
+        	['${memberInfo.email}','${memberInfo.name}','${memberInfo.phone}','${memberInfo.joinDate}','${memberInfo.ipAddress}'],
+			</c:forEach>
+        ]);
+        var table = new google.visualization.Table(document.getElementById('table_member'));
+        table.draw(data, {showRowNumber: true, width: '100%', height: '330'});
+      }
+    </script>
+
+<script type="text/javascript"> //기부 게시판
+      google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(drawTable);
+ 
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '기부 프로젝트 이름');
+        data.addColumn('string', '기부 신청자');
+        data.addColumn('string', '글 작성일자');
+        data.addColumn('string', '마감일');
+        data.addColumn('number', '현재모금액');
+        data.addColumn('number', '도달금액');
+        data.addColumn('boolean', '도달여부');
+        
+        data.addRows([
+        	<c:forEach var='allDonationProject' items="${totalDonationProject}">
+        	['${allDonationProject.title}','${allDonationProject.writer}','${allDonationProject.writeDate}','${allDonationProject.dueDate}',{v: ${allDonationProject.amount}, f: '${allDonationProject.amount}원'},{v: ${allDonationProject.sumAmount}, f: '${allDonationProject.sumAmount}원'},${allDonationProject.donationResult}],
+			</c:forEach>
+        ]);
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(data, {showRowNumber: true, width: '100%', height: '430'});
+      }
+    </script>
 </body>
 
 </html>

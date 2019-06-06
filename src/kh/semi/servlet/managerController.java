@@ -3,9 +3,7 @@ package kh.semi.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Timer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,12 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import kh.semi.dao.ManagerDAO;
 import kh.semi.dto.BoardDTO;
-import kh.semi.dto.BoardDTO2;
 import kh.semi.dto.MemberDTO;
-import kh.semi.dto.MemberDTO2;
 import kh.semi.dto.PaymentDTO;
 import kh.semi.dto.TimePersonCountDTO;
-import kh.semi.scheduler.TimeVisiterCount;
 
 @WebServlet("*.manager")
 public class managerController extends HttpServlet {
@@ -31,6 +26,20 @@ public class managerController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter write = response.getWriter();
 		
+		int visitPersonCount;
+		String totalMoney;
+		int nowingProjectCount;
+		int joinMemberCount;
+		List<TimePersonCountDTO> line = new ArrayList<>();
+		List<BoardDTO> pie = new ArrayList<>();
+		List<Object> bestRecommendCount = new ArrayList<>();
+		List<Object> worstRecommendCount = new ArrayList<>();
+		List<Object> bestViewCount = new ArrayList<>();
+		List<Object> worstViewCount = new ArrayList<>();
+		List<PaymentDTO> donationManyPeople = new ArrayList<>();
+		List<MemberDTO> memberInfo = new ArrayList<>();
+		List<BoardDTO> totalDonationProject = new ArrayList<>();
+		
 			
 		String requestURI = request.getRequestURI();
 		String comtextPath = request.getContextPath();
@@ -38,19 +47,6 @@ public class managerController extends HttpServlet {
 		ManagerDAO dao = new ManagerDAO();
 
 		if (cmd.equals("/Bar.manager")) {
-			int visitPersonCount;
-			String totalMoney;
-			int nowingProjectCount;
-			int joinMemberCount;
-			List<TimePersonCountDTO> line = new ArrayList<>();
-			List<BoardDTO> pie = new ArrayList<>();
-			List<Object> bestRecommendCount = new ArrayList<>();
-			List<Object> worstRecommendCount = new ArrayList<>();
-			List<Object> bestViewCount = new ArrayList<>();
-			List<Object> worstViewCount = new ArrayList<>();
-			List<PaymentDTO> donationManyPeople = new ArrayList<>();
-			List<MemberDTO> memberInfo = new ArrayList<>();
-			List<BoardDTO> totalDonationProject = new ArrayList<>();
 			try {
 				visitPersonCount = dao.visitPersonCount();
 				totalMoney = dao.totalMoney();
@@ -92,8 +88,22 @@ public class managerController extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			request.getRequestDispatcher("List.board?currentPage=1&&searchOption==null&&searchWord==null").forward(request, response);
+				request.getRequestDispatcher("List.board?currentPage=1&searchOption=allPages&searchWord=allPages").forward(request, response);//이걸로고침!!창훈
 		
+		}else if(cmd.equals("/DetailMemberInfo.manager")) {
+			try {
+				visitPersonCount = dao.visitPersonCount();
+				totalMoney = dao.totalMoney();
+				nowingProjectCount = dao.nowingProjectCount();
+				joinMemberCount = dao.joinMemberCount();
+				request.setAttribute("visitPersonCount", visitPersonCount);
+				request.setAttribute("totalMoney", totalMoney);
+				request.setAttribute("nowingProjectCount", nowingProjectCount);
+				request.setAttribute("joinMemberCount", joinMemberCount);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			request.getRequestDispatcher("/WEB-INF/basics/manager.jsp").forward(request, response);
 		}
 	}
 

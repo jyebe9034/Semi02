@@ -16,11 +16,9 @@ create table members(
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))
 );
---drop table members;
+drop table members;
 
 select * from members;
-
-select m_name, m_email, m_phone from members where m_email='junhaeyong95@naver.com';
 
 commit;
 
@@ -41,14 +39,16 @@ create table board(
     b_recommend number default 0 not null,
     b_sum_amount number default 0
 );
---drop table board;
+drop table board;
 
 create sequence b_no_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
---drop sequence b_no_seq;
+drop sequence b_no_seq;
+
+select b_no_seq.currval from dual;
 
 select * from board;
 
@@ -62,20 +62,14 @@ create table title_img(
     t_filePath varchar(300) not null,
     t_fileSize number not null
 );
---drop table title_img;
-
-create sequence t_fileSeq_seq
-start with 1
-increment by 1
-nocache
-nomaxvalue;
+drop table title_img;
 
 create sequence t_b_no_seq
 start with 1
 increment by 1
 nocache
 nomaxvalue;
---drop sequence t_fileSeq_seq;
+drop sequence t_b_no_seq;
 
 select * from title_img;
 
@@ -104,7 +98,7 @@ create table recommend(
     r_b_no number not null,
     r_b_title varchar(100) not null
 );
---drop table recommend;
+drop table recommend;
 
 select * from recommend;
 
@@ -119,8 +113,46 @@ create table comments(
     c_comment varchar(1000) not null,
     c_write_date timestamp default sysdate not null
 );
---drop table comments;
+drop table comments;
 
 select * from comments;
 
 commit;
+
+--------------------------------------------------------------------------------
+
+create table visitPersonCount(
+    personcount number 
+);
+
+--------------------------------------------------------------------------------
+
+create table timepersoncount(
+    time1 number,
+time2 number,
+time3 number,
+time4 number,
+time5 number,
+time6 number,
+time7 number,
+time8 number,
+time9 number,
+time10 number,
+time11 number,
+time12 number,
+time13 number,
+time14 number,
+time15 number,
+time16 number,
+time17 number,
+time18 number,
+time19 number,
+time20 number,
+time21 number,
+time22 number,
+time23 number,
+time24 number
+);
+
+insert into members values('opopa159@naver.com','asdasd','¿”√¢»∆','010-211-222','qwe','asd','zxc',sysdate,'asd','y');
+insert into members values('opopa1559@naver.com','asdasd','¿”√¢»∆','010-211-222','qwe','asd','zxc',sysdate,'asd','n');

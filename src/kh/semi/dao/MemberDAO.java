@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,10 +27,7 @@ import javax.mail.internet.MimeMessage;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import kh.semi.dto.BoardDTO;
-import kh.semi.dto.BoardListDTO;
 import kh.semi.dto.MemberDTO;
-import kh.semi.dto.MySupportDTO;
 
 public class MemberDAO {
 	public Connection getConnection() throws Exception {
@@ -434,127 +430,191 @@ public class MemberDAO {
 	}
 	
 	///*마이페이지*/------------------------------------------------------------------------
-	/*내가 후원한 글 목록*/
-	private PreparedStatement psForMySupport(Connection con, String email, int startNumforMS, int endNumforMS)throws Exception{
-		String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.*,payment.* from board join payment on (b_no = p_b_no) where b_no in (select p_b_no from payment where p_email=?)) where rown between ? and ? order by b_no desc";
-		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setString(1, email);
-		ps.setInt(2, startNumforMS);
-		ps.setInt(3, endNumforMS);
-		return ps;
-	}
-	public List<MySupportDTO> mySupport(String email, int startNumforMS, int endNumforMS)throws Exception{
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement ps = psForMySupport(con, email,startNumforMS,endNumforMS);
-				ResultSet rs = ps.executeQuery();
-				){
-			List<MySupportDTO> result = new ArrayList<>();
-			while(rs.next()) {
-				int boardNo = rs.getInt("b_no");
-				String title = rs.getString("b_title");
-				String writer = rs.getString("b_writer");
-				int amount = rs.getInt("b_amount");
-				String bank = rs.getString("b_bank");
-				String account = rs.getString("b_account");
-				String dueDate = rs.getString("b_due_date");
-				String contents = rs.getString("b_contents1")+rs.getString("b_contents2")+rs.getString("b_contents3");
-				int viewCount = rs.getInt("b_viewcount");
-				String writeDate = rs.getString("b_writedate");
-				int recommend = rs.getInt("b_recommend");
-				int sumAmount = rs.getInt("b_sum_amount");
-				int pBoardNo = rs.getInt("p_b_no");
-				String pName =rs.getString("p_name");
-				String pPhone = rs.getString("p_phone");
-				int pAmount = rs.getInt("p_amount");
-				Timestamp pPaymentDate = rs.getTimestamp("p_payment_date");
-				MySupportDTO dto = new MySupportDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,pBoardNo,pName,pPhone,pAmount,pPaymentDate);
-				result.add(dto);
-			}
-			return result;
-		}
-	}
-	/*내가 후원한 게시글의 개수*///=recordTotalCount //////여기부터!!!!
-	public int totalSupportRecordNum(String email) throws Exception{
-		String sql = "select p_b_no from payment where p_email='" +email+ "' order by p_b_no desc";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();	
-				){
-			int result = 0;
-			while(rs.next()) {
-				result++;
-			}
-			return result;
-		}
-	}
+
+	static int recordCountPerPage = 5;
+	static int recordCountPerPage2 = 5;
+
+	static int naviCountPerPage = 5;
+	public static int pageTotalCount;
 	
-	/*페이지 네비게이터(내가 후원한 글 목록)*/
-	public String getNaviforMySupport(int currentPage) throws Exception { //부트스트랩은 int로 받아야함	
-		int recordTotalCount = totalRecordNum();
-		
-		int recordCountPerPage = 5; //5개의 글이 보이게 한다.
-		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
-		  
+	static int naviCountPerPage2 = 5;
+	public static int pageTotalCount2;
+
+	/* 페이지 네비게이터(내가 후원한 글 목록) */
+	public String getNaviforMySupport(int currentPage, String email) throws Exception { // 부트스트랩은 int로 받아야함
+		int recordTotalCount = this.MyDonateContentsSize(email);
+		int recordCountPerPage = 5; // 5개의 글이 보이게 한다.
+		int naviCountPerPage = 5; // 5개의 네비가 보이게 한다.
+
 		int pageTotalCount = recordTotalCount / recordCountPerPage;
-		if(recordTotalCount % recordCountPerPage > 0) {
+		if (recordTotalCount % recordCountPerPage > 0) {
 			pageTotalCount++;
 		}
 
-		if(currentPage < 1) {
+		if (currentPage < 1) {
 			currentPage = 1;
-		}else if(currentPage > pageTotalCount) {
+		} else if (currentPage > pageTotalCount) {
 			currentPage = pageTotalCount;
 		}
 
-		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
-		int endNavi = startNavi + (naviCountPerPage - 1); 
-	
-		//네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
-		if(endNavi > pageTotalCount) {
+		int startNavi = (currentPage - 1) / naviCountPerPage * naviCountPerPage + 1;
+		int endNavi = startNavi + (naviCountPerPage - 1);
+
+		// 네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
+		if (endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
 		}
-		
-		System.out.println("현재 위치 : " + currentPage);
+
+		System.out.println("1시작 : 현재 위치 : " + currentPage);
 		System.out.println("네비 시작 : " + startNavi);
 		System.out.println("네비 끝 : " + endNavi);
-		
+
 		boolean needPrev = true;
 		boolean needNext = true;
 
-		if(startNavi == 1) { 
+		if (startNavi == 1) {
 			needPrev = false;
 		}
-		if(endNavi == pageTotalCount) {
+		if (endNavi == pageTotalCount) {
 			needNext = false;
 		}
 
 		StringBuilder sb = new StringBuilder();
-		if(needPrev) {
-			int prevStartNavi = startNavi-1;
-			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ prevStartNavi +"\"" + 
-					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
-					"						</a></li>");
-			
+		if (needPrev) {
+			int prevStartNavi = startNavi - 1;
+			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage2=1&currentPage="
+					+ prevStartNavi + "\""
+					+ "							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>"
+					+ "						</a></li>");
+
 		}
-		for(int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+i+"\">" + i + "</a></li>");
+		for (int i = startNavi; i <= endNavi; i++) {
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage2=1&currentPage=" + i + "\">"
+					+ i + "</a></li>");
 		}
-		if(needNext) {
-			int nextEndNavi = endNavi+1;
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ nextEndNavi++ +"\""+ 
-					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
-					"						</a></li>");
+		if (needNext) {
+			int nextEndNavi = endNavi + 1;
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage2=1&currentPage="
+					+ nextEndNavi++ + "\""
+					+ "							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>"
+					+ "						</a></li>");
 		}
-		
+
 		return sb.toString();
 	}
-	//------------
 	
-	/*내가 쓴 글 목록*/
-	private PreparedStatement psForMyArticles(Connection con, String email, int startNum, int endNum)throws Exception{
-		String sql = "select * from (select row_number() over(order by b_no desc) as rown, board.* from board where b_email=?) where rown between ? and ?";
+	
+	public String getNaviforMySupport2(int currentPage2, String email) throws Exception { // 부트스트랩은 int로 받아야함
+		int recordTotalCount = this.MyDonateContentsSize2(email);
+		int recordCountPerPage = 5; // 5개의 글이 보이게 한다.
+		int naviCountPerPage = 5; // 5개의 네비가 보이게 한다.
+
+		int pageTotalCount = recordTotalCount / recordCountPerPage;
+		if (recordTotalCount % recordCountPerPage > 0) {
+			pageTotalCount++;
+		}
+
+		if (currentPage2 < 1) {
+			currentPage2 = 1;
+		} else if (currentPage2 > pageTotalCount) {
+			currentPage2 = pageTotalCount;
+		}
+
+		int startNavi = (currentPage2 - 1) / naviCountPerPage * naviCountPerPage + 1;
+		int endNavi = startNavi + (naviCountPerPage - 1);
+
+		// 네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
+		if (endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		System.out.println("2시작 : 현재 위치 : " + currentPage2);
+		System.out.println("네비 시작 : " + startNavi);
+		System.out.println("네비 끝 : " + endNavi);
+
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if (startNavi == 1) {
+			needPrev = false;
+		}
+		if (endNavi == pageTotalCount) {
+			needNext = false;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		if (needPrev) {
+			int prevStartNavi = startNavi - 1;
+			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage=1&currentPage2="
+					+ prevStartNavi + "\""
+					+ "							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>"
+					+ "						</a></li>");
+
+		}
+		for (int i = startNavi; i <= endNavi; i++) {
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage=1&currentPage2=" + i + "\">"
+					+ i + "</a></li>");
+		}
+		if (needNext) {
+			int nextEndNavi = endNavi + 1;
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage=1&currentPage2="
+					+ nextEndNavi++ + "\""
+					+ "							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>"
+					+ "						</a></li>");
+		}
+
+		return sb.toString();
+	}
+	// ------------
+
+	
+	
+	/* 내가 쓴 게시글의 개수 */// =recordTotalCount
+	public int MyDonateContentsSize(String email) throws Exception {
+		String sql = "select row_number() over(order by p_payment_date desc) rown,\r\n"
+				+ "b_no, b_title, p_amount, p_payment_date, b_writer, p_email from BOARD\r\n"
+				+ "join PAYMENT on b_no = p_b_no where p_email = ?";
+		try (Connection con = this.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+
+			ps.setString(1, email);
+
+			try (ResultSet rs = ps.executeQuery();) {
+
+				int result = 0;
+
+				while (rs.next()) {
+					result++;
+				}
+				return result;
+			}
+		}
+	}
+
+	/* 내가 쓴 게시글의 개수 */// =recordTotalCount
+	public int MyDonateContentsSize2(String email) throws Exception {
+		String sql = "select * from (select row_number() over(order by b_writedate desc) as rown,\r\n" + 
+				"b_no, b_title, b_sum_amount, b_writedate, b_viewcount,b_email from BOARD where b_email =?)";
+		try (Connection con = this.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
+
+			ps.setString(1, email);
+
+			try (ResultSet rs = ps.executeQuery();) {
+
+				int result = 0;
+
+				while (rs.next()) {
+					result++;
+				}
+				return result;
+			}
+		}
+	}
+	
+	private PreparedStatement psForMyArticles2(Connection con, String email, int startNum, int endNum) throws Exception {
+		String sql = "select * from (select row_number() over(order by b_writedate desc) as rown,\r\n" + 
+				"				b_no, b_title, b_sum_amount, to_char(b_writedate,'yyyy-mm-dd') as b_writedate, b_viewcount,b_email from BOARD where b_email = ?)\r\n" + 
+				"				where rown between ? and ?";
+
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setString(1, email);
 		ps.setInt(2, startNum);
@@ -562,111 +622,70 @@ public class MemberDAO {
 		return ps;
 	}
 
-	public List<BoardDTO> myArticles(String email, int startNum, int endNum)throws Exception{
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement ps = psForMyArticles(con, email,startNum,endNum);
-				ResultSet rs = ps.executeQuery();
-				){
-			List<BoardDTO> result = new ArrayList<>();
-			while(rs.next()) {
-				int boardNo = rs.getInt("b_no");
-				String title = rs.getString("b_title");
-				String tmepEmail = rs.getString("b_email");
-				String writer = rs.getString("b_writer");
-				int amount = rs.getInt("b_amount");
-				String bank = rs.getString("b_bank");
-				String account = rs.getString("b_account");
-				Timestamp dueDate = rs.getTimestamp("b_due_date");
-				String contents = rs.getString("b_contents");
-				int viewCount = rs.getInt("b_viewcount");
-				Timestamp writeDate = rs.getTimestamp("b_writedate");
-				int recommend = rs.getInt("b_recommend");
-				int sumAmount = rs.getInt("b_sum_amount");
-				BoardDTO dto = new BoardDTO(boardNo,title,tmepEmail,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount);
-				result.add(dto);
-			}
-			return result;
-		}
+	/*
+	 * public List<MyWriteDTO> myDonateContents2(String email,int currentPage2)
+	 * throws Exception {
+	 * 
+	 * int endNum = currentPage2*recordCountPerPage2; int startNum = endNum -
+	 * (recordCountPerPage2-1);
+	 * 
+	 * try (Connection con = this.getConnection(); PreparedStatement ps =
+	 * psForMyArticles2(con, email, startNum, endNum); ResultSet rs =
+	 * ps.executeQuery();) {
+	 * 
+	 * List<MyWriteDTO> result = new ArrayList<>();
+	 * 
+	 * while (rs.next()) {
+	 * 
+	 * int b_no = rs.getInt("b_no"); String b_title = rs.getString("b_title"); int
+	 * b_sum_amount = rs.getInt("b_sum_amount"); String b_writedate =
+	 * rs.getString("b_writedate"); int b_viewcount = rs.getInt("b_viewcount");
+	 * 
+	 * MyWriteDTO dto = new MyWriteDTO(b_no, b_title, b_sum_amount, b_writedate,
+	 * b_viewcount);
+	 * 
+	 * result.add(dto); } return result; } }
+	 */
+	
+	
+	
+	
+	
+	/* 내가 쓴 글 목록 */
+	private PreparedStatement psForMyArticles(Connection con, String email, int startNum, int endNum) throws Exception {
+		String sql = "select * from (select row_number() over(order by p_payment_date desc) as rown,\r\n"
+				+ "b_no, b_title, p_amount, to_char(p_payment_date,'yyyy-mm-dd') as p_payment_date, b_writer, p_email from BOARD\r\n"
+				+ "join PAYMENT on b_no = p_b_no where p_email = ?) where rown between ? and ?";
+
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, email);
+		ps.setInt(2, startNum);
+		ps.setInt(3, endNum);
+		return ps;
 	}
 
+	/*
+	 * public List<MyDonateDTO> myDonateContents(String email,int currentPage)
+	 * throws Exception {
+	 * 
+	 * int endNum = currentPage*recordCountPerPage; int startNum = endNum -
+	 * (recordCountPerPage-1);
+	 * 
+	 * try (Connection con = this.getConnection(); PreparedStatement ps =
+	 * psForMyArticles(con, email, startNum, endNum); ResultSet rs =
+	 * ps.executeQuery();) { List<MyDonateDTO> result = new ArrayList<>(); while
+	 * (rs.next()) {
+	 * 
+	 * int b_no = rs.getInt("b_no"); String b_title = rs.getString("b_title"); int
+	 * p_amount = rs.getInt("p_amount"); String p_payment_date =
+	 * rs.getString("p_payment_date"); String b_writer = rs.getString("b_writer");
+	 * 
+	 * MyDonateDTO dto = new MyDonateDTO(b_no, b_title, p_amount, p_payment_date,
+	 * b_writer);
+	 * 
+	 * result.add(dto); } return result; } }
+	 */
 	
-	/*내가 쓴 게시글의 개수*///=recordTotalCount
-	public int totalRecordNum() throws Exception{
-		String sql = "select * from board where b_email='email@email.mail' order by b_no desc";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement ps = con.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();	
-				){
-			int result = 0;
-			while(rs.next()) {
-				result++;
-			}
-			return result;
-		}
-	}
-	
-	/*페이지 네비게이터(내가쓴 글 목록)*/
-	public String getNavi(int currentPage) throws Exception { //부트스트랩은 int로 받아야함	
-		int recordTotalCount = totalRecordNum();
-		
-		int recordCountPerPage = 5; //5개의 글이 보이게 한다.
-		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
-		  
-		int pageTotalCount = recordTotalCount / recordCountPerPage;
-		if(recordTotalCount % recordCountPerPage > 0) {
-			pageTotalCount++;
-		}
-
-		if(currentPage < 1) {
-			currentPage = 1;
-		}else if(currentPage > pageTotalCount) {
-			currentPage = pageTotalCount;
-		}
-
-		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
-		int endNavi = startNavi + (naviCountPerPage - 1); 
-	
-		//네비 끝값이 최대 페이지 번호를 넘어가면 최대 페이지번호로 네비 끝값을 설정한다.
-		if(endNavi > pageTotalCount) {
-			endNavi = pageTotalCount;
-		}
-		
-		System.out.println("현재 위치 : " + currentPage);
-		System.out.println("네비 시작 : " + startNavi);
-		System.out.println("네비 끝 : " + endNavi);
-		
-		boolean needPrev = true;
-		boolean needNext = true;
-
-		if(startNavi == 1) { 
-			needPrev = false;
-		}
-		if(endNavi == pageTotalCount) {
-			needNext = false;
-		}
-
-		StringBuilder sb = new StringBuilder();
-		if(needPrev) {
-			int prevStartNavi = startNavi-1;
-			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ prevStartNavi +"\"" + 
-					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
-					"						</a></li>");
-			
-		}
-		for(int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+i+"\">" + i + "</a></li>");
-		}
-		if(needNext) {
-			int nextEndNavi = endNavi+1;
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"Mypage.members?currentPage="+ nextEndNavi++ +"\""+ 
-					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
-					"						</a></li>");
-		}
-		
-		return sb.toString();
-	}
 	//-----------------------------------------------------------------------------------
 }
 
