@@ -22,14 +22,6 @@ public class BoardListDTO {
 	private int percentage; //추가됐어요
 	//총 19개
 	
-	public int getPercentage() { //추가됐어요
-		return percentage;
-	}
-	public void setPercentage(int percentage) { //추가됐어요
-		this.percentage = percentage;
-	}
-	
-	
 	public BoardListDTO() {
 		super();
 	}
@@ -74,6 +66,7 @@ public class BoardListDTO {
 		this.filePath = filePath;
 		this.newFilePath = newFilePath;
 	}
+	
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -170,5 +163,10 @@ public class BoardListDTO {
 	public void setNewFilePath(String newFilePath) {
 		this.newFilePath = newFilePath;
 	}
-	
+	public int getPercentage() {
+		return percentage;
+	}
+	public void setPercentage(int percentage) {
+		this.percentage = percentage;
+	}	
 }

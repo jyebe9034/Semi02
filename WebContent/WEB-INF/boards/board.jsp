@@ -135,93 +135,94 @@
       cursor: pointer; 
    }
    
+   .check{
+      margin-left:auto;
+    }
+   
 </style>
 <script>
-   $(function(){
-   
-      $.ajax({
-         url : "Fund",
-         type : "post",
-      }).done(function(resp) {
-         $("#card1").css("width", resp + "%");
-         $("#card1_span").text(resp + "%");
-      })
-      
-      $("#goMainBtn").on("click",function(){
-         location.href="Main.members";
-      })
-      $("#writeBtn").on("click", function(){
-         location.href="write.board";
-      })
-      
-//       지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
-      $(".article").on("click", function(){
-         var boardNo = $(this).attr("boardNo");
-         var currentPage ="${currentPage }";
-         location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
-      })
-//-----------------------------------------------------------------------------      
-      $(".searchBtn").on("click",function(){      
-         var searchWord = $(".searchWord").val();
-         var searchOption = $("#dropdownforSearch option:selected").val();
-          if(searchWord==""){
-             alert("검색할 내용을 입력해주세요.");
-          }else if(searchOption=="none"){
-             alert("검색방법을 선택해주세요.");
-          }else{
-             location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
-          }
-      })   
-//      창훈이 삭제버튼 부분--------------------------------------------------------------      
-      $("#deleteBtn").on("click",function(){
-         
-      })
-      
-   })
+	$(function(){
+		$("#goMainBtn").on("click",function(){
+			location.href="Main.members";
+		})
+		
+		$("#writeBtn").on("click", function(){
+			if(${loginEmail == null}){
+				alert("로그인 후 글쓰기가 가능합니다.");
+				location.href="LoginForm.members";
+			}else{
+				location.href="write.board";	
+			}
+		})
+		
+// 		지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
+		$(".article").on("click", function(){
+			var boardNo = $(this).attr("boardNo");
+			var currentPage ="${currentPage }";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
+		})
+//-----------------------------------------------------------------------------		
+		$(".searchBtn").on("click",function(){		
+			var searchWord = $(".searchWord").val();
+			var searchOption = $("#dropdownforSearch option:selected").val();
+	       if(searchWord==""){
+	    	   alert("검색할 내용을 입력해주세요.");
+	       }else if(searchOption=="none"){
+	    	   alert("검색방법을 선택해주세요.");
+	       }else{
+	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
+	       }
+		})	
+//		창훈이 삭제버튼 부분--------------------------------------------------------------		
+		$("#deleteBtn").on("click",function(){
+			location.href="BoardWriteDelete.manager";
+		})
+		
+	})
 </script>
 </head>
 <body>
-   <!--상단 메뉴바-->
-   <nav class="navbar navbar-expand-md navbar-light">
-      <div class="logo">
-         <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-      </div>
-      <div id="toggle">
-         <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-         </button>
-      </div>
-      <div class="collapse navbar-collapse" id="navbarNav">
-         <ul class="navbar-nav nav-ul">
-            <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-            <li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-            <li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
-   
-            <c:choose>
-               <c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-                  <c:if test="${sessionScope.admin==null}">
-                     <li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-                  </c:if>   
-                  <c:if test="${sessionScope.admin!=null}">
-                     <li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
-                  </c:if>
-                  <li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-               </c:when>
-               <c:otherwise>
-                  <li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-                  <li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
-               </c:otherwise>
-            </c:choose>
-         </ul>
-      </div>
-   </nav>
-   <hr style="margin:0px;">
-   
-   <div class="boardName">
-      <p>게시판</p>
-   </div>
+	<!--상단 메뉴바-->
+		<nav class="navbar navbar-expand-md navbar-light">
+		<div class="logo">
+			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="toggle">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav nav-ul">
+				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+	
+				<c:choose>
+					<c:when test="${sessionScope.loginEmail != null}">
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						</c:if>	
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
+	</nav>
+	<hr style="margin:0px;">
+	
+	<div class="boardName">
+		<p>게시판</p>
+	</div>
 
    <div id="wrapper" class="container listBox">
 
@@ -322,6 +323,7 @@
       </div>
       <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
    </div>
+
 
       
 </body>
