@@ -416,11 +416,7 @@ a:hover {
          <img id="kakao" class="sns" src="photo_image/ka.png">
          <img class="sns" src="photo_image/fa.png">
          <img id="insta" class="sns" src="photo_image/kk.png">
-<<<<<<< HEAD
-         <a href="write.board"><div id="suggest">후원 신청</div></a>
-=======
          <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
->>>>>>> 48605d1b072cdf26828227e35b39b91e29826cac
       </div>
       <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
    </div>

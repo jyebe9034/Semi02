@@ -68,7 +68,11 @@ public class MembersController extends HttpServlet {
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
-			request.getRequestDispatcher("Main.members").forward(request, response);;
+			request.getRequestDispatcher("Main.members").forward(request, response);
+			
+		}else if(cmd.equals("/checkLogin.members")) {
+			request.getRequestDispatcher("/WEB-INF/basics/checkLogin.jsp").forward(request, response);
+			
 		}
 		else if (cmd.equals("/Main.members")) {
 			request.getServletContext().setAttribute("visitPerson", visitPerson);
@@ -295,61 +299,6 @@ public class MembersController extends HttpServlet {
 				response.sendRedirect("error.html");
 			}
 
-
-		}else if(cmd.equals("/myPageUpdateForNaver.members")) {
-
-			String phone = request.getParameter("phone");
-			String zipcode = request.getParameter("zipcode");
-			String add1 = request.getParameter("address1");
-			String add2 = request.getParameter("address2");
-
-			MemberDTO contents = (MemberDTO)request.getSession().getAttribute("navercontents");
-			MemberDTO aftercontents = (MemberDTO)request.getSession().getAttribute("realcontents");
-
-
-			if(contents==null) {
-				String naverandkakaoEmail = aftercontents.getEmail();
-
-				MemberDTO dto = new MemberDTO();
-
-				dto.setPhone(phone);
-				dto.setZipCode(zipcode);
-				dto.setAddress1(add1);
-				dto.setAddress2(add2);
-				dto.setEmail(naverandkakaoEmail);
-
-				try {
-					int result = dao.updateContentsForNaver(dto);
-					request.getSession().setAttribute("result", result);
-					request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					response.sendRedirect("error.html");
-				}
-			}else {
-				String naverandkakaoEmail = contents.getEmail();
-
-				System.out.println(naverandkakaoEmail);
-
-				MemberDTO dto = new MemberDTO();
-
-				dto.setPhone(phone);
-				dto.setZipCode(zipcode);
-				dto.setAddress1(add1);
-				dto.setAddress2(add2);
-				dto.setEmail(naverandkakaoEmail);
-
-				try {
-					int result = dao.updateContentsForNaver(dto);
-					request.getSession().setAttribute("result", result);
-					request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					response.sendRedirect("error.html");
-				}
-			}
 
 		}else if(cmd.equals("/myPageUpdateComplete.members")) {
 
