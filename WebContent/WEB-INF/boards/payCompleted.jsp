@@ -70,7 +70,7 @@
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+					<c:when test="${sessionScope.loginEmail != null}">
 						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
@@ -89,7 +89,7 @@
 			<h3>후원 내역</h3>
 		</div>
 		<div class="form-group">
-			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }">${board.title }</a></p>
+			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1">${board.title }</a></p>
 		</div>
 		<div class="form-group">
 			<p>후원자 : ${payment.name }</p>
@@ -105,7 +105,7 @@
 		</div>
 		<div id="divBtn">
 			<a id="btnMyPage" class="btn btn-primary" href="Mypage.members">마이페이지</a>
-			<a id="btnBoard" class="btn btn-primary" href="Board.board">후원게시판</a>
+			<a id="btnBoard" class="btn btn-primary" href="List.board">후원게시판</a>
 			<a id="btnMain" class="btn btn-primary" href="Main.members">메인으로</a>
 		</div>
 	</div>

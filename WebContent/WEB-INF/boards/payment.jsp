@@ -109,7 +109,7 @@ li {
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
 	
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+					<c:when test="${sessionScope.loginEmail != null}">
 						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
@@ -130,7 +130,7 @@ li {
 			<input type="hidden" name="boardNo" value="${boardNo }">
 			<div class="form-group">
 				이름
-				<input type="text" class="form-control" id="name" name="name"
+				<input type="text" class="form-control" id="inputName" name="name"
 					placeholder="이름" value="${result[0] }" required>
 			</div>
 			<div class="form-group">
@@ -189,8 +189,11 @@ li {
 			}
 		})
 		$("#btnPay").click(function() {
-			if($("#name").val() == ""){
+			if($("#inputName").val() == ""){
 				alert("이름을 입력해주세요.");
+				return;
+			}else if($("#phone").val() == ""){
+				alert("전화번호를 입력해주세요.");
 				return;
 			}else if($("#amount").val() == ""){
 				alert("금액을 선택해주세요");
@@ -229,8 +232,8 @@ li {
 				 */
 				name : "${title}", //결제창에서 보여질 이름 //// 후원명 불러오기
 				amount : $("#amount").val(), // 입력받은 금액
-				buyer_email : $("#inputEmail").val(),
-				buyer_name : $("#name").val(),
+				buyer_email : "",
+				buyer_name : $("#inputName").val(),
 				buyer_tel : $("#phone").val(),
 				m_redirect_url : ''
 			/*  
@@ -259,7 +262,8 @@ li {
 				} else {
 					var msg = '결제에 실패하였습니다.';
 					msg += '에러내용 : ' + rsp.error_msg;
-					location.href = "Read.board?boardNo=" + ${boardNo} + "&commentPage=1";
+					alert(msg);
+					location.href = "Read.board?boardNo=" + ${boardNo} + "&currentPage=1&commentPage=1";
 				}
 			});
 		});
