@@ -649,10 +649,6 @@ public class MemberDAO {
 		}
 	}
 
-
-
-
-
 	/* 내가 쓴 글 목록 */
 	private PreparedStatement psForMyArticles(Connection con, String email, int startNum, int endNum) throws Exception {
 		String sql = "select * from (select row_number() over(order by p_payment_date desc) as rown,\r\n"
@@ -691,19 +687,22 @@ public class MemberDAO {
 		}
 	}
 
-}	
+	//-----------------------------------------------------------------------------------
 
-class MyAuthentication extends Authenticator {
-	PasswordAuthentication pa;
-	public MyAuthentication(){
-		String id = "jihye.t0221@gmail.com";       // 구글 ID
-		String pw = "dPwlguswn7&";          // 구글 비밀번호
-		// ID와 비밀번호를 입력한다.
-		pa = new PasswordAuthentication(id, pw);
-	}
-	// 시스템에서 사용하는 인증정보
-	public PasswordAuthentication getPasswordAuthentication() {
-		return pa;
+
+	class MyAuthentication extends Authenticator {
+		PasswordAuthentication pa;
+		public MyAuthentication(){
+
+			String id = "jihye.t0221@gmail.com";       // 구글 ID
+			String pw = "";          // 구글 비밀번호
+
+			// ID와 비밀번호를 입력한다.
+			pa = new PasswordAuthentication(id, pw);
+		}
+		// 시스템에서 사용하는 인증정보
+		public PasswordAuthentication getPasswordAuthentication() {
+			return pa;
+		}
 	}
 }
-

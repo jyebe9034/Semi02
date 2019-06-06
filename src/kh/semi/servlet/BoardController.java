@@ -121,7 +121,7 @@ public class BoardController extends HttpServlet {
 					dto.setAccount(multi.getParameter("account"));
 					dto.setContents(multi.getParameter("contents"));
 					try {
-						int result = dao.insertBoard(dto);
+						int result = dao.insertBoard(dto, tdto);
 						request.setAttribute("board", result);
 					}catch(Exception e) {
 						e.printStackTrace();
@@ -129,6 +129,7 @@ public class BoardController extends HttpServlet {
 					int result = dao.insertTitleImg(tdto);
 					System.out.println("결과"+result);
 					request.setAttribute("titleImg", result);
+
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -233,7 +234,8 @@ public class BoardController extends HttpServlet {
 				String str = titleImg.getFilePath();
 
 				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
-				//String result = str.replaceAll("D:.+?mi.+?mi.+?",""); 재용오빠꺼
+
+				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
 				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
 				String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 
@@ -284,6 +286,9 @@ public class BoardController extends HttpServlet {
 							String folder = path.replaceAll("D.+?2.+?",""); // 지혜 노트북
 							//String result = str.replaceAll("D.+?3.+?", ""); 지혜꺼
 							//String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+							//String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
+							//재용
+
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 
 							int sumAmount = result.get(i).getSumAmount();
@@ -292,6 +297,7 @@ public class BoardController extends HttpServlet {
 							result.get(i).setPercentage(percentage);
 						}
 						request.setAttribute("board", result);
+
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
@@ -300,7 +306,13 @@ public class BoardController extends HttpServlet {
 							String path = result.get(i).getFilePath();
 							String folder = path.replaceAll("D.+?2.+?",""); // 지혜 노트북
 							//String folder = path.replaceAll("D.+?3.+?","");
-							//							String folder = path.replaceAll("D:.+?mi.+?","");
+
+							//String folder = path.replaceAll("D:.+?mi.+?","");
+							//String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
+							//재용
+
+							//	String folder = path.replaceAll("D:.+?mi.+?","");
+
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 							
 							int sumAmount = result.get(i).getSumAmount();
