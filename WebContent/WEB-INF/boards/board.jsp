@@ -159,9 +159,9 @@
 	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
 	       }
 		})	
-//		창훈이 삭제버튼 부분--------------------------------------------------------------		
+//		창훈이 삭제버튼 부분--------------------------------------------------------------	
 		$("#deleteBtn").on("click",function(){
-			location.href="BoardWriteDelete.manager";
+				location.href="BoardWriteDelete.manager";	
 		})
 		
 	})
