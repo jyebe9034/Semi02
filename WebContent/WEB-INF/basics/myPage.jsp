@@ -228,7 +228,7 @@ a:hover {
 		</div>
 	</nav>
 
-   <hr id="top">
+		<hr style="margin:0px; bordercolor:whitesmoke;">
    
    
    

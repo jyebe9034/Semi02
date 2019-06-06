@@ -88,6 +88,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 			</ul>
 		</div>
 	</nav>
+	<hr style="margin:0px;">
 	<div id=wrapper>
 		<p class="title">서비스 준비중입니다.</p>
 		<p class="contents">이용에 불편을 드려 죄송합니다.</p> 

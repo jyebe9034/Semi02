@@ -83,6 +83,7 @@
 			</ul>
 		</div>
 	</nav>
+	<hr style="margin:0px;">
 	<div class="wrapper">
 		<div class="title">
 			<h3>후원 내역</h3>

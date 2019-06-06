@@ -206,7 +206,8 @@
 			</ul>
 		</div>
 	</nav>
-
+	<hr style="margin:0px;">
+	
 	<div class="boardName">
 		<p>게시판</p>
 	</div>

@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,9 +65,7 @@ public class MembersController extends HttpServlet {
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
 		
-		System.out.println(cmd);
-
-		if(cmd.equals("/First.members")) {
+		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
 			request.getRequestDispatcher("Main.members").forward(request, response);;
@@ -95,23 +94,25 @@ public class MembersController extends HttpServlet {
 				}
 				request.setAttribute("duedate", strArr);
 				request.setAttribute("percentage", intArr);
-
+				
 				String[] imgSrc = new String[3];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
-					//					String result = str.replaceAll("D:.+?mi.+?mi.+?",""); 재용오빠꺼
+					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
 					//String result = str.replaceAll("D.+?3.+?", "");
-					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
+//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
 
 				request.setAttribute("imgSrc", imgSrc);
+				// 카드 data, 제목, 마감일, 퍼센트
 				
-				int totalAmount = pdao.getTotalAmount();
+				int totalAmount = pdao.getTotalAmount();	
 				int countDonors = pdao.getNumberOfDonors();
-				request.setAttribute("totalAmount", totalAmount);
-				request.setAttribute("countDonors", countDonors);
+				DecimalFormat commas = new DecimalFormat("###,###,###,###");
+				request.setAttribute("totalAmount", commas.format(totalAmount));
+				request.setAttribute("countDonors", commas.format(countDonors));
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 
 			}catch(Exception e) {
