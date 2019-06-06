@@ -123,10 +123,15 @@
 	.article{
 		cursor: pointer; 
 	}
-	 .listRow{
-      width: 1200px;
+	.check{
+		margin-left:auto;
+	}
+
+/* 	 .listRow{
+	  width : 1200px;
       margin: auto;
    }
+ */
 </style>
 <script>
 	$(function(){
@@ -209,7 +214,8 @@
 			</ul>
 		</div>
 	</nav>
-
+	<hr style="margin:0px;">
+	
 	<div class="boardName">
 		<p>게시판</p>
 	</div>
@@ -242,7 +248,7 @@
 						<c:forEach var="list" items="${board }">
 							<div class="col-lg-3 col-md-6 col-sm-12">
 							<c:if test="${sessionScope.admin!=null}">		 
-								<div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
+								<div class="check col-lg-3 col-md-4 col-sm-4"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
 							</c:if> 
 								<div class="card list">
 									<img src="${list.newFilePath}"> 

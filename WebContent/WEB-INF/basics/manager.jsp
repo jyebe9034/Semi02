@@ -29,7 +29,6 @@
 	background-color: #1ebdd8; /*사이드 컬러*/
 }
 
-
 </style>
 </head>
 
@@ -171,6 +170,7 @@
 						<h1 class="h3 mb-0 text-gray-800"><br>Dashboard</h1>
 						<!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Geneasdasdrate Report</a>-->
 					</div>
+				
 
 					<!-- Content Row -->
 					<div class="row">

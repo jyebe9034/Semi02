@@ -157,6 +157,7 @@
 			</ul>
 		</div>
 	</nav>
+	<hr style="margin:0px;">
 <!-- 	<div class="header row"> -->
 <!-- 		<div class="banner col-md-12 d-none d-md-block m-3"></div> -->
 <!-- 	</div> -->
