@@ -135,7 +135,7 @@ ul {
 		</div>
 	</nav>
 
-	<hr>
+	<hr style="margin:0px;">
 
 	<form action="Join.members" id="joinForm" method="post">
 		<div class="wrapper">

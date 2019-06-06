@@ -91,7 +91,8 @@
 			</div>
 		</nav>
 		
-		<hr>
+		<hr style="margin:0px;">
+		
 		<div id="wrapper">
 			<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">

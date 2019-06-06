@@ -130,7 +130,7 @@ a:hover {
 		</div>
 	</nav>
 
-	<hr>
+	<hr style="margin:0px;">
 	<div class="wrapper">
 		<div class="login_box">
 			<div class="title">
