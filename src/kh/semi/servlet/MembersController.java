@@ -52,8 +52,7 @@ public class MembersController extends HttpServlet {
 			date1.set(Calendar.MINUTE, 0);
 			date1.set(Calendar.SECOND, 0);
 			date1.set(Calendar.MILLISECOND, 0);
-			timer1.schedule(visiterCount,1000,1000*10);//60초마다 저장
-			System.out.println("10초마다");
+			timer1.schedule(visiterCount,1000,1000*10);//10초마다 저장
 
 		}
 
@@ -64,7 +63,7 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-		
+
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
@@ -94,20 +93,21 @@ public class MembersController extends HttpServlet {
 				}
 				request.setAttribute("duedate", strArr);
 				request.setAttribute("percentage", intArr);
-				
+
 				String[] imgSrc = new String[3];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
-					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
+//					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-					//String result = str.replaceAll("D.+?3.+?", "");
-//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
+					//String result = str.replaceAll("D.+?3.+?", ""); 지혜꺼
+					//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
+					String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
 
 				request.setAttribute("imgSrc", imgSrc);
 				// 카드 data, 제목, 마감일, 퍼센트
-				
+
 				int totalAmount = pdao.getTotalAmount();	
 				int countDonors = pdao.getNumberOfDonors();
 				DecimalFormat commas = new DecimalFormat("###,###,###,###");
@@ -360,17 +360,17 @@ public class MembersController extends HttpServlet {
 			String email = (String)request.getSession().getAttribute("loginEmail");
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 			int currentPage2 = Integer.parseInt(request.getParameter("currentPage2"));
-			
+
 			try {
 				request.setAttribute("getNavi", dao.getNaviforMySupport(currentPage, email));
-				//					request.setAttribute("myDonateContents", dao.myDonateContents(email, currentPage));
+				request.setAttribute("myDonateContents", dao.myDonateContents(email, currentPage));
 
 				request.setAttribute("getNavi2", dao.getNaviforMySupport2(currentPage2, email));
-				//					request.setAttribute("myDonateContents2", dao.myDonateContents2(email, currentPage2));
+				request.setAttribute("myDonateContents2", dao.myDonateContents2(email, currentPage2));
 				MemberDTO dto = dao.getContents(email);
 				request.setAttribute("dto",dto);
 				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

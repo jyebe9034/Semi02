@@ -6,16 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>도움닿기</title>
-<link
-	href="https://fonts.googleapis.com/css?family=Cute+Font|Jeju+Gothic|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Jeju+Gothic|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="nav_footer.css">
 <style>
@@ -131,7 +126,7 @@ body{
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+					<c:when test="${sessionScope.loginEmail != null}">
 						<c:if test="${sessionScope.admin==null}">
 							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						</c:if>
@@ -148,7 +143,7 @@ body{
 			</ul>
 		</div>
 	</nav>
-	<hr style="margin:0px;">
+	
 	<!-- 캐러셀 -->
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-ride="carousel" data-interval="5000">
@@ -182,7 +177,7 @@ body{
 			class="sr-only">Next</span>
 		</a>
 	</div>
-	<hr>
+	
 	<div class="guide" style="font-family:Do Hyeon"><h2>후원 안내</h2></div>
 	<div class="container">
 		<div class="row rowStep">
