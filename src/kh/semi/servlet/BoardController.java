@@ -46,7 +46,7 @@ public class BoardController extends HttpServlet {
 		String contextPath = request.getContextPath();
 
 		String cmd = requestURI.substring(contextPath.length());
-		System.out.println(cmd);
+		//		System.out.println(cmd);
 
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO dao = new BoardDAO();
@@ -126,12 +126,15 @@ public class BoardController extends HttpServlet {
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
+					int result = dao.insertTitleImg(tdto);
+					System.out.println("결과"+result);
+					request.setAttribute("titleImg", result);
 
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
 				request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
-	
+
 			}else if(cmd.equals("/uploadImage.board")) { // 서버 측 이미지 업로드 
 				request.getSession().setAttribute("flag", "false");
 				int maxSize = 10 * 1024 * 1024;
@@ -150,6 +153,7 @@ public class BoardController extends HttpServlet {
 
 				String savePath = rootPath + email + "/" + newDate;
 				tdto.setFilePath(savePath);
+				System.out.println("boardControllerFilePath : " + savePath);
 				String uploadFile = "";
 				String newFileName = "";
 
@@ -228,15 +232,15 @@ public class BoardController extends HttpServlet {
 				request.setCharacterEncoding("UTF-8");
 
 				String str = titleImg.getFilePath();
-				
+
 				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
-				String result = str.replaceAll("C:.+?mi.+?mi02.+?","");
-				//재용
-//				String result = str.replaceAll("D:.+?mi.+?","");
-				//슬기꺼
-				
+
+				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
+				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
+
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
-				
+
 				request.setAttribute("currentPage", currentPage);
 				request.setAttribute("titleImg", result+"/"+titleImg.getFileName());
 				request.setAttribute("pageNavi", dao.getCommentNavi(commentPage, dao.selectAllComments(boardNo)));
@@ -260,56 +264,75 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("title", title);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("payment.jsp").forward(request, response);
-				
+
 			}else if(cmd.equals("/List.board")){ //후원 게시판 목록
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
 					String searchWord = request.getParameter("searchWord"); //검색어
 					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
+
 					if(searchOption.contains(" ")) { //추가
 						searchOption = "b_title || b_contents";
 					}
 					request.setAttribute("currentPage", currentPage);
 					int totalRecordCount = 0; //=recordTotalCount
+
 					if(searchOption.equals("allPages")){ //전체 글 목록
 						totalRecordCount = dao.totalRecordNum();
-						
-						List<BoardListDTO> result = dao.selectByPage(currentPage);
+
+						List<BoardListDTO> result = dao.selectByPage(currentPage);	
 						for(int i = 0; i < result.size(); i++) {
 							String path = result.get(i).getFilePath();
-							//String folder = path.replaceAll("D.+?3.+?","");
-//							String folder = path.replaceAll("D:.+?mi.+?",""); 
-							//슬기꺼
-							String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
+							String folder = path.replaceAll("D.+?2.+?",""); // 지혜 노트북
+							//String result = str.replaceAll("D.+?3.+?", ""); 지혜꺼
+							//String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+							//String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
 							//재용
+
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
+
+							int sumAmount = result.get(i).getSumAmount();
+							int goalAmount = result.get(i).getAmount();
+							int percentage = (int) Math.floor((double) sumAmount / goalAmount * 100);
+							result.get(i).setPercentage(percentage);
 						}
 						request.setAttribute("board", result);
-					
+
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
 						List<BoardListDTO> result = dao.searchList(currentPage, searchOption, searchWord);
 						for(int i = 0; i < result.size(); i++) {
 							String path = result.get(i).getFilePath();
+							String folder = path.replaceAll("D.+?2.+?",""); // 지혜 노트북
 							//String folder = path.replaceAll("D.+?3.+?","");
+
 							//String folder = path.replaceAll("D:.+?mi.+?","");
-							String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
+							//String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
 							//재용
+
+							//	String folder = path.replaceAll("D:.+?mi.+?","");
+
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
+							
+							int sumAmount = result.get(i).getSumAmount();
+							int goalAmount = result.get(i).getAmount();
+							int percentage = (int) Math.floor((double) sumAmount / goalAmount * 100);
+							result.get(i).setPercentage(percentage);
 						}
 						request.setAttribute("board", result);
 					}
-				
-					
+
+
 					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord));
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
-					
+
 				}catch(Exception e) {				
 					e.printStackTrace();
 				}
 			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
 				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);
+
 			}else if(cmd.equals("/Payment.board")) {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String name = request.getParameter("name");

@@ -6,16 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>도움닿기</title>
-<link
-	href="https://fonts.googleapis.com/css?family=Cute+Font|Jeju+Gothic|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Jeju+Gothic|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="nav_footer.css">
 <style>
@@ -148,7 +143,7 @@ body{
 			</ul>
 		</div>
 	</nav>
-	<hr style="margin:0px;">
+	
 	<!-- 캐러셀 -->
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-ride="carousel" data-interval="5000">
@@ -182,7 +177,7 @@ body{
 			class="sr-only">Next</span>
 		</a>
 	</div>
-	<hr>
+	
 	<div class="guide" style="font-family:Do Hyeon"><h2>후원 안내</h2></div>
 	<div class="container">
 		<div class="row rowStep">
@@ -252,6 +247,7 @@ body{
 			</c:choose>
 		</div>
 	</div>
+
 	<div class="jumbotron" style="font-family:Do Hyeon">
 		<h1 class="display-5">2019년 도움닿기 후원 현황</h1>
 		<h2 class="display-4">${totalAmount }원</h2>
@@ -270,10 +266,11 @@ body{
 		<div id="f_sns">
 			<img id="kakao" class="sns" src="photo_image/ka.png"> <img
 				class="sns" src="photo_image/fa.png"> <img id="insta"
-				class="sns" src="photo_image/kk.png"> <a href="write.board"><div id="suggest">후원 신청</div></a>
+				class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
+
 </body>
 </html>
 

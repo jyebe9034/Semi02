@@ -15,6 +15,7 @@ public class BoardListDTO {
 	private String writeDate;	
 	private int recommend;
 	private int sumAmount;
+	private int percentage;
 	/*title_img*/
 	private String fileName;
 	private String filePath;
@@ -65,6 +66,7 @@ public class BoardListDTO {
 		this.filePath = filePath;
 		this.newFilePath = newFilePath;
 	}
+	
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -161,5 +163,10 @@ public class BoardListDTO {
 	public void setNewFilePath(String newFilePath) {
 		this.newFilePath = newFilePath;
 	}
-	
+	public int getPercentage() {
+		return percentage;
+	}
+	public void setPercentage(int percentage) {
+		this.percentage = percentage;
+	}	
 }

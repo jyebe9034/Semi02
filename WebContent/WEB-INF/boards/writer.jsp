@@ -71,9 +71,10 @@
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-light">
+	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
-			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+			<a class="navbar-brand anker" href="Main.members"
+				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
 		<div id="toggle">
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -86,12 +87,16 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
-	
+
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						</c:if>
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
@@ -200,7 +205,7 @@
 			<img id="kakao" class="sns" src="photo_image/ka.png">
 			<img class="sns" src="photo_image/fa.png">
 			<img id="insta" class="sns" src="photo_image/kk.png">
-			<a href="write.board"><div id="suggest">후원 신청</div></a>
+			<a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
