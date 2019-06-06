@@ -35,8 +35,7 @@ public class MembersController extends HttpServlet {
 	public static int timePerson;
 	public static int oneStart;
 	public static int count;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 

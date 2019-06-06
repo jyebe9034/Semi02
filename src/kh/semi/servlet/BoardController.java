@@ -127,6 +127,7 @@ public class BoardController extends HttpServlet {
 						e.printStackTrace();
 					}
 					int result = dao.insertTitleImg(tdto);
+					System.out.println("결과"+result);
 					request.setAttribute("titleImg", result);
 				}catch(Exception e) {
 					e.printStackTrace();
@@ -277,7 +278,7 @@ public class BoardController extends HttpServlet {
 					if(searchOption.equals("allPages")){ //전체 글 목록
 						totalRecordCount = dao.totalRecordNum();
 
-						List<BoardListDTO> result = dao.selectByPage(currentPage);
+						List<BoardListDTO> result = dao.selectByPage(currentPage);	
 						for(int i = 0; i < result.size(); i++) {
 							String path = result.get(i).getFilePath();
 							String folder = path.replaceAll("D.+?2.+?",""); // 지혜 노트북

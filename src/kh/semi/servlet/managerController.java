@@ -26,7 +26,7 @@ public class managerController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter write = response.getWriter();
 		
-			
+		
 		String requestURI = request.getRequestURI();
 		String comtextPath = request.getContextPath();
 		String cmd = requestURI.substring(comtextPath.length());
@@ -56,12 +56,12 @@ public class managerController extends HttpServlet {
 			for(int i=0; i<value.length; i++) {
 				try {
 					int result = dao.BoardWriteDelete(value[i]);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			request.getRequestDispatcher("List.board?currentPage=1&&searchOption==null&&searchWord==null").forward(request, response);
-		
+				request.getRequestDispatcher("List.board?currentPage=1&searchOption=allPages&searchWord=allPages").forward(request, response);//이걸로고침!!창훈
 		}
 	}
 

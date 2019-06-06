@@ -161,7 +161,7 @@
 		})	
 //		창훈이 삭제버튼 부분--------------------------------------------------------------		
 		$("#deleteBtn").on("click",function(){
-			
+			location.href="BoardWriteDelete.manager";
 		})
 		
 	})
@@ -227,6 +227,7 @@
 	</div>
 
 		<!--글목록-->
+
 		<c:choose>
 			<c:when test="${totalRecordCount<1}">
 				<div class="row noneListRow"><p>검색 결과가 없습니다.</p></div>
@@ -257,7 +258,6 @@
 							</div>
 						</c:forEach>
 					</div>
-				</form>
 			</c:otherwise>	
 		</c:choose>
 		
@@ -282,8 +282,9 @@
 				<button type="submit" class="btn" id="deleteBtn">삭제</button>
 			</c:if>
 		</div>
+		</form>
 	</div>
-	</form>
+
 	
 	
 	<div id="footer">
