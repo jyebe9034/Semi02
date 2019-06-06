@@ -18,8 +18,17 @@ public class BoardListDTO {
 	/*title_img*/
 	private String fileName;
 	private String filePath;
-	private String newFilePath;
-	//총 18개
+	private String newFilePath;	
+	private int percentage; //추가됐어요
+	//총 19개
+	
+	public int getPercentage() { //추가됐어요
+		return percentage;
+	}
+	public void setPercentage(int percentage) { //추가됐어요
+		this.percentage = percentage;
+	}
+	
 	
 	public BoardListDTO() {
 		super();

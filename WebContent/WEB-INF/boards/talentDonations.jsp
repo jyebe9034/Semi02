@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,9 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	#wrapper *{
 		text-align: center;
 		}
+	#wrapper{
+		margin-bottom: 300px;
+	}
 	.title{
 		font-family: "Do Hyeon";
 		font-size: 50px;
@@ -45,10 +49,6 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		background-color: #28a39f;
 		color: #FFF;
 	}
-	#footer{
-		position: absolute;
-		bottom: 0;
-	}
 </style>
 <script>
 	$(function(){
@@ -75,10 +75,16 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
 				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li"><a class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						</c:if>	
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
+						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -88,15 +94,19 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 			</ul>
 		</div>
 	</nav>
+	
 	<div id=wrapper>
-		<p class="title">서비스 준비중입니다.</p>
-		<p class="contents">이용에 불편을 드려 죄송합니다.</p> 
-		<p class="contents">보다 나은 서비스 제공을 위하여 준비중입니다.</p>
-		<p class="contents">빠른 시일내에 준비하여 찾아뵙겠습니다.</p>
+		<div id=message>
+			<p class="title">서비스 준비중입니다.</p>
+			<p class="contents">이용에 불편을 드려 죄송합니다.</p> 
+			<p class="contents">보다 나은 서비스 제공을 위하여 준비중입니다.</p>
+			<p class="contents">빠른 시일내에 준비하여 찾아뵙겠습니다.</p>
+		</div>
+		<div class=btnArea>
+			<button class="btn" id=goMainBtn>메인으로 가기</button>	
+		</div>
 	</div>
-	<div class=btnArea>
-		<button class="btn" id=goMainBtn>메인으로 가기</button>	
-	</div>
+	
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>

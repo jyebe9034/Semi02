@@ -131,6 +131,7 @@ public class MembersController extends HttpServlet {
 			String email = request.getParameter("email");
 			try {
 				int ranNum = dao.sendMail(email);
+				System.out.println(ranNum);
 				printWriter.print(ranNum);
 			} catch (Exception e) {
 				e.printStackTrace();
