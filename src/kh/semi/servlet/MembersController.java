@@ -98,13 +98,13 @@ public class MembersController extends HttpServlet {
 				String[] imgSrc = new String[3];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
-					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
+					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); 
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
 					//String result = str.replaceAll("D.+?3.+?", "");
 //					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
-
+				
 				request.setAttribute("imgSrc", imgSrc);
 				// 카드 data, 제목, 마감일, 퍼센트
 				
@@ -363,10 +363,10 @@ public class MembersController extends HttpServlet {
 			
 			try {
 				request.setAttribute("getNavi", dao.getNaviforMySupport(currentPage, email));
-				//					request.setAttribute("myDonateContents", dao.myDonateContents(email, currentPage));
+				request.setAttribute("myDonateContents", dao.myDonateContents(email, currentPage));
 
 				request.setAttribute("getNavi2", dao.getNaviforMySupport2(currentPage2, email));
-				//					request.setAttribute("myDonateContents2", dao.myDonateContents2(email, currentPage2));
+				request.setAttribute("myDonateContents2", dao.myDonateContents2(email, currentPage2));
 				MemberDTO dto = dao.getContents(email);
 				request.setAttribute("dto",dto);
 				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);

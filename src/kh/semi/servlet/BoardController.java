@@ -121,13 +121,12 @@ public class BoardController extends HttpServlet {
 					dto.setAccount(multi.getParameter("account"));
 					dto.setContents(multi.getParameter("contents"));
 					try {
-						int result = dao.insertBoard(dto);
+						int result = dao.insertBoard(dto, tdto);
 						request.setAttribute("board", result);
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
-					int result = dao.insertTitleImg(tdto);
-					request.setAttribute("titleImg", result);
+
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -231,8 +230,10 @@ public class BoardController extends HttpServlet {
 				String str = titleImg.getFilePath();
 				
 				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
-				//String result = str.replaceAll("D:.+?mi.+?mi.+?",""); 재용오빠꺼
-				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				String result = str.replaceAll("C:.+?mi.+?mi02.+?","");
+				//재용
+//				String result = str.replaceAll("D:.+?mi.+?","");
+				//슬기꺼
 				
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 				
@@ -277,11 +278,14 @@ public class BoardController extends HttpServlet {
 						for(int i = 0; i < result.size(); i++) {
 							String path = result.get(i).getFilePath();
 							//String folder = path.replaceAll("D.+?3.+?","");
-							String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+//							String folder = path.replaceAll("D:.+?mi.+?",""); 
+							//슬기꺼
+							String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
+							//재용
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 						}
 						request.setAttribute("board", result);
-						request.setAttribute("board", dao.selectByPage(currentPage));
+					
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
@@ -289,7 +293,9 @@ public class BoardController extends HttpServlet {
 						for(int i = 0; i < result.size(); i++) {
 							String path = result.get(i).getFilePath();
 							//String folder = path.replaceAll("D.+?3.+?","");
-							String folder = path.replaceAll("D:.+?mi.+?","");
+							//String folder = path.replaceAll("D:.+?mi.+?","");
+							String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
+							//재용
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 						}
 						request.setAttribute("board", result);

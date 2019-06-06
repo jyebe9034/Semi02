@@ -8,7 +8,7 @@
 </head>
 <body>
 	<script>
-		if(${board} > 0 && ${titleImg} > 0){
+		if(${board} > 0){
 			alert("글이 성공적으로 등록되었습니다.");
 			location.href = "List.board?currentPage=1&searchOption=allPages&searchWord=allPages";
 		}else{
