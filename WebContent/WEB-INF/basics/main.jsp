@@ -252,6 +252,7 @@ body{
 			</c:choose>
 		</div>
 	</div>
+
 	<div class="jumbotron" style="font-family:Do Hyeon">
 		<h1 class="display-5">2019년 도움닿기 후원 현황</h1>
 		<h2 class="display-4">${totalAmount }원</h2>
@@ -274,6 +275,7 @@ body{
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
+
 </body>
 </html>
 
