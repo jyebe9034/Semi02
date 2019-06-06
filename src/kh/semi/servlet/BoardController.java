@@ -231,7 +231,8 @@ public class BoardController extends HttpServlet {
 				
 //				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
-				//String result = str.replaceAll("D:.+?mi.+?mi.+?",""); 재용오빠꺼
+
+				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
 				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
 				String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 				
@@ -285,6 +286,7 @@ public class BoardController extends HttpServlet {
 							String folder = path.replaceAll("D.+?2.+?",""); // 지혜 노트북
 							//String result = str.replaceAll("D.+?3.+?", ""); 지혜꺼
 							//String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+							//String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
 
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 
@@ -294,6 +296,7 @@ public class BoardController extends HttpServlet {
 							result.get(i).setPercentage(percentage);
 						}
 						request.setAttribute("board", result);
+
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
@@ -304,6 +307,11 @@ public class BoardController extends HttpServlet {
 							//String folder = path.replaceAll("D.+?3.+?","");
 //							String folder = path.replaceAll("D:.+?mi.+?","");
 //							String folder = path.replaceAll("C:.+?2Project.+?", ""); //해용이 집
+							//String folder = path.replaceAll("D:.+?mi.+?","");
+							//String folder = path.replaceAll("C:.+?mi.+?mi02.+?",""); 
+							//재용
+
+							//	String folder = path.replaceAll("D:.+?mi.+?","");
 							result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());
 							
 							int sumAmount = result.get(i).getSumAmount();

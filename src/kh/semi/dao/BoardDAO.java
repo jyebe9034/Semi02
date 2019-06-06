@@ -84,6 +84,7 @@ public class BoardDAO {
 			return list;
 		}
 	}
+
 	public int insertBoard(BoardDTO dto, TitleImgDTO tdto)throws Exception{
 		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,default,default,default,default)";
 		String sql2 = "insert into title_img values(b_no_seq.currval, ?, ?, ?, ?)";
