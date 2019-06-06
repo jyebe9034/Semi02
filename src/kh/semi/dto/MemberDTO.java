@@ -14,6 +14,7 @@ public class MemberDTO {
 	private String ipAddress;
 	private String admin;
 	
+	
 	public MemberDTO() {}
 	
 	public MemberDTO(String email, String name, String ipAddress) {
@@ -40,14 +41,6 @@ public class MemberDTO {
 		this.address2 = address2;
 
 	}
-	public MemberDTO(String email, String name, String phone, Timestamp joinDate, String ipAddress) {
-		super();
-		this.email = email;
-		this.name = name;
-		this.phone = phone;
-		this.joinDate = joinDate;
-		this.ipAddress = ipAddress;
-	}
 	
 	public MemberDTO(String email, String name, Timestamp joinDate, String ipAddress, String admin) {
 		this.email = email;
@@ -55,6 +48,17 @@ public class MemberDTO {
 		this.joinDate = joinDate;
 		this.ipAddress = ipAddress;
 		this.admin = admin;
+	}
+	
+	
+
+	public MemberDTO(String email, String name, String phone, Timestamp joinDate, String ipAddress) {
+		super();
+		this.email = email;
+		this.name = name;
+		this.phone = phone;
+		this.joinDate = joinDate;
+		this.ipAddress = ipAddress;
 	}
 
 	public MemberDTO(String email, String pw, String name, String phone, String zipCode,

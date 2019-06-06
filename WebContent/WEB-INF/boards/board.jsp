@@ -123,24 +123,22 @@
 	.article{
 		cursor: pointer; 
 	}
-	
+	.check{
+      margin-left:auto;
+    }
 </style>
 <script>
 	$(function(){
-	
-		$.ajax({
-			url : "Fund",
-			type : "post",
-		}).done(function(resp) {
-			$("#card1").css("width", resp + "%");
-			$("#card1_span").text(resp + "%");
-		})
-		
 		$("#goMainBtn").on("click",function(){
 			location.href="Main.members";
 		})
 		$("#writeBtn").on("click", function(){
-			location.href="write.board";
+			if(${loginEmail == null}){
+				alert("로그인 후 글쓰기가 가능합니다.");
+				location.href="LoginForm.members";
+			}else{
+				location.href="write.board";	
+			}
 		})
 		
 // 		지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
@@ -161,9 +159,9 @@
 	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
 	       }
 		})	
-//		창훈이 삭제버튼 부분--------------------------------------------------------------		
+//		창훈이 삭제버튼 부분--------------------------------------------------------------	
 		$("#deleteBtn").on("click",function(){
-			
+				location.href="BoardWriteDelete.manager";	
 		})
 		
 	})
@@ -229,6 +227,7 @@
 	</div>
 
 		<!--글목록-->
+
 		<c:choose>
 			<c:when test="${totalRecordCount<1}">
 				<div class="row noneListRow"><p>검색 결과가 없습니다.</p></div>
@@ -239,18 +238,18 @@
 						<c:forEach var="list" items="${board }">
 							<div class="col-lg-3 col-md-6 col-sm-12">
 							<c:if test="${sessionScope.admin!=null}">		 
-								<div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
+								<div class="check col-lg-3 col-md-4 col-sm-4"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
 							</c:if> 
 								<div class="card list">
 									<img src="${list.newFilePath}"> 
 									<div class="card-body article" boardNo="${list.boardNo}">
 										<h5 class="card-title">${list.title }</h5>
 										<p class="card-text">${list.writer }</p>
-										<div class="progress">
-											<div id="card1" class="progress-bar" role="progressbar"
-												aria-valuenow="${percentage }" aria-valuemin="0"
-												aria-valuemax="100"></div>
-										</div>
+										 <div class="progress">
+ 											<div class="progress-bar" role="progressbar" 
+ 											style="width: ${list.percentage}%" aria-valuemin="${list.percentage}" aria-valuemax="100"></div>
+ 										 </div>
+										
 										<div class="amount">
 											<small class="text-muted amount">${list.amount }</small>
 										</div>
@@ -259,14 +258,9 @@
 							</div>
 						</c:forEach>
 					</div>
-				</form>
 			</c:otherwise>	
 		</c:choose>
 		
-		
-		
-	
-
 	<!--페이지네비게이터 -->
 		<div class="row  p-0 m-0" id="num_box">
 			<div class="col-12 d-flex justify-content-center">
@@ -282,14 +276,15 @@
 		<div class="col-12 bottonBtns d-flex justify-content-center">
 			<button type="button" class="btn" id="goMainBtn">메인으로</button>
 			<c:if test="${sessionScope.admin==null}">
-			<button type="button" class="btn" id="writeBtn">글쓰기</button>
+				<button type="button" class="btn" id="writeBtn">글쓰기</button>
 			</c:if>
 			<c:if test="${sessionScope.admin!=null}">
-			<button type="submit" class="btn" id="deleteBtn">삭제</button>
+				<button type="submit" class="btn" id="deleteBtn">삭제</button>
 			</c:if>
 		</div>
+		</form>
 	</div>
-	</form>
+
 	
 	
 	<div id="footer">
@@ -303,7 +298,7 @@
 			<img id="kakao" class="sns" src="photo_image/ka.png">
 			<img class="sns" src="photo_image/fa.png">
 			<img id="insta" class="sns" src="photo_image/kk.png">
-			<a href="/"><div id="suggest">후원 신청</div></a>
+			<a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>

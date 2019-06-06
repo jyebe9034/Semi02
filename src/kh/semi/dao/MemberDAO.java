@@ -72,24 +72,65 @@ public class MemberDAO {
 				if (rs.next()) {
 
 					MemberDTO result = new MemberDTO();
-					result.setEmail(rs.getString("m_email"));
-					result.setPw(rs.getString("m_pw"));
-					result.setName(rs.getString("m_name"));
-					result.setPhone(rs.getString("m_phone"));
-					result.setZipCode(rs.getString("m_zipcode"));
-					result.setAddress1(rs.getString("m_address1"));
-					result.setAddress2(rs.getString("m_address2"));
-					
+
+					String id = rs.getString("m_email");
+					String name = rs.getString("m_name");
+					String phone = rs.getString("m_phone");
+					String zipcode = rs.getString("m_zipcode");
+					String add1 = rs.getString("m_address1");
+					String add2 = rs.getString("m_address2");
+
+					result.setEmail(id);
+					result.setName(name);
+					result.setPhone(phone);
+					result.setZipCode(zipcode);
+					result.setAddress1(add1);
+					result.setAddress2(add2);
+
 					return result;
 				}
-				
+
 				return null;
 			}
 		}
 	}
-	
-	
 
+
+	public MemberDTO getContents(MemberDTO dto) throws Exception {
+
+		String sql = "select * from members where m_email = ?";
+
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+
+			pstat.setString(1, dto.getEmail());
+
+			try (ResultSet rs = pstat.executeQuery();) {
+
+				if (rs.next()) {
+
+					MemberDTO result = new MemberDTO();
+
+					String id = rs.getString("m_email");
+					String name = rs.getString("m_name");
+					String phone = rs.getString("m_phone");
+					String zipcode = rs.getString("m_zipcode");
+					String add1 = rs.getString("m_address1");
+					String add2 = rs.getString("m_address2");
+
+					result.setEmail(id);
+					result.setName(name);
+					result.setPhone(phone);
+					result.setZipCode(zipcode);
+					result.setAddress1(add1);
+					result.setAddress2(add2);
+
+					return result;
+				}
+
+				return null;
+			}
+		}
+	}
 
 	public int updateContents(MemberDTO param) throws Exception {
 
@@ -143,7 +184,7 @@ public class MemberDAO {
 			pstat.setString(1, email);
 
 			try (ResultSet rs = pstat.executeQuery();) {
-				
+
 				return rs.next();
 			}
 		}
@@ -241,7 +282,7 @@ public class MemberDAO {
 			return result;
 		}
 	}
-	
+
 	public List<String> selectByEmail(String email) throws Exception {
 		String sql = "select m_name, m_email, m_phone from members where m_email='"+email+"'";
 		try(
@@ -356,7 +397,7 @@ public class MemberDAO {
 
 		return ranNum;
 	}
-	
+
 	public String managerOrVisiter(String email)throws Exception{
 		String sql = "select m_admin from members where m_email=?";
 		try(
@@ -370,7 +411,7 @@ public class MemberDAO {
 			return admin;
 		}
 	}
-	
+
 	///*마이페이지*/------------------------------------------------------------------------
 
 	static int recordCountPerPage = 5;
@@ -378,7 +419,7 @@ public class MemberDAO {
 
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
-	
+
 	static int naviCountPerPage2 = 5;
 	public static int pageTotalCount2;
 
@@ -444,8 +485,8 @@ public class MemberDAO {
 
 		return sb.toString();
 	}
-	
-	
+
+
 	public String getNaviforMySupport2(int currentPage2, String email) throws Exception { // 부트스트랩은 int로 받아야함
 		int recordTotalCount = this.MyDonateContentsSize2(email);
 		int recordCountPerPage = 5; // 5개의 글이 보이게 한다.
@@ -509,8 +550,8 @@ public class MemberDAO {
 	}
 	// ------------
 
-	
-	
+
+
 	/* 내가 쓴 게시글의 개수 */// =recordTotalCount
 	public int MyDonateContentsSize(String email) throws Exception {
 		String sql = "select row_number() over(order by p_payment_date desc) rown,\r\n"
@@ -551,7 +592,7 @@ public class MemberDAO {
 			}
 		}
 	}
-	
+
 	private PreparedStatement psForMyArticles2(Connection con, String email, int startNum, int endNum) throws Exception {
 		String sql = "select * from (select row_number() over(order by b_writedate desc) as rown,\r\n" + 
 				"				b_no, b_title, b_sum_amount, to_char(b_writedate,'yyyy-mm-dd') as b_writedate, b_viewcount,b_email from BOARD where b_email = ?)\r\n" + 
@@ -565,7 +606,6 @@ public class MemberDAO {
 	}
 
 	public List<MyWriteDTO> myDonateContents2(String email,int currentPage2) throws Exception {
-		
 		   int endNum = currentPage2*recordCountPerPage2;
 		   int startNum = endNum - (recordCountPerPage2-1);
 		      
@@ -574,7 +614,6 @@ public class MemberDAO {
 				ResultSet rs = ps.executeQuery();) {
 			
 			List<MyWriteDTO> result = new ArrayList<>();
-			
 			while (rs.next()) {
 
 				int b_no = rs.getInt("b_no");
@@ -590,11 +629,6 @@ public class MemberDAO {
 			return result;
 		}
 	}
-	
-	
-	
-	
-	
 	/* 내가 쓴 글 목록 */
 	private PreparedStatement psForMyArticles(Connection con, String email, int startNum, int endNum) throws Exception {
 		String sql = "select * from (select row_number() over(order by p_payment_date desc) as rown,\r\n"
@@ -609,7 +643,6 @@ public class MemberDAO {
 	}
 
 	public List<MyDonateDTO> myDonateContents(String email,int currentPage) throws Exception {
-		
 		   int endNum = currentPage*recordCountPerPage;
 		   int startNum = endNum - (recordCountPerPage-1);
 		      
@@ -632,16 +665,14 @@ public class MemberDAO {
 			return result;
 		}
 	}
-	
-	//-----------------------------------------------------------------------------------
 }
+	//-----------------------------------------------------------------------------------
 
 class MyAuthentication extends Authenticator {
-
 	PasswordAuthentication pa;
 	public MyAuthentication(){
-		String id = "junhaeyong95@gmail.com";       // 구글 ID
-		String pw = "wjsgodyd95!!";          // 구글 비밀번호
+		String id = "jihye.t0221@gmail.com";       // 구글 ID
+		String pw = "dPwlguswn7&";          // 구글 비밀번호
 		// ID와 비밀번호를 입력한다.
 		pa = new PasswordAuthentication(id, pw);
 	}
@@ -650,5 +681,4 @@ class MyAuthentication extends Authenticator {
 		return pa;
 	}
 }
-
 
