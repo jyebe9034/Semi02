@@ -195,6 +195,14 @@ a:hover {
 	background-color:"white";
 
 }
+.form-control[readonly] {
+	background-color: white;
+}
+
+	.page-link{
+	color : #1ebdd8;
+	}
+
    </style>
 </head>
 <body>
@@ -217,7 +225,7 @@ a:hover {
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 
 					</c:when>
@@ -230,214 +238,284 @@ a:hover {
 		</div>
 	</nav>
 
-   <hr id="top">
+		<hr style="margin:0px; bordercolor:whitesmoke;">
    
    
    
    
 <br><br><br>
 
-<c:choose>
+	<c:choose>
 
-<c:when test="${dto!=null }">
+		<c:when test="${dto!=null }">
 
-<div class="container wrap">
-  <h3>내 정보</h3>
-  <hr  class="myhr1">
-  <div class="row">
-    <div class="col-2"><span class="first">이메일</span></div>
-    <div class="col-10"><span class="second">${dto.email }</span></div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-2"><span class="first">이름</span></div>
-    <div class="col-10"><span class="second">${dto.name }</span></div>
-  </div>
-   <hr>
-    <div class="row">
-    <div class="col-2"><span class="first-phone">연락처</span></div>
-        <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="phone" class="form-control mx-sm-3 second" value="${dto.phone }">
-  </div>
-</form></span></div>
-  </div>
+			<div class="container wrap">
+				<h3>내 정보</h3>
+				<hr class="myhr1">
+				<div class="row">
+					<div class="col-2">
+						<span class="first">이메일</span>
+					</div>
+					<div class="col-10">
+						<span class="second">${dto.email }</span>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2">
+						<span class="first">이름</span>
+					</div>
+					<div class="col-10">
+						<span class="second">${dto.name }</span>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2">
+						<span class="first-phone">연락처</span>
+					</div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="phone"
+										class="form-control mx-sm-3 second" value="${dto.phone }">
+								</div>
+							</form></span>
+					</div>
+				</div>
 
-     <hr>
-      <div class="row">
-    <div class="col-2"><span class="first-pw">주소</span></div>
-    <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="zipcode" class="form-control mx-sm-3 second" value="${dto.zipCode }" readonly>
-  </div>
-</form></span></div>
-  </div>
-     <br>
-      <div class="row">
-    <div class="col-2"><span class="first-pw"></span></div>
-    <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="address1" class="second form-control mx-sm-3" value="${dto.address1 }">
-  </div>
-</form></span></div>
-  </div>
-  <br>
+				<hr>
+				<div class="row">
+					<div class="col-2">
+						<span class="first-pw">주소</span>
+					</div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="zipcode"
+										class="form-control mx-sm-3 second" value="${dto.zipCode }"
+										readonly>
+								</div>
+							</form></span>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-2">
+						<span class="first-pw"></span>
+					</div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="address1"
+										class="second form-control mx-sm-3" value="${dto.address1 }">
+								</div>
+							</form></span>
+					</div>
+				</div>
+				<br>
 
-      <div class="row">
-    <div class="col-2"></div>
-    <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="address2" class="second form-control mx-sm-3" value="${dto.address2 }">
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="address2"
+										class="second form-control mx-sm-3" value="${dto.address2 }">
 
-  </div>
-</form></span></div>
-  </div>
-      <div class="row"><div class="col-12">
-   <a href="myPageUpdateLocation.members"><button type="button" class="btn btn-info update">정보 수정</button></a>
-   </div>
-  </div>
-  
-</div>
-</c:when>
+								</div>
+							</form></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<a href="myPageUpdateLocation.members"><button type="button"
+								class="btn btn-info update">정보 수정</button></a>
+					</div>
+				</div>
 
-<c:otherwise>
+			</div>
+		</c:when>
 
-<div class="container wrap">
-  <h3>내 정보</h3>
-  <hr  class="myhr1">
-  <div class="row">
-    <div class="col-2"><span class="first">이메일</span></div>
-    <div class="col-10"><span class="second">${realcontents.email}${navercontents.email }</span></div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-2"><span class="first">이름</span></div>
-    <div class="col-10"><span class="second">${realcontents.name }${navercontents.name }</span></div>
-  </div>
-   <hr>
-    <div class="row">
-    <div class="col-2"><span class="first-phone">연락처</span></div>
-        <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="phone" class="form-control mx-sm-3 second"  value="${realcontents.phone }" readonly>
-  </div>
-</form></span></div>
-  </div>
+		<c:otherwise>
 
-     <hr>
-      <div class="row">
-    <div class="col-2"><span class="first-pw">주소</span></div>
-    <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="zipcode" class="form-control mx-sm-3 second" value="${realcontents.zipCode }" readonly>
-  </div>
-</form></span></div>
-  </div>
-     <br>
-      <div class="row">
-    <div class="col-2"><span class="first-pw"></span></div>
-    <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="address1" class="second form-control mx-sm-3" value="${realcontents.address1 }" readonly>
-  </div>
-</form></span></div>
-  </div>
-  <br>
+			<div class="container wrap">
+				<h3>내 정보</h3>
+				<hr class="myhr1">
+				<div class="row">
+					<div class="col-2">
+						<span class="first">이메일</span>
+					</div>
+					<div class="col-10">
+						<span class="second">${realcontents.email}${navercontents.email }</span>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2">
+						<span class="first">이름</span>
+					</div>
+					<div class="col-10">
+						<span class="second">${realcontents.name }${navercontents.name }</span>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-2">
+						<span class="first-phone">연락처</span>
+					</div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="phone"
+										class="form-control mx-sm-3 second"
+										value="${realcontents.phone }" readonly>
+								</div>
+							</form></span>
+					</div>
+				</div>
 
-      <div class="row">
-    <div class="col-2"></div>
-    <div class="col-10"><span><form class="form-inline">
-  <div class="form-group">
-    <input type="text" id="address2" class="second form-control mx-sm-3" value="${realcontents.address2 }" readonly>
+				<hr>
+				<div class="row">
+					<div class="col-2">
+						<span class="first-pw">주소</span>
+					</div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="zipcode"
+										class="form-control mx-sm-3 second"
+										value="${realcontents.zipCode }" readonly>
+								</div>
+							</form></span>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-2">
+						<span class="first-pw"></span>
+					</div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="address1"
+										class="second form-control mx-sm-3"
+										value="${realcontents.address1 }" readonly>
+								</div>
+							</form></span>
+					</div>
+				</div>
+				<br>
 
-  </div>
-</form></span></div>
-  </div>
-      <div class="row"><div class="col-12">
-   <a href="myPageUpdateLocationForNaver.members"><button type="button" class="btn btn-info update">정보 수정</button></a>
-   </div>
-  </div>
-</div>
+				<div class="row">
+					<div class="col-2"></div>
+					<div class="col-10">
+						<span><form class="form-inline">
+								<div class="form-group">
+									<input type="text" id="address2"
+										class="second form-control mx-sm-3"
+										value="${realcontents.address2 }" readonly>
 
-</c:otherwise>
-</c:choose>
-<br><br><br>
-<div class="container wrap">
-  <h3>내가 도와준 글</h3>
-  <hr  class="myhr1"> 
-<!--    <hr  class="mySupportList"> -->
-     <div class="container">
-           <div class="row head">
-         <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none">글 번호</div>
-         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">후원 명</div>
-         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">후원 금액</div>
-         <div class="col-xl-2 col-lg-2 d-none d-lg-block">후원 날짜</div>
-         <div class="col-xl-2 col-lg-2 d-lg-block d-none">글 작성자</div>
-      </div>
-      <br>
-<!--       <div class="row contents"> -->
-<!--          <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">1</div> -->
-<!--          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">연탄 봉사 후원</div> -->
-<!--          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">15,000원</div> -->
-<!--          <div class="col-xl-2 col-lg-2 d-none d-lg-block">5월 31일 13시 51분</div> -->
-<!--          <div class="col-xl-2 col-lg-2 d-lg-block d-none">임창훈</div> -->
-<!--       </div> -->
-      <div class="row contents">
-         <c:forEach var="support" items="${mySupport }">
-         <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${support.boardNo }</div>
-         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${support.title }</div>
-         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${support.pAmount }</div>
-         <div class="col-xl-2 col-lg-2 d-none d-lg-block">${support.pPaymentDate }</div>
-         <div class="col-xl-2 col-lg-2 d-lg-block d-none">${support.writer }</div>
-         </c:forEach>
-      </div>
-            <div class="row  p-0 m-0" class="numBox">
-         <div class="col-12 d-flex justify-content-center">
-            <nav aria-label="Page navigation example">
-               <ul class="pagination pagination-sm">
-                        ${getNaviforMS }
-               </ul>
-            </nav>      
-         </div>
-      </div>
-   </div>
-</div>
-<br><br><br>
-<div class="container wrap">
-  <h3>내가 올린 글</h3>
-  <hr class=underline align=left>
-  <div class="container">
-      <div class="row head">
-         <div class="col-lg-1 col-md-4 col-sm-4 d-sm-block d-none">글 번호</div>
-         <div class="col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">글 제목</div>
-         <div class="col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">작성자</div>
-         <div class="col-lg-3 d-none d-lg-block">작성일</div>
-         <div class="col-lg-1 d-lg-block d-none">조회수</div>
-      </div>
-      <br>
-      <div class="row contents">
-          <c:forEach var="Articles" items="${myArticles}">
-               <div class="col-lg-1 col-md-4 col-sm-4">${Articles.boardNo }</div>
-               <div class="col-lg-4 col-md-4 col-sm-4">${Articles.title }</div>
-               <div class="col-lg-3 col-md-4 col-sm-4">${Articles.writer }</div>
-               <div class="col-lg-3 d-none d-lg-block">${Articles.writeDate }</div>
-               <div class="col-lg-1 d-lg-block d-none">${Articles.viewCount }</div>
-           </c:forEach>
-      </div>
-           
-  </div>
-      <div class="row  p-0 m-0" class="numBox">
-         <div class="col-12 d-flex justify-content-center">
-            <nav aria-label="Page navigation example">
-               <ul class="pagination pagination-sm">
-                        ${getNavi }
-               </ul>
-            </nav>      
-         </div>
-      </div>
-</div>
+								</div>
+							</form></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<a href="myPageUpdateLocationForNaver.members"><button
+								type="button" class="btn btn-info update">정보 수정</button></a>
+					</div>
+				</div>
+			</div>
 
-	<div id="footer">
+		</c:otherwise>
+	</c:choose>
+	<br>
+	<br>
+	<br>
+	<div class="container wrap">
+		<h3>내가 도와준 글</h3>
+		<hr class="myhr1">
+		<!--    <hr  class="mySupportList"> -->
+		<div class="container">
+			<div class="row head">
+				<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none">글
+					번호</div>
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">후원
+					명</div>
+				<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">후원
+					금액</div>
+				<div class="col-xl-2 col-lg-2 d-none d-lg-block">후원 날짜</div>
+				<div class="col-xl-2 col-lg-2 d-lg-block d-none">글 작성자</div>
+			</div>
+			<br>
+			<!--       <div class="row contents"> -->
+			<!--          <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">1</div> -->
+			<!--          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">연탄 봉사 후원</div> -->
+			<!--          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">15,000원</div> -->
+			<!--          <div class="col-xl-2 col-lg-2 d-none d-lg-block">5월 31일 13시 51분</div> -->
+			<!--          <div class="col-xl-2 col-lg-2 d-lg-block d-none">임창훈</div> -->
+			<!--       </div> -->
+			<div class="row contents">
+				<c:forEach var="myDonateContents" items="${myDonateContents }">
+					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents.boardTitle }</div>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
+					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.paymentDate }</div>
+					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.boardWriter }</div>
+					<hr>
+				</c:forEach>
+			</div>
+			<br><br>
+			<div class="row  p-0 m-0" class="numBox">
+				<div class="col-12 d-flex justify-content-center">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination pagination-sm">${getNavi}
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<div class="container wrap">
+		<h3>내가 올린 글</h3>
+		<hr class="myhr1">
+		<div class="container">
+			<div class="row head">
+				<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none">글 번호</div>
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">글 제목</div>
+				<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">모인 금액</div>
+				<div class="col-xl-2 col-lg-2 d-none d-lg-block">작성일</div>
+				<div class="col-xl-2 col-lg-2 d-lg-block d-none">조회수</div>
+			</div>
+			<br>
+			<div class="row contents">
+				<c:forEach var="myDonateContents2" items="${myDonateContents2 }">
+					<div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents2.title }</div>
+					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
+					<div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.writeDate }</div>
+					<div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.viewCount }</div>
+					<hr>
+				</c:forEach>
+			</div>
+		</div>
+		<br><br>
+		<div class="row  p-0 m-0" class="numBox">
+			<div class="col-12 d-flex justify-content-center">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination pagination-sm">${getNavi2}
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+		<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
@@ -452,8 +530,7 @@ a:hover {
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-
-   <br><br>
+	
 <script>
 
     </script>

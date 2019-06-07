@@ -18,11 +18,32 @@ public class BoardDTO {
 	private Timestamp writeDate;	
 	private int recommend;
 	private int sumAmount;	
+	private boolean donationResult;
 	// 총
 	
 	
 	public BoardDTO() {
 		super();
+	}
+	public BoardDTO(String title, int recommend) {
+		this.title = title;
+		this.recommend = recommend;
+	}	
+	public BoardDTO(String title, String account) {
+		super();
+		this.title = title;
+		this.account = account;
+	}
+	public BoardDTO(String title, String writer, Timestamp dueDate, Timestamp writeDate, int amount, int sumAmount,
+			boolean donationResult) {
+		super();
+		this.title = title;
+		this.writer = writer;
+		this.amount = amount;
+		this.dueDate = dueDate;
+		this.writeDate = writeDate;
+		this.sumAmount = sumAmount;
+		this.donationResult = donationResult;
 	}
 	public BoardDTO(int boardNo, String title, String email, String writer, int amount, String bank, String account,
 			Timestamp dueDate, String contents, int viewCount, Timestamp writeDate, int recommend, int sumAmount) {
@@ -119,6 +140,13 @@ public class BoardDTO {
 	}
 	public void setSumAmount(int sumAmount) {
 		this.sumAmount = sumAmount;
+	}
+	public boolean isDonationResult() {
+		return donationResult;
+	}
+
+	public void setDonationResult(boolean donationResult) {
+		this.donationResult = donationResult;
 	}
 
 	public String getFormedDate() {

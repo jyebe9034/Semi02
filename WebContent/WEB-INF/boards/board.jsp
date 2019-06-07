@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>후원 게시판</title>
+<title>도움닿기 - 후원 게시판</title>
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
@@ -33,11 +33,9 @@
 	#dropdownforSearch {
 		float: left;
         height: 30px;
-        margin-top: 3px;
 	}
 	
 	.searchWord {
-/*		float: left;*/
 		width: 250px;
         height: 30px;
 	}
@@ -48,7 +46,6 @@
 	}
 	
 	.searchBtn {
-		/*                margin-left: 1px;*/
 		background-color: #1ebdd8;
 		border-color: #1ebdd8;
 		color: #FFF;
@@ -58,6 +55,9 @@
 		border-color: #28a39f;
 		background-color: #28a39f;
 		color: #FFF;
+	}
+	.noneListRow{
+		text-align: center;
 	}
 	
 	.listBox {
@@ -109,13 +109,13 @@
 		color: #FFF;
 	}
 	
-	#writeBtn {
+	#writeBtn,#deleteBtn {
 		background-color: #1ebdd8;
 		border-color: #1ebdd8;
 		color: #FFF;
 	}
 	
-	#writeBtn:hover {
+	#writeBtn:hover,#deleteBtn:hover {
 		border-color: #28a39f;
 		background-color: #28a39f;
 		color: #FFF;
@@ -123,9 +123,11 @@
 	.article{
 		cursor: pointer; 
 	}
+	
 </style>
 <script>
 	$(function(){
+	
 		$.ajax({
 			url : "Fund",
 			type : "post",
@@ -137,29 +139,33 @@
 		$("#goMainBtn").on("click",function(){
 			location.href="Main.members";
 		})
-		
-		$(".searchBtn").on("click",function(){
-	       if($(".searchWord").val()==""){
-	    	   alert("검색할 내용을 입력해주세요.");
-	       }
+		$("#writeBtn").on("click", function(){
+			location.href="write.board";
 		})
 		
-
-// 		$(".page-link").on("click",function(){
-// 			var paging = $(this).attr("paging");
-// 			$.ajax({
-// 					url:"List.board",		
-// 					type:"post",
-// 					data:{
-// 						currentPage:paging,
-// 						searchOption:$("#dropdownforSearch option").val(),
-// 						searchWord:$(".searchWord").val()
-// 						}
-// 			}).done(function(resp){
-// 				console.log(resp); 			    	
-// 			});
-// 		})
-
+// 		지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
+		$(".article").on("click", function(){
+			var boardNo = $(this).attr("boardNo");
+			var currentPage ="${currentPage }";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
+		})
+//-----------------------------------------------------------------------------		
+		$(".searchBtn").on("click",function(){		
+			var searchWord = $(".searchWord").val();
+			var searchOption = $("#dropdownforSearch option:selected").val();
+	       if(searchWord==""){
+	    	   alert("검색할 내용을 입력해주세요.");
+	       }else if(searchOption=="none"){
+	    	   alert("검색방법을 선택해주세요.");
+	       }else{
+	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
+	       }
+		})	
+//		창훈이 삭제버튼 부분--------------------------------------------------------------		
+		$("#deleteBtn").on("click",function(){
+			
+		})
+		
 	})
 </script>
 </head>
@@ -180,13 +186,17 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						</c:if>	
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
 						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -196,7 +206,8 @@
 			</ul>
 		</div>
 	</nav>
-
+	<hr style="margin:0px;">
+	
 	<div class="boardName">
 		<p>게시판</p>
 	</div>
@@ -205,42 +216,55 @@
 
 		<!--검색창-->
 		<div class="row d-flex justify-content-end">
-			<form action="List.board?currentPage=1" method=post id=searchBox>
 				<select name="searchOption" id="dropdownforSearch">
-					<option>검색방법</option>
-					<option name="searchOption" value="title">제목</option>
-					<option name="searchOption" value="contents">내용</option>
-					<option name="searchOption" value="all">제목+내용</option>
+					<option name="searchOption" class="searchOption" value="none">검색방법</option>
+					<option name="searchOption" class="searchOption" value="b_title">제목</option>
+					<option name="searchOption" class="searchOption" value="b_contents">내용</option>
+					<option name="searchOption" class="searchOption" value="b_title or b_contents">제목+내용</option>
 				</select> 
 				<input type="text" name="searchWord" class="searchWord" placeholder="검색할 내용 입력">
 				<button type="submit" class="btn searchBtn">검색</button>
-			</form>
 		</div>
 
 	</div>
 
 		<!--글목록-->
-		<div class="row listRow">
-			<c:forEach var="list" items="${board }">
-				<div class="col-lg-3 col-md-6 col-sm-12 article" boardNo="${list.boardNo}">
-					<div class="card list">
-						<img src=${list.filePath}> 
-						<div class="card-body">
-							<h5 class="card-title">${list.title }</h5>
-							<p class="card-text">${list.writer }</p>
-							<div class="progress">
-								<div id="card1" class="progress-bar" role="progressbar"
-									aria-valuenow="${percentage }" aria-valuemin="0"
-									aria-valuemax="100"></div>
+		<c:choose>
+			<c:when test="${totalRecordCount<1}">
+				<div class="row noneListRow"><p>검색 결과가 없습니다.</p></div>
+			</c:when>
+			<c:otherwise>
+				<form action="BoardWriteDelete.manager">
+					<div class="row listRow">
+						<c:forEach var="list" items="${board }">
+							<div class="col-lg-3 col-md-6 col-sm-12">
+							<c:if test="${sessionScope.admin!=null}">		 
+								<div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
+							</c:if> 
+								<div class="card list">
+									<img src="${list.newFilePath}"> 
+									<div class="card-body article" boardNo="${list.boardNo}">
+										<h5 class="card-title">${list.title }</h5>
+										<p class="card-text">${list.writer }</p>
+										<div class="progress">
+											<div id="card1" class="progress-bar" role="progressbar"
+												aria-valuenow="${percentage }" aria-valuemin="0"
+												aria-valuemax="100"></div>
+										</div>
+										<div class="amount">
+											<small class="text-muted amount">${list.amount }</small>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="amount">
-								<small class="text-muted amount">${list.amount }</small>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
-				</div>
-			</c:forEach>
-		</div>
+				</form>
+			</c:otherwise>	
+		</c:choose>
+		
+		
+		
 	
 
 	<!--페이지네비게이터 -->
@@ -257,9 +281,16 @@
 	<div class="row p-0 m-0" id="bottom">
 		<div class="col-12 bottonBtns d-flex justify-content-center">
 			<button type="button" class="btn" id="goMainBtn">메인으로</button>
+			<c:if test="${sessionScope.admin==null}">
 			<button type="button" class="btn" id="writeBtn">글쓰기</button>
+			</c:if>
+			<c:if test="${sessionScope.admin!=null}">
+			<button type="submit" class="btn" id="deleteBtn">삭제</button>
+			</c:if>
 		</div>
 	</div>
+	</form>
+	
 	
 	<div id="footer">
 		<div id="f_logo_wrap">
@@ -276,20 +307,7 @@
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
-	<script>
-		$("#goMainBtn").on("click", function(){
-			location.href="Main.members";
-		})
-	
-		$("#writeBtn").on("click", function(){
-			location.href="write.board";
-		})
+
 		
-		$(".article").on("click", function(){
-			var boardNo = $(this).attr("boardNo");
-			location.href="Read.board?boardNo="+boardNo+"&commentPage=1";
-		})
-	</script>
 </body>
 </html>
