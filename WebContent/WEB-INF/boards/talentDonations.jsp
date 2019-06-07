@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,48 +15,47 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
        
 <link rel="stylesheet" href="nav_footer.css">
 <style>
-	#wrapper *{
-		text-align: center;
-		}
-	.title{
-		font-family: "Do Hyeon";
-		font-size: 50px;
-		color: darkslategray;
-		margin-top: 200px;
-		margin-bottom: 50px;
-	}
-	.contents{
-		font-family: "Nanum Gothic";
-		font-size: 18px;
-		color: gray;
-		margin: auto;
-	}
-	.btnArea{
-		text-align: center;
-		margin: auto;
-	}
-	#goMainBtn {
-		background-color: #1ebdd8;
-		border-color: #1ebdd8;
-		color: #FFF;	
-		margin-top: 30px;
-	}
-	#goMainBtn:hover {
-		border-color: #28a39f;
-		background-color: #28a39f;
-		color: #FFF;
-	}
-	#footer{
-		position: absolute;
-		bottom: 0;
-	}
+   #wrapper *{
+      text-align: center;
+      }
+   #wrapper{
+      margin-bottom: 300px;
+   }
+   .title{
+      font-family: "Do Hyeon";
+      font-size: 50px;
+      color: darkslategray;
+      margin-top: 200px;
+      margin-bottom: 50px;
+   }
+   .contents{
+      font-family: "Nanum Gothic";
+      font-size: 18px;
+      color: gray;
+      margin: auto;
+   }
+   .btnArea{
+      text-align: center;
+      margin: auto;
+   }
+   #goMainBtn {
+      background-color: #1ebdd8;
+      border-color: #1ebdd8;
+      color: #FFF;   
+      margin-top: 30px;
+   }
+   #goMainBtn:hover {
+      border-color: #28a39f;
+      background-color: #28a39f;
+      color: #FFF;
+   }
 </style>
 <script>
-	$(function(){
-		$("#goMainBtn").on("click",function(){
-			location.href="Main.members";
-		})
-	})
+   $(function(){
+      $("#goMainBtn").on("click",function(){
+         location.href="Main.members";
+      })
+   })
 </script>
 </head>
 <body>
