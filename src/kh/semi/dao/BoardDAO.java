@@ -17,7 +17,7 @@ import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
 	static int recordCountPerPage = 10;
-	static int boardRecordCountPerPage = 10;
+	static int boardRecordCountPerPage = 8;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 
@@ -27,22 +27,6 @@ public class BoardDAO {
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
-	}
-
-	public int insertTitleImg(TitleImgDTO dto) throws Exception {
-		String sql = "insert into title_img values(t_b_no_seq.nextval, ?, ?, ?, ?)";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setString(1, dto.getFileName());
-			pstat.setString(2, dto.getOriFileName());
-			pstat.setString(3, dto.getFilePath());
-			pstat.setLong(4, dto.getFileSize());
-			int result = pstat.executeUpdate();
-			con.commit();
-			return result;
-		}
 	}
 
 	// read 페이지에서 필요함
@@ -100,26 +84,40 @@ public class BoardDAO {
 			return list;
 		}
 	}
-	public int insertBoard(BoardDTO dto)throws Exception{
-		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,default,default,default,default)";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setString(1,dto.getTitle());
-			pstat.setString(2,dto.getEmail());
-			pstat.setString(3,dto.getWriter());
-			pstat.setInt(4,dto.getAmount());
-			pstat.setString(5,dto.getBank());
-			pstat.setString(6,dto.getAccount());
-			pstat.setTimestamp(7, dto.getDueDate());
-			pstat.setString(8, dto.getContents());
-			System.out.println(dto.getTitle()+":"+dto.getEmail()+":"+dto.getWriter()+":"+dto.getAmount()+":"+dto.getBank()+":"+dto.getAccount()+":"+dto.getDueDate()+":"+dto.getContents());
-			int result = pstat.executeUpdate();
-			con.commit();
-			return result;
-		}
-	}
+	   public int insertBoard(BoardDTO dto, TitleImgDTO tdto)throws Exception{
+		      String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,default,default,default,default)";
+		      String sql2 = "insert into title_img values(b_no_seq.currval, ?, ?, ?, ?)";
+		      try(
+		            Connection con = this.getConnection();
+		            PreparedStatement pstat = con.prepareStatement(sql);
+		            PreparedStatement pstat2 = con.prepareStatement(sql2);
+		            ){
+		         // board 테이블에 insert!!
+		         pstat.setString(1,dto.getTitle());
+		         pstat.setString(2,dto.getEmail());
+		         pstat.setString(3,dto.getWriter());
+		         pstat.setInt(4,dto.getAmount());
+		         pstat.setString(5,dto.getBank());
+		         pstat.setString(6,dto.getAccount());
+		         pstat.setTimestamp(7, dto.getDueDate());
+		         pstat.setString(8, dto.getContents());
+		         int result = pstat.executeUpdate();
+		         
+		         // title_img 테이블에 insert!!
+		         pstat2.setString(1, tdto.getFileName());
+		         pstat2.setString(2, tdto.getOriFileName());
+		         pstat2.setString(3, tdto.getFilePath());
+		         pstat2.setLong(4, tdto.getFileSize());
+		         int result2 = pstat2.executeUpdate();
+		         
+		         con.commit();
+		         
+		         if(result>0 && result2>0) {
+		            return 1;
+		         }
+		         return 0;
+		      }
+		   }
 
 	private PreparedStatement pstatForSelectOneArticle(Connection con, int boardNo)throws Exception{
 		String sql = "select * from board where b_no=?";
@@ -203,8 +201,8 @@ public class BoardDAO {
 	}
 	
 	public List<BoardListDTO> selectByPage(int currentPage) throws Exception{
-		int endNum = currentPage *recordCountPerPage;
-		int startNum = endNum - (recordCountPerPage-1);
+		int endNum = currentPage *boardRecordCountPerPage;
+		int startNum = endNum - (boardRecordCountPerPage-1);
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement ps = this.psForSelectByPage(con, startNum, endNum);
@@ -250,8 +248,8 @@ public class BoardDAO {
 	}
 	
 	public List<BoardListDTO> searchList(int currentPage, String searchOption, String searchWord) throws Exception{		
-		int endNum = currentPage *recordCountPerPage;
-		int startNum = endNum - (recordCountPerPage-1);
+		int endNum = currentPage *boardRecordCountPerPage;
+		int startNum = endNum - (boardRecordCountPerPage-1);
 			
 		try(
 				Connection con = this.getConnection();
