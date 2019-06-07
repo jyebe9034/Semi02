@@ -17,7 +17,7 @@ import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
 	static int recordCountPerPage = 10;
-	static int boardRecordCountPerPage = 10;
+	static int boardRecordCountPerPage = 8;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 
@@ -203,8 +203,8 @@ public class BoardDAO {
 	}
 	
 	public List<BoardListDTO> selectByPage(int currentPage) throws Exception{
-		int endNum = currentPage *recordCountPerPage;
-		int startNum = endNum - (recordCountPerPage-1);
+		int endNum = currentPage *boardRecordCountPerPage;
+		int startNum = endNum - (boardRecordCountPerPage-1);
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement ps = this.psForSelectByPage(con, startNum, endNum);
@@ -250,8 +250,8 @@ public class BoardDAO {
 	}
 	
 	public List<BoardListDTO> searchList(int currentPage, String searchOption, String searchWord) throws Exception{		
-		int endNum = currentPage *recordCountPerPage;
-		int startNum = endNum - (recordCountPerPage-1);
+		int endNum = currentPage *boardRecordCountPerPage;
+		int startNum = endNum - (boardRecordCountPerPage-1);
 			
 		try(
 				Connection con = this.getConnection();

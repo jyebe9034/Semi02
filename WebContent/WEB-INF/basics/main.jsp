@@ -126,7 +126,6 @@
     background-color: #2d3f53;
     align-items: center;
     position: relative;
-    margin-top: 30px;
 }
 #f_logo{
 	color: #98ddde;
@@ -334,11 +333,13 @@
 			</c:choose>
 		</div>
 	</div>
+
 	<div class="jumbotron" style="font-family:Do Hyeon">
 		<h1 class="display-5">2019년 도움닿기 후원 현황</h1>
 		<h2 class="display-4">${totalAmount }원</h2>
 		<h2 class="display-4">${countDonors }명</h2>
 	</div>
+
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members"
