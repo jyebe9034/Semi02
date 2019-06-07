@@ -52,8 +52,7 @@ public class MembersController extends HttpServlet {
 			date1.set(Calendar.MINUTE, 0);
 			date1.set(Calendar.SECOND, 0);
 			date1.set(Calendar.MILLISECOND, 0);
-			timer1.schedule(visiterCount,1000,1000*10);//60초마다 저장
-			System.out.println("10초마다");
+			timer1.schedule(visiterCount,1000,1000*10);//10초마다 저장
 
 		}
 
@@ -64,7 +63,7 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-
+		
 		System.out.println(cmd);
 
 		if (cmd.equals("/First.members")) {
@@ -110,6 +109,8 @@ public class MembersController extends HttpServlet {
 					String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 //					String result = str.replaceAll("D.+?3.+?","");
 //					String result = str.replaceAll("D.+?3.+?", "");
+					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
+//					String result = str.replaceAll("D.+?4.+?", "");
 //					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
@@ -148,6 +149,7 @@ public class MembersController extends HttpServlet {
 			String email = request.getParameter("email");
 			try {
 				int ranNum = dao.sendMail(email);
+				System.out.println(ranNum);
 				printWriter.print(ranNum);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -304,6 +306,7 @@ public class MembersController extends HttpServlet {
 				e.printStackTrace();
 				response.sendRedirect("error.html");
 			}
+
 		}else if(cmd.equals("/myPage.members")) {
 
 			String email = (String)request.getSession().getAttribute("loginEmail");

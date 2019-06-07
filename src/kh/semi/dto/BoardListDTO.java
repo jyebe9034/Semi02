@@ -15,12 +15,12 @@ public class BoardListDTO {
 	private String writeDate;	
 	private int recommend;
 	private int sumAmount;
-	private int percentage;
 	/*title_img*/
 	private String fileName;
 	private String filePath;
-	private String newFilePath;
-	//총 18개
+	private String newFilePath;	
+	private int percentage; //추가됐어요
+	//총 19개
 	
 	public BoardListDTO() {
 		super();

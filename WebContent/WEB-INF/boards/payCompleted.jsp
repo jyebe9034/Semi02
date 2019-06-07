@@ -52,7 +52,7 @@
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-light">
+		<nav class="navbar navbar-expand-md navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
@@ -71,7 +71,12 @@
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						</c:if>	
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>

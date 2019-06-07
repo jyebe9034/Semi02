@@ -546,5 +546,6 @@ public class BoardDAO {
 		return pageNavi;
 	}
 
+	
 }
 
