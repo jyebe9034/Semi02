@@ -42,16 +42,8 @@ body{
 	color: #FFF;
 }
 
-.carousel {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
-
 .img_carousel {
 	max-height: 700px;
-	min-height: 300px;
-	object-fit: cover;
 }
 
 .card {
@@ -155,15 +147,15 @@ body{
 		</ol>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="photo_image/bestgift.jpg"
+				<img src="bestgift.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="photo_image/hands_together.jpg"
+				<img src="hands_together.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="photo_image/girls_heart_2.jpg"
+				<img src="girls_heart_2.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 		</div>
@@ -224,9 +216,9 @@ body{
 			<c:otherwise>
 				<c:forEach var="i" begin="0" end="${listSize-1}">
 					<div class="card col-lg-4 col-md-12 col-sm-12">
-						<div class="imgBox">
-							<img src="${imgSrc[i] }" class="imgTag" width="100%">
-						</div>
+						<div class="imgBox" style="height:40%">
+                     <img src="${imgSrc[i] }" class="imgTag" width="100%" style="max-height:100%">
+                 		 </div>
 						<div class="card-body">
 							<h6 class="card-title">
 								<span>${list[i].title}</span>

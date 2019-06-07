@@ -12,15 +12,14 @@ rel="stylesheet">
 <link rel="stylesheet"
 href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-       
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script   src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="nav_footer.css">
 <style>
    #wrapper *{
       text-align: center;
       }
-   #wrapper{
-      margin-bottom: 300px;
-   }
+      
    .title{
       font-family: "Do Hyeon";
       font-size: 50px;
@@ -37,6 +36,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
    .btnArea{
       text-align: center;
       margin: auto;
+      margin-bottom: 200px;
    }
    #goMainBtn {
       background-color: #1ebdd8;
@@ -59,7 +59,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-light">
+	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>

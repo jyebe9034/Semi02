@@ -9,8 +9,10 @@
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script   src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="nav_footer.css">
+
 <style>
    .progress {
       width: 200px;
@@ -23,7 +25,7 @@
    }
    .boardName {
       text-align: center;
-      margin-bottom: 50px;
+      margin: 50px;
       font-family: "Do Hyeon";
       font-size: 50px;
       color: darkslategray;
@@ -55,8 +57,6 @@
 		height:40px;
         border-radius:15px;
         margin-left: 3px;
-/* 		position: relative; */
-/* 		bottom: 3px; */
 	}
 	
 	.searchBtn:hover {
@@ -64,32 +64,47 @@
 		background-color: #28a39f;
 		color: #FFF;
 	}
-   .noneListRow{
+   .noneListRow div{
+      margin: auto;
       text-align: center;
+      font-family: "Do Hyeon";
+      font-size: 20px;
    }
    
-   .listBox {
-      margin-bottom: 50px;
+   .searchBox {
+    margin-bottom: 50px;
+    width: 100%;
+	margin-right: 190px;
    }
    .listRow{
-         width: 80%;
+         width: 90%;
          margin: auto;
    }
    
    .list {
       width: 250px;
-      height: 350px;
-      margin: 10px auto;
+      height: 370px;
+      margin: 30px auto;
+      border : none; 
    }
-   
+   .card-title{
+       height: 50px;
+   }
+   .article .writer {
+   color : grey;
+   margin-top: -10px;
+   }
    .list img {
       width: 240px;
       height: 200px;
       margin: auto;
+      border-radius:15px;
+      border : 1px solid lightgrey; 
    }
    
    .progress {
       width: 100%;
+      margin-top: -10px;
    }
    
    .percentage{
@@ -103,10 +118,12 @@
      
    }
    
-   .numBox li a {
-      color: lightslategray;
+   .page-item a {
+      color: #1ebdd8;
    }
-   
+   .page-item a:hover{
+      color: #1ebdd8;
+   }
    .bottonBtns {
       margin-bottom: 100px;
    }
@@ -138,7 +155,6 @@
    .article{
       cursor: pointer; 
    }
-   
    .check{
       margin-left:auto;
    }
@@ -180,12 +196,20 @@
 				location.href="BoardWriteDelete.manager";	
 		})
 		
+	//------------추가--------------------
+				$(".pageNumber").each(function(item){
+				if(${currentPage} == $(this).text()){
+					$(this).css("background-color", "#1ebdd8");
+					$(this).css("color", "white");
+				}
+			})
+		
 	})
 </script>
 </head>
 <body>
 	<!--상단 메뉴바-->
-		<nav class="navbar navbar-expand-md navbar-light">
+		<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
@@ -226,7 +250,7 @@
 		<p>게시판</p>
 	</div>
 
-   <div id="wrapper" class="container listBox">
+   <div id="wrapper" class="container searchBox">
 
       <!--검색창-->
       <div class="row d-flex justify-content-end">
@@ -244,21 +268,26 @@
       <!--글목록-->
       <c:choose>
          <c:when test="${totalRecordCount<1}">
-            <div class="row noneListRow"><p>검색 결과가 없습니다.</p></div>
+            <div class="row noneListRow">
+              <div class="col-12">
+              	<p>검색어 : ${searchWord }</p> 
+          	 	 <p>검색 결과가 없습니다.</p>
+          	  </div>
+            </div>
          </c:when>
          <c:otherwise>
             <form action="BoardWriteDelete.manager">
                <div class="row listRow">
                   <c:forEach var="list" items="${board }" varStatus="status">
-                     <div class="col-lg-3 col-md-6 col-sm-12">
+                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                      <c:if test="${sessionScope.admin!=null}">       
                         <div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
                      </c:if> 
                         <div class="card list">
                            <img src="${list.newFilePath}"> 
                            <div class="card-body article" boardNo="${list.boardNo}">
-                              <h5 class="card-title">${list.title }</h5>
-                              <p class="card-text">${list.writer }</p>
+                              <h5 class="card-title title">${list.title }</h5>
+                              <p class="card-text writer">${list.writer }</p>
                               <div class="progress">
  									<div class="progress-bar" role="progressbar" 
  									style="width: ${list.percentage}%;" aria-valuemin="0" 
@@ -276,7 +305,6 @@
                      </div>
                   </c:forEach>
                </div>
-            </form>
          </c:otherwise>   
       </c:choose>
       
@@ -306,19 +334,21 @@
    
    
    <div id="footer">
-      <div id="f_logo_wrap">
-         <a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-      </div>
-      <div id="f_info_wrap">
-         <div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
-      </div>
-      <div id="f_sns">
-         <img id="kakao" class="sns" src="photo_image/ka.png">
-         <img class="sns" src="photo_image/fa.png">
-         <img id="insta" class="sns" src="photo_image/kk.png">
-         <a href="checkLogin.memebrs"><div id="suggest">후원 신청</div></a>
-      </div>
-      <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
-   </div>
+		<div id="f_logo_wrap">
+			<a id="f_logo" href="Main.members"
+				style="font-family: Cute Font"><h1>도움닿기</h1></a>
+		</div>
+		<div id="f_info_wrap">
+			<div id="f_info">
+				행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
+			</div>
+		</div>
+		<div id="f_sns">
+			<img id="kakao" class="sns" src="photo_image/ka.png"> <img
+				class="sns" src="photo_image/fa.png"> <img id="insta"
+				class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
+		</div>
+		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+	</div>
 </body>
 </html>

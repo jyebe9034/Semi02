@@ -234,8 +234,8 @@ public class BoardController extends HttpServlet {
 				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
 
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
-				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-				String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
+							String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				//String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
@@ -285,9 +285,10 @@ public class BoardController extends HttpServlet {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
 						result = dao.searchList(currentPage, searchOption, searchWord);
+						request.setAttribute("searchWord", searchWord);
 					}
 
-					String[] sumAmountArr = new String[8];
+					String[] sumAmountArr = new String[12];
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
 						//String folder = path.replaceAll("D.+?3.+?",""); //지혜껀가

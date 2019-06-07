@@ -103,7 +103,7 @@ ul {
 </style>
 </head>
 <body>
-		<nav class="navbar navbar-expand-md navbar-light">
+		<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
@@ -290,7 +290,7 @@ ul {
 
 		document.getElementById("inputPassword").oninput = function() {
 			var inputPw = document.getElementById("inputPassword").value;
-			var regex = /^[A-Za-z0-9!@#$%^&*()_-]{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+			var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
 			var result = regex.exec(inputPw);
 			if (result == null) {
 				document.getElementById("pw_form").innerHTML = "8자 이상 영문,숫자,특수문자를 사용하세요.";

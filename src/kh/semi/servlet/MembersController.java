@@ -105,8 +105,8 @@ public class MembersController extends HttpServlet {
 //					String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 //					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-					String result = str.replaceAll("D.+?4.+?", "");
-//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
+					//String result = str.replaceAll("D.+?4.+?", "");
+					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
 				

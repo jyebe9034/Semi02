@@ -17,13 +17,13 @@ import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
 	static int recordCountPerPage = 10;
-	static int boardRecordCountPerPage = 8;
+	static int boardRecordCountPerPage = 12; //수정됨
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String url = "jdbc:oracle:thin:@localhost:1522:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
@@ -288,7 +288,7 @@ public class BoardDAO {
 			
 			int recordTotalCount = totalRecordCount;
 			
-			int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
+			int recordCountPerPage = 12; //12개의 글이 보이게 한다.	 //수정됨
 			int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
 			  
 			int pageTotalCount = recordTotalCount / recordCountPerPage;
@@ -309,10 +309,7 @@ public class BoardDAO {
 			if(endNavi > pageTotalCount) {
 				endNavi = pageTotalCount;
 			}
-			
-			System.out.println("현재 위치 : " + currentPage);
-			System.out.println("네비 시작 : " + startNavi);
-			System.out.println("네비 끝 : " + endNavi);
+
 			
 			boolean needPrev = true;
 			boolean needNext = true;
@@ -335,7 +332,7 @@ public class BoardDAO {
 						"						</a></li>");		
 			}
 			for(int i = startNavi; i <= endNavi; i++) {
-				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"\">" + i + "</a></li>");
+				sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"\">" + i + "</a></li>");
 			}
 			if(needNext) {
 				int nextEndNavi = endNavi+1;
