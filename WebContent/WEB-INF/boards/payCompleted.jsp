@@ -11,7 +11,7 @@
 <!-- 	src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
 <script type="text/javascript"
 	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<title>테스트 페이지</title>
+<title>도움닿기 - 결제 내역</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet"
@@ -66,14 +66,13 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li mr-3"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
-						<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
+					<c:when test="${sessionScope.loginEmail != null}">
+						<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -83,12 +82,13 @@
 			</ul>
 		</div>
 	</nav>
+	<hr style="margin:0px;">
 	<div class="wrapper">
 		<div class="title">
 			<h3>후원 내역</h3>
 		</div>
 		<div class="form-group">
-			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }">${board.title }</a></p>
+			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1">${board.title }</a></p>
 		</div>
 		<div class="form-group">
 			<p>후원자 : ${payment.name }</p>
@@ -103,8 +103,8 @@
 			<p>후원하신 금액 : ${payment.amount }원</p>
 		</div>
 		<div id="divBtn">
-			<a id="btnMyPage" class="btn btn-primary" href="Mypage.members">마이페이지</a>
-			<a id="btnBoard" class="btn btn-primary" href="Board.board">후원게시판</a>
+			<a id="btnMyPage" class="btn btn-primary" href="myPage.members?currentPage=1&currentPage2=1">마이페이지</a>
+			<a id="btnBoard" class="btn btn-primary" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원게시판</a>
 			<a id="btnMain" class="btn btn-primary" href="Main.members">메인으로</a>
 		</div>
 	</div>
@@ -119,7 +119,7 @@
 			<img id="kakao" class="sns" src="photo_image/ka.png">
 			<img class="sns" src="photo_image/fa.png">
 			<img id="insta" class="sns" src="photo_image/kk.png">
-			<a href="write.board"><div id="suggest">후원 신청</div></a>
+			<a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>

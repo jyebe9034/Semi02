@@ -6,23 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>도움닿기</title>
-<link
-	href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Jeju+Gothic|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-<!-- <link rel="stylesheet" href="nav_footer.css"> -->
+<link rel="stylesheet" href="nav_footer.css">
 <style>
-
+body{
+	min-width:375px;
+}
 .progress {
 	width: 200px;
 }
@@ -55,7 +49,8 @@
 }
 
 .img_carousel {
-	max-height: 730px;
+	max-height: 700px;
+	min-height: 300px;
 	object-fit: cover;
 }
 
@@ -74,6 +69,8 @@
 	font-family: "Jua";
 	text-align: center;
 	margin-top: 40px;
+	margin-bottom:0px;
+	padding:2rem 2rem;
 }
 .text {
 	vertical-align: middle;
@@ -101,93 +98,10 @@
  	padding: 10px; 
  	text-align:center; 
  	display:flex; 
+ 	justify-content:center;
 } 
 .forArrow{ 
 	line-height:110px;
-}
-/* --------------- */
-.nav-ul{
-	margin:auto;
-}
-.nav-link{
-	margin:10px 20px;
-	padding:0px;
-	font-family:"Nanum Gothic";
-	font-weight:bold;
-	text-align:right;
-}
-.logo{
- 	margin-left:15%;
-}
-
-#footer{
-    height: 200px;
-    width: 100%;
-    background-color: #2d3f53;
-    align-items: center;
-    position: relative;
-}
-#f_logo{
-	color: #98ddde;
-    text-decoration: none;
-}
-#f_logo_wrap{
-    position: absolute;
-    left: 15%;
-    top: 20%;
-}
-#f_info_wrap{
-	position: absolute;
-	right: 15%;
-	top: 20%;
-}
-#f_info{
-	color: gray;
-	text-align: right;
-	font-size: 13px;
-	float: left;
-	padding-top: 5px;
-	margin-right: 10px;
-}
-#suggest{
-	display: inline-block;
-	background-color: #fa7268;
-	border-radius: 10%;
-	color: white; 
-	width: 90px;
-	height: 45px;
-	text-decoration: none;
-	line-height: 45px;
-	float: right;
-	margin-left: 15px;
-	text-align: center;
-}
-#f_sns{
-	position: absolute;
-	right: 15%;
-	top: 47%;
-}
-.sns{
-	width: 30px;
-	height: 30px;
-	margin: 3px;
-}
-#kakao{
-	width: 40px;
-	height: 40px;
-}
-#insta{
-	width: 32px;
-	height: 32px;
-	margin-left: 8px;
-}
-#copyright{
-	color: gray;
-	position: absolute;
-	right: 15%;
-	top: 70%;
-	font-size: 13px;
-	margin-top: 5px;
 }
 
 </style>
@@ -212,14 +126,14 @@
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 
 				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null || navercontents.name != null || realcontents.email != null}">
+					<c:when test="${sessionScope.loginEmail != null}">
 						<c:if test="${sessionScope.admin==null}">
-							<li class="nav-item nav-li ml-3"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 						</c:if>
 						<c:if test="${sessionScope.admin!=null}">
 							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
 						</c:if>
-						<li class="nav-item nav-li ml-4"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -229,7 +143,7 @@
 			</ul>
 		</div>
 	</nav>
-	<hr style="margin:0px;">
+	
 	<!-- 캐러셀 -->
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-ride="carousel" data-interval="5000">
@@ -263,12 +177,12 @@
 			class="sr-only">Next</span>
 		</a>
 	</div>
-	<hr>
+	
 	<div class="guide" style="font-family:Do Hyeon"><h2>후원 안내</h2></div>
 	<div class="container">
 		<div class="row rowStep">
 			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
-				<div>
+				<div style="display:inline-block;">
 				<img src="photo_image/write2.png">
 				<p></p>
 				<h4>후원 게시판에서 후원 요청 글 작성</h4>
@@ -276,7 +190,7 @@
 			</div>
 			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
 				<div class="forArrow"><img src="photo_image/arrow.png" style="margin-right:20px;"></div>
-				<div>
+				<div style="display:inline-block;">
 				<img src="photo_image/board.png">
 				<p></p>
 				<h4>게시판에 글 등록</h4>
@@ -284,7 +198,7 @@
 			</div>
 			<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
 				<div class="forArrow"><img src="photo_image/arrow.png" style="margin-right:20px;"></div>
-				<div>
+				<div style="display:inline-block;">
 				<img src="photo_image/donate.png">
 				<p></p>
 				<h4>후원자분들의 기부금 결제</h4>
@@ -302,7 +216,7 @@
 	</div>
 
 	<hr>
-	<div class="aboveCard" style="font-family:Do Hyeon"><h2>여러분의 작은 도움이 그들에게 큰 힘이 됩니다.</h2></div>
+	<div class="aboveCard" style="font-family:Do Hyeon;"><h2>여러분의 작은 도움이 그들에게 큰 힘이 됩니다.</h2></div>
 	<div class="container container_card">
 		<div class="row rowcard">
 			<c:choose>
@@ -310,8 +224,8 @@
 			<c:otherwise>
 				<c:forEach var="i" begin="0" end="${listSize-1}">
 					<div class="card col-lg-4 col-md-12 col-sm-12">
-						<div class="imgBox">
-							<img src="${imgSrc[i] }" class="imgTag" width="100%">
+						<div class="imgBox" style="height:40%;">
+							<img src="${imgSrc[i] }" class="imgTag" width="100%" style="max-height:100%">
 						</div>
 						<div class="card-body">
 							<h6 class="card-title">
@@ -339,11 +253,11 @@
 		<h2 class="display-4">${totalAmount }원</h2>
 		<h2 class="display-4">${countDonors }명</h2>
 	</div>
-
+	
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+				style="font-family: Cute Font"><h1>도움닿기</h1></a>
 		</div>
 		<div id="f_info_wrap">
 			<div id="f_info">
@@ -353,8 +267,7 @@
 		<div id="f_sns">
 			<img id="kakao" class="sns" src="photo_image/ka.png"> <img
 				class="sns" src="photo_image/fa.png"> <img id="insta"
-				class="sns" src="photo_image/kk.png"> <a href="write.board"><div
-					id="suggest">후원 신청</div></a>
+				class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>

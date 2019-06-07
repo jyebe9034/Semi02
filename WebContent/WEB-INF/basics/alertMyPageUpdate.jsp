@@ -12,13 +12,11 @@
 	<script>
 	
 	if(${result}>0){
-		
-		alert("정보가 수정되었습니다. 다시 로그인 해주세요.");
-		location.href="myPageUpdateComplete.members"
+		alert("정보가 수정되었습니다.");
+		location.href="myPage.members?currentPage=1&currentPage2=1";
 	}else{
-		
 		alert("정보 수정에 실패하였습니다.");
-		location.href="myPageUpdateComplete.members"
+		location.href="myPage.members?currentPage=1&currentPage2=1";
 	}
 	
 	
