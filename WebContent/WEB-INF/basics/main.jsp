@@ -41,24 +41,17 @@ body{
 	background-color: #28a39f;
 	color: #FFF;
 }
-
-.carousel {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
-
 .img_carousel {
-	max-height: 700px;
-	min-height: 300px;
-	object-fit: cover;
-}
-
+   max-height: 700px;
+ }
 .card {
 	border-radius: 10px;
-	min-width: 300px;
+/* 	min-width: 300px; */
 }
-
+.rowcard{
+	margin:auto;
+	width:80%;
+}
 .container_card {
 	margin: auto;
 }
@@ -102,6 +95,15 @@ body{
 } 
 .forArrow{ 
 	line-height:110px;
+}
+.percentage{
+    float : left;
+    position: static;
+}
+.amount {
+    position: relative;
+    right : 1px;
+    top : 2px;   
 }
 
 </style>
@@ -155,15 +157,15 @@ body{
 		</ol>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="photo_image/bestgift.jpg"
+				<img src="bestgift.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="photo_image/hands_together.jpg"
+				<img src="hands_together.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="photo_image/girls_heart_2.jpg"
+				<img src="girls_heart_2.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 		</div>
@@ -217,14 +219,15 @@ body{
 
 	<hr>
 	<div class="aboveCard" style="font-family:Do Hyeon;"><h2>여러분의 작은 도움이 그들에게 큰 힘이 됩니다.</h2></div>
-	<div class="container container_card">
+
 		<div class="row rowcard">
+<!-- 			<div class="card-deck"> -->
 			<c:choose>
 			<c:when test="${listSize == 0 }"></c:when>
 			<c:otherwise>
 				<c:forEach var="i" begin="0" end="${listSize-1}">
-					<div class="card col-lg-4 col-md-12 col-sm-12">
-						<div class="imgBox" style="height:40%">
+					<div class="card col-lg-3 col-md-6 col-sm-12">
+						<div class="imgBox" style="height:250px">
 							<img src="${imgSrc[i] }" class="imgTag" width="100%" style="max-height:100%">
 						</div>
 						<div class="card-body">
@@ -233,20 +236,26 @@ body{
 							</h6>
 							<hr>
 							<p class="card-text" align="left">
-								모금 마감일 <br> <span>${duedate[i]}</span><br> 모금현황<br>
-								<span>${percentage[i]}%</span>
+								모금 마감일 &nbsp; &nbsp; <span>${duedate[i]}</span><p></p>
 							<div class="progress">
 								<div class="progress-bar" role="progressbar"
 									aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[i]}%"></div>
 							</div>
+							  <div class="percentage">
+                                 <small class="text-muted amount">${percentage[i]}%</small>
+                              </div>
+                              <div class="amount d-flex justify-content-end">
+                                 <small class="text-muted amount">${sumArr[i]}원</small>
+                              </div>
 							<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&currentPage=1&commentPage=1">후원하기</a></div>
 						</div>
 					</div>
 				</c:forEach>
 			</c:otherwise>
 			</c:choose>
+<!-- 			</div> -->
 		</div>
-	</div>
+	
 
 	<div class="jumbotron" style="font-family:Do Hyeon">
 		<h1 class="display-5">2019년 도움닿기 후원 현황</h1>

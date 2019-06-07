@@ -206,7 +206,7 @@ a:hover {
    </style>
 </head>
 <body>
-   <nav class="navbar navbar-expand-md navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light">
       <div class="logo">
          <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
       </div>
@@ -222,8 +222,22 @@ a:hover {
             <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
             <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
             <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
-            <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-            <li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+
+            <c:choose>
+               <c:when test="${sessionScope.loginEmail != null}">
+                  <c:if test="${sessionScope.admin==null}">
+                     <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+                  </c:if>   
+                  <c:if test="${sessionScope.admin!=null}">
+                     <li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+                  </c:if>
+                  <li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+               </c:when>
+               <c:otherwise>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+               </c:otherwise>
+            </c:choose>
 
          </ul>
       </div>
@@ -347,7 +361,7 @@ a:hover {
          <div class="row contents">
             <c:forEach var="myDonateContents" items="${myDonateContents }">
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents.boardTitle }</div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents.boardNo }&currentPage=1&commentPage=1">${myDonateContents.boardTitle }</a></div>
                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.paymentDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.boardWriter }</div>
@@ -382,7 +396,7 @@ a:hover {
          <div class="row contents">
             <c:forEach var="myDonateContents2" items="${myDonateContents2 }">
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">${myDonateContents2.title }</div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents2.boardNo }&currentPage=1&commentPage=1">${myDonateContents2.title }</a></div>
                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.writeDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.viewCount }</div>

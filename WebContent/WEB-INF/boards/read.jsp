@@ -85,7 +85,7 @@
 .commentsBox>div{
 	border: 0.5px solid #00000030;
 }
-.deleteCommentBtn, .modifyCommentBtn, .modifyCompleteBtn{
+.deleteCommentBtn, .modifyCommentBtn, .modifyCompleteBtn, .modifyCancelBtn{
 	cursor: pointer;
 }
 .page-item{
@@ -127,7 +127,7 @@
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-light">
+		<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
@@ -142,11 +142,16 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption=allPages&&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members">마이 페이지</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						</c:if>	
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 					</c:when>
 					<c:otherwise>
@@ -179,7 +184,7 @@
 			</div>
 			<div class="btnBox col-12">
 				<button type="button" class="btn btn-primary donateBtn">후원하기</button>
-				<input type="button" class="btn btn-primary recommendBtn" value="추천하기">
+				<button type="button" class="btn btn-primary recommendBtn">추천하기</button>
 				<span class="recommend">${result.recommend }</span>
 			</div>
 			<div class="contents col-12 m-3 p-3">${result.contents }</div>
@@ -212,6 +217,7 @@
 	    					<div class="col-1">
 	    						<span class="modifyCommentBtn" writeDate="${com.writeDate }">✎</span>
 	    						<span class="modifyCompleteBtn" writeDate="${com.writeDate }"></span>
+	    						<span class="modifyCancelBtn" writeDate="${com.writeDate }"></span>
 	    						<span class="deleteCommentBtn" writeDate="${com.writeDate }">✗</span> <!-- ✕ ✖ × ✗ -->
 	    					</div>
 	    				</c:when>
@@ -271,7 +277,7 @@
 				<form action="PaymentForm.board" id="payment">
 					<input type="hidden" id="boardNo" name="boardNo" value=${result.boardNo }>
 					<button type="button" class="btn btn-primary donateBtn">후원하기</button>
-					<input type="button" class="btn btn-primary recommendBtn" value="추천하기">
+					<button type="button" class="btn btn-primary recommendBtn">추천하기</button>
 					<span class="recommend">${result.recommend }</span>
 				</form>
 			</div>
@@ -307,7 +313,14 @@
 					$(this).css("color", "white");
 				}
 			})
-		})
+			var email = "${result.email}";
+			var loginEmail = "${sessionScope.loginEmail}";
+			if(loginEmail == email){
+				$(".donateBtn").prop("disabled", true);
+				$(".recommendBtn").prop("disabled", true);
+			}
+		});
+		
 		$(".donateBtn").on("click", function(){
 			if(${sessionScope.loginEmail == null}){
 				alert("로그인 후 후원이 가능합니다.");
@@ -315,7 +328,7 @@
 			}else{
 				$("#payment").submit();
 			}
-		})
+		});
 
 		$(".recommendBtn").on("click", function(){
 			if(${sessionScope.loginEmail == null}){
@@ -403,13 +416,22 @@
 		$(".modifyCommentBtn").on("click", function(){
 			var writeDate = $(this).attr("writeDate");
 			var comment = $(this).parent().siblings(".comment");
-			var btn = $(this);
-			var modifyComplete = btn.siblings(".modifyCompleteBtn");
-			btn.text("");	// ✓✔
-			modifyComplete.text("✓");
+			var modifyBtn = $(this);
+			var modifyComplete = modifyBtn.siblings(".modifyCompleteBtn");
+			
+			var deleteBtn = modifyBtn.siblings(".deleteCommentBtn");
+			var cancelBtn = modifyBtn.siblings(".modifyCancelBtn");
+			
+			
+			modifyBtn.text("");
+			modifyComplete.text("✓");	// ✓✔
+			deleteBtn.text("");
+			cancelBtn.text("✗")	// ✕ ✖ × ✗
 			comment.attr("contenteditable", true);
 			comment.focus();
-			btn.siblings(".modifyCompleteBtn").on("click", function(){
+			comment.css("border", "0.5px solid #00000030");
+			
+			modifyComplete.on("click", function(){
 				$.ajax({
 					url: "ModifyComment.board",
 					type: "post",
@@ -419,11 +441,16 @@
 					}
 				}).done(function(){
 					comment.attr("contenteditable", false);
-					btn.text("✎");
+					comment.css("border", "none");
+					modifyBtn.text("✎");
 					modifyComplete.text("");
 				});
 				return;
 			});
+			
+			cancelBtn.on("click", function(){
+				location.reload();
+			})
 		})
 		
 		$(window).scroll(function() {

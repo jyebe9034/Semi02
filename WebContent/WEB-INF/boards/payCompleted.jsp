@@ -52,7 +52,7 @@
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-light">
+		<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
@@ -71,9 +71,13 @@
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
-						<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						<c:if test="${sessionScope.admin==null}">
+							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+						</c:if>	
+						<c:if test="${sessionScope.admin!=null}">
+							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+						</c:if>
 						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
@@ -89,7 +93,7 @@
 			<h3>후원 내역</h3>
 		</div>
 		<div class="form-group">
-			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }">${board.title }</a></p>
+			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1">${board.title }</a></p>
 		</div>
 		<div class="form-group">
 			<p>후원자 : ${payment.name }</p>
@@ -104,8 +108,8 @@
 			<p>후원하신 금액 : ${payment.amount }원</p>
 		</div>
 		<div id="divBtn">
-			<a id="btnMyPage" class="btn btn-primary" href="Mypage.members">마이페이지</a>
-			<a id="btnBoard" class="btn btn-primary" href="Board.board">후원게시판</a>
+			<a id="btnMyPage" class="btn btn-primary" href="myPage.members?currentPage=1&currentPage2=1">마이페이지</a>
+			<a id="btnBoard" class="btn btn-primary" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원게시판</a>
 			<a id="btnMain" class="btn btn-primary" href="Main.members">메인으로</a>
 		</div>
 	</div>

@@ -17,7 +17,7 @@ import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
 	static int recordCountPerPage = 10;
-	static int boardRecordCountPerPage = 8;
+	static int boardRecordCountPerPage = 12;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 
@@ -70,7 +70,7 @@ public class BoardDAO {
 				ResultSet rs = pstat.executeQuery();
 				){
 			List<BoardDTO> list = new ArrayList<>();
-			for(int i=0; i<3;i++) {
+			for(int i=0; i<4;i++) {
 				if(rs.next()) {
 					BoardDTO dto = new BoardDTO();
 					dto.setBoardNo(rs.getInt("b_no"));
@@ -84,40 +84,41 @@ public class BoardDAO {
 			return list;
 		}
 	}
-	   public int insertBoard(BoardDTO dto, TitleImgDTO tdto)throws Exception{
-		      String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,default,default,default,default)";
-		      String sql2 = "insert into title_img values(b_no_seq.currval, ?, ?, ?, ?)";
-		      try(
-		            Connection con = this.getConnection();
-		            PreparedStatement pstat = con.prepareStatement(sql);
-		            PreparedStatement pstat2 = con.prepareStatement(sql2);
-		            ){
-		         // board 테이블에 insert!!
-		         pstat.setString(1,dto.getTitle());
-		         pstat.setString(2,dto.getEmail());
-		         pstat.setString(3,dto.getWriter());
-		         pstat.setInt(4,dto.getAmount());
-		         pstat.setString(5,dto.getBank());
-		         pstat.setString(6,dto.getAccount());
-		         pstat.setTimestamp(7, dto.getDueDate());
-		         pstat.setString(8, dto.getContents());
-		         int result = pstat.executeUpdate();
-		         
-		         // title_img 테이블에 insert!!
-		         pstat2.setString(1, tdto.getFileName());
-		         pstat2.setString(2, tdto.getOriFileName());
-		         pstat2.setString(3, tdto.getFilePath());
-		         pstat2.setLong(4, tdto.getFileSize());
-		         int result2 = pstat2.executeUpdate();
-		         
-		         con.commit();
-		         
-		         if(result>0 && result2>0) {
-		            return 1;
-		         }
-		         return 0;
-		      }
-		   }
+
+	public int insertBoard(BoardDTO dto, TitleImgDTO tdto)throws Exception{
+		String sql = "insert into Board values(b_no_seq.nextval,?,?,?,?,?,?,?,?,default,default,default,default)";
+		String sql2 = "insert into title_img values(b_no_seq.currval, ?, ?, ?, ?)";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				PreparedStatement pstat2 = con.prepareStatement(sql2);
+				){
+			// board 테이블에 insert!!
+			pstat.setString(1,dto.getTitle());
+			pstat.setString(2,dto.getEmail());
+			pstat.setString(3,dto.getWriter());
+			pstat.setInt(4,dto.getAmount());
+			pstat.setString(5,dto.getBank());
+			pstat.setString(6,dto.getAccount());
+			pstat.setTimestamp(7, dto.getDueDate());
+			pstat.setString(8, dto.getContents());
+			int result = pstat.executeUpdate();
+			
+			// title_img 테이블에 insert!!
+			pstat2.setString(1, tdto.getFileName());
+			pstat2.setString(2, tdto.getOriFileName());
+			pstat2.setString(3, tdto.getFilePath());
+			pstat2.setLong(4, tdto.getFileSize());
+			int result2 = pstat2.executeUpdate();
+			
+			con.commit();
+			
+			if(result>0 && result2>0) {
+				return 1;
+			}
+			return 0;
+		}
+	}
 
 	private PreparedStatement pstatForSelectOneArticle(Connection con, int boardNo)throws Exception{
 		String sql = "select * from board where b_no=?";
@@ -287,7 +288,7 @@ public class BoardDAO {
 			
 			int recordTotalCount = totalRecordCount;
 			
-			int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
+			int recordCountPerPage = 12; //8개의 글이 보이게 한다.	
 			int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
 			  
 			int pageTotalCount = recordTotalCount / recordCountPerPage;
@@ -545,5 +546,6 @@ public class BoardDAO {
 		return pageNavi;
 	}
 
+	
 }
 

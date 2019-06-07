@@ -58,86 +58,30 @@ public class MemberDAO {
       return SHA;
    }
 
-
-   public MemberDTO getContents(String email) throws Exception {
-
-      String sql = "select * from members where m_email = ?";
-
-      try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-
-         pstat.setString(1, email);
-
-         try (ResultSet rs = pstat.executeQuery();) {
-
-            if (rs.next()) {
-
-               MemberDTO result = new MemberDTO();
-
-               String id = rs.getString("m_email");
-               String name = rs.getString("m_name");
-               String phone = rs.getString("m_phone");
-               String zipcode = rs.getString("m_zipcode");
-               String add1 = rs.getString("m_address1");
-               String add2 = rs.getString("m_address2");
-
-               result.setEmail(id);
-               result.setName(name);
-               result.setPhone(phone);
-               result.setZipCode(zipcode);
-               result.setAddress1(add1);
-               result.setAddress2(add2);
-
-               return result;
+      public MemberDTO getContents(String email) throws Exception {
+            String sql = "select * from members where m_email = ?";
+            try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+               pstat.setString(1, email);
+               try (ResultSet rs = pstat.executeQuery();) {
+                  if (rs.next()) {
+                     MemberDTO result = new MemberDTO();
+                     result.setEmail(rs.getString("m_email"));
+                     result.setPw(rs.getString("m_pw"));
+                     result.setName(rs.getString("m_name"));
+                     result.setPhone(rs.getString("m_phone"));
+                     result.setZipCode(rs.getString("m_zipcode"));
+                     result.setAddress1(rs.getString("m_address1"));
+                     result.setAddress2(rs.getString("m_address2"));
+                     return result;
+                  }
+                  return null;
+               }
             }
-
-            return null;
          }
-      }
-   }
-
-
-   public MemberDTO getContents(MemberDTO dto) throws Exception {
-
-      String sql = "select * from members where m_email = ?";
-
-      try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-
-         pstat.setString(1, dto.getEmail());
-
-         try (ResultSet rs = pstat.executeQuery();) {
-
-            if (rs.next()) {
-
-               MemberDTO result = new MemberDTO();
-
-               String id = rs.getString("m_email");
-               String name = rs.getString("m_name");
-               String phone = rs.getString("m_phone");
-               String zipcode = rs.getString("m_zipcode");
-               String add1 = rs.getString("m_address1");
-               String add2 = rs.getString("m_address2");
-
-               result.setEmail(id);
-               result.setName(name);
-               result.setPhone(phone);
-               result.setZipCode(zipcode);
-               result.setAddress1(add1);
-               result.setAddress2(add2);
-
-               return result;
-            }
-
-            return null;
-         }
-      }
-   }
 
    public int updateContents(MemberDTO param) throws Exception {
-
       String sql = "update members set M_phone=?,m_zipcode=?,m_address1=?,m_address2=?,m_pw=? where M_EMAIL=?";
-
       try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-
          pstat.setString(1, param.getPhone());
          pstat.setString(2, param.getZipCode());
          pstat.setString(3, param.getAddress1());
@@ -153,21 +97,16 @@ public class MemberDAO {
 
          con.commit();
          return result;
-
       }
-
    }
-   
+
+
    public int insertNaverMember(MemberDTO param) throws Exception {
-
       String sql = "insert into members (m_email,m_name,m_joindate,m_ipaddress,m_admin) values(?,?,default,?,'n')";
-
       try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-
          pstat.setString(1, param.getEmail());
          pstat.setString(2, param.getName());
          pstat.setString(3, param.getIpAddress());
-
          int result = pstat.executeUpdate();
 
          con.commit();
@@ -176,15 +115,10 @@ public class MemberDAO {
    }
 
    public boolean isIdExist(String email) throws Exception {
-
       String sql = "select * from members where m_email = ?";
-
       try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-
          pstat.setString(1, email);
-
          try (ResultSet rs = pstat.executeQuery();) {
-
             return rs.next();
          }
       }
@@ -606,13 +540,13 @@ public class MemberDAO {
    }
 
    public List<MyWriteDTO> myDonateContents2(String email,int currentPage2) throws Exception {
-         int endNum = currentPage2*recordCountPerPage2;
-         int startNum = endNum - (recordCountPerPage2-1);
-            
+      int endNum = currentPage2*recordCountPerPage2;
+      int startNum = endNum - (recordCountPerPage2-1);
+
       try (Connection con = this.getConnection();
             PreparedStatement ps = psForMyArticles2(con, email, startNum, endNum);
             ResultSet rs = ps.executeQuery();) {
-         
+
          List<MyWriteDTO> result = new ArrayList<>();
          while (rs.next()) {
 
@@ -643,9 +577,9 @@ public class MemberDAO {
    }
 
    public List<MyDonateDTO> myDonateContents(String email,int currentPage) throws Exception {
-         int endNum = currentPage*recordCountPerPage;
-         int startNum = endNum - (recordCountPerPage-1);
-            
+      int endNum = currentPage*recordCountPerPage;
+      int startNum = endNum - (recordCountPerPage-1);
+
       try (Connection con = this.getConnection();
             PreparedStatement ps = psForMyArticles(con, email, startNum, endNum);
             ResultSet rs = ps.executeQuery();) {
@@ -666,13 +600,13 @@ public class MemberDAO {
       }
    }
 }
-   //-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
 
 class MyAuthentication extends Authenticator {
    PasswordAuthentication pa;
    public MyAuthentication(){
-      String id = "jihye.t0221@gmail.com";       // 구글 ID
-      String pw = "dPwlguswn7&";          // 구글 비밀번호
+      String id = "";       // 구글 ID
+      String pw = "";          // 구글 비밀번호
       // ID와 비밀번호를 입력한다.
       pa = new PasswordAuthentication(id, pw);
    }

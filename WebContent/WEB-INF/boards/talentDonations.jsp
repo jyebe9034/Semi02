@@ -12,15 +12,14 @@ rel="stylesheet">
 <link rel="stylesheet"
 href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-       
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script   src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="nav_footer.css">
 <style>
    #wrapper *{
       text-align: center;
       }
-   #wrapper{
-      margin-bottom: 300px;
-   }
+      
    .title{
       font-family: "Do Hyeon";
       font-size: 50px;
@@ -37,6 +36,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
    .btnArea{
       text-align: center;
       margin: auto;
+      margin-bottom: 200px;
    }
    #goMainBtn {
       background-color: #1ebdd8;
@@ -59,7 +59,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </script>
 </head>
 <body>
-      <nav class="navbar navbar-expand-md navbar-light">
+   <nav class="navbar navbar-expand-lg navbar-light">
       <div class="logo">
          <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
       </div>
@@ -94,19 +94,16 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
          </ul>
       </div>
    </nav>
-   
+   <hr style="margin:0px;">
    <div id=wrapper>
-      <div id=message>
-         <p class="title">서비스 준비중입니다.</p>
-         <p class="contents">이용에 불편을 드려 죄송합니다.</p> 
-         <p class="contents">보다 나은 서비스 제공을 위하여 준비중입니다.</p>
-         <p class="contents">빠른 시일내에 준비하여 찾아뵙겠습니다.</p>
-      </div>
-      <div class=btnArea>
-         <button class="btn" id=goMainBtn>메인으로 가기</button>   
-      </div>
+      <p class="title">서비스 준비중입니다.</p>
+      <p class="contents">이용에 불편을 드려 죄송합니다.</p> 
+      <p class="contents">보다 나은 서비스 제공을 위하여 준비중입니다.</p>
+      <p class="contents">빠른 시일내에 준비하여 찾아뵙겠습니다.</p>
    </div>
-   
+   <div class=btnArea>
+      <button class="btn" id=goMainBtn>메인으로 가기</button>   
+   </div>
    <div id="footer">
       <div id="f_logo_wrap">
          <a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -118,7 +115,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
          <img id="kakao" class="sns" src="photo_image/ka.png">
          <img class="sns" src="photo_image/fa.png">
          <img id="insta" class="sns" src="photo_image/kk.png">
-         <a href="write.board"><div id="suggest">후원 신청</div></a>
+         <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
       </div>
       <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
    </div>
