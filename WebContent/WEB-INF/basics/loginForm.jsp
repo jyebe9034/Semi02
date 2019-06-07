@@ -91,10 +91,6 @@ a:hover {
 		width : 193px;
 		height : 47px;
 	}
-	#footer{
-		position: absolute;
-		bottom: 0;
-	}
 </style>
 </head>
 <body>

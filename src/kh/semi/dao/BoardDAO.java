@@ -17,13 +17,13 @@ import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
 	static int recordCountPerPage = 10;
-	static int boardRecordCountPerPage = 12; //수정됨
+	static int boardRecordCountPerPage = 12;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1522:xe";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
@@ -151,6 +151,19 @@ public class BoardDAO {
 				return boardDTO;
 			}
 			return null;
+		}
+	}
+	
+	public int updatedEditing(int boardNo, String title, String content) throws Exception {
+		String sql = "update board set b_title=?, b_contents=? where b_no=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, title);
+			pstat.setString(2, content);
+			pstat.setInt(3, boardNo);
+			int result = pstat.executeUpdate();
+			return result;
 		}
 	}
 
@@ -287,8 +300,7 @@ public class BoardDAO {
 		public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord) throws Exception {
 			
 			int recordTotalCount = totalRecordCount;
-			
-			int recordCountPerPage = 12; //12개의 글이 보이게 한다.	 //수정됨
+			int recordCountPerPage = 12; //12개의 글이 보이게 한다.	
 			int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
 			  
 			int pageTotalCount = recordTotalCount / recordCountPerPage;
@@ -309,7 +321,6 @@ public class BoardDAO {
 			if(endNavi > pageTotalCount) {
 				endNavi = pageTotalCount;
 			}
-
 			
 			boolean needPrev = true;
 			boolean needNext = true;
