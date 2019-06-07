@@ -41,19 +41,6 @@ body{
 	background-color: #28a39f;
 	color: #FFF;
 }
-
-.carousel {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
-
-.img_carousel {
-	max-height: 700px;
-	min-height: 300px;
-	object-fit: cover;
-}
-
 .card {
 	border-radius: 10px;
 	min-width: 300px;

@@ -34,7 +34,7 @@ import kh.semi.dto.MyWriteDTO;
 public class MemberDAO {
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String url = "jdbc:oracle:thin:@192.168.60.18:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url, user, pw);
@@ -406,7 +406,7 @@ public class MemberDAO {
 
 		}
 		for (int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage2=1&currentPage=" + i + "\">"
+			sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber1\" href=\"myPage.members?currentPage2=1&currentPage=" + i + "\">"
 					+ i + "</a></li>");
 		}
 		if (needNext) {
@@ -469,7 +469,7 @@ public class MemberDAO {
 
 		}
 		for (int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage=1&currentPage2=" + i + "\">"
+			sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber2\" href=\"myPage.members?currentPage=1&currentPage2=" + i + "\">"
 					+ i + "</a></li>");
 		}
 		if (needNext) {
