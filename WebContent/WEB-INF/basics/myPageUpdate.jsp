@@ -179,11 +179,12 @@
        <hr style="margin:0px; bordercolor:whitesmoke;">
         <br><br><br>
 
-        <form action="myPageUpdate.members" method="post">
+        <form action="myPageUpdate.members" id="myPageUpdateForm" method="post">
             <div class="container wrap">
                 <h3>내 정보 관리</h3>
                 <br>
-                <hr  class="myhr1">
+                <p class="ml-3">*표시는 필수항목입니다.</p>
+                <br>
                 <div class="row">
                     <div class="col-2 d-md-block d-none"><span class="first">이메일</span></div>
                     <div class="col-10 "><span class="second">${dto.email }</span></div>
@@ -199,30 +200,27 @@
 
                     <div class="col-10"><span><span class="form-inline">
                         <div class="form-group">
-                            <input type="text" class="form-control mx-sm-3 second" name="phone" id="phone" value="${dto.phone }" required>
+                            <input type="text" class="form-control mx-sm-3 second" name="phone" id="phone" value="${dto.phone }">
                         </div>
                         </span></span></div>
                 </div>
                 <hr>
                 <c:if test="${dto.pw != null }">
-              	  <div class="row">
-              	      <div class="col-2 d-md-block d-none"><span class="first-pw first">비밀번호</span></div>
-              	      <div class="col-10"><span><span class="form-inline">
-              	          <div class="form-group">
-              	              <input type="password" id="inputPassword" class="form-control mx-sm-3 second" aria-describedby="passwordHelpInline" required>
-              	              <small id="pw_form" class="text-mute">
-              	              </small>
-              	          </div>
-              	          </span></span></div>
+					<div class="row">
+						<div class="col-2 d-md-block d-none"><span class="first-pw first">*비밀번호</span></div>
+						<div class="col-10"><span><span class="form-inline">
+						<div class="form-group">
+							<input type="password" id="inputPassword" class="form-control mx-sm-3 second" aria-describedby="passwordHelpInline" required>
+							<small id="pw_form" class="text-mute"></small>
+						</div></span></span></div>
               	  </div>
               	  <br>
               	  <div class="row">
-              	      <div class="col-2 d-md-block d-none"><span class="first-pw"></span></div>
+              	      <div class="col-2 d-md-block d-none"><span class="first-pw" style="font-size:11px"><!-- (현재 비밀번호 또는 변경하실 비밀번호) --></span></div>
               	      <div class="col-10"><span><span class="form-inline">
               	          <div class="form-group">
               	              <input type="password" id="inputPasswordCheck" class="second form-control mx-sm-3" aria-describedby="passwordHelpInline" name="pw" required>
-              	              <small id="pw_match" class="text-mute">
-              	              </small>
+              	              <small id="pw_match" class="text-mute"></small>
               	          </div>
               	          </span></span></div>
               	  </div>
@@ -258,7 +256,7 @@
                         </span></span></div>
                 </div>
                 <div class="row"><div class="col-12">
-                    <input type="submit" class="btn btn-info update" id="update" value="수정 하기"></input>
+                    <input type="button" class="btn btn-info update" id="update" value="수정 하기"></input>
                 </div>
             </div>
             </div>
@@ -280,61 +278,30 @@
 			<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 		</div>
     <script>
-
-
         document.getElementById("update").onclick=function(){
+        	if(${dto.pw != null}){
+        		pw1 = document.getElementById("inputPassword").value;
+                pw2 = document.getElementById("inputPasswordCheck").value;
 
-            pw1 = document.getElementById("inputPassword").value;
-            pw2 = document.getElementById("inputPasswordCheck").value;
-
-            if(pw1 == "" || pw2 == ""){
-                alert("패스워드를 입력해주세요.")
-                return false;
-            }
-
-
-            var inputPw = document.getElementById("inputPassword").value;
-            var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
-            var result = regex.exec(inputPw);
-            if (result == null) {
-                alert("패스워드를 확인해주세요.")
-                return false;
-            }
+                if(pw1 == "" || pw2 == ""){
+                    alert("패스워드를 입력해주세요.")
+                    return;
+                }
+                var inputPw = document.getElementById("inputPassword").value;
+                var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+                var result = regex.exec(inputPw);
+                if (result == null) {
+                    alert("패스워드를 확인해주세요.")
+                    return;
+                }
+                if(pw1!=pw2){
+                    alert("패스워드를 확인해주세요");
+                    return;
+                }
+        	}
+            $("#myPageUpdateForm").submit();
             
-            if(pw1!=pw2){
-                alert("패스워드를 확인해주세요");
-                return false;
-            }
-            
-
         }
-
-
-        document.getElementById("inputPassword").oninput = function() {
-            var inputPw = document.getElementById("inputPassword").value;
-            var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
-            var result = regex.exec(inputPw);
-            if (result == null) {
-                document.getElementById("pw_form").innerHTML = "8자 이상 영문,숫자,특수문자를 사용하세요.";
-                document.getElementById("pw_form").style.color = "red";
-            } else {
-                document.getElementById("pw_form").style.color = "green";
-                document.getElementById("pw_form").innerHTML = "아래 빈칸에 한번더 입력해 주세요.";
-            }
-        }
-
-        document.getElementById("inputPasswordCheck").oninput = function() {
-            var pw = document.getElementById("inputPassword").value;
-            var pw_chk = document.getElementById("inputPasswordCheck").value;
-            if (pw == pw_chk) {
-                document.getElementById("pw_match").innerHTML = "";
-
-            } else {
-                document.getElementById("pw_match").innerHTML = "비밀번호가 일치하지 않습니다.";
-                document.getElementById("pw_match").style.color = "red";
-            }
-        }
-
         document.getElementById("addressbt").onclick = function() {
             new daum.Postcode(
                 {
@@ -386,6 +353,31 @@
                         document.getElementById("address2").focus();
                     }
                 }).open();
+        }
+        
+        document.getElementById("inputPassword").oninput = function() {
+            var inputPw = document.getElementById("inputPassword").value;
+            var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+            var result = regex.exec(inputPw);
+            if (result == null) {
+                document.getElementById("pw_form").innerHTML = "8자 이상 영문,숫자,특수문자를 사용하세요.";
+                document.getElementById("pw_form").style.color = "red";
+            } else {
+                document.getElementById("pw_form").style.color = "green";
+                document.getElementById("pw_form").innerHTML = "아래 빈칸에 한번더 입력해 주세요.";
+            }
+        }
+
+        document.getElementById("inputPasswordCheck").oninput = function() {
+            var pw = document.getElementById("inputPassword").value;
+            var pw_chk = document.getElementById("inputPasswordCheck").value;
+            if (pw == pw_chk) {
+                document.getElementById("pw_match").innerHTML = "";
+
+            } else {
+                document.getElementById("pw_match").innerHTML = "비밀번호가 일치하지 않습니다.";
+                document.getElementById("pw_match").style.color = "red";
+            }
         }
 
     </script>

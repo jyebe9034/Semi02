@@ -65,6 +65,8 @@ public class MembersController extends HttpServlet {
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
 		
+		System.out.println(cmd);
+		
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
@@ -102,8 +104,9 @@ public class MembersController extends HttpServlet {
 				String[] imgSrc = new String[3];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
-					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); 
-					//재용
+//					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
+//					String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
+					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
 					//String result = str.replaceAll("D.+?3.+?", "");
 //					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
@@ -274,7 +277,7 @@ public class MembersController extends HttpServlet {
 		}else if(cmd.equals("/myPageUpdate.members")) {
 
 			String phone = request.getParameter("phone");
-			String pw = dao.testSHA256(request.getParameter("pw"));
+			String pw = request.getParameter("pw");
 			String zipcode = request.getParameter("zipcode");
 			String add1 = request.getParameter("address1");
 			String add2 = request.getParameter("address2");
@@ -291,20 +294,13 @@ public class MembersController extends HttpServlet {
 
 			try {
 				int result = dao.updateContents(dto);
-				request.getSession().setAttribute("result", result);
-				request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateView.jsp").forward(request, response);
+				request.setAttribute("result", result);
+				request.getRequestDispatcher("/WEB-INF/basics/alertMyPageUpdate.jsp").forward(request, response);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 				response.sendRedirect("error.html");
 			}
-
-
-		}else if(cmd.equals("/myPageUpdateComplete.members")) {
-
-			request.getSession().invalidate();
-			request.getRequestDispatcher("/WEB-INF/basics/loginForm.jsp").forward(request, response);
-
 		}else if(cmd.equals("/myPage.members")) {
 
 			String email = (String)request.getSession().getAttribute("loginEmail");
