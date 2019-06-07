@@ -33,7 +33,7 @@ create table board(
     b_bank varchar(20) not null,
     b_account varchar(30) not null,
     b_due_date timestamp not null,
-    b_contents long not null,
+    b_contents CLOB not null,
     b_viewcount number default 0,
     b_writedate timestamp default sysdate not null,
     b_recommend number default 0 not null,
@@ -154,5 +154,5 @@ time23 number,
 time24 number
 );
 
-insert into members values('opopa159@naver.com','asdasd','¿”√¢»∆','010-211-222','qwe','asd','zxc',sysdate,'asd','y');
-insert into members values('opopa1559@naver.com','asdasd','¿”√¢»∆','010-211-222','qwe','asd','zxc',sysdate,'asd','n');
+insert into members values('opopa159@naver.com','asdasd','√Ä√ì√É¬¢√à√Ü','010-211-222','qwe','asd','zxc',sysdate,'asd','y');
+insert into members values('opopa1559@naver.com','asdasd','√Ä√ì√É¬¢√à√Ü','010-211-222','qwe','asd','zxc',sysdate,'asd','n');
