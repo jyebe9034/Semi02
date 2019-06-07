@@ -63,7 +63,10 @@
 	.listBox {
 		margin-bottom: 50px;
 	}
-	
+	.listRow{
+         width: 80%;
+         margin: auto;
+   	}
 	.list {
 		width: 250px;
 		height: 350px;
@@ -125,7 +128,6 @@
 	}
 	.check{
       margin-left:auto;
-<<<<<<< HEAD
    }
 </style>
 <script>
