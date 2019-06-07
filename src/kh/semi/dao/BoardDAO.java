@@ -17,7 +17,7 @@ import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
 	static int recordCountPerPage = 10;
-	static int boardRecordCountPerPage = 8;
+	static int boardRecordCountPerPage = 12;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 
@@ -288,7 +288,7 @@ public class BoardDAO {
 			
 			int recordTotalCount = totalRecordCount;
 			
-			int recordCountPerPage = 8; //8개의 글이 보이게 한다.	
+			int recordCountPerPage = 12; //12개의 글이 보이게 한다.	
 			int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
 			  
 			int pageTotalCount = recordTotalCount / recordCountPerPage;

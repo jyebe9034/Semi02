@@ -59,6 +59,10 @@
 .header div{
 	color: #00000080;
 }
+#titleImg{
+	max-height: 400px;
+	max-width:100%;
+}
 .contents{
 	border: 0.5px solid #00000030;
 }
@@ -74,6 +78,7 @@
 #inputComment{
     border: 0.5px solid #00000030;
     height: 100px;
+	overflow-y: auto;
 }
 #commentBtnBox{
     text-align: center;
@@ -84,6 +89,9 @@
 }
 .commentsBox>div{
 	border: 0.5px solid #00000030;
+}
+.comment{
+	word-wrap: break-word;
 }
 .deleteCommentBtn, .modifyCommentBtn, .modifyCompleteBtn, .modifyCancelBtn{
 	cursor: pointer;
@@ -128,7 +136,7 @@
 </style>
 </head>
 <body>
-		<nav class="navbar navbar-expand-md navbar-light">
+		<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
@@ -172,7 +180,7 @@
 			<div><h2>${result.title }</h2></div>
 		</div>
 		<div class="wrapper row">
-			<div class="col-lg-6 col-12"><img src="${titleImg }" alt="..." width="100%"></div>
+			<div class="col-lg-6 col-12"><img src="${titleImg }" alt="..." id="titleImg"></div>
 			<div class="info row col-lg-6 col-12">
 				<div class="col-lg-6 col-12">작성자</div>
 				<div class="col-lg-6 col-12">${result.writer }<hr></div>

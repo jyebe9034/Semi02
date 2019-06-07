@@ -23,9 +23,9 @@ public class ManagerDAO {
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
 	}
-	
-	
-	
+
+
+
 	public int visitPersonCount()throws Exception{
 		String sql = "update visitpersoncount set personcount=?";
 		try(
@@ -36,9 +36,9 @@ public class ManagerDAO {
 			int result = pstat.executeUpdate();
 			return result;
 		}
-		
+
 	}
-	
+
 	public String totalMoney()throws Exception{
 		String sql = "select to_char(sum(b_sum_amount),'999,999,999') from board";
 		try(	
@@ -51,7 +51,7 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-	
+
 	public int nowingProjectCount() throws Exception { //현재 진행중인 프로젝트 갯수
 		String sql = "select count(*) from board";
 		try(
@@ -64,7 +64,7 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-	
+
 	public int joinMemberCount()throws Exception{
 		String sql = "select count(*) from members";
 		try(
@@ -93,7 +93,7 @@ public class ManagerDAO {
 			return li;
 		}
 	}
-	
+
 	public List<Object> bestRecommendCount()throws Exception{
 		String sql = "select b_title,max(b_recommend)from board group by b_title";
 		try(
@@ -109,7 +109,7 @@ public class ManagerDAO {
 			return li;
 		}
 	}
-	
+
 	public List<Object> worstRecommendCount()throws Exception{
 		String sql = "select b_title,min(b_recommend)from board group by b_title";
 		try(
@@ -125,7 +125,7 @@ public class ManagerDAO {
 			return li;
 		}
 	}
-	
+
 	public List<Object> bestViewCount()throws Exception{
 		String sql = "select b_title,max(b_viewcount)from board group by b_title";
 		try(
@@ -141,7 +141,7 @@ public class ManagerDAO {
 			return li;
 		}
 	}
-	
+
 	public List<Object> worstViewCount()throws Exception{
 		String sql = "select b_title,min(b_viewcount)from board group by b_title";
 		try(
@@ -157,7 +157,7 @@ public class ManagerDAO {
 			return li;
 		}
 	}
-	
+
 	public List<PaymentDTO> donationTopThree()throws Exception{
 		String sql = "select num, P_name, sumamount from (select row_number() over (order by sum(p_amount) desc) as num "
 				+ ", p_name,sum(p_amount) as sumamount from payment  group by p_name) where num between 1 and 3";
@@ -174,7 +174,7 @@ public class ManagerDAO {
 			return li;
 		}
 	}
-	
+
 	public List<MemberDTO> memberInfo()throws Exception{
 		String sql = "select m_email,m_name,m_phone,m_joindate,m_ipaddress from members";
 		try(
@@ -203,7 +203,7 @@ public class ManagerDAO {
 			return result;	
 		}
 	}
-	
+
 	public List<TimePersonCountDTO> timePersonCount()throws Exception{
 		String sql = "select * from timepersoncount";
 		try(
@@ -221,7 +221,7 @@ public class ManagerDAO {
 			return li;
 		}
 	}//line차트 전부 가져오기	
-	
+
 	public int allTimeUpdate()throws Exception{ //00시 되면 모든 시간 0으로 만들기!
 		String sql = "update timepersoncount set time1=0,time2=0,time3=0,time4=0,time5=0,time6=0,time7=0,time8=0,time9=0,time10=0,\r\n" + 
 				"time11=0,time12=0,time13=0,time14=0,time15=0,time16=0,time17=0,time18=0,time19=0,time20=0,\r\n" + 
@@ -235,7 +235,7 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-	
+
 	public List<BoardDTO> totalDonationProject()throws Exception{//모든 기부프로젝트 테이블
 		String sql = "select b_title,b_writer,b_due_date,b_writedate,b_sum_amount,b_amount from board";
 		try(
@@ -256,8 +256,8 @@ public class ManagerDAO {
 			return li;		
 		}
 	}
-	
-	public int BoardWriteDelete(String value)throws Exception{
+
+	public int boardWriteDelete(String value)throws Exception{
 		String sql = "delete from board where b_no=?";
 		try(
 				Connection con = this.getConnection();
@@ -268,7 +268,18 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-	
-	
-	
+
+	public int titleImgDelete(String value)throws Exception{
+		String sql = "delete from title_img where t_b_no=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, value);
+			int result = pstat.executeUpdate();
+			return result;
+
+		}
+	}
+
 }

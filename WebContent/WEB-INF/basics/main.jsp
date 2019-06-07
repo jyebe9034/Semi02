@@ -42,16 +42,8 @@ body{
 	color: #FFF;
 }
 
-.carousel {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
-
 .img_carousel {
 	max-height: 700px;
-	min-height: 300px;
-	object-fit: cover;
 }
 
 .card {
@@ -108,41 +100,41 @@ body{
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light">
-		<div class="logo">
-			<a class="navbar-brand anker" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-		</div>
-		<div id="toggle">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNav" aria-controls="navbarNav"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-		</div>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav nav-ul">
-				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+      <div class="logo">
+         <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+      </div>
+      <div id="toggle">
+         <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav nav-ul">
+            <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+            <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+            <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 
-				<c:choose>
-					<c:when test="${sessionScope.loginEmail != null}">
-						<c:if test="${sessionScope.admin==null}">
-							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-						</c:if>
-						<c:if test="${sessionScope.admin!=null}">
-							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
-						</c:if>
-						<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
-						<li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
-	</nav>
+            <c:choose>
+               <c:when test="${sessionScope.loginEmail != null}">
+                  <c:if test="${sessionScope.admin==null}">
+                     <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+                  </c:if>   
+                  <c:if test="${sessionScope.admin!=null}">
+                     <li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
+                  </c:if>
+                  <li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+               </c:when>
+               <c:otherwise>
+                  <li class="nav-item nav-li"><a class="nav-link anker ml-1 pr-0" href="LoginForm.members">로그인</a></li>
+                  <li class="nav-item nav-li"><a class="nav-link anker pl-0" href="JoinForm.members">회원가입</a></li>
+               </c:otherwise>
+            </c:choose>
+
+         </ul>
+      </div>
+   </nav>
 	
 	<!-- 캐러셀 -->
 	<div id="carouselExampleIndicators" class="carousel slide"
@@ -224,7 +216,7 @@ body{
 			<c:otherwise>
 				<c:forEach var="i" begin="0" end="${listSize-1}">
 					<div class="card col-lg-4 col-md-12 col-sm-12">
-						<div class="imgBox" style="height:40%;">
+						<div class="imgBox" style="height:250px;">
 							<img src="${imgSrc[i] }" class="imgTag" width="100%" style="max-height:100%">
 						</div>
 						<div class="card-body">

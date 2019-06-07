@@ -206,7 +206,7 @@ a:hover {
    </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-md navbar-light">
+  <nav class="navbar navbar-expand-lg navbar-light">
       <div class="logo">
          <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
       </div>
@@ -334,13 +334,6 @@ a:hover {
             <div class="col-xl-2 col-lg-2 d-lg-block d-none">글 작성자</div>
          </div>
          <br>
-         <!--       <div class="row contents"> -->
-         <!--          <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">1</div> -->
-         <!--          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">연탄 봉사 후원</div> -->
-         <!--          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">15,000원</div> -->
-         <!--          <div class="col-xl-2 col-lg-2 d-none d-lg-block">5월 31일 13시 51분</div> -->
-         <!--          <div class="col-xl-2 col-lg-2 d-lg-block d-none">임창훈</div> -->
-         <!--       </div> -->
          <div class="row contents">
             <c:forEach var="myDonateContents" items="${myDonateContents }">
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>

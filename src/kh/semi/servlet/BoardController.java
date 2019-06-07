@@ -219,7 +219,7 @@ public class BoardController extends HttpServlet {
 				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
 				BoardDTO article = dao.selectOneArticle(boardNo);
 				List<CommentDTO> comments = dao.selectCommentsByBoardNo(commentPage, boardNo);
-				if(!email.equals(article.getEmail())) {
+				if(email!=null && !email.equals(article.getEmail())) {
 					dao.updateViewCount(boardNo);
 				}
 				
@@ -292,9 +292,10 @@ public class BoardController extends HttpServlet {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
 						result = dao.searchList(currentPage, searchOption, searchWord);
+						request.setAttribute("searchWord", searchWord);
 					}
 
-					String[] sumAmountArr = new String[8];
+					String[] sumAmountArr = new String[12];
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
 						//String folder = path.replaceAll("D.+?3.+?",""); //지혜껀가

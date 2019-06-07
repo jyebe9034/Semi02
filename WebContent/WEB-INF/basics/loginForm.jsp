@@ -21,6 +21,16 @@
 	
 <link rel="stylesheet" href="nav_footer.css">
 <style>
+html, body {
+   height: 89%;
+}
+.wrapper{
+	min-height: 100%;
+	margin: 0 auto -155px;
+}
+.push{
+	height: 200px;
+}
 .login_box {
 	width: 400px;
 	margin: auto;
@@ -90,10 +100,6 @@ a:hover {
 	#kakao-login-btn{
 		width : 193px;
 		height : 47px;
-	}
-	#footer{
-		position: absolute;
-		bottom: 0;
 	}
 </style>
 </head>
@@ -179,6 +185,7 @@ a:hover {
 				<a href="" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
 			</div>
 		</div>
+		<div class="push"></div>
 	</div>
 	
 	<div id="footer">
