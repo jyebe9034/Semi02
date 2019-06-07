@@ -70,7 +70,7 @@ public class BoardDAO {
 				ResultSet rs = pstat.executeQuery();
 				){
 			List<BoardDTO> list = new ArrayList<>();
-			for(int i=0; i<3;i++) {
+			for(int i=0; i<4;i++) {
 				if(rs.next()) {
 					BoardDTO dto = new BoardDTO();
 					dto.setBoardNo(rs.getInt("b_no"));
@@ -117,6 +117,18 @@ public class BoardDAO {
 				return 1;
 			}
 			return 0;
+		}
+	}
+	
+	public int deleteClosedBoard() throws Exception {
+		String sql = "delete from board where b_no in (select b_no from board where b_due_date-sysdate like '%-%')";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
 		}
 	}
 

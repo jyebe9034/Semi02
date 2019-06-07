@@ -65,6 +65,7 @@
 }
 .contents{
 	border: 0.5px solid #00000030;
+	overflow: auto;
 }
 .btnBox{
     text-align: center;

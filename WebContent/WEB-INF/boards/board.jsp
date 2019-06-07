@@ -24,7 +24,7 @@
    }
    .boardName {
       text-align: center;
-      margin-bottom: 50px;
+      margin: 50px;
       font-family: "Do Hyeon";
       font-size: 50px;
       color: darkslategray;
@@ -56,8 +56,6 @@
       height:40px;
         border-radius:15px;
         margin-left: 3px;
-/*       position: relative; */
-/*       bottom: 3px; */
    }
    
    .searchBtn:hover {
@@ -65,61 +63,47 @@
       background-color: #28a39f;
       color: #FFF;
    }
-   .noneListRow{
-      text-align: center;
-   }
-    .noneListRow div{ //.listBox 위에 추가해주세요
+   .noneListRow div{
       margin: auto;
       text-align: center;
       font-family: "Do Hyeon";
       font-size: 20px;
-	}
-
-
-	.list {
-		width: 250px;
-		height: 370px;  //수정
-		margin: 10px auto;
-		border: none; //추가
-	}
-	.card-title{ //.list 밑에 추가해주세요
-		height: 50px;
-	}
-
-   .list img {
-      width: 240px;
-      height: 200px;
-      margin: auto;
-      border-radius:15px; //추가
-      border : 1px solid black; //추가
    }
-   .listBox {
-      margin-bottom: 50px;
+   
+   .searchBox {
+    margin-bottom: 50px;
+    width: 100%;
+   margin-right: 190px;
    }
    .listRow{
-         width: 80%;
+         width: 90%;
          margin: auto;
    }
    
    .list {
       width: 250px;
       height: 370px;
-      margin: 10px auto;
-/*       border : none; */
+      margin: 30px auto;
+      border : none; 
    }
    .card-title{
        height: 50px;
+   }
+   .article .writer {
+   color : grey;
+   margin-top: -10px;
    }
    .list img {
       width: 240px;
       height: 200px;
       margin: auto;
       border-radius:15px;
-      border : 1px solid black;
+      border : 1px solid lightgrey; 
    }
    
    .progress {
       width: 100%;
+      margin-top: -10px;
    }
    
    .percentage{
@@ -168,11 +152,9 @@
    .article{
       cursor: pointer; 
    }
-   
    .check{
       margin-left:auto;
    }
-   
 </style>
 <script>
    $(function(){
@@ -293,8 +275,8 @@
                         <div class="card list">
                            <img src="${list.newFilePath}"> 
                            <div class="card-body article" boardNo="${list.boardNo}">
-                              <h5 class="card-title">${list.title }</h5>
-                              <p class="card-text">${list.writer }</p>
+                              <h5 class="card-title title">${list.title }</h5>
+                              <p class="card-text writer">${list.writer }</p>
                               <div class="progress">
                             <div class="progress-bar" role="progressbar" 
                             style="width: ${list.percentage}%;" aria-valuemin="0" 
