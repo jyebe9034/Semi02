@@ -212,7 +212,6 @@ public class MembersController extends HttpServlet {
 				con.setRequestMethod("GET");
 				int responseCode = con.getResponseCode();
 				BufferedReader br;
-				System.out.print("responseCode=" + responseCode);
 				if (responseCode == 200) { // 정상 호출
 					br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				} else { // 에러 발생
@@ -238,7 +237,6 @@ public class MembersController extends HttpServlet {
 					request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
-				System.out.println(e);
 				e.printStackTrace();
 				response.sendRedirect("error.html");
 			}
@@ -251,8 +249,6 @@ public class MembersController extends HttpServlet {
 
 			String id = "k_"+contents[0];
 			String nickName = contents[1];
-
-			System.out.println(id + " : " + nickName + " : "+ ip);
 
 			MemberDTO dto = new MemberDTO();
 			dto.setIpAddress(ip);

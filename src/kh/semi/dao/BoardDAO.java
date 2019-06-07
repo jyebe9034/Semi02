@@ -323,10 +323,6 @@ public class BoardDAO {
 				endNavi = pageTotalCount;
 			}
 			
-			System.out.println("현재 위치 : " + currentPage);
-			System.out.println("네비 시작 : " + startNavi);
-			System.out.println("네비 끝 : " + endNavi);
-			
 			boolean needPrev = true;
 			boolean needNext = true;
 

@@ -131,7 +131,7 @@
 			<p></p>
 			<div class="form-group">
 				<div class="noti mb-2">제목을 수정해 주세요. </div>
-				<input id="myTitle" type="text" class="form-control" name="title" placeholder="제목은 최대 22자 까지만 가능합니다 :)" required>
+				<input id="myTitle" type="text" class="form-control" name="title" placeholder="제목은 최대 22자 까지만 가능합니다 :)" required value="${result.title}">
 			</div>
 			<div class="form-group">
 				<div id="wrongTitle" class="issue"></div>
@@ -172,7 +172,7 @@
 	<script>
 		$("#myTitle").on("input",function(){
 			var title = $("#myTitle").val();
-			var regex = /^[가-힣 .:)!?]{5,22}$/g
+			var regex = /^[가-힣 .,:;()!^?~0-9\"\']{5,22}$/g
 			
 			var result = regex.exec(title);
 	        if(result == null){
@@ -198,21 +198,21 @@
 			}
 		})
 	
-		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
-	    	$("img").each(function(index, item){
-	    		var src = $(this).attr("src");
-	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
-	    		}else if(src == null){
-	    		}else{
-	    			$.ajax({
-						url: "deleteImage.board",
-						data: {src : src},
-						type: "POST",
-						cache: false
-					})	
-	    		}
-	    	})
-	    });
+// 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
+// 	    	$("img").each(function(index, item){
+// 	    		var src = $(this).attr("src");
+// 	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
+// 	    		}else if(src == null){
+// 	    		}else{
+// 	    			$.ajax({
+// 						url: "deleteImage.board",
+// 						data: {src : src},
+// 						type: "POST",
+// 						cache: false
+// 					})	
+// 	    		}
+// 	    	})
+// 	    })
 	
 		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
 			if($("#myTitle").val().length > 22){
@@ -281,6 +281,7 @@
         }
         
         $("#cancel").on("click", function(){ // 취소 버튼을 눌렀을 때 서버측의 사직 삭제
+        	alert("정말로 취소하시겠습니까?");
         	$("img").each(function(index, item){
         		var src = $(this).attr("src");
         		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
@@ -294,7 +295,7 @@
         			})	
         		}
         	})
-        	location.href="List.board";
+        	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";
         })
 	</script>
 </body>

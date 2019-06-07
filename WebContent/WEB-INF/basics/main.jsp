@@ -42,16 +42,8 @@ body{
 	color: #FFF;
 }
 
-.carousel {
-	width: 100%;
-	height: 100%;
-	margin: auto;
-}
-
 .img_carousel {
 	max-height: 700px;
-	min-height: 300px;
-	object-fit: cover;
 }
 
 .card {
@@ -77,9 +69,9 @@ body{
 	font-family: "Jua";
 }
 
-	.imgTag{
-		border-radius:10px;
-	}
+.imgTag{
+	border-radius:10px;
+}
 
 .guide{
 	text-align:center;
@@ -103,7 +95,6 @@ body{
 .forArrow{ 
 	line-height:110px;
 }
-
 </style>
 </head>
 <body>

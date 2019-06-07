@@ -115,7 +115,7 @@
 		</div>
 	</div>
 	<div id="wrapper" class="container">	
-		<form action="writer.board" method="post" id="myform" enctype="multipart/form-data" accept-charset="UTF-8">
+		<form action="writer.board" method="post" id="myform" enctype="multipart/form-data" accept-charset="UTF-8" name="fileCheck">
 			<div class="form-group">
 				<div class="noti mb-2">제목은 한눈에 쏙 들어오게!</div>
 				<input id="myTitle" type="text" class="form-control" name="title" placeholder="제목은 최대 22자 까지만 가능합니다 :)" required>
@@ -400,7 +400,7 @@
         			})	
         		}
         	})
-        	location.href="List.board";
+        	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";
         })
 	</script>
 </body>

@@ -6,164 +6,158 @@
 <head>
 <meta charset="UTF-8">
 <title>도움닿기 - 후원 게시판</title>
-<link
-	href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="nav_footer.css">
 <style>
-.progress {
-	width: 200px;
-}
-
-.progress-bar {
-	background-color: orange;
-}
-
-.wrapper {
-	display: inline-block;
-}
-
-.boardName {
-	text-align: center;
-	margin-bottom: 50px;
-	font-family: "Do Hyeon";
-	font-size: 50px;
-	color: darkslategray;
-}
-
-/*검색*/
-#dropdownforSearch {
-	float: left;
-	height: 40px;
-	border: solid lightgrey 1px;
-	border-top-left-radius: 15px;
-	border-bottom-left-radius: 15px;
-	padding-left: 9px;
-}
-
-.searchWord {
-	width: 300px;
-	height: 40px;
-	border: solid lightgrey 1px;
-	border-top-right-radius: 15px;
-	border-bottom-right-radius: 15px;
-	padding-left: 10px;
-}
-
-.searchBtn {
-	background-color: #1ebdd8;
-	border-color: #1ebdd8;
-	color: #FFF;
-	height: 40px;
-	border-radius: 15px;
-	margin-left: 3px;
-	/* 		position: relative; */
-	/* 		bottom: 3px; */
-}
-
-.searchBtn:hover {
-	border-color: #28a39f;
-	background-color: #28a39f;
-	color: #FFF;
-}
-
-.noneListRow div {
-	margin: auto;
-	text-align: center;
-	font-family: "Do Hyeon";
-	font-size: 20px;
-}
-
-.list {
-	width: 250px;
-	height: 370px; 
-	margin: 10px auto;
-	border: none;
-	//
-	추가
-}
-
-.card-title { 
-height:50px;
-	
-}
-
-.list img {
-	width: 240px;
-	height: 200px;
-	margin: auto;
-	border-radius: 15px;
-	border: 1px solid black;
-}
-
-.listBox {
-	margin-bottom: 50px;
-}
-
-.listRow {
-	width: 80%;
-	margin: auto;
-}
-
-.progress {
-	width: 100%;
-}
-
-.percentage {
-	float: left;
-	position: static;
-}
-
-.amount {
-	position: relative;
-	right: 1px;
-	top: 2px;
-}
-
-.numBox li a {
-	color: lightslategray;
-}
-
-.bottonBtns {
-	margin-bottom: 100px;
-}
-
-#goMainBtn {
-	background-color: #1ebdd8;
-	border-color: #1ebdd8;
-	color: #FFF;
-	margin: 0 5px;
-}
-
-#goMainBtn:hover {
-	border-color: #28a39f;
-	background-color: #28a39f;
-	color: #FFF;
-}
-
-#writeBtn, #deleteBtn {
-	background-color: #1ebdd8;
-	border-color: #1ebdd8;
-	color: #FFF;
-}
-
-#writeBtn:hover, #deleteBtn:hover {
-	border-color: #28a39f;
-	background-color: #28a39f;
-	color: #FFF;
-}
-
-.article {
-	cursor: pointer;
-}
-
-.check {
-	margin-left: auto;
-}
+<style>
+   .progress {
+      width: 200px;
+   }
+   .progress-bar {
+      background-color: orange;
+   }
+   .wrapper {
+      display: inline-block;
+   }
+   .boardName {
+      text-align: center;
+      margin: 50px;
+      font-family: "Do Hyeon";
+      font-size: 50px;
+      color: darkslategray;
+   }
+   
+   /*검색*/
+      #dropdownforSearch {
+      float: left;
+        height: 40px;
+        border: solid lightgrey 1px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        padding-left: 9px;
+   }
+   
+   .searchWord {
+      width: 300px;
+        height: 40px;
+        border: solid lightgrey 1px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        padding-left: 10px;
+   }
+   
+   .searchBtn {
+      background-color: #1ebdd8;
+      border-color: #1ebdd8;
+      color: #FFF;
+      height:40px;
+        border-radius:15px;
+        margin-left: 3px;
+   }
+   
+   .searchBtn:hover {
+      border-color: #28a39f;
+      background-color: #28a39f;
+      color: #FFF;
+   }
+   .noneListRow div{
+      margin: auto;
+      text-align: center;
+      font-family: "Do Hyeon";
+      font-size: 20px;
+   }
+   
+   .searchBox {
+    margin-bottom: 50px;
+    width: 100%;
+   margin-right: 190px;
+   }
+   .listRow{
+         width: 90%;
+         margin: auto;
+   }
+   
+   .list {
+      width: 250px;
+      height: 370px;
+      margin: 30px auto;
+      border : none; 
+   }
+   .card-title{
+       height: 50px;
+   }
+   .article .writer {
+   color : grey;
+   margin-top: -10px;
+   }
+   .list img {
+      width: 240px;
+      height: 200px;
+      margin: auto;
+      border-radius:15px;
+      border : 1px solid lightgrey; 
+   }
+   
+   .progress {
+      width: 100%;
+      margin-top: -10px;
+   }
+   
+   .percentage{
+         float : left;
+          position: static;
+   }
+   .amount {
+      position: relative;
+      right : 1px;
+      top : 2px;
+     
+   }
+   
+   .numBox li a {
+      color: lightslategray;
+   }
+   
+   .bottonBtns {
+      margin-bottom: 100px;
+   }
+   
+   #goMainBtn {
+      background-color: #1ebdd8;
+      border-color: #1ebdd8;
+      color: #FFF;
+      margin: 0 5px;
+   }
+   
+   #goMainBtn:hover {
+      border-color: #28a39f;
+      background-color: #28a39f;
+      color: #FFF;
+   }
+   
+   #writeBtn,#deleteBtn {
+      background-color: #1ebdd8;
+      border-color: #1ebdd8;
+      color: #FFF;
+   }
+   
+   #writeBtn:hover,#deleteBtn:hover {
+      border-color: #28a39f;
+      background-color: #28a39f;
+      color: #FFF;
+   }
+   .article{
+      cursor: pointer; 
+   }
+   .check{
+      margin-left:auto;
+   }
+</style>
 </style>
 <script>
 	$(function(){
@@ -303,8 +297,8 @@ height:50px;
 							<div class="card list">
 								<img src="${list.newFilePath}">
 								<div class="card-body article" boardNo="${list.boardNo}">
-									<h5 class="card-title">${list.title }</h5>
-									<p class="card-text">${list.writer }</p>
+									<h5 class="card-title title">${list.title }</h5>
+									<p class="card-text writer">${list.writer }</p>
 									<div class="progress">
 										<div class="progress-bar" role="progressbar"
 											style="width: ${list.percentage}%;" aria-valuemin="0"

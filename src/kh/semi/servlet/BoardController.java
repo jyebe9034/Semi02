@@ -78,7 +78,6 @@ public class BoardController extends HttpServlet {
 
 				String savePath = rootPath + email + "/" + newDate;
 				tdto.setFilePath(savePath);
-				System.out.println("파일경로: " + savePath);
 				String uploadFile = "";
 				String newFileName = "";
 
@@ -201,7 +200,9 @@ public class BoardController extends HttpServlet {
 				String test = (String)request.getSession().getAttribute("flag");
 				if(test.equals("false")) {
 					String rootPath = this.getServletContext().getRealPath("/");
+					System.out.println("rootPath: " + rootPath);
 					String fileUrl = request.getParameter("src");
+					System.out.println("fileUrl: " + fileUrl);
 					String filePath = null;
 					if(fileUrl.startsWith("http")) {
 						filePath = fileUrl.replaceAll("http://.+?/", "");
