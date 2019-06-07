@@ -34,7 +34,7 @@ import kh.semi.dto.MyWriteDTO;
 public class MemberDAO {
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String url = "jdbc:oracle:thin:@localhost:1522:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url, user, pw);
@@ -58,35 +58,33 @@ public class MemberDAO {
 		return SHA;
 	}
 
+	   public MemberDTO getContents(String email) throws Exception {
 
-	public MemberDTO getContents(String email) throws Exception {
+		      String sql = "select * from members where m_email = ?";
+		      try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 
-		String sql = "select * from members where m_email = ?";
+		         pstat.setString(1, email);
 
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+		         try (ResultSet rs = pstat.executeQuery();) {
 
-			pstat.setString(1, email);
+		            if (rs.next()) {
 
-			try (ResultSet rs = pstat.executeQuery();) {
+		               MemberDTO result = new MemberDTO();
+		               result.setEmail(rs.getString("m_email"));
+		               result.setPw(rs.getString("m_pw"));
+		               result.setName(rs.getString("m_name"));
+		               result.setPhone(rs.getString("m_phone"));
+		               result.setZipCode(rs.getString("m_zipcode"));
+		               result.setAddress1(rs.getString("m_address1"));
+		               result.setAddress2(rs.getString("m_address2"));
 
-				if (rs.next()) {
+		               return result;
+		            }
 
-					MemberDTO result = new MemberDTO();
-					result.setEmail(rs.getString("m_email"));
-					result.setPw(rs.getString("m_pw"));
-					result.setName(rs.getString("m_name"));
-					result.setPhone(rs.getString("m_phone"));
-					result.setZipCode(rs.getString("m_zipcode"));
-					result.setAddress1(rs.getString("m_address1"));
-					result.setAddress2(rs.getString("m_address2"));
-
-					return result;
-				}
-
-				return null;
-			}
-		}
-	}
+		            return null;
+		         }
+		      }
+		   }
 
 	public int updateContents(MemberDTO param) throws Exception {
 
@@ -113,6 +111,7 @@ public class MemberDAO {
 		}
 
 	}
+
 
 	public int insertNaverMember(MemberDTO param) throws Exception {
 

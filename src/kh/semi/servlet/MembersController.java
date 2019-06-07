@@ -145,6 +145,7 @@ public class MembersController extends HttpServlet {
 			String email = request.getParameter("email");
 			try {
 				int ranNum = dao.sendMail(email);
+				System.out.println(ranNum);
 				printWriter.print(ranNum);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -301,6 +302,7 @@ public class MembersController extends HttpServlet {
 				e.printStackTrace();
 				response.sendRedirect("error.html");
 			}
+
 		}else if(cmd.equals("/myPage.members")) {
 
 			String email = (String)request.getSession().getAttribute("loginEmail");
