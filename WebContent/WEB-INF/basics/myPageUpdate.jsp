@@ -154,6 +154,7 @@
         </style>
     </head>
     <body>
+<<<<<<< HEAD
 <nav class="navbar navbar-expand-lg navbar-light">
       <div class="logo">
          <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -190,6 +191,29 @@
          </ul>
       </div>
    </nav>
+=======
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<div class="logo">
+			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="toggle">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNav" aria-controls="navbarNav"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav nav-ul">
+				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+				<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+			</ul>
+		</div>
+	</nav>
+>>>>>>> 42096d976b06a1ed03b1744398a0e9dbc9966f8b
       
        <hr style="margin:0px; bordercolor:whitesmoke;">
         <br><br><br>

@@ -190,10 +190,10 @@
 			<div class="contents col-12 m-3 p-3">${result.contents }</div>
 			<div class="btnBox col-md-9 col-sm-7 d-none d-sm-block"></div>
 			<div class="btnBox2 col-md-3 col-sm-5 col-12">
-				<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&&searchOption=allPages&&searchWord=allPages">목록</a>
+				<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&searchOption=allPages&searchWord=allPages">목록</a>
 				<a class="btn btn-primary" href="Main.members">메인</a>
 				<c:if test="${sessionScope.loginEmail == result.email }">
-					<a class="btn btn-primary" href="Main.members">수정</a>
+					<a class="btn btn-primary" href="edit.board?boardNo=${result.boardNo}&currentPage=${currentPage}">수정</a>
 				</c:if>
 			</div>
 		</div>

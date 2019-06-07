@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>도움닿기 - 후원 신청</title>
+<title>도움닿기 - 글 수정</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 
@@ -115,77 +115,37 @@
 		</div>
 	</div>
 	<div id="wrapper" class="container">	
-		<form action="writer.board" method="post" id="myform" enctype="multipart/form-data" accept-charset="UTF-8" name="fileCheck">
+		<form action="editCompleted.board?boardNo=${result.boardNo}&currentPage=${currentPage}&commentPage=1" method="post" id="myform">
 			<div class="form-group">
-				<div class="noti mb-2">제목은 한눈에 쏙 들어오게!</div>
-				<input id="myTitle" type="text" class="form-control" name="title" placeholder="제목은 최대 22자 까지만 가능합니다 :)" required>
+				<div class=" noti mb-2">작성자 : ${result.writer}</div>
+			</div>
+			<div class="form-group">
+				<div class=" noti mb-2">목표 금액 : ${amount} 원</div>
+			</div>
+			<div class="form-group">
+				<div class=" noti mb-2">마감일 : ${duedate}</div>
+			</div>
+			<div class="form-group">
+				<div class=" noti mb-2">후원 계좌 : ${result.bank}은행  ${result.account}</div>
+			</div>
+			<p></p>
+			<div class="form-group">
+				<div class="noti mb-2">제목을 수정해 주세요. </div>
+				<input id="myTitle" type="text" class="form-control" name="title" placeholder="제목은 최대 22자 까지만 가능합니다 :)" required value="${result.title}">
 			</div>
 			<div class="form-group">
 				<div id="wrongTitle" class="issue"></div>
 			</div>
-			<div class="form-group"> 
-				<div class="noti mb-2">대표 사진은 신중하게 골라서!</div>
-				<div class="custom-file mb-1">
-			      <input id="myTitleImg" type="file" class="custom-file-input" id="customFile" name="filename">
-			      <label class="custom-file-label text-left" for="customFile">용량은 10MB까지만 올릴 수 있어요:)</label>
-			    </div>
-			</div>
 			<div class="form-group">
-				<div class=" noti mb-2">작성자는 실명으로!</div>
-				<input id="myWriter" type="text" class="form-control" name="writer" placeholder="신뢰를 바탕으로 모금액이 모이기 때문에 실명을 입력해 주세요 :)" required>
-			</div>
-			<div class="form-group">
-				<div id="wrongName" class="issue"></div>
-			</div>
-			<div class="form-group">
-				<div class=" noti mb-2">목표 금액은 최소 10,000원 이상 최대 10,000,000원까지!</div>
-				<input id="myAmount" type="number" class="form-control" name="amount" placeholder="한번 입력된 금액은 변경할 수 없어요 :)" min="10000" max="10000000" required>
-			</div>
-			<div class="form-group">
-				<div id="lessAmount" class="issue"></div>
-			</div>
-			<div class="form-group">
-				<div class=" noti mb-2">마감일은 내가 원하는 대로!</div>
-				<input id="myDueDate" type="date" class="form-control" name="dueDate" required>
-			</div>
-			<div class="form-group">
-				<div id="today" class="issue"></div>
-			</div>
-			<div class="form-group">
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<label class="mt-1 mr-2 noti">후원받을 계좌는 본인 계좌만 가능합니다!</label>
-					</div>
-				    <select class="custom-select" name="select">
-					    <option value="신한" selected>신한</option>
-						<option value="국민">국민</option>
-						<option value="농협">농협</option>
-						<option value="우리">우리</option>
-						<option value="기업">기업</option>
-						<option value="하나">하나</option>
-						<option value="부산">부산</option>
-						<option value="경남">경남</option>
-						<option value="SC">SC</option>
-						<option value="수협">수협</option>
-						<option value="우체국">우체국</option>
-						<option value="카카오">카카오</option>
-				    </select>
-				</div>
-				<input id="myAccount" type="text" class="form-control m-0" name="account" placeholder="계좌번호 '-' 제외하고 입력" required>
-			</div>
-			<div class="form-group">
-				<div id="wrongAccount" class="issue"></div>
-			</div>
-			<div class="form-group">
-				<div class="mb-2 noti">내용을 자유롭게 작성해 주세요 :) 사진을 추가로 올리는 것도 가능합니다.</div>
+				<div class="mb-2 noti">내용을 자유롭게 수정해 주세요 :)</div>
 			</div>
 			<div id="content">	
-				<div id="summernote" contenteditable="true"></div>
+				<div id="summernote" contenteditable="true">${result.contents}</div>
 				<input id="myContent" type="hidden" name="contents">
 			</div>
 			<div id="all-btns">
 				<div class="btns">
-					<input type="button" id="sendit" class="btn btn-sm btn-primary" value="등록">
+					<input type="button" id="sendit" class="btn btn-sm btn-primary" value="수정">
 				</div>
 				<div class="btns">
 					<input type="button" id="cancel" class="btn btn-sm btn-primary" value="취소">
@@ -222,108 +182,42 @@
 	        }
 		})
 		
-		$("#myWriter").on("input", function(){
-			var writer = $("#myWriter").val();
-			var regex = /^[가-힣]{2,5}$/g
-			
-			var result = regex.exec(writer);
-	        if(result == null){
-	             $("#wrongName").html("잘못된 이름 형식입니다.");
-	        }else{
-	        	 $("#wrongName").html("");
-	        }
-		})
-	
-		$("#myAmount").on("input", function(){
-			var amount = parseInt($("#myAmount").val());
-			if(amount < 10000){
-				$("#lessAmount").html("10,000원 이상의 금액을 입력해주세요.");
-			}else if(amount > 10000000){
-				$("#lessAmount").html("10,000,000원 이하의 금액을 입력해주세요.");
-			}else{
-				$("#lessAmount").html("");	
-			}
-		})
-        
-        $("#myDueDate").on("change",function(){
-            var today = new Date();
-            var dueDate = $(this).val();
-            var dueArr = dueDate.split("-");
-            var dateObj = new Date(dueArr[0], Number(dueArr[1])-1, dueArr[2]);
-            
-            var between = Math.ceil((dateObj.getTime() - today.getTime())/1000/60/60/24);
-            if(between < 7){
-            	$("#today").html("마감일은 일주일 이후의 날짜로 선택해주세요.");
-            }else{
-            	$("#today").html("");
-            }
-        })
-        
-        $("#myAccount").on("input",function(){
-        	var account = $("#myAccount").val();
-        	var regex = /^[\d]{12,15}$/g
-    			
-			var result = regex.exec(account);
-	        if(result == null){
-	             $("#wrongAccount").html("잘못된 계좌번호 형식입니다.");
-	        }else{
-	        	 $("#wrongAccount").html("");
-	        }
-        })
-	
-		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
-	    	$("img").each(function(index, item){
-	    		var src = $(this).attr("src");
-	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
-	    		}else if(src == null){
-	    		}else{
-	    			$.ajax({
-						url: "deleteImage.board",
-						data: {src : src},
-						type: "POST",
-						cache: false
-					})	
-	    		}
-	    	})
-	    });
-	
-		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
+		$("#sendit").on("click", function(){
 			var title = $("#myTitle").val();
 			var titleRegex = /^[가-힣 .,:;()!^?~0-9\"\']{5,22}$/g
 			var result1 = titleRegex.exec(title);
 			
-			var writer = $("#myWriter").val();
-			var writerRegex = /^[가-힣]{2,5}$/g
-			var result2 = writerRegex.exec(writer);
-			
-			var today = new Date();
-            var dueDate = $("#myDueDate").val();
-            var dueArr = dueDate.split("-");
-            var dateObj = new Date(dueArr[0], Number(dueArr[1])-1, dueArr[2]);
-            var between = Math.ceil((dateObj.getTime() - today.getTime())/1000/60/60/24);
-            
-            var account = $("#myAccount").val();
-        	var accountRegex = /^[\d]{12,15}$/g
-			var result3 = accountRegex.exec(account);
-			
-			
 			if(result1 == null){
 				alert("제목을 형식에 맞게 작성해 주세요.");
 				$("#myTitle").val("");
-			}else if($("#myTitleImg").val() == ""){
-				alert("대표사진을 입력해주세요.");
-			}else if(result2 == null){
-				alert("이름을 형식에 맞게 작성해 주세요.");
-				$("#myWriter").val("");
-			}else if(parseInt($("#myAmount").val()) < 10000 || parseInt($("#myAmount").val()) > 10000000){
-				alert("목표금액으로 적절한 금액을 입력해주세요.");
-				$("#myAmount").val("");
-			}else if(between < 7){
-				alert("마감일로 적절한 날짜를 입력해주세요.");
-				$("#myDueDate").val("");
-			}else if(result3 == null){
-				alert("계좌번호는 12~15글자만 가능합니다.");
-				$("#myAccount").val("");
+			}else if($(".note-editable").html() == "<p><br></p>"){
+				alert("내용을 입력해주세요.");
+			}else{
+				$("#myContent").val($(".note-editable").html());
+		        $("#myform").submit();	
+			}
+		})
+	
+// 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
+// 	    	$("img").each(function(index, item){
+// 	    		var src = $(this).attr("src");
+// 	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
+// 	    		}else if(src == null){
+// 	    		}else{
+// 	    			$.ajax({
+// 						url: "deleteImage.board",
+// 						data: {src : src},
+// 						type: "POST",
+// 						cache: false
+// 					})	
+// 	    		}
+// 	    	})
+// 	    })
+	
+		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
+			if($("#myTitle").val().length > 22){
+				alert("제목은 최대 22자까지만 가능합니다.");
+				$(this).val("");
 			}else if($(".note-editable").html() == "<p><br></p>"){
 				alert("내용을 입력해주세요.");
 			}else{
@@ -387,6 +281,7 @@
         }
         
         $("#cancel").on("click", function(){ // 취소 버튼을 눌렀을 때 서버측의 사직 삭제
+        	alert("정말로 취소하시겠습니까?");
         	$("img").each(function(index, item){
         		var src = $(this).attr("src");
         		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){

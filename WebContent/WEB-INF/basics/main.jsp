@@ -70,9 +70,9 @@ body{
 	font-family: "Jua";
 }
 
-	.imgTag{
-		border-radius:10px;
-	}
+.imgTag{
+	border-radius:10px;
+}
 
 .guide{
 	text-align:center;
@@ -96,6 +96,7 @@ body{
 .forArrow{ 
 	line-height:110px;
 }
+<<<<<<< HEAD
 .percentage{
     float : left;
     position: static;
@@ -106,6 +107,8 @@ body{
     top : 2px;   
 }
 
+=======
+>>>>>>> 42096d976b06a1ed03b1744398a0e9dbc9966f8b
 </style>
 </head>
 <body>
