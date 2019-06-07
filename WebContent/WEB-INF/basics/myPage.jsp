@@ -116,6 +116,7 @@ a:hover {
    display: block;
    color: gray;
    line-height: 21px;
+   min-width: 55px;
 }
 
 .first-pw {
@@ -124,6 +125,7 @@ a:hover {
    display: block;
    color: gray;
    line-height: 35px;
+   min-width: 55px;
 }
 
 .first-phone {
@@ -132,6 +134,7 @@ a:hover {
    display: block;
    color: gray;
    line-height: 35px;
+   min-width: 55px;
 }
 
 .second {
@@ -202,13 +205,17 @@ a:hover {
    .page-link{
    color : #1ebdd8;
    }
+   a{
+   color:black;
+   }
 
    </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light">
       <div class="logo">
-         <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+         <a class="navbar-brand anker" href="Main.members"
+            style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
       </div>
       <div id="toggle">
          <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -219,21 +226,25 @@ a:hover {
       </div>
       <div class="collapse navbar-collapse" id="navbarNav">
          <ul class="navbar-nav nav-ul">
-            <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-            <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-            <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
-            <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-            <li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
+            <li class="nav-item nav-li"><a class="nav-link anker"
+               href="Introduce.members">소개</a></li>
+            <li class="nav-item nav-li"><a id="logos"
+               class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+            <li class="nav-item nav-li"><a id="logos"
+               class="nav-link anker"
+               href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원
+                  게시판</a></li>
+            <li class="nav-item nav-li"><a id="logos"
+               class="nav-link anker"
+               href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+            <li class="nav-item nav-li"><a class="nav-link anker"
+               href="Logout.members">로그아웃</a></li>
 
          </ul>
       </div>
    </nav>
 
       <hr style="margin:0px; bordercolor:whitesmoke;">
-   
-   
-   
-   
 <br><br><br>
          <div class="container wrap">
             <h3>내 정보</h3>
@@ -314,7 +325,90 @@ a:hover {
                </div>
             </div>
 
+
+   <br>
+   <br>
+   <br>
+   <div class="container wrap">
+      <h3>내 정보</h3>
+      <hr class="myhr1">
+      <div class="row">
+         <div class="col-2">
+            <span class="first">이메일</span>
          </div>
+         <div class="col-10">
+            <span class="second">${dto.email }</span>
+         </div>
+      </div>
+      <hr>
+      <div class="row">
+         <div class="col-2">
+            <span class="first">이름</span>
+         </div>
+         <div class="col-10">
+            <span class="second">${dto.name }</span>
+         </div>
+      </div>
+      <hr>
+      <div class="row">
+         <div class="col-2">
+            <span class="first-phone">연락처</span>
+         </div>
+         <div class="col-10">
+            <span><form class="form-inline">
+                  <div class="form-group">
+                     <span class="second">${dto.phone }</span>
+                  </div>
+               </form></span>
+         </div>
+      </div>
+
+      <hr>
+      <div class="row">
+         <div class="col-2">
+            <span class="first-pw">주소</span>
+         </div>
+         <div class="col-10">
+            <span><form class="form-inline">
+                  <div class="form-group">
+                     <span class="second">${dto.zipCode }</span>
+                  </div>
+               </form></span>
+         </div>
+      </div>
+      <br>
+      <div class="row">
+         <div class="col-2">
+            <span class="first-pw"></span>
+         </div>
+         <div class="col-10">
+            <span><form class="form-inline">
+                  <div class="form-group">
+                     <span class="second">${dto.address1 }</span>
+                  </div>
+               </form></span>
+         </div>
+      </div>
+      <br>
+
+      <div class="row">
+         <div class="col-2"></div>
+         <div class="col-10">
+            <span><form class="form-inline">
+                  <div class="form-group">
+                     <span class="second">${dto.address2 }</span>
+                  </div>
+               </form></span>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-12">
+            <a href="myPageUpdateLocation.members"><button type="button"
+                  class="btn btn-info update">정보 수정</button></a>
+         </div>
+      </div>
+
+   </div>
    <br>
    <br>
    <br>
@@ -324,7 +418,8 @@ a:hover {
       <!--    <hr  class="mySupportList"> -->
       <div class="container">
          <div class="row head">
-            <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none">글
+            <div
+               class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none minwidth">글
                번호</div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">후원
                명</div>
@@ -337,14 +432,21 @@ a:hover {
          <div class="row contents">
             <c:forEach var="myDonateContents" items="${myDonateContents }">
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
+<<<<<<< HEAD
                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents.boardNo }&currentPage=1&commentPage=1">${myDonateContents.boardTitle }</a></div>
+=======
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                  <a
+                     href="Read.board?boardNo=${myDonateContents.boardNo }&currentPage=1&commentPage=1">${myDonateContents.boardTitle }</a>
+               </div>
+>>>>>>> 0d9ff5f13220dfb5e7e6b2a7b26e863f025e825f
                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.paymentDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.boardWriter }</div>
                <hr>
             </c:forEach>
          </div>
-         <br><br>
+         <br> <br>
          <div class="row  p-0 m-0" class="numBox">
             <div class="col-12 d-flex justify-content-center">
                <nav aria-label="Page navigation example">
@@ -362,9 +464,13 @@ a:hover {
       <hr class="myhr1">
       <div class="container">
          <div class="row head">
-            <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none">글 번호</div>
-            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">글 제목</div>
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">모인 금액</div>
+            <div
+               class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none minwidth">글
+               번호</div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">글
+               제목</div>
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">모인
+               금액</div>
             <div class="col-xl-2 col-lg-2 d-none d-lg-block">작성일</div>
             <div class="col-xl-2 col-lg-2 d-lg-block d-none">조회수</div>
          </div>
@@ -372,7 +478,14 @@ a:hover {
          <div class="row contents">
             <c:forEach var="myDonateContents2" items="${myDonateContents2 }">
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
+<<<<<<< HEAD
                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents2.boardNo }&currentPage=1&commentPage=1">${myDonateContents2.title }</a></div>
+=======
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                  <a
+                     href="Read.board?boardNo=${myDonateContents2.boardNo }&currentPage=1&commentPage=1">${myDonateContents2.title }</a>
+               </div>
+>>>>>>> 0d9ff5f13220dfb5e7e6b2a7b26e863f025e825f
                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.writeDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.viewCount }</div>
@@ -380,7 +493,7 @@ a:hover {
             </c:forEach>
          </div>
       </div>
-      <br><br>
+      <br> <br>
       <div class="row  p-0 m-0" class="numBox">
          <div class="col-12 d-flex justify-content-center">
             <nav aria-label="Page navigation example">
@@ -392,20 +505,39 @@ a:hover {
    </div>
    <br>
    <br>
-      <div id="footer">
+   <div id="footer">
       <div id="f_logo_wrap">
-         <a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+         <a id="f_logo" href="Main.members"
+            style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
       </div>
       <div id="f_info_wrap">
-         <div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
+         <div id="f_info">
+            행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
+         </div>
       </div>
       <div id="f_sns">
-         <img id="kakao" class="sns" src="photo_image/ka.png">
-         <img class="sns" src="photo_image/fa.png">
-         <img id="insta" class="sns" src="photo_image/kk.png">
-         <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
+         <img id="kakao" class="sns" src="photo_image/ka.png"> <img
+            class="sns" src="photo_image/fa.png"> <img id="insta"
+            class="sns" src="photo_image/kk.png"> <a
+            href="checkLogin.members"><div id="suggest">후원 신청</div></a>
       </div>
       <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
    </div>
 </body>
+<script type="text/javascript">
+
+$(".pageNumber1").each(function(item){
+	if(${currentPage1} == $(this).text()){
+		$(this).css("background-color", "#1ebdd8");
+		$(this).css("color", "white");
+	}
+})
+$(".pageNumber2").each(function(item){
+	if(${currentPage2} == $(this).text()){
+		$(this).css("background-color", "#1ebdd8");
+		$(this).css("color", "white");
+	}
+})
+
+</script>
 </html>

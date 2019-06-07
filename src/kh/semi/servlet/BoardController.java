@@ -200,7 +200,9 @@ public class BoardController extends HttpServlet {
 				String test = (String)request.getSession().getAttribute("flag");
 				if(test.equals("false")) {
 					String rootPath = this.getServletContext().getRealPath("/");
+					System.out.println("rootPath: " + rootPath);
 					String fileUrl = request.getParameter("src");
+					System.out.println("fileUrl: " + fileUrl);
 					String filePath = null;
 					if(fileUrl.startsWith("http")) {
 						filePath = fileUrl.replaceAll("http://.+?/", "");
@@ -244,6 +246,7 @@ public class BoardController extends HttpServlet {
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
 				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
 //				String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
+//				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
@@ -270,6 +273,35 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("title", title);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("WEB-INF/boards/payment.jsp").forward(request, response);
+				
+			}else if(cmd.equals("/edit.board")) {
+				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				BoardDTO article = dao.selectOneArticle(boardNo);
+				DecimalFormat Commas = new DecimalFormat("#,###,###");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				request.setAttribute("amount", Commas.format(article.getAmount()));
+				request.setAttribute("duedate", sdf.format(article.getDueDate()));
+				request.setAttribute("currentPage", currentPage);
+				request.setAttribute("result", article);
+				request.getRequestDispatcher("/WEB-INF/boards/edit.jsp").forward(request, response);
+				
+			}else if(cmd.equals("/editCompleted.board")) {
+				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
+				String title = request.getParameter("title");
+				String content = request.getParameter("contents");
+				int result = dao.updatedEditing(boardNo, title, content);
+				request.setAttribute("boardNo", boardNo);
+				request.setAttribute("currentPage", currentPage);
+				request.setAttribute("commentPage", commentPage);
+				if(result > 0) {
+					request.getRequestDispatcher("Read.board").forward(request, response);
+				}else {
+					request.setAttribute("fail", 1);
+					request.getRequestDispatcher("List.board").forward(request, response);
+				}
 				
 			}else if(cmd.equals("/List.board")){ //후원 게시판 목록
 				try {
@@ -301,6 +333,8 @@ public class BoardController extends HttpServlet {
 						//String folder = path.replaceAll("D.+?3.+?",""); //지혜껀가
 //						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
+//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
+//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();
@@ -312,7 +346,7 @@ public class BoardController extends HttpServlet {
 						request.setAttribute("sumAmount", sumAmountArr);	
 					}
 					request.setAttribute("board", result);
-
+					request.setAttribute("fail", request.getParameter("fail"));
 					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord));
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
 

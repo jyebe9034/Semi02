@@ -165,6 +165,19 @@ public class BoardDAO {
 			return null;
 		}
 	}
+	
+	public int updatedEditing(int boardNo, String title, String content) throws Exception {
+		String sql = "update board set b_title=?, b_contents=? where b_no=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, title);
+			pstat.setString(2, content);
+			pstat.setInt(3, boardNo);
+			int result = pstat.executeUpdate();
+			return result;
+		}
+	}
 
 //*게시판*//==============================================================================================================================
 	//totalCount//전체글개수----------------
@@ -321,10 +334,6 @@ public class BoardDAO {
 			if(endNavi > pageTotalCount) {
 				endNavi = pageTotalCount;
 			}
-			
-			System.out.println("현재 위치 : " + currentPage);
-			System.out.println("네비 시작 : " + startNavi);
-			System.out.println("네비 끝 : " + endNavi);
 			
 			boolean needPrev = true;
 			boolean needNext = true;
