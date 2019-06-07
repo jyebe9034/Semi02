@@ -189,7 +189,8 @@
 			
 			if(result1 == null){
 				alert("제목을 형식에 맞게 작성해 주세요.");
-				$("#myTitle").val("");
+			}else if($("#myTitle").val().length > 22){
+				alert("제목은 최대 22자 까지만 가능합니다.");
 			}else if($(".note-editable").html() == "<p><br></p>"){
 				alert("내용을 입력해주세요.");
 			}else{

@@ -154,133 +154,238 @@
         </style>
     </head>
     <body>
-	<nav class="navbar navbar-expand-lg navbar-light">
-		<div class="logo">
-			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-		</div>
-		<div id="toggle">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarNav" aria-controls="navbarNav"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-		</div>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav nav-ul">
-				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-				<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
-			</ul>
-		</div>
-	</nav>
-      
-       <hr style="margin:0px; bordercolor:whitesmoke;">
-        <br><br><br>
+   <nav class="navbar navbar-expand-md navbar-light">
+      <div class="logo">
+         <a class="navbar-brand anker" href="Main.members"
+            style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+      </div>
+      <div id="toggle">
+         <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+         <ul class="navbar-nav nav-ul">
+            <li class="nav-item nav-li"><a class="nav-link anker"
+               href="Introduce.members">소개</a></li>
+            <li class="nav-item nav-li"><a id="logos"
+               class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
+            <li class="nav-item nav-li"><a id="logos"
+               class="nav-link anker"
+               href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원
+                  게시판</a></li>
+            <li class="nav-item nav-li"><a id="logos"
+               class="nav-link anker"
+               href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
+            <li class="nav-item nav-li"><a class="nav-link anker"
+               href="Logout.members">로그아웃</a></li>
+         </ul>
+      </div>
+   </nav>
 
-        <form action="myPageUpdate.members" id="myPageUpdateForm" method="post">
-            <div class="container wrap">
-                <h3>내 정보 관리</h3>
-                <br>
-                <p class="ml-3">*표시는 필수항목입니다.</p>
-                <br>
-                <div class="row">
-                    <div class="col-2 d-md-block d-none"><span class="first">이메일</span></div>
-                    <div class="col-10 "><span class="second">${dto.email }</span></div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-2 d-md-block d-none"><span class="first">이름</span></div>
-                    <div class="col-10"><span class="second">${dto.name }</span></div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-2 d-md-block d-none"><span class="first-phone first">연락처</span></div>
+   <hr style="margin: 0px; bordercolor: whitesmoke;">
+   <br>
+   <br>
+   <br>
 
-                    <div class="col-10"><span><span class="form-inline">
-                        <div class="form-group">
-                            <input type="text" class="form-control mx-sm-3 second" name="phone" id="phone" value="${dto.phone }">
-                        </div>
-                        </span></span></div>
-                </div>
-                <hr>
-                <c:if test="${dto.pw != null }">
-					<div class="row">
-						<div class="col-2 d-md-block d-none"><span class="first-pw first">*비밀번호</span></div>
-						<div class="col-10"><span><span class="form-inline">
-						<div class="form-group">
-							<input type="password" id="inputPassword" class="form-control mx-sm-3 second" aria-describedby="passwordHelpInline" required>
-							<small id="pw_form" class="text-mute"></small>
-						</div></span></span></div>
-              	  </div>
-              	  <br>
-              	  <div class="row">
-              	      <div class="col-2 d-md-block d-none"><span class="first-pw" style="font-size:11px"><!-- (현재 비밀번호 또는 변경하실 비밀번호) --></span></div>
-              	      <div class="col-10"><span><span class="form-inline">
-              	          <div class="form-group">
-              	              <input type="password" id="inputPasswordCheck" class="second form-control mx-sm-3" aria-describedby="passwordHelpInline" name="pw" required>
-              	              <small id="pw_match" class="text-mute"></small>
-              	          </div>
-              	          </span></span></div>
-              	  </div>
-              	  <hr>
-                </c:if>
-                <div class="row">
-                    <div class="col-2"><span class="first-pw first">주소</span></div>
-                    <div class="col-10"><span><span class="form-inline">
-                        <div class="form-group">
-                            <input type="text" id="zipcode" class="form-control mx-sm-3 second" readonly value="${dto.zipCode }" name="zipcode">
-                            <button type="button" class="btn btn-info d-sm-block d-none" id="addressbt">찾기</button>
-                        </div>
-                        </span></span></div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-2"><span class="first-pw"></span></div>
-                    <div class="col-10"><span><span class="form-inline">
-                        <div class="form-group">
-                            <input type="text" id="address1" class="second form-control mx-sm-3" value="${dto.address1 }" name="address1">
-                        </div>
-                        </span></span></div>
-                </div>
-                <br>
+   <form action="myPageUpdate.members" id="myPageUpdateForm" method="post">
+      <div class="container wrap">
+         <h3>내 정보 관리</h3>
+         <br>
+         <c:if test="${dto.pw != null }">
+            <p class="ml-3">*표시는 필수항목입니다.</p>
+            <br>
+         </c:if>
 
-                <div class="row">
-                    <div class="col-2"><span class="first-pw first d-md-block d-none">상세 주소</span></div>
-                    <div class="col-10"><span><span class="form-inline">
-                        <div class="form-group">
-                            <input type="text" id="address2" class="second form-control mx-sm-3" name="address2" value="${dto.address2 }">
-
-                        </div>
-                        </span></span></div>
-                </div>
-                <div class="row"><div class="col-12">
-                    <input type="button" class="btn btn-info update" id="update" value="수정 하기"></input>
-                </div>
+         <div class="row">
+            <div class="col-2 d-md-block d-none">
+               <span class="first">이메일</span>
             </div>
+            <div class="col-10 ">
+               <span class="second">${dto.email }</span>
             </div>
-        </form>
-<br><br>
-		<div id="footer">
-			<div id="f_logo_wrap">
-				<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-			</div>
-			<div id="f_info_wrap">
-				<div id="f_info">행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.</div>
-			</div>
-			<div id="f_sns">
-				<img id="kakao" class="sns" src="photo_image/ka.png">
-				<img class="sns" src="photo_image/fa.png">
-				<img id="insta" class="sns" src="photo_image/kk.png">
-				<a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
-			</div>
-			<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
-		</div>
-    <script>
+         </div>
+         <hr>
+         <div class="row">
+            <div class="col-2 d-md-block d-none">
+               <span class="first">이름</span>
+            </div>
+            <div class="col-10">
+               <span class="second">${dto.name }</span>
+            </div>
+         </div>
+         <hr>
+         <div class="row">
+            <div class="col-2 d-md-block d-none">
+               <span class="first">연락처</span>
+            </div>
+
+            <div class="col-10">   
+               <span><span class="form-inline">
+                     <div class="form-group">
+                        <input type="text" class="form-control mx-sm-3 second"
+                           name="phone" id="phone" value="${dto.phone }" maxlength="13">
+                     </div>
+               </span></span>
+            </div>
+         </div>
+         <hr>
+         <c:if test="${dto.pw != null }">
+            <div class="row">
+               <div class="col-2 d-md-block d-none">
+                  <span class="first-pw first">*비밀번호</span>
+               </div>
+               <div class="col-10">
+                  <span><span class="form-inline">
+                        <div class="form-group">
+                           <input type="password" id="inputPassword"
+                              class="form-control mx-sm-3 second"
+                              aria-describedby="passwordHelpInline" required> <small
+                              id="pw_form" class="text-mute"></small>
+                        </div>
+                  </span></span>
+               </div>
+            </div>
+            <br>
+            <div class="row">
+               <div class="col-2 d-md-block d-none">
+                  <span class="first-pw" style="font-size: 11px"> <!-- (현재 비밀번호 또는 변경하실 비밀번호) -->
+                  </span>
+               </div>
+               <div class="col-10">
+                  <span><span class="form-inline">
+                        <div class="form-group">
+                           <input type="password" id="inputPasswordCheck"
+                              class="second form-control mx-sm-3"
+                              aria-describedby="passwordHelpInline" name="pw" required>
+                           <small id="pw_match" class="text-mute"></small>
+                        </div>
+                  </span></span>
+               </div>
+            </div>
+            <hr>
+         </c:if>
+         <div class="row">
+            <div class="col-2">
+               <span class="first-pw first">주소</span>
+            </div>
+            <div class="col-10">
+               <span><span class="form-inline">
+                     <div class="form-group">
+                        <input type="text" id="zipcode"
+                           class="form-control mx-sm-3 second" readonly
+                           value="${dto.zipCode }" name="zipcode">
+                        <button type="button" class="btn btn-info d-sm-block d-none"
+                           id="addressbt">찾기</button>
+                     </div>
+               </span></span>
+            </div>
+         </div>
+         <br>
+         <div class="row">
+            <div class="col-2">
+               <span class="first-pw"></span>
+            </div>
+            <div class="col-10">
+               <span><span class="form-inline">
+                     <div class="form-group">
+                        <input type="text" id="address1"
+                           class="second form-control mx-sm-3" value="${dto.address1 }"
+                           name="address1" maxlength="20">
+                     </div>
+               </span></span>
+            </div>
+         </div>
+         <br>
+
+         <div class="row">
+            <div class="col-2">
+               <span class="first-pw first d-md-block d-none">상세 주소</span>
+            </div>
+            <div class="col-10">
+               <span><span class="form-inline">
+                     <div class="form-group">
+                        <input type="text" id="address2"
+                           class="second form-control mx-sm-3" name="address2"
+                           value="${dto.address2 }" maxlength="20">
+
+                     </div>
+               </span></span>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-12">
+               <input type="button" class="btn btn-info update" id="update"
+                  value="수정 하기"></input>
+            </div>
+         </div>
+      </div>
+   </form>
+   <br>
+   <br>
+   <div id="footer">
+      <div id="f_logo_wrap">
+         <a id="f_logo" href="Main.members"
+            style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+      </div>
+      <div id="f_info_wrap">
+         <div id="f_info">
+            행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
+         </div>
+      </div>
+      <div id="f_sns">
+         <img id="kakao" class="sns" src="photo_image/ka.png"> <img
+            class="sns" src="photo_image/fa.png"> <img id="insta"
+            class="sns" src="photo_image/kk.png"> <a
+            href="checkLogin.members"><div id="suggest">후원 신청</div></a>
+      </div>
+      <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+   </div>
+   <script>
+    
+    
+    function autoHypenPhone(str){
+        str = str.replace(/[^0-9]/g, '');
+        var tmp = '';
+        if( str.length < 4){
+            return str;
+        }else if(str.length < 7){
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3);
+            return tmp;
+        }else if(str.length < 11){
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3, 3);
+            tmp += '-';
+            tmp += str.substr(6);
+            return tmp;
+        }else{              
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3, 4);
+            tmp += '-';
+            tmp += str.substr(7);
+            return tmp;
+        }
+        return str;
+    }
+
+var cellPhone = document.getElementById('phone');
+cellPhone.onkeyup = function(event){
+    event = event || window.event;
+    var _val = this.value.trim();
+    this.value = autoHypenPhone(_val) ;
+}
+    
+    
+    
         document.getElementById("update").onclick=function(){
-        	if(${dto.pw != null}){
-        		pw1 = document.getElementById("inputPassword").value;
+           if(${dto.pw != null}){
+              pw1 = document.getElementById("inputPassword").value;
                 pw2 = document.getElementById("inputPasswordCheck").value;
 
                 if(pw1 == "" || pw2 == ""){
@@ -298,7 +403,7 @@
                     alert("패스워드를 확인해주세요");
                     return;
                 }
-        	}
+           }
             $("#myPageUpdateForm").submit();
             
         }
@@ -381,5 +486,5 @@
         }
 
     </script>
-    </body>
+</body>
 </html>

@@ -41,11 +41,9 @@ body{
 	background-color: #28a39f;
 	color: #FFF;
 }
-
 .img_carousel {
 	max-height: 700px;
 }
-
 .card {
 	border-radius: 10px;
 	min-width: 300px;

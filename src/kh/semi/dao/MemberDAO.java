@@ -160,8 +160,6 @@ public class MemberDAO {
 		String name = Json_response.get("name").getAsString();
 		String email = Json_response.get("email").getAsString();
 
-		System.out.println(id + name + email);
-
 		MemberDTO dto = new MemberDTO();
 		dto.setEmail(email);
 		dto.setIpAddress(ipaddr);
@@ -382,10 +380,6 @@ public class MemberDAO {
 			endNavi = pageTotalCount;
 		}
 
-		System.out.println("1시작 : 현재 위치 : " + currentPage);
-		System.out.println("네비 시작 : " + startNavi);
-		System.out.println("네비 끝 : " + endNavi);
-
 		boolean needPrev = true;
 		boolean needNext = true;
 
@@ -406,7 +400,7 @@ public class MemberDAO {
 
 		}
 		for (int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage2=1&currentPage=" + i + "\">"
+			sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber1\" href=\"myPage.members?currentPage2=1&currentPage=" + i + "\">"
 					+ i + "</a></li>");
 		}
 		if (needNext) {
@@ -445,10 +439,6 @@ public class MemberDAO {
 			endNavi = pageTotalCount;
 		}
 
-		System.out.println("2시작 : 현재 위치 : " + currentPage2);
-		System.out.println("네비 시작 : " + startNavi);
-		System.out.println("네비 끝 : " + endNavi);
-
 		boolean needPrev = true;
 		boolean needNext = true;
 
@@ -469,7 +459,7 @@ public class MemberDAO {
 
 		}
 		for (int i = startNavi; i <= endNavi; i++) {
-			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"myPage.members?currentPage=1&currentPage2=" + i + "\">"
+			sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber2\" href=\"myPage.members?currentPage=1&currentPage2=" + i + "\">"
 					+ i + "</a></li>");
 		}
 		if (needNext) {

@@ -14,7 +14,6 @@
 
 <link rel="stylesheet" href="nav_footer.css">
 <style>
-<style>
    .progress {
       width: 200px;
    }
@@ -157,7 +156,6 @@
    .check{
       margin-left:auto;
    }
-</style>
 </style>
 <script>
 	$(function(){
