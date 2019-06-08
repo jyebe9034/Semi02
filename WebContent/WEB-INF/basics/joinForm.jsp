@@ -329,7 +329,7 @@ cellPhone.onkeyup = function(event){
 
       document.getElementById("inputPassword").oninput = function() {
          var inputPw = document.getElementById("inputPassword").value;
-         var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+         var regex = /^.*(?=^.{8,25}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
          var result = regex.exec(inputPw);
          if (result == null) {
             document.getElementById("pw_form").innerHTML = "8자 이상 영문,숫자,특수문자를 사용하세요.";

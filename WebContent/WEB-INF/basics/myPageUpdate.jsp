@@ -169,7 +169,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 			</ul>
@@ -381,7 +381,7 @@ cellPhone.onkeyup = function(event){
                     return;
                 }
                 var inputPw = document.getElementById("inputPassword").value;
-                var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+                var regex = /^.*(?=^.{8,25}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
                 var result = regex.exec(inputPw);
                 if (result == null) {
                     alert("패스워드를 확인해주세요.")

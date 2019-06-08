@@ -282,21 +282,22 @@
         }
         
         $("#cancel").on("click", function(){ // 취소 버튼을 눌렀을 때 서버측의 사직 삭제
-        	alert("정말로 취소하시겠습니까?");
-        	$("img").each(function(index, item){
-        		var src = $(this).attr("src");
-        		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
-        		}else if(src == null){
-        		}else{
-        			$.ajax({
-        				url: "deleteImage.board",
-        				data: {src : src},
-        				type: "POST",
-        				cache: false
-        			})	
-        		}
-        	})
-        	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";
+        	if(confirm("작성된 글이 모두 삭제됩니다. 정말로 취소하시겠습니까?")){
+        		$("img").each(function(index, item){
+            		var src = $(this).attr("src");
+            		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
+            		}else if(src == null){
+            		}else{
+            			$.ajax({
+            				url: "deleteImage.board",
+            				data: {src : src},
+            				type: "POST",
+            				cache: false
+            			})	
+            		}
+            	})
+            	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";	
+        	}
         })
 	</script>
 </body>

@@ -112,6 +112,7 @@ public class BoardController extends HttpServlet {
 						oldFile.delete();
 					}
 					
+					dto.setTitle(multi.getParameter("title"));
 					dto.setWriter(multi.getParameter("writer"));
 					dto.setAmount(Integer.parseInt(multi.getParameter("amount")));
 					String duedate = multi.getParameter("dueDate") + " " + sdf.format(currentTime);
@@ -235,13 +236,6 @@ public class BoardController extends HttpServlet {
 				request.setCharacterEncoding("UTF-8");
 
 				String str = titleImg.getFilePath();
-
-				//	String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
-//				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
-				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
-				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
-				//String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 				
 				DecimalFormat Commas = new DecimalFormat("#,###,###");

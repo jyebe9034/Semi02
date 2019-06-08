@@ -26,8 +26,9 @@
    .boardName {
       text-align: center;
       margin: 50px;
-      font-family: "Do Hyeon";
+      font-family: "Nanum Gothic";
       font-size: 50px;
+      font-weight: bold;
       color: darkslategray;
    }
    
@@ -248,7 +249,7 @@
    </nav>
    <hr style="margin:0px;">
    <div class="boardName">
-      <p>게시판</p>
+      <p>후원 게시판</p>
    </div>
 
 <!--검색창-->
