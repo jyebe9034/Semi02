@@ -251,7 +251,6 @@
    <div class="boardName">
       <p>후원 게시판</p>
    </div>
-
 <!--검색창-->
    <div id="wrapper" class="container searchBox">
 		<div class="row d-flex justify-content-end">
@@ -265,92 +264,90 @@
 			<button type="submit" class="btn searchBtn">검색</button>
 		</div>
 	</div>
-
-	<!--글목록-->
-	<form action="BoardWriteDelete.manager">
-	<c:choose>
-		<c:when test="${totalRecordCount<1}">
-			<div class="row noneListRow">
-				<div class="col-12">
-					<p>검색어 : ${searchWord }</p>
-					<p>검색 결과가 없습니다.</p>
-				</div>
-			</div>
-		</c:when>
-		<c:otherwise>
-				<div class="row listRow">
-					<c:forEach var="list" items="${board }" varStatus="status">
-						<div class="col-lg-3 col-md-6 col-sm-12">
-							<c:if test="${sessionScope.admin!=null}">
-								<div class="check">
-									<input type="checkbox" name="checkDelete"
-										value="${list.boardNo }">
-								</div>
-							</c:if>
-							<div class="card list">
-								<img src="${list.newFilePath}">
-								<div class="card-body article" boardNo="${list.boardNo}">
-									<h5 class="card-title title">${list.title }</h5>
-									<p class="card-text writer">${list.writer }</p>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar"
-											style="width: ${list.percentage}%;" aria-valuemin="0"
-											aria-valuemax="100"></div>
-
-									</div>
-									<div class="percentage">
-										<small class="text-muted amount">${list.percentage }%</small>
-									</div>
-									<div class="amount d-flex justify-content-end">
-										<small class="text-muted amount">${sumAmount[status.index]}원</small>
-									</div>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</div>
-		</c:otherwise>
-	</c:choose>
+      <!--글목록-->
+      <c:choose>
+         <c:when test="${totalRecordCount<1}">
+            <div class="row noneListRow">
+              <div class="col-12">
+                 <p>검색어 : ${searchWord }</p> 
+                  <p>검색 결과가 없습니다.</p>
+               </div>
+            </div>
+         </c:when>
+         <c:otherwise>
+            <form action="BoardWriteDelete.manager">
+               <div class="row listRow">
+                  <c:forEach var="list" items="${board }" varStatus="status">
+                     <div class="col-lg-3 col-md-6 col-sm-12">
+                     <c:if test="${sessionScope.admin!=null}">       
+                        <div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
+                     </c:if> 
+                        <div class="card list">
+                           <img src="${list.newFilePath}"> 
+                           <div class="card-body article" boardNo="${list.boardNo}">
+                              <h5 class="card-title title">${list.title }</h5>
+                              <p class="card-text writer">${list.writer }</p>
+                              <div class="progress">
+                            <div class="progress-bar" role="progressbar" 
+                            style="width: ${list.percentage}%;" aria-valuemin="0" 
+                            aria-valuemax="100"></div>
+ 
+                              </div>
+                              <div class="percentage">
+                                 <small class="text-muted amount">${list.percentage }%</small>
+                              </div>
+                              <div class="amount d-flex justify-content-end">
+                                 <small class="text-muted amount">${sumAmount[status.index]}원</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </c:forEach>
+               </div>
+         </c:otherwise>   
+      </c:choose>
+      
+   <!--페이지네비게이터 -->
+      <div class="row  p-0 m-0" id="num_box">
+         <div class="col-12 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+               <ul class="pagination pagination-sm">
+                        ${getNavi }
+               </ul>
+            </nav>      
+         </div>
+      </div>
+   <!--하단 버튼들 -->
+   <div class="row p-0 m-0" id="bottom">
+      <div class="col-12 bottonBtns d-flex justify-content-center">
+         <button type="button" class="btn" id="goMainBtn">메인으로</button>
+         <c:if test="${sessionScope.admin==null}">
+         <button type="button" class="btn" id="writeBtn">글쓰기</button>
+         </c:if>
+         <c:if test="${sessionScope.admin!=null}">
+         <button type="submit" class="btn" id="deleteBtn">삭제</button>
+         </c:if>
+      </div>
+   </div>
+   </form>
    
-	<!--페이지네비게이터 -->
-	<div class="row  p-0 m-0" id="num_box">
-		<div class="col-12 d-flex justify-content-center">
-			<nav aria-label="Page navigation example">
-				<ul class="pagination pagination-sm">${getNavi }</ul>
-			</nav>
-		</div>
-	</div>
-	<!--하단 버튼들 -->
-	<div class="row p-0 m-0" id="bottom">
-		<div class="col-12 bottonBtns d-flex justify-content-center">
-			<button type="button" class="btn" id="goMainBtn">메인으로</button>
-			<c:if test="${sessionScope.admin==null}">
-				<button type="button" class="btn" id="writeBtn">글쓰기</button>
-			</c:if>
-			<c:if test="${sessionScope.admin!=null}">
-				<button type="submit" class="btn" id="deleteBtn">삭제</button>
-			</c:if>
-		</div>
-	</div>
-	</form>
-
-
-	<div id="footer">
-		<div id="f_logo_wrap">
-			<a id="f_logo" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-		</div>
-		<div id="f_info_wrap">
-			<div id="f_info">
-				행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
-			</div>
-		</div>
-		<div id="f_sns">
-			<img id="kakao" class="sns" src="photo_image/ka.png"> <img
-				class="sns" src="photo_image/fa.png"> <img id="insta"
-				class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
-		</div>
-		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
-	</div>
+   
+   <div id="footer">
+      <div id="f_logo_wrap">
+         <a id="f_logo" href="Main.members"
+            style="font-family: Cute Font"><h1>도움닿기</h1></a>
+      </div>
+      <div id="f_info_wrap">
+         <div id="f_info">
+            행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
+         </div>
+      </div>
+      <div id="f_sns">
+         <img id="kakao" class="sns" src="photo_image/ka.png"> <img
+            class="sns" src="photo_image/fa.png"> <img id="insta"
+            class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
+      </div>
+      <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+   </div>
 </body>
 </html>

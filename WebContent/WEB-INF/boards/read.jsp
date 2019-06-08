@@ -51,10 +51,9 @@
 	color: #FFF;
 }
 .header{
-	text-align: center;
-	background-image: url(photo_image/titleBackground.PNG);
-	background-size: cover;
-	background-position: center center;
+	border-radius: 20px;
+	margin-top: 15px;
+	color: white;
 }
 .header div{
 	color: #00000080;
@@ -128,11 +127,6 @@
 	color: white;
 	background-color: #00000030;
 }
-/*
-    div{
-        border: 1px solid black;
-    }
-*/
 
 </style>
 </head>
@@ -173,32 +167,30 @@
 		</div>
 	</nav>
 	<hr style="margin:0px;">
-<!-- 	<div class="header row"> -->
-<!-- 		<div class="banner col-md-12 d-none d-md-block m-3"></div> -->
-<!-- 	</div> -->
 	<div class="container">
-		<div class="header row justify-content-center m-3 p-3">
+		<div class="header row justify-content-center p-3">
 			<div><h2>${result.title }</h2></div>
 		</div>
+		<hr>
 		<div class="wrapper row">
-			<div class="col-lg-6 col-12"><img src="${titleImg }" alt="..." id="titleImg"></div>
+			<div id="titleImgBox" class="col-lg-6 col-12"><img src="${titleImg }" alt="..." id="titleImg"></div>
 			<div class="info row col-lg-6 col-12">
-				<div class="col-lg-6 col-12">작성자</div>
-				<div class="col-lg-6 col-12">${result.writer }<hr></div>
-				<div class="col-lg-6 col-12">후원기간</div>
-				<div class="col-lg-6 col-12">${result.formedDate }<hr></div>
-				<div class="col-lg-6 col-12">목표모금액</div>
-				<div class="col-lg-6 col-12">${amount } 원<hr></div>
-				<div class="col-lg-6 col-12">현재모금액</div>
-				<div class="col-lg-6 col-12">${sumAmount } 원<hr></div>
+				<div class="col-lg-6 col-12 p-3">작성자</div>
+				<div class="col-lg-6 col-12 p-3">${result.writer }<hr></div>
+				<div class="col-lg-6 col-12 p-3">후원기간</div>
+				<div class="col-lg-6 col-12 p-3">${result.formedDate }<hr></div>
+				<div class="col-lg-6 col-12 p-3">목표모금액</div>
+				<div class="col-lg-6 col-12 p-3">${amount } 원<hr></div>
+				<div class="col-lg-6 col-12 p-3">현재모금액</div>
+				<div class="col-lg-6 col-12 p-3">${sumAmount } 원</div>
 			</div>
 			<div class="btnBox col-12">
 				<button type="button" class="btn btn-primary donateBtn">후원하기</button>
 				<button type="button" class="btn btn-primary recommendBtn">추천하기</button>
 				<span class="recommend">${result.recommend }</span>
 			</div>
-			<div class="contents col-12 m-3 p-3">${result.contents }</div>
-			<div class="btnBox col-md-9 col-sm-7 d-none d-sm-block"></div>
+			<div class="contents col-12 p-3">${result.contents }</div>
+			<div class="btnBox1 col-md-9 col-sm-7 d-none d-sm-block"></div>
 			<div class="btnBox2 col-md-3 col-sm-5 col-12">
 				<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&searchOption=allPages&searchWord=allPages">목록</a>
 				<a class="btn btn-primary" href="Main.members">메인</a>
@@ -218,7 +210,7 @@
 	    </div>
 	    <div class="commentsBox row col-12">
 	   		<c:forEach var="com" items="${comments }">
-	   			<div class="row col-12 p-3 m-3">
+	   			<div class="row col-12 p-3 m-3 pr-0">
 	    			<div class="col-md-7 col-9 comment">${com.comment }</div>
 	    			<div class="col-md-2 col-2">${com.name }</div>
 	    			<c:choose>
@@ -362,7 +354,7 @@
 								title: "${result.title}"
 							}
 						}).done(function(resp){
-							alert("추천 감사드려요~");
+							alert("추천해주셔서 감사합니다.");
 							$(".recommend").text(resp);
 						});
 					}else{	// 추천을 이미 했으면
@@ -391,12 +383,6 @@
 						}
 					}).done(function(resp){
 						location.reload();
-// 						$("#inputComment").html("");
-// 						$(".commentsBox").prepend("<div class='row col-12 p-3 m-3'></div>");
-// 						$(".commentsBox>div:first-child").prepend("<div class='col-1'><span class='modifyCommentBtn' writeDate='" + resp.writeDate + "'>✎ </span><span class='modifyCompleteBtn' writeDate='" + resp.writeDate + "'></span><span class='deleteCommentBtn' writeDate='" + resp.writeDate +"'>✗</span></div>");
-// 						$(".commentsBox>div:first-child").prepend("<div class='col-md-2 d-none d-md-block'>방금 전</div>");
-// 					    $(".commentsBox>div:first-child").prepend("<div class='col-md-2 col-2'>"+ resp.name +"</div>");
-// 						$(".commentsBox>div:first-child").prepend("<div class='col-md-7 col-9 comment'>"+ resp.comment +"</div>");
 					});
 				}
 			}
@@ -414,7 +400,6 @@
 				}).done(function(resp){
 					if(resp == "1"){
 						alert("삭제되었습니다.");
-// 						$(".commentsBox>div:first-child").css("display", "none");
 						location.reload();
 					}else{
 						alert("삭제하실 수 없습니다.");
@@ -450,10 +435,7 @@
 						writeDate: writeDate
 					}
 				}).done(function(){
-					comment.attr("contenteditable", false);
-					comment.css("border", "none");
-					modifyBtn.text("✎");
-					modifyComplete.text("");
+					location.reload();
 				});
 				return;
 			});

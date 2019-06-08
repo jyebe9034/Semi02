@@ -391,8 +391,8 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/Comment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-				String comment = request.getParameter("comment");
-
+				String comment = request.getParameter("comment").replaceAll("&lt;script&gt;", "").replaceAll("<script>", "");
+				System.out.println(comment);
 				try {
 					String name = mdao.selectByEmail(email).get(0);
 
@@ -411,7 +411,7 @@ public class BoardController extends HttpServlet {
 				pw.print(result);
 			}else if(cmd.equals("/ModifyComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
-				String comment = request.getParameter("comment");
+				String comment = request.getParameter("comment").replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", "");
 				String writeDate = request.getParameter("writeDate");
 
 				try {
