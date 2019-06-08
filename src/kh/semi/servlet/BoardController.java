@@ -47,7 +47,6 @@ public class BoardController extends HttpServlet {
 		String contextPath = request.getContextPath();
 
 		String cmd = requestURI.substring(contextPath.length());
-		//		System.out.println(cmd);
 
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO dao = new BoardDAO();
@@ -204,9 +203,7 @@ public class BoardController extends HttpServlet {
 				String test = (String)request.getSession().getAttribute("flag");
 				if(test.equals("false")) {
 					String rootPath = this.getServletContext().getRealPath("/");
-					System.out.println("rootPath: " + rootPath);
 					String fileUrl = request.getParameter("src");
-					System.out.println("fileUrl: " + fileUrl);
 					String filePath = null;
 					if(fileUrl.startsWith("http")) {
 						filePath = fileUrl.replaceAll("http://.+?/", "");
@@ -219,13 +216,16 @@ public class BoardController extends HttpServlet {
 				request.getSession().setAttribute("flag", "false");
 
 			}else if(cmd.equals("/Read.board")) {
+				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
 				BoardDTO article = dao.selectOneArticle(boardNo);
 				List<CommentDTO> comments = dao.selectCommentsByBoardNo(commentPage, boardNo);
-				dao.updateViewCount(boardNo);
-
+				if(email!=null && !email.equals(article.getEmail())) {
+					dao.updateViewCount(boardNo);
+				}
+				
 				double amount = article.getAmount();
 				double sumAmount = article.getSumAmount();
 				double percentage = Math.floor((double)sumAmount / amount * 100);
@@ -236,13 +236,11 @@ public class BoardController extends HttpServlet {
 
 				String str = titleImg.getFilePath();
 
-				//				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
-				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
-
+				//	String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
+//				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
-				
-				//String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-				
+				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
 				//String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 				
@@ -318,7 +316,6 @@ public class BoardController extends HttpServlet {
 					if(searchOption.equals("allPages")){ //전체 글 목록
 						totalRecordCount = dao.totalRecordNum();
 						result = dao.selectByPage(currentPage);	
-
 					}else {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
@@ -329,8 +326,10 @@ public class BoardController extends HttpServlet {
 					String[] sumAmountArr = new String[12];
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
-						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
+						//String folder = path.replaceAll("D.+?3.+?",""); //지혜꺼
 //						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
+						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();

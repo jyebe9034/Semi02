@@ -59,8 +59,13 @@
 .header div{
 	color: #00000080;
 }
+#titleImg{
+	max-height: 400px;
+	max-width:100%;
+}
 .contents{
 	border: 0.5px solid #00000030;
+	overflow: auto;
 }
 .btnBox{
     text-align: center;
@@ -74,6 +79,7 @@
 #inputComment{
     border: 0.5px solid #00000030;
     height: 100px;
+	overflow-y: auto;
 }
 #commentBtnBox{
     text-align: center;
@@ -84,6 +90,9 @@
 }
 .commentsBox>div{
 	border: 0.5px solid #00000030;
+}
+.comment{
+	word-wrap: break-word;
 }
 .deleteCommentBtn, .modifyCommentBtn, .modifyCompleteBtn, .modifyCancelBtn{
 	cursor: pointer;
@@ -103,6 +112,7 @@
 	background-color: #00000090;
 	text-align: center;
 	display: none;
+	z-index: 1;
 }
 .fixedMenu span{
 	color: white;
@@ -171,7 +181,7 @@
 			<div><h2>${result.title }</h2></div>
 		</div>
 		<div class="wrapper row">
-			<div class="col-lg-6 col-12"><img src="${titleImg }" alt="..." width="100%"></div>
+			<div class="col-lg-6 col-12"><img src="${titleImg }" alt="..." id="titleImg"></div>
 			<div class="info row col-lg-6 col-12">
 				<div class="col-lg-6 col-12">작성자</div>
 				<div class="col-lg-6 col-12">${result.writer }<hr></div>

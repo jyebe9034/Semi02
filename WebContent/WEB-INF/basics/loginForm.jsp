@@ -21,6 +21,16 @@
 	
 <link rel="stylesheet" href="nav_footer.css">
 <style>
+html, body {
+   height: 89%;
+}
+.wrapper{
+	min-height: 100%;
+	margin: 0 auto -155px;
+}
+.push{
+	height: 200px;
+}
 .login_box {
 	width: 400px;
 	margin: auto;
@@ -172,9 +182,10 @@ a:hover {
 			</form>
 			<hr>
 			<div id="forget_pw" style="text-align: center">
-				<a href="" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
+				<a href="FindPWForm.members" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
 			</div>
 		</div>
+		<div class="push"></div>
 	</div>
 	
 	<div id="footer">

@@ -23,9 +23,6 @@ public class ManagerDAO {
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
 	}
-
-
-
 	public int visitPersonCount()throws Exception{
 		String sql = "update visitpersoncount set personcount=?";
 		try(
