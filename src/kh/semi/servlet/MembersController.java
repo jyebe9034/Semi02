@@ -310,6 +310,8 @@ public class MembersController extends HttpServlet {
 				request.setAttribute("myDonateContents2", dao.myDonateContents2(email, currentPage2));
 				MemberDTO dto = dao.getContents(email);
 				request.setAttribute("dto",dto);
+				request.setAttribute("currentPage1",currentPage);
+				request.setAttribute("currentPage2",currentPage2);
 				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
 				
 			} catch (Exception e) {
