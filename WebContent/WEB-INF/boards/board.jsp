@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="nav_footer.css">
+
 <style>
    .progress {
       width: 200px;
@@ -63,6 +64,7 @@
       background-color: #28a39f;
       color: #FFF;
    }
+   
    .noneListRow div{
       margin: auto;
       text-align: center;
@@ -73,7 +75,7 @@
    .searchBox {
     margin-bottom: 50px;
     width: 100%;
-   margin-right: 190px;
+	margin-right: 190px;
    }
    .listRow{
          width: 90%;
@@ -117,10 +119,12 @@
      
    }
    
-   .numBox li a {
-      color: lightslategray;
+   .page-item a {
+      color: #1ebdd8;
    }
-   
+   .page-item a:hover{
+      color: #1ebdd8;
+   }
    .bottonBtns {
       margin-bottom: 100px;
    }
@@ -157,46 +161,52 @@
    }
 </style>
 <script>
-	$(function(){
-		if(${fail == 1}){
-			alert("수정에 실패했습니다. 다시 시도해 주세요.");
-		}
-
-      $("#goMainBtn").on("click",function(){
-         location.href="Main.members";
-      })
-      
-      $("#writeBtn").on("click", function(){
-         if(${loginEmail == null}){
-            alert("로그인 후 글쓰기가 가능합니다.");
-            location.href="LoginForm.members";
-         }else{
-            location.href="write.board";   
-         }
-      })
-      
-//       지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
-      $(".article").on("click", function(){
-         var boardNo = $(this).attr("boardNo");
-         var currentPage ="${currentPage }";
-         location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
-      })
-//-----------------------------------------------------------------------------      
-      $(".searchBtn").on("click",function(){      
-         var searchWord = $(".searchWord").val();
-         var searchOption = $("#dropdownforSearch option:selected").val();
-          if(searchWord==""){
-             alert("검색할 내용을 입력해주세요.");
-          }else{
-             location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
-          }
-      })   
-//      창훈이 삭제버튼 부분--------------------------------------------------------------   
-      $("#deleteBtn").on("click",function(){
-            location.href="BoardWriteDelete.manager";   
-      })
-      
-   })
+   $(function(){
+      if(${fail == 1}){
+         alert("수정에 실패했습니다. 다시 시도해 주세요.");
+      }
+		$("#goMainBtn").on("click",function(){
+			location.href="Main.members";
+		})
+		
+		$("#writeBtn").on("click", function(){
+			if(${loginEmail == null}){
+				alert("로그인 후 글쓰기가 가능합니다.");
+				location.href="LoginForm.members";
+			}else{
+				location.href="write.board";	
+			}
+		})
+		
+// 		지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
+		$(".article").on("click", function(){
+			var boardNo = $(this).attr("boardNo");
+			var currentPage ="${currentPage }";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
+		})
+//-----------------------------------------------------------------------------		
+		$(".searchBtn").on("click",function(){		
+			var searchWord = $(".searchWord").val();
+			var searchOption = $("#dropdownforSearch option:selected").val();
+	       if(searchWord==""){
+	    	   alert("검색할 내용을 입력해주세요.");
+	       }else{
+	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
+	       }
+		})	
+//		창훈이 삭제버튼 부분--------------------------------------------------------------	
+		$("#deleteBtn").on("click",function(){
+				location.href="BoardWriteDelete.manager";	
+		})
+		
+	//------------추가--------------------
+				$(".pageNumber").each(function(item){
+				if(${currentPage} == $(this).text()){
+					$(this).css("background-color", "#1ebdd8");
+					$(this).css("color", "white");
+				}
+			})
+	})
 </script>
 </head>
 <body>
@@ -237,13 +247,11 @@
       </div>
    </nav>
    <hr style="margin:0px;">
-   
    <div class="boardName">
       <p>게시판</p>
    </div>
-	<div id="wrapper" class="container listBox">
-
-		<!--검색창-->
+<!--검색창-->
+   <div id="wrapper" class="container searchBox">
 		<div class="row d-flex justify-content-end">
 			<select name="searchOption" id="dropdownforSearch">
 				<option name="searchOption" class="searchOption" value="b_title">제목</option>
@@ -254,7 +262,6 @@
 				placeholder="검색할 내용 입력">
 			<button type="submit" class="btn searchBtn">검색</button>
 		</div>
-
 	</div>
       <!--글목록-->
       <c:choose>

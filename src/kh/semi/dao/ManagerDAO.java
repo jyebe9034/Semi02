@@ -253,7 +253,7 @@ public class ManagerDAO {
 			return li;		
 		}
 	}
-
+	
 	public int boardWriteDelete(String value)throws Exception{
 		String sql = "delete from board where b_no=?";
 		try(
@@ -265,17 +265,17 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-
+	
 	public int titleImgDelete(String value)throws Exception{
-		String sql = "delete from title_img where t_b_no=?";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setString(1, value);
-			int result = pstat.executeUpdate();
-			return result;
-
-		}
-	}
+	      String sql = "delete from title_img where t_b_no=?";
+	      try(
+	            Connection con = this.getConnection();
+	            PreparedStatement pstat = con.prepareStatement(sql);
+	            ){
+	         pstat.setString(1, value);
+	         int result = pstat.executeUpdate();
+	         return result;
+	         
+	      }
+	   }
 }

@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kh.semi.dao.BoardDAO;
-import kh.semi.dao.ManagerDAO;
 import kh.semi.dao.MemberDAO;
 import kh.semi.dao.PaymentDAO;
 import kh.semi.dto.BoardDTO;
@@ -43,7 +42,7 @@ public class MembersController extends HttpServlet {
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-
+		
 		PrintWriter printWriter = response.getWriter();
 		String reqUri = request.getRequestURI();
 		String ctxPath = request.getContextPath();
@@ -51,7 +50,7 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-
+		
 		System.out.println(cmd);
 
 		Date date = new Date();
@@ -69,6 +68,7 @@ public class MembersController extends HttpServlet {
 			date1.set(Calendar.MINUTE, 0);
 			date1.set(Calendar.SECOND, 0);
 			date1.set(Calendar.MILLISECOND, 0);
+
 			timer1.schedule(visiterCount,1000,1000*10);//10초마다 저장
 		}
 		if(!today.equals(sdf2.format(date))) {
@@ -83,7 +83,7 @@ public class MembersController extends HttpServlet {
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
-			request.getRequestDispatcher("Main.members").forward(request, response);
+			request.getRequestDispatcher("Main.members").forward(request, response);;
 
 		}else if(cmd.equals("/checkLogin.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/checkLogin.jsp").forward(request, response);
@@ -99,7 +99,8 @@ public class MembersController extends HttpServlet {
 				request.setAttribute("list", list);
 				request.setAttribute("listSize", list.size());
 				String[] strArr = new String[4];
-				int[] intArr = new int[4];		
+				int[] intArr = new int[4];	
+				int[] sumArr = new int[4];
 				List<TitleImgDTO> imgList = new ArrayList<>();
 				for(int i = 0; i < list.size(); i++) {
 					int goalAmount = list.get(i).getAmount();
@@ -108,24 +109,23 @@ public class MembersController extends HttpServlet {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					strArr[i] = sdf.format(dueTime);
 					int sumAmount = list.get(i).getSumAmount();
+					sumArr[i] = sumAmount;
 					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
 					imgList.add(bdao.getTitleImg(list.get(i).getBoardNo()));
 				}
 				request.setAttribute("duedate", strArr);
 				request.setAttribute("percentage", intArr);
-
+				request.setAttribute("sumArr", sumArr);
 				String[] imgSrc = new String[4];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
-					//					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
 					//					String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 					//					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
-					String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
+					// String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 					//					String result = str.replaceAll("D.+?3.+?","");
-					//					String result = str.replaceAll("D.+?3.+?", "");
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-					//					String result = str.replaceAll("D.+?4.+?", "");
-					//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
+					String result = str.replaceAll("D.+?4.+?", "");
+//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
 
@@ -138,12 +138,11 @@ public class MembersController extends HttpServlet {
 				DecimalFormat commas = new DecimalFormat("###,###,###,###");
 				request.setAttribute("totalAmount", commas.format(totalAmount));
 				request.setAttribute("countDonors", commas.format(countDonors));
-
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
-
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
 

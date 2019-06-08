@@ -175,14 +175,8 @@
 			</ul>
 		</div>
 	</nav>
-      
        <hr style="margin:0px; bordercolor:whitesmoke;">
         <br><br><br>
-
-   <hr style="margin: 0px; bordercolor: whitesmoke;">
-   <br>
-   <br>
-   <br>
 
    <form action="myPageUpdate.members" id="myPageUpdateForm" method="post">
       <div class="container wrap">
@@ -448,7 +442,7 @@ cellPhone.onkeyup = function(event){
                         // 우편번호와 주소 정보를 해당 필드에 넣는다.
                         document.getElementById('zipcode').value = data.zonecode;
                         document.getElementById("address1").value = addr;
-                        // 커서를 상세주소 필드로 이동한다.
+                        //커서를 상세주소 필드로 이동한다.
                         document.getElementById("address2").focus();
                     }
                 }).open();
