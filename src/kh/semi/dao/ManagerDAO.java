@@ -18,7 +18,7 @@ import kh.semi.servlet.MembersController;
 public class ManagerDAO {
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@192.168.60.18:1521:xe";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
@@ -256,7 +256,7 @@ public class ManagerDAO {
 			return li;		
 		}
 	}
-
+	
 	public int boardWriteDelete(String value)throws Exception{
 		String sql = "delete from board where b_no=?";
 		try(
@@ -268,19 +268,17 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-
+	
 	public int titleImgDelete(String value)throws Exception{
-		String sql = "delete from title_img where t_b_no=?";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setString(1, value);
-			int result = pstat.executeUpdate();
-			return result;
-
-		}
-	}
-
-
+	      String sql = "delete from title_img where t_b_no=?";
+	      try(
+	            Connection con = this.getConnection();
+	            PreparedStatement pstat = con.prepareStatement(sql);
+	            ){
+	         pstat.setString(1, value);
+	         int result = pstat.executeUpdate();
+	         return result;
+	         
+	      }
+	   }
 }

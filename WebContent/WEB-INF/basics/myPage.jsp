@@ -212,7 +212,7 @@ a:hover {
    </style>
 </head>
 <body>
-   <nav class="navbar navbar-expand-md navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light">
       <div class="logo">
          <a class="navbar-brand anker" href="Main.members"
             style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -239,15 +239,11 @@ a:hover {
                href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
             <li class="nav-item nav-li"><a class="nav-link anker"
                href="Logout.members">로그아웃</a></li>
-
          </ul>
       </div>
    </nav>
 
-   <hr style="margin: 0px; bordercolor: whitesmoke;">
-
-
-
+      <hr style="margin:0px; bordercolor:whitesmoke;">
 
    <br>
    <br>
@@ -280,7 +276,7 @@ a:hover {
          <div class="col-10">
             <span><form class="form-inline">
                   <div class="form-group">
-                     <span class="second">${dto.phone }</span>
+                     <span class="form-control mx-sm-3 second">${dto.phone }</span>
                   </div>
                </form></span>
          </div>
@@ -294,7 +290,7 @@ a:hover {
          <div class="col-10">
             <span><form class="form-inline">
                   <div class="form-group">
-                     <span class="second">${dto.zipCode }</span>
+                     <span class="form-control mx-sm-3 second">${dto.zipCode }</span>
                   </div>
                </form></span>
          </div>
@@ -362,10 +358,7 @@ a:hover {
          <div class="row contents">
             <c:forEach var="myDonateContents" items="${myDonateContents }">
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                  <a
-                     href="Read.board?boardNo=${myDonateContents.boardNo }&currentPage=1&commentPage=1">${myDonateContents.boardTitle }</a>
-               </div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents.boardNo }&currentPage=1&commentPage=1">${myDonateContents.boardTitle }</a></div>
                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.paymentDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.boardWriter }</div>
@@ -404,10 +397,7 @@ a:hover {
          <div class="row contents">
             <c:forEach var="myDonateContents2" items="${myDonateContents2 }">
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4">
-                  <a
-                     href="Read.board?boardNo=${myDonateContents2.boardNo }&currentPage=1&commentPage=1">${myDonateContents2.title }</a>
-               </div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents2.boardNo }&currentPage=1&commentPage=1">${myDonateContents2.title }</a></div>
                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.writeDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.viewCount }</div>

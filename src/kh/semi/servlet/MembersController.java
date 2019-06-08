@@ -52,6 +52,7 @@ public class MembersController extends HttpServlet {
 			date1.set(Calendar.MINUTE, 0);
 			date1.set(Calendar.SECOND, 0);
 			date1.set(Calendar.MILLISECOND, 0);
+
 			timer1.schedule(visiterCount,1000,1000*10);//10초마다 저장
 
 		}
@@ -63,15 +64,15 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-		
+
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
-			request.getRequestDispatcher("Main.members").forward(request, response);
-			
+			request.getRequestDispatcher("Main.members").forward(request, response);;
+	
 		}else if(cmd.equals("/checkLogin.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/checkLogin.jsp").forward(request, response);
-			
+
 		}
 		else if (cmd.equals("/Main.members")) {
 			request.getServletContext().setAttribute("visitPerson", visitPerson);
@@ -82,8 +83,9 @@ public class MembersController extends HttpServlet {
 
 				request.setAttribute("list", list);
 				request.setAttribute("listSize", list.size());
-				String[] strArr = new String[3];
-				int[] intArr = new int[3];		
+				String[] strArr = new String[4];
+				int[] intArr = new int[4];	
+				int[] sumArr = new int[4];
 				List<TitleImgDTO> imgList = new ArrayList<>();
 				for(int i = 0; i < list.size(); i++) {
 					int goalAmount = list.get(i).getAmount();
@@ -92,37 +94,40 @@ public class MembersController extends HttpServlet {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					strArr[i] = sdf.format(dueTime);
 					int sumAmount = list.get(i).getSumAmount();
+					sumArr[i] = sumAmount;
 					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
 					imgList.add(bdao.getTitleImg(list.get(i).getBoardNo()));
 				}
 				request.setAttribute("duedate", strArr);
 				request.setAttribute("percentage", intArr);
-				
-				String[] imgSrc = new String[3];
+				request.setAttribute("sumArr", sumArr);
+				String[] imgSrc = new String[4];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
-//					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
-//					String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
-//					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
-					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-					String result = str.replaceAll("D.+?4.+?", "");
-//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
+					String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
+					//재용
+					//	String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 
+					//	String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
+					//	String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
+					//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
+					//	String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
-				
+
 				request.setAttribute("imgSrc", imgSrc);
 				// 카드 data, 제목, 마감일, 퍼센트
-				
+
 				int totalAmount = pdao.getTotalAmount();	
 				int countDonors = pdao.getNumberOfDonors();
 				DecimalFormat commas = new DecimalFormat("###,###,###,###");
 				request.setAttribute("totalAmount", commas.format(totalAmount));
 				request.setAttribute("countDonors", commas.format(countDonors));
-				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 
+				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+
 		}else if(cmd.equals("/Introduce.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/introduce.jsp").forward(request, response);
 
@@ -301,7 +306,7 @@ public class MembersController extends HttpServlet {
 			String email = (String)request.getSession().getAttribute("loginEmail");
 			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 			int currentPage2 = Integer.parseInt(request.getParameter("currentPage2"));
-			
+
 			try {
 				request.setAttribute("getNavi", dao.getNaviforMySupport(currentPage, email));
 				request.setAttribute("myDonateContents", dao.myDonateContents(email, currentPage));
@@ -313,7 +318,7 @@ public class MembersController extends HttpServlet {
 				request.setAttribute("currentPage1",currentPage);
 				request.setAttribute("currentPage2",currentPage2);
 				request.getRequestDispatcher("/WEB-INF/basics/myPage.jsp").forward(request, response);
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

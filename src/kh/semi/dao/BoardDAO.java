@@ -23,7 +23,7 @@ public class BoardDAO {
 
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@192.168.60.18:1521:xe";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
@@ -70,7 +70,7 @@ public class BoardDAO {
 				ResultSet rs = pstat.executeQuery();
 				){
 			List<BoardDTO> list = new ArrayList<>();
-			for(int i=0; i<3;i++) {
+			for(int i=0; i<4;i++) {
 				if(rs.next()) {
 					BoardDTO dto = new BoardDTO();
 					dto.setBoardNo(rs.getInt("b_no"));
