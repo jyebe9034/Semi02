@@ -112,15 +112,18 @@ public class BoardController extends HttpServlet {
 						dis.close();
 						oldFile.delete();
 					}
-
-					dto.setTitle(multi.getParameter("title"));
+					
 					dto.setWriter(multi.getParameter("writer"));
 					dto.setAmount(Integer.parseInt(multi.getParameter("amount")));
 					String duedate = multi.getParameter("dueDate") + " " + sdf.format(currentTime);
 					dto.setDueDate(Timestamp.valueOf(duedate));
 					dto.setBank(multi.getParameter("select"));
 					dto.setAccount(multi.getParameter("account"));
-					dto.setContents(multi.getParameter("contents"));
+					
+					String content = multi.getParameter("contents");
+					content.replaceAll("<.?script>", "");
+					dto.setContents(content);
+					
 					try {
 						int result = dao.insertBoard(dto, tdto);
 						request.setAttribute("board", result);
