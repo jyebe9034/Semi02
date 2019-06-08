@@ -212,7 +212,7 @@ body{
 			<c:when test="${listSize == 0 }"></c:when>
 			<c:otherwise>
 				<c:forEach var="i" begin="0" end="${listSize-1}">
-					<div class="card col-lg-3 col-md-6 col-sm-12 p-0 m-1">
+					<div class="card col-lg-3 col-md-6 col-sm-12 p-0">
 						<div class="imgBox" style="height:250px;">
 							<img src="${imgSrc[i] }" class="imgTag" width="100%" style="max-height:100%">
 						</div>

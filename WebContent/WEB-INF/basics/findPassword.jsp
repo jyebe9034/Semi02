@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>도움닿기 - 로그인</title>
+<title>도움닿기 - 비밀번호 찾기</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -145,36 +145,20 @@ a:hover {
 	<div class="wrapper">
 		<div class="login_box">
 			<div class="title">
-				<h3>로그인</h3>
+				<h3>비밀번호 찾기</h3>
+				<hr></hr>
 			</div>
-			<form action="Login.members" method="post">
+			<form action="FindPW.members" method="post">
 				<div class="form-group">
 					<input type="email" class="form-control" id="exampleInputEmail1"
 						name="email" aria-describedby="emailHelp"
 						placeholder="이메일 주소(아이디)" required>
+					<input type="hidden" class="form-control" id="inputNum"
+               			placeholder="*인증번호" style="width: 70%" flag="false" required>
+            		<input type="hidden" id="btnInputNum" class="btn btn-outline-info" value="확인">
 				</div>
-				<div class="form-group">
-					<input type="password" class="form-control"
-						id="exampleInputPassword1" name="pw"
-						placeholder="비밀번호 (영문,숫자,특수문자 포함 8자 이상)" required>
-				</div>
-				<button type="submit" class="btn btn-primary btn-md btn-block"
-					style="font-size: 18px; font-weight: bold;">로그인</button>
-				<%
-					String clientId = "9fcJ6ehu7V7mEFnBQABz";//애플리케이션 클라이언트 아이디값";
-					String redirectURI = URLEncoder.encode("http://localhost/naverLogin.members", "UTF-8");
-					SecureRandom random = new SecureRandom();
-					String state = new BigInteger(130, random).toString();
-					String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-					apiURL += "&client_id=" + clientId;
-					apiURL += "&redirect_uri=" + redirectURI;
-					apiURL += "&state=" + state;
-					session.setAttribute("state", state);
-				%>
-				<a href="<%=apiURL%>" id="naver"><img height="47" width="120"
-					src="http://static.nid.naver.com/oauth/small_g_in.PNG" /></a>
-					<a id="kakao-login-btn"></a>
-					<a href="http://developers.kakao.com/logout"></a> <!--이 코드는 왜 필요한 거지?-->
+				<button type="button" class="btn btn-primary btn-md btn-block"
+					style="font-size: 18px; font-weight: bold;">인증번호 받기</button>
 				<div id="toJoin">
 					아직 계정이 없으신가요?&nbsp;&nbsp;&nbsp;<a href="JoinForm.members"
 						id="a_join" style="color: black">가입하기</a>
@@ -182,7 +166,7 @@ a:hover {
 			</form>
 			<hr>
 			<div id="forget_pw" style="text-align: center">
-				<a href="FindPWForm.members" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
+				<a href="" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
 			</div>
 		</div>
 		<div class="push"></div>
@@ -203,40 +187,6 @@ a:hover {
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
-	
-	<script type='text/javascript'>
-  //<![CDATA[
-    // 사용할 앱의 JavaScript 키를 설정해 주세요.
-    Kakao.init('95dd9e37f2f0e7fa6479b04e4ad29068');
-    // 카카오 로그인 버튼을 생성합니다.
-    Kakao.Auth.createLoginButton({
-      container: '#kakao-login-btn',
-      success: function(authObj) {
 
-          Kakao.API.request({
-              url: '/v1/user/me',
-              success: function(res) {
-               
-               var userID = res.id;      //유저의 카카오톡 고유 id
-               var userNickName = res.properties.nickname; //유저가 등록한 별명
-               
-               console.log(userID);
-               console.log(userNickName);
-               
-               location.href="kakaoLogin.members?contents="+userID+","+userNickName;
-
-               
-              },
-              fail: function(error) {
-               alert(JSON.stringify(error));
-              }
-             });
-      },
-      fail: function(err) {
-         alert(JSON.stringify(err));
-      }
-    });
-  //]]>
-</script>
 </body>
 </html>

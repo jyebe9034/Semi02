@@ -346,8 +346,8 @@ public class MembersController extends HttpServlet {
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
-		}else if(cmd.equals("/myPageUpdateLocationForNaver.members")) {
-			request.getRequestDispatcher("/WEB-INF/basics/myPageUpdateForNaver.jsp").forward(request, response);
+		}else if(cmd.equals("/FindPWForm.members")) {
+			request.getRequestDispatcher("/WEB-INF/basics/findPassword.jsp").forward(request, response);
 		}
 
 
