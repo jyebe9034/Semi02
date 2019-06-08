@@ -130,6 +130,7 @@ public class BoardController extends HttpServlet {
 					}catch(Exception e) {
 						e.printStackTrace();
 					}
+
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
