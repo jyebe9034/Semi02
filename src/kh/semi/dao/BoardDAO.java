@@ -300,7 +300,6 @@ public class BoardDAO {
 		public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord) throws Exception {
 			
 			int recordTotalCount = totalRecordCount;
-			
 			int recordCountPerPage = 12; //12개의 글이 보이게 한다.	
 			int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
 			  
@@ -344,7 +343,7 @@ public class BoardDAO {
 						"						</a></li>");		
 			}
 			for(int i = startNavi; i <= endNavi; i++) {
-				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"\">" + i + "</a></li>");
+				sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"\">" + i + "</a></li>");
 			}
 			if(needNext) {
 				int nextEndNavi = endNavi+1;

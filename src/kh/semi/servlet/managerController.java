@@ -58,7 +58,6 @@ public class managerController extends HttpServlet {
 					try {
 						int result = dao.boardWriteDelete(value[i]);
 						int resultTitleDelete = dao.titleImgDelete(value[i]);
-
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

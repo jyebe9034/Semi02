@@ -13,6 +13,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="nav_footer.css">
+
 <style>
    .progress {
       width: 200px;
@@ -64,6 +65,7 @@
       background-color: #28a39f;
       color: #FFF;
    }
+   
    .noneListRow div{
       margin: auto;
       text-align: center;
@@ -74,7 +76,7 @@
    .searchBox {
     margin-bottom: 50px;
     width: 100%;
-   margin-right: 190px;
+	margin-right: 190px;
    }
    .listRow{
          width: 90%;
@@ -118,10 +120,12 @@
      
    }
    
-   .numBox li a {
-      color: lightslategray;
+   .page-item a {
+      color: #1ebdd8;
    }
-   
+   .page-item a:hover{
+      color: #1ebdd8;
+   }
    .bottonBtns {
       margin-bottom: 100px;
    }
@@ -162,42 +166,48 @@
       if(${fail == 1}){
          alert("수정에 실패했습니다. 다시 시도해 주세요.");
       }
-
-      $("#goMainBtn").on("click",function(){
-         location.href="Main.members";
-      })
-      
-      $("#writeBtn").on("click", function(){
-         if(${loginEmail == null}){
-            alert("로그인 후 글쓰기가 가능합니다.");
-            location.href="LoginForm.members";
-         }else{
-            location.href="write.board";   
-         }
-      })
-      
-//       지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
-      $(".article").on("click", function(){
-         var boardNo = $(this).attr("boardNo");
-         var currentPage ="${currentPage }";
-         location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
-      })
-//-----------------------------------------------------------------------------      
-      $(".searchBtn").on("click",function(){      
-         var searchWord = $(".searchWord").val();
-         var searchOption = $("#dropdownforSearch option:selected").val();
-          if(searchWord==""){
-             alert("검색할 내용을 입력해주세요.");
-          }else{
-             location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
-          }
-      })   
-//      창훈이 삭제버튼 부분--------------------------------------------------------------   
-      $("#deleteBtn").on("click",function(){
-            location.href="BoardWriteDelete.manager";   
-      })
-      
-   })
+		$("#goMainBtn").on("click",function(){
+			location.href="Main.members";
+		})
+		
+		$("#writeBtn").on("click", function(){
+			if(${loginEmail == null}){
+				alert("로그인 후 글쓰기가 가능합니다.");
+				location.href="LoginForm.members";
+			}else{
+				location.href="write.board";	
+			}
+		})
+		
+// 		지혜야 너꺼 여기다가 옮겼어------------------------------------------------------
+		$(".article").on("click", function(){
+			var boardNo = $(this).attr("boardNo");
+			var currentPage ="${currentPage }";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
+		})
+//-----------------------------------------------------------------------------		
+		$(".searchBtn").on("click",function(){		
+			var searchWord = $(".searchWord").val();
+			var searchOption = $("#dropdownforSearch option:selected").val();
+	       if(searchWord==""){
+	    	   alert("검색할 내용을 입력해주세요.");
+	       }else{
+	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
+	       }
+		})	
+//		창훈이 삭제버튼 부분--------------------------------------------------------------	
+		$("#deleteBtn").on("click",function(){
+				location.href="BoardWriteDelete.manager";	
+		})
+		
+	//------------추가--------------------
+				$(".pageNumber").each(function(item){
+				if(${currentPage} == $(this).text()){
+					$(this).css("background-color", "#1ebdd8");
+					$(this).css("color", "white");
+				}
+			})
+	})
 </script>
 </head>
 <body>
@@ -255,109 +265,103 @@
       <p>게시판</p>
    </div>
 
-   <div id="wrapper" class="container listBox">
+<!--검색창-->
+   <div id="wrapper" class="container searchBox">
+		<div class="row d-flex justify-content-end">
+			<select name="searchOption" id="dropdownforSearch">
+				<option name="searchOption" class="searchOption" value="b_title">제목</option>
+				<option name="searchOption" class="searchOption" value="b_contents">내용</option>
+				<option name="searchOption" class="searchOption"
+					value="b_title or b_contents">제목+내용</option>
+			</select> <input type="text" name="searchWord" class="searchWord"
+				placeholder="검색할 내용 입력">
+			<button type="submit" class="btn searchBtn">검색</button>
+		</div>
+	</div>
 
-      <!--검색창-->
-      <div class="row d-flex justify-content-end">
-         <select name="searchOption" id="dropdownforSearch">
-            <option name="searchOption" class="searchOption" value="b_title">제목</option>
-            <option name="searchOption" class="searchOption" value="b_contents">내용</option>
-            <option name="searchOption" class="searchOption"
-               value="b_title or b_contents">제목+내용</option>
-         </select> <input type="text" name="searchWord" class="searchWord"
-            placeholder="검색할 내용 입력">
-         <button type="submit" class="btn searchBtn">검색</button>
-      </div>
-
-   </div>
-
-   <!--글목록-->
-   <c:choose>
-      <c:when test="${totalRecordCount<1}">
-         <div class="row noneListRow">
-            <div class="col-12">
-               <p>검색어 : ${searchWord }</p>
-               <p>검색 결과가 없습니다.</p>
+      <!--글목록-->
+      <c:choose>
+         <c:when test="${totalRecordCount<1}">
+            <div class="row noneListRow">
+              <div class="col-12">
+              	<p>검색어 : ${searchWord }</p> 
+          	 	 <p>검색 결과가 없습니다.</p>
+          	  </div>
             </div>
-         </div>
-      </c:when>
-      <c:otherwise>
-         <form action="BoardWriteDelete.manager">
-            <div class="row listRow">
-               <c:forEach var="list" items="${board }" varStatus="status">
-                  <div class="col-lg-3 col-md-6 col-sm-12">
-                     <c:if test="${sessionScope.admin!=null}">
-                        <div class="check">
-                           <input type="checkbox" name="checkDelete"
-                              value="${list.boardNo }">
-                        </div>
-                     </c:if>
-                     <div class="card list">
-                        <img src="${list.newFilePath}">
-                        <div class="card-body article" boardNo="${list.boardNo}">
-                           <h5 class="card-title title">${list.title }</h5>
-                           <p class="card-text writer">${list.writer }</p>
-                           <div class="progress">
-                              <div class="progress-bar" role="progressbar"
-                                 style="width: ${list.percentage}%;" aria-valuemin="0"
-                                 aria-valuemax="100"></div>
-
-                           </div>
-                           <div class="percentage">
-                              <small class="text-muted amount">${list.percentage }%</small>
-                           </div>
-                           <div class="amount d-flex justify-content-end">
-                              <small class="text-muted amount">${sumAmount[status.index]}원</small>
+         </c:when>
+         <c:otherwise>
+            <form action="BoardWriteDelete.manager">
+               <div class="row listRow">
+                  <c:forEach var="list" items="${board }" varStatus="status">
+                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                     <c:if test="${sessionScope.admin!=null}">       
+                        <div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
+                     </c:if> 
+                        <div class="card list">
+                           <img src="${list.newFilePath}"> 
+                           <div class="card-body article" boardNo="${list.boardNo}">
+                              <h5 class="card-title title">${list.title }</h5>
+                              <p class="card-text writer">${list.writer }</p>
+                              <div class="progress">
+ 									<div class="progress-bar" role="progressbar" 
+ 									style="width: ${list.percentage}%;" aria-valuemin="0" 
+ 									aria-valuemax="100"></div>
+ 
+                              </div>
+                              <div class="percentage">
+                                 <small class="text-muted amount">${list.percentage }%</small>
+                              </div>
+                              <div class="amount d-flex justify-content-end">
+                                 <small class="text-muted amount">${sumAmount[status.index]}원</small>
+                              </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-               </c:forEach>
-            </div>
-      </c:otherwise>
-   </c:choose>
+                  </c:forEach>
+               </div>
+         </c:otherwise>   
+      </c:choose>
+      
+	<!--페이지네비게이터 -->
+	<div class="row  p-0 m-0" id="num_box">
+		<div class="col-12 d-flex justify-content-center">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination pagination-sm">${getNavi }
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!--하단 버튼들 -->
+	<div class="row p-0 m-0" id="bottom">
+		<div class="col-12 bottonBtns d-flex justify-content-center">
+			<button type="button" class="btn" id="goMainBtn">메인으로</button>
+			<c:if test="${sessionScope.admin==null}">
+				<button type="button" class="btn" id="writeBtn">글쓰기</button>
+			</c:if>
+			<c:if test="${sessionScope.admin!=null}">
+				<button type="submit" class="btn" id="deleteBtn">삭제</button>
+			</c:if>
+		</div>
+	</div>
+	</form>
 
-   <!--페이지네비게이터 -->
-   <div class="row  p-0 m-0" id="num_box">
-      <div class="col-12 d-flex justify-content-center">
-         <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-sm">${getNavi }
-            </ul>
-         </nav>
-      </div>
-   </div>
-   <!--하단 버튼들 -->
-   <div class="row p-0 m-0" id="bottom">
-      <div class="col-12 bottonBtns d-flex justify-content-center">
-         <button type="button" class="btn" id="goMainBtn">메인으로</button>
-         <c:if test="${sessionScope.admin==null}">
-            <button type="button" class="btn" id="writeBtn">글쓰기</button>
-         </c:if>
-         <c:if test="${sessionScope.admin!=null}">
-            <button type="submit" class="btn" id="deleteBtn">삭제</button>
-         </c:if>
-      </div>
-   </div>
-   </form>
 
-
-   <div id="footer">
-      <div id="f_logo_wrap">
-         <a id="f_logo" href="Main.members"
-            style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-      </div>
-      <div id="f_info_wrap">
-         <div id="f_info">
-            행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
-         </div>
-      </div>
-      <div id="f_sns">
-         <img id="kakao" class="sns" src="photo_image/ka.png"> <img
-            class="sns" src="photo_image/fa.png"> <img id="insta"
-            class="sns" src="photo_image/kk.png"> <a
-            href="checkLogin.memebrs"><div id="suggest">후원 신청</div></a>
-      </div>
-      <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
-   </div>
+	<div id="footer">
+		<div id="f_logo_wrap">
+			<a id="f_logo" href="Main.members"
+				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+		</div>
+		<div id="f_info_wrap">
+			<div id="f_info">
+				행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
+			</div>
+		</div>
+		<div id="f_sns">
+			<img id="kakao" class="sns" src="photo_image/ka.png"> <img
+				class="sns" src="photo_image/fa.png"> <img id="insta"
+				class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
+		</div>
+		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+	</div>
 </body>
 </html>

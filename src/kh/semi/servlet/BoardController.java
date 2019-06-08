@@ -240,9 +240,12 @@ public class BoardController extends HttpServlet {
 				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
 
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
-				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				
+				//String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				
+				//String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 				String result = str.replaceAll("D.+?4.+?",""); // 지혜
-
+				
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
 				request.setAttribute("currentPage", currentPage);

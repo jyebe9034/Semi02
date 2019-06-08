@@ -156,15 +156,15 @@ body{
 		</ol>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="bestgift.jpg"
+				<img src="photo_image/bestgift.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="hands_together.jpg"
+				<img src="photo_image/hands_together.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="girls_heart_2.jpg"
+				<img src="photo_image/girls_heart_2.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 		</div>
