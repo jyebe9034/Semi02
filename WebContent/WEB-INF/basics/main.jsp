@@ -238,7 +238,7 @@
 	</div>
 
 	<hr>
-	<div><h2 class="smTitle">[  모금 마감일이 얼마남지 않은 글  ]</h2></div>
+	<div><h2 class="smTitle">[  모금 마감일이 얼마남지 않은 후원  ]</h2></div>
 		<div class="row rowcard">
 			<c:choose>
 				<c:when test="${listSize == 0 }"></c:when>

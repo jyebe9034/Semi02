@@ -392,7 +392,6 @@ public class BoardController extends HttpServlet {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String comment = request.getParameter("comment").replaceAll("&lt;script&gt;", "").replaceAll("<script>", "");
-				System.out.println(comment);
 				try {
 					String name = mdao.selectByEmail(email).get(0);
 
@@ -403,12 +402,14 @@ public class BoardController extends HttpServlet {
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
+				
 			}else if(cmd.equals("/DeleteComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String writeDate = request.getParameter("writeDate");
 
 				int result = dao.deleteComment(email, writeDate);
 				pw.print(result);
+				
 			}else if(cmd.equals("/ModifyComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String comment = request.getParameter("comment").replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", "");

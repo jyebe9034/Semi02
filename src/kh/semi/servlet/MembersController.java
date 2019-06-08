@@ -50,9 +50,6 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-		
-		System.out.println(cmd);
-
 		Date date = new Date();
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -237,8 +234,6 @@ public class MembersController extends HttpServlet {
 			apiURL += "&redirect_uri=" + redirectURI;
 			apiURL += "&code=" + code;
 			apiURL += "&state=" + state;
-			String access_token = "";
-			String refresh_token = "";
 			try {
 				URL url = new URL(apiURL);
 				HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -361,6 +356,7 @@ public class MembersController extends HttpServlet {
 			}
 		}else if(cmd.equals("/FindPWForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/findPassword.jsp").forward(request, response);
+			
 		}else if(cmd.equals("/FindPW.members")) {
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");

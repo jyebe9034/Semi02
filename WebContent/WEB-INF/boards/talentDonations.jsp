@@ -21,11 +21,12 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
       }
       
    .title{
-      font-family: "Do Hyeon";
+      font-family: "Nanum Gothic";
       font-size: 50px;
       color: darkslategray;
       margin-top: 200px;
       margin-bottom: 50px;
+      font-weight: bold;
    }
    .contents{
       font-family: "Nanum Gothic";
