@@ -253,10 +253,8 @@ cellPhone.onkeyup = function(event){
    
    
       $("#btnConfirmEmail").on("click", function() {
-         if ($("#inputNum").attr("flag") == "true") {
-            alert("이미 인증이 완료되었습니다.");
-            return;
-         }
+    	 $("#btnConfirmEmail").prop("disabled", true);
+    	 $("#emailCheck").text("인증번호를 메일로 발송중입니다.");
          if ($("#inputEmail").val() == "") {
             alert("이메일을 입력해주세요.");
          } else {
@@ -269,8 +267,12 @@ cellPhone.onkeyup = function(event){
             }).done(function(resp) {
                if (resp == 0) {
                   alert("이메일 주소가 잘못되었습니다. 다시 입력해주세요.");
+                  $("#inputEmail").val("");
+                  $("#inputEmail").focus();
+                  $("#btnConfirmEmail").prop("disabled", false);
                } else { // 메일 발송을 성공했을 때
                   alert("입력하신 이메일로 메일이 발송되었습니다. 확인하신 후 인증번호를 입력해주세요.");
+                  $("#emailCheck").text("");
                   $("#inputNum").attr("type", "text");
                   $("#btnInputNum").css("display", "inline-block");
                   $("#btnInputNum").on("click", function() {
@@ -323,6 +325,7 @@ cellPhone.onkeyup = function(event){
                $("#btnConfirmEmail").prop("disabled", true);
             } else {
                $("#emailCheck").text("");
+               $("#btnConfirmEmail").prop("disabled", false);
             }
          })
       })
@@ -378,7 +381,6 @@ cellPhone.onkeyup = function(event){
          }).open();
       }
    </script>
->>>>>>> 0d9ff5f13220dfb5e7e6b2a7b26e863f025e825f
 </body>
 
 </html>

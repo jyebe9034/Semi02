@@ -38,6 +38,7 @@ public class MembersController extends HttpServlet {
 	public static int oneStart;
 	public static int count;
 	public static String today;
+	public static List<String> loginMembers = new ArrayList<>();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
@@ -52,7 +53,7 @@ public class MembersController extends HttpServlet {
 		PaymentDAO pdao = new PaymentDAO();
 
 		System.out.println(cmd);
-		
+
 		Date date = new Date();
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -191,23 +192,36 @@ public class MembersController extends HttpServlet {
 		} else if (cmd.equals("/Login.members")) {
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");
-			try {
-				boolean result = dao.isLoginOk(email, pw);
-				if (result) {
-					request.getSession().setAttribute("loginEmail", email);
-					String admin = dao.managerOrVisiter(email);
-					if(admin.equals("y")) {
-						request.getSession().setAttribute("admin", admin);
-						System.out.println(admin);
-					}
+			boolean login = true;
+			for(String member : loginMembers) {
+				if(member.equals(email)) {
+					request.setAttribute("resultLogin", "login");	// 이미 로그인 한 상태일 때!
+					login = false;
+					break;
 				}
-				request.setAttribute("result", result);
-				request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+			if(login) {
+				try {
+					boolean result = dao.isLoginOk(email, pw);
+					if (result) {
+						request.getSession().setAttribute("loginEmail", email);
+						loginMembers.add(email);
+						String admin = dao.managerOrVisiter(email);
+						if(admin.equals("y")) {
+							request.getSession().setAttribute("admin", admin);
+							System.out.println(admin);
+						}
+					}
+					request.setAttribute("result", result);
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);
 
 		} else if (cmd.equals("/Logout.members")) {
+			String email = (String)request.getSession().getAttribute("loginEmail");
+			loginMembers.remove(email);
 			request.getSession().invalidate();
 			request.getRequestDispatcher("/WEB-INF/basics/alertLogout.jsp").forward(request, response);
 
@@ -348,6 +362,17 @@ public class MembersController extends HttpServlet {
 			}
 		}else if(cmd.equals("/FindPWForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/findPassword.jsp").forward(request, response);
+		}else if(cmd.equals("/FindPW.members")) {
+			String email = request.getParameter("email");
+			String pw = request.getParameter("pw");
+
+			try {
+				int result = dao.updatePassword(email, pw);
+				request.setAttribute("result", result);
+				request.getRequestDispatcher("/WEB-INF/basics/alertPwUpdate.jsp").forward(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 

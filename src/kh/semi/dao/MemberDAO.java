@@ -102,6 +102,20 @@ public class MemberDAO{
 			return result;
 		}
 	}
+	
+	public int updatePassword(String email, String pw) throws Exception {
+		String sql = "update members set m_pw=? where m_email=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, testSHA256(pw));
+			pstat.setString(2, email);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
 
 
 	public int insertNaverMember(MemberDTO param) throws Exception {
