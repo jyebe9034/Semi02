@@ -398,7 +398,6 @@ public class BoardController extends HttpServlet {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String comment = request.getParameter("comment").replaceAll("&lt;script&gt;", "").replaceAll("<script>", "");
-				System.out.println(comment);
 				try {
 					String name = mdao.selectByEmail(email).get(0);
 
