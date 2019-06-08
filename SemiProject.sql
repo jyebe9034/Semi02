@@ -12,7 +12,7 @@ create table members(
     m_zipcode varchar(20),
     m_address1 varchar(100),
     m_address2 varchar(100),
-    m_joindate timestamp default sysdate not null,
+    m_joindate timestamp default sysdate,
     m_ipaddress varchar(20) not null,
     m_admin char(1) check(m_admin in('y', 'n'))
 );
@@ -35,8 +35,8 @@ create table board(
     b_due_date timestamp not null,
     b_contents CLOB not null,
     b_viewcount number default 0,
-    b_writedate timestamp default sysdate not null,
-    b_recommend number default 0 not null,
+    b_writedate timestamp default sysdate,
+    b_recommend number default 0,
     b_sum_amount number default 0
 );
 --drop table board;
@@ -65,8 +65,8 @@ create table closed(
     cl_b_due_date timestamp not null,
     cl_b_contents clob not null,
     cl_b_viewcount number default 0,
-    cl_b_writedate timestamp default sysdate not null,
-    cl_b_recommend number default 0 not null,
+    cl_b_writedate timestamp default sysdate,
+    cl_b_recommend number default 0,
     cl_b_sum_amount number default 0
 );
 --drop table closed;
@@ -113,7 +113,7 @@ create table payment(
     p_email varchar(30) not null,
     p_phone varchar(20) not null,
     p_amount number not null,
-    p_payment_date timestamp default sysdate not null
+    p_payment_date timestamp default sysdate
 );
 --drop table payment;
 
@@ -141,21 +141,13 @@ create table comments(
     c_name varchar(20) not null,
     c_b_no number not null,
     c_comment varchar(1000) not null,
-    c_write_date timestamp default sysdate not null
+    c_write_date timestamp default sysdate
 );
 --drop table comments;
 
 select * from comments;
 
 commit;
-
---------------------------------------------------------------------------------
-
-create table visitPersonCount(
-    personcount number 
-);
-
-select * from visitPersonCount;
 
 --------------------------------------------------------------------------------
 
@@ -187,4 +179,36 @@ create table timepersoncount(
 );
 insert into timepersoncount values(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 select * from timepersoncount;
+                          
+--------------------------------------------------------------------------------
+
+create table closed(
+    cl_b_no number primary key,
+    cl_b_title varchar(100) not null,
+    cl_b_email varchar(30) not null,
+    cl_b_writer varchar(20) not null,
+    cl_b_amount number not null,
+    cl_b_bank varchar(20) not null,
+    cl_b_account varchar(30) not null,
+    cl_b_due_date timestamp not null,
+    cl_b_contents clob not null,
+    cl_b_viewcount number default 0,
+    cl_b_writedate timestamp default sysdate,
+    cl_b_recommend number default 0,
+    cl_b_sum_amount number default 0
+);
+--drop table closed;
+
+select * from closed;
+
+create or replace trigger board_delete_trg
+after delete
+on board
+for each row
+begin
+    insert into closed values(:old.b_no, :old.b_title, :old.b_email, :old.b_writer, :old.b_amount,
+    :old.b_bank, :old.b_account, :old.b_due_date, :old.b_contents, :old.b_viewcount, :old.b_writedate, :old.b_recommend, :old.b_sum_amount);
+end;
+/
+                          
 commit;
