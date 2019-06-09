@@ -250,7 +250,8 @@ cellPhone.onkeyup = function(event){
                url : "SendMail.members",
                type : "post",
                data : {
-                  email : $("#inputEmail").val()
+                  email : $("#inputEmail").val(),
+                  classification : "J"
                }
             }).done(function(resp) {
                if (resp == 0) {
