@@ -128,7 +128,9 @@
 				<div class="noti mb-2">대표 사진은 신중하게 골라서!</div>
 				<input id="myTitleImg" type="file" name="filename" class="form-control">
 			</div>
-			
+			<div class="form-group">
+				<div id="wrongFile" class="issue"></div>
+			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">작성자는 실명으로!</div>
 				<input id="myWriter" type="text" class="form-control" name="writer" placeholder="신뢰를 바탕으로 모금액이 모이기 때문에 실명을 입력해 주세요 :)" required>
@@ -222,6 +224,19 @@
 	        }
 		})
 		
+		$("#myTitleImg").on("change",function(){
+			var file = $("#myTitleImg").val();
+			console.log(file);
+			var regex = /(\.png|\.jpg|\.jpeg|\.gif)/g
+			
+			var result = regex.exec(file);
+	        if(result == null){
+	             $("#wrongFile").html("잘못된 파일 형식입니다.");
+	        }else{
+	        	 $("#wrongFile").html("");
+	        }
+		})
+		
 		$("#myWriter").on("input", function(){
 			var writer = $("#myWriter").val();
 			var regex = /^[가-힣]{2,5}$/g
@@ -305,21 +320,31 @@
             var account = $("#myAccount").val();
         	var accountRegex = /^[\d]{12,15}$/g
 			var result3 = accountRegex.exec(account);
+        	
+        	var file = $("#myTitleImg").val();
+			var fileRegex = /(\.png|\.jpg|\.jpeg|\.gif)/g
+			var result4 = fileRegex.exec(file);
 			
 			if($("#myTitle").val() == ""){
 				alert("제목을 입력해 주세요.");
 			}else if(result1 == null){
 				alert("제목을 형식에 맞게 작성해 주세요.");
 				$("#myTitle").val("");
+				$("#wrongTitle").html("");
 				
 			}else if($("#myTitleImg").val() == ""){
 				alert("대표사진을 입력해주세요.");
+			}else if(result4 == null){
+				alert("이미지 파일만 등록 가능합니다.");
+				$("#myTitleImg").val("");
+				$("#wrongFile").html("");
 				
 			}else if($("#myWriter").val() == ""){
 				alert("작성자를 입력해 주세요.");
 			}else if(result2 == null){
 				alert("작성자를 형식에 맞게 작성해 주세요.");
 				$("#myWriter").val("");
+				$("#wrongName").html("");
 				
 			}else if($("#myAmount").val() == ""){
 				alert("목표금액을 입력해 주세요.");
@@ -327,18 +352,21 @@
 			}else if(parseInt($("#myAmount").val()) < 10000 || parseInt($("#myAmount").val()) > 10000000){
 				alert("목표금액으로 적절한 금액을 입력해주세요.");
 				$("#myAmount").val("");
+				$("#lessAmount").html("");
 				
 			}else if($("#myDueDate").val() == ""){
 				alert("마감일을 입력해 주세요.");
 			}else if(between < 7){
 				alert("마감일로 적절한 날짜를 입력해주세요.");
 				$("#myDueDate").val("");
+				$("#today").html("");
 				
 			}else if($("#myAccount").val() == ""){
 				alert("계좌번호를 입력해 주세요.");
 			}else if(result3 == null){
 				alert("계좌번호는 12~15자리의 숫자만 가능합니다.");
 				$("#myAccount").val("");
+				$("#wrongAccount").html("");
 				
 			}else if($(".note-editable").html() == "<p><br></p>"){
 				alert("내용을 입력해주세요.");

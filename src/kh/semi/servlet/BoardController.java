@@ -121,7 +121,9 @@ public class BoardController extends HttpServlet {
 					dto.setAccount(multi.getParameter("account"));
 					
 					String content = multi.getParameter("contents");
+					System.out.println("before: " + content);
 					content.replaceAll("<.?script>", "");
+					System.out.println("after: " + content);
 					dto.setContents(content);
 					
 					try {
@@ -334,10 +336,8 @@ public class BoardController extends HttpServlet {
 					String[] sumAmountArr = new String[12];
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
-						
-						
-//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
-						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
+//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();
@@ -392,7 +392,7 @@ public class BoardController extends HttpServlet {
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
 						
-						String folder = path.replaceAll("D.+?3.+?",""); //지혜꺼
+						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
 //						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 //						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
