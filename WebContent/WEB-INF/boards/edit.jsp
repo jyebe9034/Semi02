@@ -215,18 +215,6 @@
 // 	    	})
 // 	    })
 	
-		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
-			if($("#myTitle").val().length > 22){
-				alert("제목은 최대 22자까지만 가능합니다.");
-				$(this).val("");
-			}else if($(".note-editable").html() == "<p><br></p>"){
-				alert("내용을 입력해주세요.");
-			}else{
-				$("#myContent").val($(".note-editable").html());
-		        $("#myform").submit();	
-			}	
-	    })
-	     
 	    $('#summernote').summernote({
 			placeholder: '내용을 입력해주세요.',
 		    tabsize: 2,

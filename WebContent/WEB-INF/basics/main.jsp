@@ -303,7 +303,7 @@
 	<script>
 		$(".article").on("click", function(){
 			var boardNo = $(this).attr("boardNo");
-			location.href="Read.board?boardNo="+boardNo+"&currentPage=1&commentPage=1&classification=ongoing";
+			location.href="Read.board?boardNo="+boardNo+"&currentPage=1&commentPage=1&classification=ongoing&searchOption=allPages&searchWord=allPages";
 		})
 	</script>
 </body>

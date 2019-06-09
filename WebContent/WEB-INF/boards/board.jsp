@@ -213,7 +213,9 @@ html, body {
 			var boardNo = $(this).attr("boardNo");
 			var currentPage ="${currentPage }";
 			var classification = "${classification}";
-			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1&classification="+classification;
+			var searchOption = "${searchOption}";
+			var searchWord = "${searchWord}";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1&classification="+classification + "&searchOption="+searchOption + "&searchWord="+searchWord;
 		})
 
 //		창훈이 삭제버튼 부분--------------------------------------------------------------	

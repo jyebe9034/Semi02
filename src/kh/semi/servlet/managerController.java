@@ -64,7 +64,7 @@ public class managerController extends HttpServlet {
 					}
 				}
 			}
-			request.getRequestDispatcher("List.board?currentPage=1&searchOption=allPages&searchWord=allPages").forward(request, response);//이걸로고침!!창훈
+			request.getRequestDispatcher("List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing").forward(request, response);
 		}
 	}
 

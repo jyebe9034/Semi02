@@ -93,7 +93,7 @@
 			<h3>후원 내역</h3>
 		</div>
 		<div class="form-group">
-			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1$classification=ongoing">${board.title }</a></p>
+			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1$classification=ongoing&searchOption=allPages&searchWord=allPages">${board.title }</a></p>
 		</div>
 		<div class="form-group">
 			<p>후원자 : ${payment.name }</p>
