@@ -51,9 +51,6 @@ public class MembersController extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		BoardDAO bdao = new BoardDAO();
 		PaymentDAO pdao = new PaymentDAO();
-
-		System.out.println(cmd);
-
 		Date date = new Date();
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -127,12 +124,12 @@ public class MembersController extends HttpServlet {
 				String[] imgSrc = new String[4];
 				for(int i=0; i < imgList.size(); i++) {
 					String str = imgList.get(i).getFilePath();
-					String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
+//					String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 					//					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
 					// String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 					//					String result = str.replaceAll("D.+?3.+?","");
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-					//					String result = str.replaceAll("D.+?4.+?", "");
+										String result = str.replaceAll("D.+?4.+?", "");
 					//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}

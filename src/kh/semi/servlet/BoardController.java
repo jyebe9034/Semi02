@@ -121,7 +121,10 @@ public class BoardController extends HttpServlet {
 					dto.setAccount(multi.getParameter("account"));
 
 					String content = multi.getParameter("contents");
-					content.replaceAll("<.?script>", "");
+					System.out.println("before: " + content);
+					content.replaceAll("&lt;", "");
+					content.replaceAll("&gt;", "");
+					System.out.println("after: " + content);
 					dto.setContents(content);
 
 					try {
@@ -277,7 +280,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("WEB-INF/boards/payment.jsp").forward(request, response);
 
-			}else if(cmd.equals("/edit.board")) {
+			}else if(cmd.equals("/edit.board")) { // 글 수정 페이지로 이동
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				BoardDTO article = dao.selectOneArticle(boardNo);
@@ -289,16 +292,22 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("result", article);
 				request.getRequestDispatcher("/WEB-INF/boards/edit.jsp").forward(request, response);
 
-			}else if(cmd.equals("/editCompleted.board")) {
+			}else if(cmd.equals("/editCompleted.board")) { // 글 수정 완료 후 정보 업데이트 및 페이지 이동
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
+				String classification = request.getParameter("classification");
 				String title = request.getParameter("title");
 				String content = request.getParameter("contents");
+				content.replaceAll("<.?script>", "");
+				dto.setContents(content);
 				int result = dao.updatedEditing(boardNo, title, content);
 				request.setAttribute("boardNo", boardNo);
 				request.setAttribute("currentPage", currentPage);
 				request.setAttribute("commentPage", commentPage);
+				request.setAttribute("classification", classification);
+				request.setAttribute("searchOption", "allPages");
+				request.setAttribute("searchWord", "allPages");
 				if(result > 0) {
 					request.getRequestDispatcher("Read.board").forward(request, response);
 				}else {
@@ -337,8 +346,8 @@ public class BoardController extends HttpServlet {
 						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
 						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
-						String folder = path.replaceAll("C:.+?2Project.+?","");	// 해용 집
-//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
+//						String folder = path.replaceAll("C:.+?2Project.+?","");	// 해용 집
+						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
 //						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/

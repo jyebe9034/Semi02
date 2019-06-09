@@ -115,7 +115,7 @@
 		</div>
 	</div>
 	<div id="wrapper" class="container">	
-		<form action="editCompleted.board?boardNo=${result.boardNo}&currentPage=${currentPage}&commentPage=1" method="post" id="myform">
+		<form action="editCompleted.board?boardNo=${result.boardNo}&currentPage=${currentPage}&commentPage=1&classification=ongoing" method="post" id="myform">
 			<div class="form-group">
 				<div class=" noti mb-2">작성자 : ${result.writer}</div>
 			</div>
@@ -214,19 +214,7 @@
 // 	    		}
 // 	    	})
 // 	    })
-	
-		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
-			if($("#myTitle").val().length > 22){
-				alert("제목은 최대 22자까지만 가능합니다.");
-				$(this).val("");
-			}else if($(".note-editable").html() == "<p><br></p>"){
-				alert("내용을 입력해주세요.");
-			}else{
-				$("#myContent").val($(".note-editable").html());
-		        $("#myform").submit();	
-			}	
-	    })
-	     
+
 	    $('#summernote').summernote({
 			placeholder: '내용을 입력해주세요.',
 		    tabsize: 2,
@@ -282,7 +270,7 @@
         }
         
         $("#cancel").on("click", function(){ // 취소 버튼을 눌렀을 때 서버측의 사직 삭제
-        	if(confirm("작성된 글이 모두 삭제됩니다. 정말로 취소하시겠습니까?")){
+        	if(confirm("수정하신 내용이 삭제될 수 있습니다. 정말로 취소하시겠습니까?")){
         		$("img").each(function(index, item){
             		var src = $(this).attr("src");
             		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
@@ -296,7 +284,7 @@
             			})	
             		}
             	})
-            	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";	
+            	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing";	
         	}
         })
 	</script>
