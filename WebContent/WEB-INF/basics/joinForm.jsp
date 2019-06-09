@@ -14,29 +14,15 @@
 
 <link rel="stylesheet" href="nav_footer.css">
 <style>
+#root{
+	margin-top: 30px;
+}
 .wrapper {
 	width: 400px;
 	margin: auto;
 	padding: 40px;
 	border: 1px solid #e4e4e4;
 	border-radius: 5px;
-}
-
-.top_wrapper {
-	display: flex;
-	justify-content: space-between;
-	height: 40px;
-	align-items: center;
-	position: relative;
-	margin: auto;
-}
-
-a {
-	font-weight: bold;
-}
-
-a:hover {
-	color: #000000;
 }
 
 .title {
@@ -103,9 +89,7 @@ ul {
 </style>
 </head>
 <body>
-
-	
-      <nav class="navbar navbar-expand-md navbar-light">
+      <nav class="navbar navbar-expand-lg navbar-light">
       <div class="logo">
          <a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
       </div>
@@ -120,7 +104,7 @@ ul {
          <ul class="navbar-nav nav-ul">
             <li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
             <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-            <li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
    
             <c:choose>
                <c:when test="${sessionScope.loginEmail != null}">
@@ -143,8 +127,9 @@ ul {
 
    <hr style="margin:0px;">
 
-   <form action="Join.members" id="joinForm" method="post">
-      <div class="wrapper">
+   <div id="root">
+	<form action="Join.members" id="joinForm" method="post">
+	<div class="wrapper">
          <div class="title">
             <h3>회원가입</h3>
          </div>
@@ -196,8 +181,9 @@ ul {
             <input type="button" id="btnJoin" class="btn btn-primary"
                value="가입하기">
          </div>
-      </div>
-   </form>
+   		</div>
+      </form>
+	</div>
 
    <div id="footer">
       <div id="f_logo_wrap">
@@ -255,10 +241,8 @@ cellPhone.onkeyup = function(event){
    
    
       $("#btnConfirmEmail").on("click", function() {
-         if ($("#inputNum").attr("flag") == "true") {
-            alert("이미 인증이 완료되었습니다.");
-            return;
-         }
+    	 $("#btnConfirmEmail").prop("disabled", true);
+    	 $("#emailCheck").text("인증번호를 메일로 발송중입니다.");
          if ($("#inputEmail").val() == "") {
             alert("이메일을 입력해주세요.");
          } else {
@@ -271,8 +255,12 @@ cellPhone.onkeyup = function(event){
             }).done(function(resp) {
                if (resp == 0) {
                   alert("이메일 주소가 잘못되었습니다. 다시 입력해주세요.");
+                  $("#inputEmail").val("");
+                  $("#inputEmail").focus();
+                  $("#btnConfirmEmail").prop("disabled", false);
                } else { // 메일 발송을 성공했을 때
                   alert("입력하신 이메일로 메일이 발송되었습니다. 확인하신 후 인증번호를 입력해주세요.");
+                  $("#emailCheck").text("");
                   $("#inputNum").attr("type", "text");
                   $("#btnInputNum").css("display", "inline-block");
                   $("#btnInputNum").on("click", function() {
@@ -325,13 +313,14 @@ cellPhone.onkeyup = function(event){
                $("#btnConfirmEmail").prop("disabled", true);
             } else {
                $("#emailCheck").text("");
+               $("#btnConfirmEmail").prop("disabled", false);
             }
          })
       })
 
       document.getElementById("inputPassword").oninput = function() {
          var inputPw = document.getElementById("inputPassword").value;
-         var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+         var regex = /^.*(?=^.{8,25}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
          var result = regex.exec(inputPw);
          if (result == null) {
             document.getElementById("pw_form").innerHTML = "8자 이상 영문,숫자,특수문자를 사용하세요.";

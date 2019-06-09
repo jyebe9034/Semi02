@@ -37,11 +37,13 @@ public class MembersController extends HttpServlet {
 	public static int oneStart;
 	public static int count;
 	public static String today;
+	
+	public static List<String> loginMembers = new ArrayList<>();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		System.out.println(today);
+		
 		PrintWriter printWriter = response.getWriter();
 		String reqUri = request.getRequestURI();
 		String ctxPath = request.getContextPath();
@@ -85,7 +87,7 @@ public class MembersController extends HttpServlet {
 		if (cmd.equals("/First.members")) {
 			visitPerson++;
 			timePerson++;
-			request.getRequestDispatcher("Main.members").forward(request, response);;
+			request.getRequestDispatcher("Main.members").forward(request, response);
 
 		}else if(cmd.equals("/checkLogin.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/checkLogin.jsp").forward(request, response);
@@ -193,23 +195,36 @@ public class MembersController extends HttpServlet {
 		} else if (cmd.equals("/Login.members")) {
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");
-			try {
-				boolean result = dao.isLoginOk(email, pw);
-				if (result) {
-					request.getSession().setAttribute("loginEmail", email);
-					String admin = dao.managerOrVisiter(email);
-					if(admin.equals("y")) {
-						request.getSession().setAttribute("admin", admin);
-						System.out.println(admin);
-					}
+			boolean login = true;
+			for(String member : loginMembers) {
+				if(member.equals(email)) {
+					request.setAttribute("resultLogin", "login");	// 이미 로그인 한 상태일 때!
+					login = false;
+					break;
 				}
-				request.setAttribute("result", result);
-				request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+			if(login) {
+				try {
+					boolean result = dao.isLoginOk(email, pw);
+					if (result) {
+						request.getSession().setAttribute("loginEmail", email);
+						loginMembers.add(email);
+						String admin = dao.managerOrVisiter(email);
+						if(admin.equals("y")) {
+							request.getSession().setAttribute("admin", admin);
+							System.out.println(admin);
+						}
+					}
+					request.setAttribute("result", result);
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);
 
 		} else if (cmd.equals("/Logout.members")) {
+			String email = (String)request.getSession().getAttribute("loginEmail");
+			loginMembers.remove(email);
 			request.getSession().invalidate();
 			request.getRequestDispatcher("/WEB-INF/basics/alertLogout.jsp").forward(request, response);
 
@@ -218,7 +233,7 @@ public class MembersController extends HttpServlet {
 			String clientSecret = "otERPitybs";// 애플리케이션 클라이언트 시크릿값";
 			String code = request.getParameter("code");
 			String state = request.getParameter("state");
-			String redirectURI = URLEncoder.encode("http://localhost/naverLogin.members", "UTF-8");
+			String redirectURI = URLEncoder.encode("http://192.168.60.7/naverLogin.members", "UTF-8");
 			String apiURL;
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 			apiURL += "client_id=" + clientId;
@@ -226,8 +241,6 @@ public class MembersController extends HttpServlet {
 			apiURL += "&redirect_uri=" + redirectURI;
 			apiURL += "&code=" + code;
 			apiURL += "&state=" + state;
-			String access_token = "";
-			String refresh_token = "";
 			try {
 				URL url = new URL(apiURL);
 				HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -350,6 +363,18 @@ public class MembersController extends HttpServlet {
 			}
 		}else if(cmd.equals("/FindPWForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/findPassword.jsp").forward(request, response);
+			
+		}else if(cmd.equals("/FindPW.members")) {
+			String email = request.getParameter("email");
+			String pw = request.getParameter("pw");
+
+			try {
+				int result = dao.updatePassword(email, pw);
+				request.setAttribute("result", result);
+				request.getRequestDispatcher("/WEB-INF/basics/alertPwUpdate.jsp").forward(request, response);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 

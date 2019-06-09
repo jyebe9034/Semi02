@@ -154,7 +154,6 @@
         </style>
     </head>
     <body>
-    
 	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
 			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -170,13 +169,12 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&&searchOption==null&&searchWord==null">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Logout.members">로그아웃</a></li>
 			</ul>
 		</div>
 	</nav>
-      
        <hr style="margin:0px; bordercolor:whitesmoke;">
         <br><br><br>
 
@@ -383,7 +381,7 @@ cellPhone.onkeyup = function(event){
                     return;
                 }
                 var inputPw = document.getElementById("inputPassword").value;
-                var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
+                var regex = /^.*(?=^.{8,25}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
                 var result = regex.exec(inputPw);
                 if (result == null) {
                     alert("패스워드를 확인해주세요.")
@@ -444,7 +442,7 @@ cellPhone.onkeyup = function(event){
                         // 우편번호와 주소 정보를 해당 필드에 넣는다.
                         document.getElementById('zipcode').value = data.zonecode;
                         document.getElementById("address1").value = addr;
-                        // 커서를 상세주소 필드로 이동한다.
+                        //커서를 상세주소 필드로 이동한다.
                         document.getElementById("address2").focus();
                     }
                 }).open();

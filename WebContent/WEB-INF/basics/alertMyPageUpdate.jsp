@@ -8,9 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<script>
-	
 	if(${result}>0){
 		alert("정보가 수정되었습니다.");
 		location.href="myPage.members?currentPage=1&currentPage2=1";
@@ -18,10 +16,6 @@
 		alert("정보 수정에 실패하였습니다.");
 		location.href="myPage.members?currentPage=1&currentPage2=1";
 	}
-	
-	
-	
 	</script>
-
 </body>
 </html>

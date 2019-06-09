@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Introduce</title>
+<title>도움닿기 - 소개</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Bitter|Dancing+Script|Inconsolata|Indie+Flower|Nanum+Pen+Script|Poiret+One" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="nav_footer.css">
 
@@ -27,9 +27,7 @@
 	    object-fit: cover;
 	    width: 100%;
 	}
-	.wrapper {
-		display: inline-block;
-	}
+
 	.btn-primary {
 		margin: 20px 0px 20px;
 		background-color: #1ebdd8;
@@ -54,10 +52,11 @@
 </style>
 </head>
 <body>
-	<div id="root">
-			<nav class="navbar navbar-expand-lg navbar-light">
+
+	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
-			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+			<a class="navbar-brand anker" href="Main.members"
+				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
 		<div id="toggle">
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -70,13 +69,13 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
-	
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
+
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
 						<c:if test="${sessionScope.admin==null}">
 							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-						</c:if>	
+						</c:if>
 						<c:if test="${sessionScope.admin!=null}">
 							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
 						</c:if>
@@ -132,6 +131,6 @@
 				<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	        </div>
 		</div>
-	</div>
+	
 </body>
 </html>

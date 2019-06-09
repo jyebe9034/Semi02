@@ -10,10 +10,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimerTask;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -31,10 +33,10 @@ import kh.semi.dto.MemberDTO;
 import kh.semi.dto.MyDonateDTO;
 import kh.semi.dto.MyWriteDTO;
 
-public class MemberDAO {
+public class MemberDAO{
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1522:xe";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url, user, pw);
@@ -58,26 +60,26 @@ public class MemberDAO {
 		return SHA;
 	}
 
-	   public MemberDTO getContents(String email) throws Exception {
-		      String sql = "select * from members where m_email = ?";
-		      try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-		         pstat.setString(1, email);
-		         try (ResultSet rs = pstat.executeQuery();) {
-		            if (rs.next()) {
-		               MemberDTO result = new MemberDTO();
-		               result.setEmail(rs.getString("m_email"));
-		               result.setPw(rs.getString("m_pw"));
-		               result.setName(rs.getString("m_name"));
-		               result.setPhone(rs.getString("m_phone"));
-		               result.setZipCode(rs.getString("m_zipcode"));
-		               result.setAddress1(rs.getString("m_address1"));
-		               result.setAddress2(rs.getString("m_address2"));
-		               return result;
-		            }
-		            return null;
-		         }
-		      }
-		   }
+	public MemberDTO getContents(String email) throws Exception {
+		String sql = "select * from members where m_email = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, email);
+			try (ResultSet rs = pstat.executeQuery();) {
+				if (rs.next()) {
+					MemberDTO result = new MemberDTO();
+					result.setEmail(rs.getString("m_email"));
+					result.setPw(rs.getString("m_pw"));
+					result.setName(rs.getString("m_name"));
+					result.setPhone(rs.getString("m_phone"));
+					result.setZipCode(rs.getString("m_zipcode"));
+					result.setAddress1(rs.getString("m_address1"));
+					result.setAddress2(rs.getString("m_address2"));
+					return result;
+				}
+				return null;
+			}
+		}
+	}
 
 	public int updateContents(MemberDTO param) throws Exception {
 		String sql = "update members set M_phone=?,m_zipcode=?,m_address1=?,m_address2=?,m_pw=? where M_EMAIL=?";
@@ -95,6 +97,20 @@ public class MemberDAO {
 
 			int result = pstat.executeUpdate();
 
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int updatePassword(String email, String pw) throws Exception {
+		String sql = "update members set m_pw=? where m_email=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, testSHA256(pw));
+			pstat.setString(2, email);
+			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
 		}
@@ -589,19 +605,20 @@ public class MemberDAO {
 			return result;
 		}
 	}
+
 }
 //-----------------------------------------------------------------------------------
 
 class MyAuthentication extends Authenticator {
-	PasswordAuthentication pa;
-	public MyAuthentication(){
-		String id = "starlight9134@gmail.com";       // 구글 ID
-		String pw = "semipractice12@";          // 구글 비밀번호
-		// ID와 비밀번호를 입력한다.
-		pa = new PasswordAuthentication(id, pw);
-	}
-	// 시스템에서 사용하는 인증정보
-	public PasswordAuthentication getPasswordAuthentication() {
-		return pa;
-	}
+   PasswordAuthentication pa;
+   public MyAuthentication(){
+      String id = "junhaeyong95@gmail.com";       // 구글 ID
+      String pw = "wjsgodyd95!!";          // 구글 비밀번호
+      // ID와 비밀번호를 입력한다.
+      pa = new PasswordAuthentication(id, pw);
+   }
+   // 시스템에서 사용하는 인증정보
+   public PasswordAuthentication getPasswordAuthentication() {
+      return pa;
+   }
 }

@@ -18,26 +18,12 @@ import kh.semi.servlet.MembersController;
 public class ManagerDAO {
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1522:xe";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
 	}
 
-
-
-	public int visitPersonCount()throws Exception{
-		String sql = "update visitpersoncount set personcount=?";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setInt(1, MembersController.visitPerson);
-			int result = pstat.executeUpdate();
-			return result;
-		}
-
-	}
 
 	public String totalMoney()throws Exception{
 		String sql = "select to_char(sum(b_sum_amount),'999,999,999') from board";
@@ -268,18 +254,17 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-
+	
 	public int titleImgDelete(String value)throws Exception{
-		String sql = "delete from title_img where t_b_no=?";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setString(1, value);
-			int result = pstat.executeUpdate();
-			return result;
-
-		}
-	}
-
+	      String sql = "delete from title_img where t_b_no=?";
+	      try(
+	            Connection con = this.getConnection();
+	            PreparedStatement pstat = con.prepareStatement(sql);
+	            ){
+	         pstat.setString(1, value);
+	         int result = pstat.executeUpdate();
+	         return result;
+	         
+	      }
+	   }
 }

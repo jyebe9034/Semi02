@@ -16,6 +16,7 @@ import kh.semi.dto.CommentDTO;
 import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
+	
 	static int recordCountPerPage = 10;
 	static int boardRecordCountPerPage = 12;
 	static int naviCountPerPage = 5;
@@ -24,7 +25,7 @@ public class BoardDAO {
 
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1522:xe";
+		String url = "jdbc:oracle:thin:@localhost:1521:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
@@ -153,19 +154,19 @@ public class BoardDAO {
 				){
 			BoardDTO boardDTO = new BoardDTO();
 			if(rs.next()) {
-				boardDTO.setBoardNo(rs.getInt(1));
-				boardDTO.setTitle(rs.getString(2));
-				boardDTO.setEmail(rs.getString(3));
-				boardDTO.setWriter(rs.getString(4));
-				boardDTO.setAmount(rs.getInt(5));
-				boardDTO.setBank(rs.getString(6));
-				boardDTO.setAccount(rs.getString(7));
-				boardDTO.setContents(rs.getString(9));
-				boardDTO.setDueDate(rs.getTimestamp(8));
-				boardDTO.setViewCount(rs.getInt(10));
-				boardDTO.setWriteDate(rs.getTimestamp(11));
-				boardDTO.setRecommend(rs.getInt(12));
-				boardDTO.setSumAmount(rs.getInt(13));
+	            boardDTO.setBoardNo(rs.getInt("b_no"));
+	            boardDTO.setTitle(rs.getString("b_title"));
+	            boardDTO.setEmail(rs.getString("b_email"));
+	            boardDTO.setWriter(rs.getString("b_writer"));
+	            boardDTO.setAmount(rs.getInt("b_amount"));
+	            boardDTO.setBank(rs.getString("b_bank"));
+	            boardDTO.setAccount(rs.getString("b_account"));
+	            boardDTO.setContents(rs.getString("b_contents"));
+	            boardDTO.setDueDate(rs.getTimestamp("b_due_date"));
+	            boardDTO.setViewCount(rs.getInt("b_viewcount"));
+	            boardDTO.setWriteDate(rs.getTimestamp("b_writedate"));
+	            boardDTO.setRecommend(rs.getInt("b_recommend"));
+	            boardDTO.setSumAmount(rs.getInt("b_sum_amount"));
 				return boardDTO;
 			}
 			return null;
@@ -744,6 +745,5 @@ public class BoardDAO {
 		return pageNavi;
 	}
 
-	
-}
 
+}

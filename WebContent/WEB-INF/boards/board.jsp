@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +26,9 @@
    .boardName {
       text-align: center;
       margin: 50px;
-      font-family: "Do Hyeon";
+      font-family: "Nanum Gothic";
       font-size: 50px;
+      font-weight: bold;
       color: darkslategray;
    }
    /*분류*/
@@ -183,11 +184,10 @@
    
 </style>
 <script>
-	$(function(){
-		if(${fail == 1}){
-			alert("수정에 실패했습니다. 다시 시도해 주세요.");
-		}
-
+   $(function(){
+      if(${fail == 1}){
+         alert("수정에 실패했습니다. 다시 시도해 주세요.");
+      }
 		$("#goMainBtn").on("click",function(){
 			location.href="Main.members";
 		})
@@ -214,6 +214,7 @@
 				location.href="BoardWriteDelete.manager";	
 		})
 		
+
 	//-----------------------------------------------------------------------------
 		$(".pageNumber").each(function(item){
 			if(${currentPage} == $(this).text()){
@@ -251,10 +252,8 @@
 					href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos"
 					class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos"
-					class="nav-link anker"
-					href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원
-						게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
+
 
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -288,13 +287,11 @@
 
 <div id="top">
 <!--글 분류 -->
-<!--    <div class="classificationRow"> -->
        <div class="col-6 classificationCol d-flex justify-content-left">
             <div class="list-group list-group-horizontal-sm classification">
                 <a href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing" class="list-group-item list-group-item-action ongoing state" flag="ongoing">진행중</a>
                 <a href="ClosedList.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=closed" class="list-group-item list-group-item-action closed state" flag="closed">마감</a>
             </div>
-<!--        </div> -->
    </div>
     
 <!--검색창-->
@@ -309,7 +306,6 @@
 				</c:otherwise>
 			</c:choose>
 	
-<!-- 		  <div id="wrapper" class="container searchBox"> -->
 				<div class="col-6 d-flex justify-content-end search searchBox">
 				<select name="searchOption" id="dropdownforSearch">
 					<option name="searchOption" class="searchOption" value="b_title">제목</option>
@@ -320,7 +316,6 @@
 					placeholder="검색할 내용 입력">
 				<button type="submit" class="btn searchBtn">검색</button>
 				</div>
-<!-- 		 </div> -->
 	</form>
 
 </div>
@@ -372,47 +367,48 @@
 		</c:otherwise>
 	</c:choose>
 
-      
-	<!--페이지네비게이터 -->
-	<div class="row  p-0 m-0" id="num_box">
-		<div class="col-12 d-flex justify-content-center">
-			<nav aria-label="Page navigation example">
-				<ul class="pagination pagination-sm">${getNavi }
-				</ul>
-			</nav>
-		</div>
-	</div>
-	<!--하단 버튼들 -->
-	<div class="row p-0 m-0" id="bottom">
-		<div class="col-12 bottonBtns d-flex justify-content-center">
-			<button type="button" class="btn" id="goMainBtn">메인으로</button>
-			<c:if test="${sessionScope.admin==null}">
-				<button type="button" class="btn" id="writeBtn">글쓰기</button>
-			</c:if>
-			<c:if test="${sessionScope.admin!=null}">
-				<button type="submit" class="btn" id="deleteBtn">삭제</button>
-			</c:if>
-		</div>
-	</div>
-	</form>
 
-
-	<div id="footer">
-		<div id="f_logo_wrap">
-			<a id="f_logo" href="Main.members"
-				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
-		</div>
-		<div id="f_info_wrap">
-			<div id="f_info">
-				행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
-			</div>
-		</div>
-		<div id="f_sns">
-			<img id="kakao" class="sns" src="photo_image/ka.png"> <img
-				class="sns" src="photo_image/fa.png"> <img id="insta"
-				class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
-		</div>
-		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
-	</div>
+   <!--페이지네비게이터 -->
+      <div class="row  p-0 m-0" id="num_box">
+         <div class="col-12 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+               <ul class="pagination pagination-sm">
+                        ${getNavi }
+               </ul>
+            </nav>      
+         </div>
+      </div>
+   <!--하단 버튼들 -->
+   <div class="row p-0 m-0" id="bottom">
+      <div class="col-12 bottonBtns d-flex justify-content-center">
+         <button type="button" class="btn" id="goMainBtn">메인으로</button>
+         <c:if test="${sessionScope.admin==null}">
+         <button type="button" class="btn" id="writeBtn">글쓰기</button>
+         </c:if>
+         <c:if test="${sessionScope.admin!=null}">
+         <button type="submit" class="btn" id="deleteBtn">삭제</button>
+         </c:if>
+      </div>
+   </div>
+   </form>
+   
+   
+   <div id="footer">
+      <div id="f_logo_wrap">
+         <a id="f_logo" href="Main.members"
+            style="font-family: Cute Font"><h1>도움닿기</h1></a>
+      </div>
+      <div id="f_info_wrap">
+         <div id="f_info">
+            행동하는 당신과 당신의 도움으로<br>다시 희망을 찾는 사람들을 응원힙니다.
+         </div>
+      </div>
+      <div id="f_sns">
+         <img id="kakao" class="sns" src="photo_image/ka.png"> <img
+            class="sns" src="photo_image/fa.png"> <img id="insta"
+            class="sns" src="photo_image/kk.png"> <a href="checkLogin.members"><div id="suggest">후원 신청</div></a>
+      </div>
+      <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
+   </div>
 </body>
 </html>

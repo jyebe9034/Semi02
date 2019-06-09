@@ -34,7 +34,6 @@ public class managerController extends HttpServlet {
 
 		if (cmd.equals("/Bar.manager")) {
 			try {
-				request.setAttribute("visitPersonCount", dao.visitPersonCount());
 				request.setAttribute("totalMoney", dao.totalMoney());
 				request.setAttribute("nowingProjectCount", dao.nowingProjectCount());
 				request.setAttribute("joinMemberCount", dao.joinMemberCount());
@@ -57,7 +56,7 @@ public class managerController extends HttpServlet {
 				for(int i=0; i<value.length; i++) {
 					try {
 						int result = dao.boardWriteDelete(value[i]);
-						int resultTitleDelete = dao.titleImgDelete(value[i]);   
+						int resultTitleDelete = dao.titleImgDelete(value[i]);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
