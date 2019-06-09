@@ -39,7 +39,7 @@ create table board(
     b_recommend number default 0,
     b_sum_amount number default 0
 );
---drop table board;
+drop table board;
 
 create sequence b_no_seq
 start with 1
@@ -51,6 +51,8 @@ nomaxvalue;
 --select b_no_seq.currval from dual;
 
 select * from board;
+
+update board set b_due_date='190607' where b_no=3;
 
 commit;
 

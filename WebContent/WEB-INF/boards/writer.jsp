@@ -86,7 +86,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -115,7 +115,7 @@
 		</div>
 	</div>
 	<div id="wrapper" class="container">	
-		<form action="writer.board" method="post" id="myform" enctype="multipart/form-data" accept-charset="UTF-8" name="fileCheck">
+		<form action="writer.board" method="post" id="myform" enctype="multipart/form-data" accept-charset="UTF-8">
 			<div class="form-group">
 				<div class="noti mb-2">제목은 한눈에 쏙 들어오게!</div>
 				<input id="myTitle" type="text" class="form-control" name="title" placeholder="제목은 최대 22자 까지만 가능합니다 :)" required>
@@ -123,12 +123,13 @@
 			<div class="form-group">
 				<div id="wrongTitle" class="issue"></div>
 			</div>
+			
 			<div class="form-group"> 
 				<div class="noti mb-2">대표 사진은 신중하게 골라서!</div>
-				<div class="custom-file mb-1">
-			      <input id="myTitleImg" type="file" class="custom-file-input" id="customFile" name="filename">
-			      <label class="custom-file-label text-left" for="customFile">용량은 10MB까지만 올릴 수 있어요:)</label>
-			    </div>
+				<input id="myTitleImg" type="file" name="filename" class="form-control">
+			</div>
+			<div class="form-group">
+				<div id="wrongFile" class="issue"></div>
 			</div>
 			<div class="form-group">
 				<div class=" noti mb-2">작성자는 실명으로!</div>
@@ -193,6 +194,7 @@
 			</div>
 		</form>
 	</div>
+	
 	<div id="footer">
 		<div id="f_logo_wrap">
 			<a id="f_logo" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
@@ -219,6 +221,19 @@
 	             $("#wrongTitle").html("잘못된 제목 형식입니다.");
 	        }else{
 	        	 $("#wrongTitle").html("");
+	        }
+		})
+		
+		$("#myTitleImg").on("change",function(){
+			var file = $("#myTitleImg").val();
+			console.log(file);
+			var regex = /(\.png|\.jpg|\.jpeg|\.gif)/g
+			
+			var result = regex.exec(file);
+	        if(result == null){
+	             $("#wrongFile").html("잘못된 파일 형식입니다.");
+	        }else{
+	        	 $("#wrongFile").html("");
 	        }
 		})
 		
@@ -271,21 +286,21 @@
 	        }
         })
 	
-		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
-	    	$("img").each(function(index, item){
-	    		var src = $(this).attr("src");
-	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
-	    		}else if(src == null){
-	    		}else{
-	    			$.ajax({
-						url: "deleteImage.board",
-						data: {src : src},
-						type: "POST",
-						cache: false
-					})	
-	    		}
-	    	})
-	    });
+// 		$(window).on("beforeunload", function(){ // 새로고침 버튼, 뒤로가기 등의 상황 시
+// 	    	$("img").each(function(index, item){
+// 	    		var src = $(this).attr("src");
+// 	    		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){	
+// 	    		}else if(src == null){
+// 	    		}else{
+// 	    			$.ajax({
+// 						url: "deleteImage.board",
+// 						data: {src : src},
+// 						type: "POST",
+// 						cache: false
+// 					})	
+// 	    		}
+// 	    	})
+// 	    });
 	
 		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
 			var title = $("#myTitle").val();
@@ -305,25 +320,54 @@
             var account = $("#myAccount").val();
         	var accountRegex = /^[\d]{12,15}$/g
 			var result3 = accountRegex.exec(account);
+        	
+        	var file = $("#myTitleImg").val();
+			var fileRegex = /(\.png|\.jpg|\.jpeg|\.gif)/g
+			var result4 = fileRegex.exec(file);
 			
-			
-			if(result1 == null){
+			if($("#myTitle").val() == ""){
+				alert("제목을 입력해 주세요.");
+			}else if(result1 == null){
 				alert("제목을 형식에 맞게 작성해 주세요.");
 				$("#myTitle").val("");
+				$("#wrongTitle").html("");
+				
 			}else if($("#myTitleImg").val() == ""){
 				alert("대표사진을 입력해주세요.");
+			}else if(result4 == null){
+				alert("이미지 파일만 등록 가능합니다.");
+				$("#myTitleImg").val("");
+				$("#wrongFile").html("");
+				
+			}else if($("#myWriter").val() == ""){
+				alert("작성자를 입력해 주세요.");
 			}else if(result2 == null){
-				alert("이름을 형식에 맞게 작성해 주세요.");
+				alert("작성자를 형식에 맞게 작성해 주세요.");
 				$("#myWriter").val("");
+				$("#wrongName").html("");
+				
+			}else if($("#myAmount").val() == ""){
+				alert("목표금액을 입력해 주세요.");
+				$("#myAmount").val("");
 			}else if(parseInt($("#myAmount").val()) < 10000 || parseInt($("#myAmount").val()) > 10000000){
 				alert("목표금액으로 적절한 금액을 입력해주세요.");
 				$("#myAmount").val("");
+				$("#lessAmount").html("");
+				
+			}else if($("#myDueDate").val() == ""){
+				alert("마감일을 입력해 주세요.");
 			}else if(between < 7){
 				alert("마감일로 적절한 날짜를 입력해주세요.");
 				$("#myDueDate").val("");
+				$("#today").html("");
+				
+			}else if($("#myAccount").val() == ""){
+				alert("계좌번호를 입력해 주세요.");
 			}else if(result3 == null){
-				alert("계좌번호는 12~15글자만 가능합니다.");
+				alert("계좌번호는 12~15자리의 숫자만 가능합니다.");
 				$("#myAccount").val("");
+				$("#wrongAccount").html("");
+				
 			}else if($(".note-editable").html() == "<p><br></p>"){
 				alert("내용을 입력해주세요.");
 			}else{
@@ -387,20 +431,22 @@
         }
         
         $("#cancel").on("click", function(){ // 취소 버튼을 눌렀을 때 서버측의 사직 삭제
-        	$("img").each(function(index, item){
-        		var src = $(this).attr("src");
-        		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
-        		}else if(src == null){
-        		}else{
-        			$.ajax({
-        				url: "deleteImage.board",
-        				data: {src : src},
-        				type: "POST",
-        				cache: false
-        			})	
-        		}
-        	})
-        	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";
+        	if(confirm("작성된 글이 모두 삭제됩니다. 정말로 취소하시겠습니까?")){
+        		$("img").each(function(index, item){
+            		var src = $(this).attr("src");
+            		if(src == "photo_image/foryou.jpg" || src == "photo_image/ka.png" || src == "photo_image/fa.png" || src == "photo_image/kk.png"){
+            		}else if(src == null){
+            		}else{
+            			$.ajax({
+            				url: "deleteImage.board",
+            				data: {src : src},
+            				type: "POST",
+            				cache: false
+            			})	
+            		}
+            	})
+            	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";
+        	}
         })
 	</script>
 </body>

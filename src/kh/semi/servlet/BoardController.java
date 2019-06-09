@@ -111,7 +111,8 @@ public class BoardController extends HttpServlet {
 						dis.close();
 						oldFile.delete();
 					}
-
+					
+					dto.setTitle(multi.getParameter("title"));
 					dto.setWriter(multi.getParameter("writer"));
 					dto.setAmount(Integer.parseInt(multi.getParameter("amount")));
 					String duedate = multi.getParameter("dueDate") + " " + sdf.format(currentTime);
@@ -120,7 +121,9 @@ public class BoardController extends HttpServlet {
 					dto.setAccount(multi.getParameter("account"));
 
 					String content = multi.getParameter("contents");
+					System.out.println("before: " + content);
 					content.replaceAll("<.?script>", "");
+					System.out.println("after: " + content);
 					dto.setContents(content);
 
 					try {
@@ -220,7 +223,13 @@ public class BoardController extends HttpServlet {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
-				BoardDTO article = dao.selectOneArticle(boardNo);
+				String classification = request.getParameter("classification");
+				BoardDTO article = null;
+				if(classification.equals("closed")) {
+					article = dao.selectOneArticle(boardNo,"closed");
+				}else {
+					article = dao.selectOneArticle(boardNo);	
+				}
 				List<CommentDTO> comments = dao.selectCommentsByBoardNo(commentPage, boardNo);
 				if(email!=null && !email.equals(article.getEmail())) {
 					dao.updateViewCount(boardNo);
@@ -235,17 +244,20 @@ public class BoardController extends HttpServlet {
 				request.setCharacterEncoding("UTF-8");
 
 				String str = titleImg.getFilePath();
-
+				//				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
+				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
 				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 				//				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
-				//				String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
+				
+		//		String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				
 				//String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 				//				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
+				request.setAttribute("classification", classification);
 				request.setAttribute("currentPage", currentPage);
 				request.setAttribute("titleImg", result+"/"+titleImg.getFileName());
 				request.setAttribute("pageNavi", dao.getCommentNavi(commentPage, dao.selectAllComments(boardNo)));
@@ -303,7 +315,7 @@ public class BoardController extends HttpServlet {
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
 					String searchWord = request.getParameter("searchWord"); //검색어
-
+					String classification = request.getParameter("classification"); //분류
 					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
 
 					if(searchOption.contains(" ")) { //추가
@@ -331,6 +343,8 @@ public class BoardController extends HttpServlet {
 						//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
 						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
 						String folder = path.replaceAll("C:.+?2Project.+?","");	// 해용 집
+//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
+//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();
@@ -341,15 +355,76 @@ public class BoardController extends HttpServlet {
 						sumAmountArr[i] = Commas.format(sumAmount);
 						request.setAttribute("sumAmount", sumAmountArr);	
 					}
+					request.setAttribute("classification", classification);
 					request.setAttribute("board", result);
 					request.setAttribute("fail", request.getParameter("fail"));
-					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord));
+					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord, classification));
 					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
 
 				}catch(Exception e) {				
 					e.printStackTrace();
 				}
-			}else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
+			}
+			
+			else if(cmd.equals("/ClosedList.board")){
+				try {
+					String searchOption = request.getParameter("searchOption"); //검색 종류
+					String searchWord = request.getParameter("searchWord"); //검색어
+					String classification = request.getParameter("classification"); //분류
+					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
+
+					if(searchOption.contains(" ")) { //추가
+						searchOption = "cl_b_title || cl_b_contents";
+					}else if(searchOption.equals("b_title")) {
+						searchOption = "cl_b_title";
+					}else if(searchOption.equals("b_contents")) {
+						searchOption = "cl_b_contents";
+					}
+					request.setAttribute("currentPage", currentPage);
+					int totalRecordCount = 0; //=recordTotalCount
+
+					List<BoardListDTO> result = new ArrayList<>();
+					if(searchOption.equals("allPages")){ //전체 글 목록
+						totalRecordCount = dao.totalClosedRecordNum();
+						result = dao.selectByClosedPage(currentPage);
+
+					}else {
+						totalRecordCount = dao.totalClosedRecordNumBySearch(searchOption, searchWord);
+						request.setAttribute("totalRecordCount", totalRecordCount);	 
+						result = dao.closedSearchList(currentPage, searchOption, searchWord);
+						request.setAttribute("searchWord", searchWord);
+					}
+
+					String[] sumAmountArr = new String[12];
+					for(int i = 0; i < result.size(); i++) {
+						String path = result.get(i).getFilePath();
+						
+//						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
+//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
+						String folder = path.replaceAll("C:.+?2Project.+?", "");
+						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
+						/*progress bar 추가됨*/
+						int sumAmount = result.get(i).getSumAmount();
+						int goalAmount = result.get(i).getAmount();
+						int percentage = (int) Math.floor((double) sumAmount / goalAmount * 100);
+						result.get(i).setPercentage(percentage);
+						DecimalFormat Commas = new DecimalFormat("#,###,###");
+						sumAmountArr[i] = Commas.format(sumAmount);
+						request.setAttribute("sumAmount", sumAmountArr);	
+					}
+					request.setAttribute("classification", classification);
+					request.setAttribute("board", result);
+					request.setAttribute("fail", request.getParameter("fail"));
+					request.setAttribute("getNavi", dao.getNavi(currentPage, totalRecordCount, searchOption, searchWord, classification));
+					request.getRequestDispatcher("WEB-INF/boards/board.jsp").forward(request, response); 
+
+				}catch(Exception e) {				
+					e.printStackTrace();
+				}
+			}
+			
+			else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
 				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);
 
 			}else if(cmd.equals("/Payment.board")) {
@@ -409,12 +484,14 @@ public class BoardController extends HttpServlet {
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
+				
 			}else if(cmd.equals("/DeleteComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String writeDate = request.getParameter("writeDate");
 
 				int result = dao.deleteComment(email, writeDate);
 				pw.print(result);
+				
 			}else if(cmd.equals("/ModifyComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String comment = request.getParameter("comment").replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", "");

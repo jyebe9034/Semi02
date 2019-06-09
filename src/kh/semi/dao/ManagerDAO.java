@@ -23,18 +23,7 @@ public class ManagerDAO {
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
 	}
-	public int visitPersonCount()throws Exception{
-		String sql = "update visitpersoncount set personcount=?";
-		try(
-				Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				){
-			pstat.setInt(1, MembersController.visitPerson);
-			int result = pstat.executeUpdate();
-			return result;
-		}
 
-	}
 
 	public String totalMoney()throws Exception{
 		String sql = "select to_char(sum(b_sum_amount),'999,999,999') from board";

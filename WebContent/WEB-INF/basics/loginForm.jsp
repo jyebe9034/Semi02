@@ -120,7 +120,7 @@ a:hover {
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
 
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -162,7 +162,7 @@ a:hover {
 					style="font-size: 18px; font-weight: bold;">로그인</button>
 				<%
 					String clientId = "9fcJ6ehu7V7mEFnBQABz";//애플리케이션 클라이언트 아이디값";
-					String redirectURI = URLEncoder.encode("http://localhost/naverLogin.members", "UTF-8");
+					String redirectURI = URLEncoder.encode("http://192.168.60.7/naverLogin.members", "UTF-8");
 					SecureRandom random = new SecureRandom();
 					String state = new BigInteger(130, random).toString();
 					String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";

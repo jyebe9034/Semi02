@@ -230,11 +230,12 @@ a:hover {
                href="Introduce.members">소개</a></li>
             <li class="nav-item nav-li"><a id="logos"
                class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-            <li class="nav-item nav-li"><a id="logos"
-               class="nav-link anker"
-               href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원
-                  게시판</a></li>
-            <li class="nav-item nav-li"><a id="logos"
+				<li class="nav-item nav-li"><a id="logos"
+					class="nav-link anker"
+					href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원
+						게시판</a></li>
+
+				<li class="nav-item nav-li"><a id="logos"
                class="nav-link anker"
                href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
             <li class="nav-item nav-li"><a class="nav-link anker"

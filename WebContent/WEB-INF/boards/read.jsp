@@ -146,7 +146,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -190,11 +190,19 @@
 				<span class="recommend">${result.recommend }</span>
 			</div>
 			<div class="contents col-12 p-3">${result.contents }</div>
-			<div class="btnBox1 col-md-9 col-sm-7 d-none d-sm-block"></div>
-			<div class="btnBox2 col-md-3 col-sm-5 col-12">
-				<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&searchOption=allPages&searchWord=allPages">목록</a>
+			<div class="btnBox1 col-md-6 col-sm-6 d-none d-sm-block"></div>
+			<div class="btnBox2 col-md-6 col-sm-6 col-12">
+				<c:choose>
+					<c:when test="${classification == 'ongoing' }">
+						<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&searchOption=allPages&searchWord=allPages&classification=ongoing">목록</a>
+					</c:when>
+					<c:otherwise>
+						<a class="btn btn-primary" href="ClosedList.board?currentPage=${currentPage}&searchOption=allPages&searchWord=allPages&classification=closed">목록</a>
+					</c:otherwise>
+				</c:choose>
+				
 				<a class="btn btn-primary" href="Main.members">메인</a>
-				<c:if test="${sessionScope.loginEmail == result.email }">
+				<c:if test="${sessionScope.loginEmail == result.email && classification == 'ongoing'}">
 					<a class="btn btn-primary" href="edit.board?boardNo=${result.boardNo}&currentPage=${currentPage}">수정</a>
 				</c:if>
 			</div>
@@ -211,8 +219,8 @@
 	    <div class="commentsBox row col-12">
 	   		<c:forEach var="com" items="${comments }">
 	   			<div class="row col-12 p-3 m-3 pr-0">
-	    			<div class="col-md-7 col-9 comment">${com.comment }</div>
-	    			<div class="col-md-2 col-2">${com.name }</div>
+	    			<div class="col-md-7 col-8 comment">${com.comment }</div>
+	    			<div class="col-md-2 col-3">${com.name }</div>
 	    			<c:choose>
 	    				<c:when test="${sessionScope.loginEmail == com.email }">
 	    					<div class="col-md-2 d-none d-md-block">${com.formedTime }</div>
@@ -234,31 +242,31 @@
 			<ul class="pagination pagination-sm justify-content-center m-0">
 				<c:if test="${pageNavi.needPrev == 1 }">
 					<li class="page-item"><a class="page-link pageNum"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.startNavi - 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.startNavi - 1}&classification=${classification}"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
 				</c:if>
 				<c:if test="${pageNavi.currentPage > 1 }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage - 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage - 1}&classification=${classification}"
 						aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 					</a></li>
 				</c:if>
 
 				<c:forEach var="i" begin="${pageNavi.startNavi}" end="${pageNavi.endNavi}">
 					<li class="page-item"><a class="page-link pageNumber"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${i }">${i}</a></li>
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${i }&classification=${classification}">${i}</a></li>
 				</c:forEach>
 					
 				<c:if test="${pageNavi.currentPage < pageNavi.pageTotalCount }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage + 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage + 1}&classification=${classification}"
 						aria-label="Previous"> <span aria-hidden="true">&gt;</span>
 					</a></li>
 				</c:if>
 				<c:if test="${pageNavi.needNext == 1 }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.endNavi + 1}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.endNavi + 1}&classification=${classification}"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a></li>
 				</c:if>
@@ -320,6 +328,13 @@
 			if(loginEmail == email){
 				$(".donateBtn").prop("disabled", true);
 				$(".recommendBtn").prop("disabled", true);
+			}
+			
+			if(${classification == "closed"}){
+				$(".donateBtn").prop("disabled", true);
+				$(".recommendBtn").prop("disabled", true);
+				$("#inputComment").attr("contenteditable", false);
+				$("#commentBtn").prop("disabled", true);
 			}
 		});
 		

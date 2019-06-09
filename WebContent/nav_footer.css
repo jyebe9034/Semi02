@@ -1,6 +1,7 @@
 body {
 	font-family: "Nanum Gothic";
 	height: 100%;
+	min-width: 425px;
 }
 a{
    	font-weight: bold;
@@ -74,6 +75,7 @@ a{
 	width: 30px;
 	height: 30px;
 	margin: 3px;
+	cursor: pointer;
 }
 #kakao{
 	width: 40px;

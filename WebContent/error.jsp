@@ -23,10 +23,10 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
    .title{
       font-family: "Nanum Gothic";
       font-size: 50px;
+      font-weight: bold;
       color: darkslategray;
       margin-top: 200px;
       margin-bottom: 50px;
-      font-weight: bold;
    }
    .contents{
       font-family: "Nanum Gothic";
@@ -75,7 +75,7 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -97,10 +97,9 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	</nav>
 	<hr style="margin:0px;">
 	<div id=wrapper>
-		<p class="title">서비스 준비중입니다.</p>
-		<p class="contents">이용에 불편을 드려 죄송합니다.</p> 
-		<p class="contents">보다 나은 서비스 제공을 위하여 준비중입니다.</p>
-		<p class="contents">빠른 시일내에 준비하여 찾아뵙겠습니다.</p>
+		<p class="title">에러가 발생했습니다.</p>
+		<p class="contents">관리자에게 문의해 주십시오.</p>
+		<p class="contents">관리자 이메일 : moonblack_@naver.com</p>
 	</div>
 	<div class=btnArea>
 		<button class="btn" id=goMainBtn>메인으로</button>	

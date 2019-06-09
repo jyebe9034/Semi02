@@ -67,7 +67,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
 	
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -93,7 +93,7 @@
 			<h3>후원 내역</h3>
 		</div>
 		<div class="form-group">
-			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1">${board.title }</a></p>
+			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1$classification=ongoing">${board.title }</a></p>
 		</div>
 		<div class="form-group">
 			<p>후원자 : ${payment.name }</p>

@@ -86,7 +86,7 @@
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
 
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -249,7 +249,7 @@
 					var msg = '결제에 실패하였습니다.';
 					msg += '에러내용 : ' + rsp.error_msg;
 					alert(msg);
-					location.href = "Read.board?boardNo=" + ${boardNo} + "&currentPage=1&commentPage=1";
+					location.href = "Read.board?boardNo=" + ${boardNo} + "&currentPage=1&commentPage=1&classfication=ongoing";
 				}
 			});
 		});
