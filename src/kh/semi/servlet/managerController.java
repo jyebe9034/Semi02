@@ -49,6 +49,7 @@ public class managerController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/basics/manager.jsp").forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 		}else if(cmd.equals("/BoardWriteDelete.manager")) {
 			String[] value = request.getParameterValues("checkDelete");
@@ -59,6 +60,7 @@ public class managerController extends HttpServlet {
 						int resultTitleDelete = dao.titleImgDelete(value[i]);
 					} catch (Exception e) {
 						e.printStackTrace();
+						response.sendRedirect("error.jsp");
 					}
 				}
 			}

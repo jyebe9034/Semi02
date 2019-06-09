@@ -72,7 +72,7 @@ public class BoardDAO {
 				ResultSet rs = pstat.executeQuery();
 				){
 			List<BoardDTO> list = new ArrayList<>();
-			for(int i=0; i<3;i++) {
+			for(int i=0; i<4;i++) {
 				if(rs.next()) {
 					BoardDTO dto = new BoardDTO();
 					dto.setBoardNo(rs.getInt("b_no"));

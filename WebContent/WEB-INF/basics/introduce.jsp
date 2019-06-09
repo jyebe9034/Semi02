@@ -41,6 +41,7 @@
 	}
 	#wrap{
 		position: relative;
+		font-family: "Nanum Gothic"; 
 	}
 	.card-title{
 		font-size: 30px;

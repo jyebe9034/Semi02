@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="nav_footer.css">
 <style>
 .progress {
-	width: 200px;
+	width: 95%;
 }
 
 .progress-bar {
@@ -43,13 +43,16 @@
 }
 .card {
 	border-radius: 10px;
-	height: 500px;
-/* 	min-width: 300px; */
+	height: 450px;
+    width: 90%;
+    margin: auto;
+    font-family: 'Jua', sans-serif;
 }
 .rowcard{
 	margin:auto;
 	width:80%;
 	height: 100%;
+	font-size: 20px;
 }
 .container_card {
 	margin: auto;
@@ -66,11 +69,6 @@
 	margin-bottom:0px;
 	padding:2rem 2rem;
 }
-.text {
-	vertical-align: middle;
-	font-family: "Jua";
-}
-
 .imgTag{
 	border-radius:10px;
 }
@@ -126,6 +124,11 @@
 #footer{
 	margin-top: 0;
 }
+.article{
+	cursor: pointer;
+	font-size: 20px;
+}
+
 </style>
 </head>
 <body>
@@ -240,7 +243,7 @@
 	</div>
 
 	<hr>
-	<div><h2 class="smTitle">[  모금 마감일이 얼마남지 않은 후원  ]</h2></div>
+	<div><h2 class="smTitle">[  마감이 임박한 후원  ]</h2></div>
 		<div class="row rowcard">
 			<c:choose>
 				<c:when test="${listSize == 0 }"></c:when>
@@ -250,10 +253,8 @@
 							<div class="imgBox" style="height:250px;">
 								<img src="${imgSrc[i] }" class="imgTag" width="100%" style="max-height:100%">
 							</div>
-							<div class="card-body">
-								<h6 class="card-title">
-									<span>${list[i].title}</span>
-								</h6>
+							<div class="card-body article" boardNo="${list[i].boardNo}">
+								<span class="card-title">${list[i].title}</span>
 								<hr>
 								<p class="card-text" align="left">
 									모금 마감일 &nbsp; &nbsp; <span>${duedate[i]}</span><p></p>
@@ -261,13 +262,12 @@
 									<div class="progress-bar" role="progressbar"
 										aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:${percentage[i]}%"></div>
 								</div>
-								  <div class="percentage">
-	                                 <small class="text-muted amount">${percentage[i]}%</small>
-	                              </div>
-	                              <div class="amount d-flex justify-content-end">
-	                                 <small class="text-muted amount">${sumArr[i]}원</small>
-	                              </div>
-								<div class="forBtnDonate"><a class="btn btn-primary" href="Read.board?boardNo=${list[i].boardNo }&currentPage=1&commentPage=1">후원하기</a></div>
+					     		<div class="percentage">
+	                               <small class="text-muted amount">${percentage[i]}%</small>
+	                            </div>
+	                            <div class="amount d-flex justify-content-end">
+	                               <small class="text-muted amount">${sumArr[i]}원</small>
+	                            </div>
 							</div>
 						</div>
 					</c:forEach>
@@ -299,6 +299,13 @@
 		</div>
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
+	
+	<script>
+		$(".article").on("click", function(){
+			var boardNo = $(this).attr("boardNo");
+			location.href="Read.board?boardNo="+boardNo+"&currentPage=1&commentPage=1&classification=ongoing";
+		})
+	</script>
 </body>
 </html>
 

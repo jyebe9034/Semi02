@@ -121,9 +121,7 @@ public class BoardController extends HttpServlet {
 					dto.setAccount(multi.getParameter("account"));
 					
 					String content = multi.getParameter("contents");
-					System.out.println("before: " + content);
 					content.replaceAll("<.?script>", "");
-					System.out.println("after: " + content);
 					dto.setContents(content);
 					
 					try {
@@ -131,10 +129,12 @@ public class BoardController extends HttpServlet {
 						request.setAttribute("board", result);
 					}catch(Exception e) {
 						e.printStackTrace();
+						response.sendRedirect("error.jsp");
 					}
 
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 				request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
 
@@ -201,6 +201,7 @@ public class BoardController extends HttpServlet {
 					Thread.sleep(500);
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 
 				String test = (String)request.getSession().getAttribute("flag");
@@ -246,12 +247,8 @@ public class BoardController extends HttpServlet {
 				String str = titleImg.getFilePath();
 				//				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 				//String result = str.replaceAll("D:.+?Project.+?Project.+?",""); // 해용이꺼
-
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
-				
 		//		String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-				
-				//String result = str.replaceAll("D.+?2.+?",""); // 지혜 노트북
 				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 				
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
@@ -356,6 +353,7 @@ public class BoardController extends HttpServlet {
 
 				}catch(Exception e) {				
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 			}
 			
@@ -413,6 +411,7 @@ public class BoardController extends HttpServlet {
 
 				}catch(Exception e) {				
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 			}
 			
@@ -440,6 +439,7 @@ public class BoardController extends HttpServlet {
 					request.getRequestDispatcher("/WEB-INF/boards/payCompleted.jsp").forward(request, response);
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 			}else if(cmd.equals("/Recommend.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
@@ -452,6 +452,7 @@ public class BoardController extends HttpServlet {
 					pw.print(recommend);
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 			}else if(cmd.equals("/RecommendCheck.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
@@ -461,6 +462,7 @@ public class BoardController extends HttpServlet {
 					pw.print(dao.recommendCheck(email, boardNo));
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 			}else if(cmd.equals("/Comment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
@@ -475,6 +477,7 @@ public class BoardController extends HttpServlet {
 					pw.print(gson.toJson(result));
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 				
 			}else if(cmd.equals("/DeleteComment.board")) {
@@ -493,10 +496,12 @@ public class BoardController extends HttpServlet {
 					int result = dao.updateComment(email, comment, writeDate);
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
+			response.sendRedirect("error.jsp");
 		}
 	}
 

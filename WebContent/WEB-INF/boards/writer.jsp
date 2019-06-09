@@ -357,7 +357,7 @@
 			}else if($("#myDueDate").val() == ""){
 				alert("마감일을 입력해 주세요.");
 			}else if(between < 7){
-				alert("마감일로 적절한 날짜를 입력해주세요.");
+				alert("마감일은 최소 일주일 이후로 설정 가능합니다.");
 				$("#myDueDate").val("");
 				$("#today").html("");
 				

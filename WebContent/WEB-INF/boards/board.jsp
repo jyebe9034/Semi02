@@ -51,7 +51,7 @@
   
    /*검색*/
       #dropdownforSearch {
-      float: left;
+      	float: left;
         height: 40px;
         border: solid lightgrey 1px;
         border-top-left-radius: 15px;

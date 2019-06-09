@@ -61,6 +61,7 @@ public class MembersController extends HttpServlet {
 				System.out.println(result + "개의 게시글 마감");
 			}catch(Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 			oneStart++;
 			TimeVisiterCount visiterCount = new TimeVisiterCount();
@@ -81,6 +82,7 @@ public class MembersController extends HttpServlet {
 				System.out.println(result + "개의 게시글 마감");
 			}catch(Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 		}
 
@@ -99,7 +101,6 @@ public class MembersController extends HttpServlet {
 			List<BoardDTO> list;
 			try {
 				list = bdao.getDataForMain();
-
 				request.setAttribute("list", list);
 				request.setAttribute("listSize", list.size());
 				String[] strArr = new String[4];
@@ -145,6 +146,7 @@ public class MembersController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 
 		}else if(cmd.equals("/Introduce.members")) {
@@ -160,6 +162,7 @@ public class MembersController extends HttpServlet {
 				printWriter.print(result);
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 
 		} else if (cmd.equals("/SendMail.members")) {
@@ -170,6 +173,7 @@ public class MembersController extends HttpServlet {
 				printWriter.print(ranNum);
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 
 		} else if (cmd.equals("/Join.members")) {
@@ -188,6 +192,7 @@ public class MembersController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/basics/alertJoin.jsp").forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 		}else if(cmd.contentEquals("/LoginForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/loginForm.jsp").forward(request, response);
@@ -218,6 +223,7 @@ public class MembersController extends HttpServlet {
 					request.setAttribute("result", result);
 				}catch (Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 			}
 			request.getRequestDispatcher("/WEB-INF/basics/alertLogin.jsp").forward(request, response);
@@ -273,7 +279,7 @@ public class MembersController extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("error.html");
+				response.sendRedirect("error.jsp");
 			}
 
 		}else if(cmd.equals("/kakaoLogin.members")) {
@@ -302,6 +308,7 @@ public class MembersController extends HttpServlet {
 
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 		}else if(cmd.equals("/myPageUpdate.members")) {
 
@@ -328,7 +335,7 @@ public class MembersController extends HttpServlet {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("error.html");
+				response.sendRedirect("error.jsp");
 			}
 
 		}else if(cmd.equals("/myPage.members")) {
@@ -351,6 +358,7 @@ public class MembersController extends HttpServlet {
 
 			} catch (Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 		}else if(cmd.equals("/myPageUpdateLocation.members")){
 			String email = (String)request.getSession().getAttribute("loginEmail");
@@ -360,6 +368,7 @@ public class MembersController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/basics/myPageUpdate.jsp").forward(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 		}else if(cmd.equals("/FindPWForm.members")) {
 			request.getRequestDispatcher("/WEB-INF/basics/findPassword.jsp").forward(request, response);
@@ -374,6 +383,7 @@ public class MembersController extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/basics/alertPwUpdate.jsp").forward(request, response);
 			}catch(Exception e) {
 				e.printStackTrace();
+				response.sendRedirect("error.jsp");
 			}
 		}
 

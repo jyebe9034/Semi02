@@ -28,9 +28,6 @@ html, body {
 	min-height: 100%;
 	margin: 0 auto -155px;
 }
-.push{
-	height: 200px;
-}
 .login_box {
 	width: 400px;
 	margin: auto;
@@ -185,7 +182,6 @@ a:hover {
 				<a href="FindPWForm.members" style="color: black">혹시 비밀번호를 잊으셨나요?</a>
 			</div>
 		</div>
-		<div class="push"></div>
 	</div>
 	
 	<div id="footer">
