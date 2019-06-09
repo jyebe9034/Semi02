@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>도움닿기 - 소개</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Bitter|Dancing+Script|Inconsolata|Indie+Flower|Nanum+Pen+Script|Poiret+One" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Noto+Sans+KR|Sunflower:300|Jua|Poor+Story|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
@@ -42,14 +42,37 @@
 	#wrap{
 		position: relative;
 		font-family: "Nanum Gothic"; 
+		margin-top : 50px;
+		text-align: center;
 	}
-	.card-title{
-		font-size: 30px;
-        font-weight: bold;
-	}
-    .card-text{
-        font-size: 20px;
+    .runup{
+    	font-size : 35px;
+    	font-weight: bold;
     }
+    .explain{
+    	font-size : 20px;
+    }
+    .step{ 
+ 	height: 150px; 
+ 	border-radius: 50%; 
+	font-family: "Nanum Gothic"; 
+ 	padding: 10px; 
+ 	text-align:center; 
+ 	display:flex; 
+ 	justify-content:center;
+} 
+.forArrow{ 
+	line-height:110px;
+}
+.mainSteps{
+	font-size: 16px;
+}
+.step_list{
+	margin-left: 30px; 
+}
+#firstStep{
+	padding-left: 80px;
+}
 </style>
 </head>
 <body>
@@ -102,19 +125,54 @@
 				</div>
 			</div>
 			
-			<div class="card text-center">
-			  <div class="card-body">
 			  	<div id="wrap">
-				    <h5 class="card-title">도움닿기는</h5><br>
+				    <p class="runup">도움닿기는<br></p><br>
 				    
-				    <p class="card-text text-center">여러분의 기부가 도움이 필요한 사람들에게 닿아<br>
-					그들이 도움닫기 하여 더 높이 더 멀리 나아갈 수 있도록 하고 싶은 마음들이 모여 만들어진<br> 열린 기부 공간입니다.</p>
+				    <p class="explain">여러분의 기부가 도움이 필요한 사람들에게 닿아<br>
+					그들이 도움닫기 하여 더 높이 더 멀리 나아갈 수 있도록<br>하고 싶은 마음들이 모여 만들어진  열린 기부 공간입니다.</p><br>
 					
-					<p class="card-text text-center">후원 요청 글은 회원에 한해 자유롭게 게시판에 올릴 수 있습니다.<br> 
-					기부된 금액은 100% 대상자에게 전달됩니다.<br> 후원 금액은 마감일까지 모금된 뒤 마감일에 대상자에게 전달됩니다.</p>
+					<p class="explain">후원 요청 글은 회원에 한해<br> 자유롭게 게시판에 올릴 수 있으며<br> 
+					기부된 금액은 100% 대상자에게 전달됩니다.<br><br><br>
+					
+					<p class="runup">[  후원 안내  ]<br></p><br>
+					
+					<div class="container">
+						<div class="row rowStep">
+							<div id="firstStep" class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
+								<div style="display:inline-block;">
+								<img src="photo_image/write2.png">
+								<p></p>
+								<h4 class="mainSteps">후원 게시판에서<br>신청 글 작성</h4>
+								</div>
+							</div>
+							<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
+								<div class="forArrow"><img src="photo_image/arrow.png" style="margin-right:20px;"></div>
+								<div class="step_list" style="display:inline-block;">
+								<img src="photo_image/board.png">
+								<p></p>
+								<h4 class="mainSteps">게시판에 글 등록</h4>
+								</div>	
+							</div>
+							<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
+								<div class="forArrow"><img src="photo_image/arrow.png" style="margin-right:20px;"></div>
+								<div class="step_list" style="display:inline-block;">
+								<img src="photo_image/donate.png">
+								<p></p>
+								<h4 class="mainSteps">후원자분들의<br>기부금 결제</h4>
+								</div>	
+							</div>
+							<div class="step col-lg-3 col-md-6 col-sm-6 col-xs-6">
+								<div class="forArrow"><img src="photo_image/arrow.png" style="margin-right:20px;"></div>
+								<div class="step_list" style="display:inline-block;">
+								<img src="photo_image/transfer.png">
+								<p></p>
+								<h4 class="mainSteps">모금 마감일에<br>모금액 전액 전달</h4>
+								</div>
+							</div>
+						</div>
+					</div>
 			  	</div>
-			  </div>
-			</div>
+			 
 			
 			<div id="footer">
 	            <div id="f_logo_wrap">

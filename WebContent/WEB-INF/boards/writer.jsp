@@ -370,6 +370,25 @@
 				
 			}else if($(".note-editable").html() == "<p><br></p>"){
 				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p><br></p><p><br></p>"){
+				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p><br></p><p><br></p><p><br></p>"){
+				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p><br></p><p><br></p><p><br></p><p><br></p>"){
+				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p><br></p><p><br></p><p><br></p><p><br></p><p><br></p>"){
+				alert("내용을 입력해주세요.");
+				
+			}else if($(".note-editable").html() == "<p>&nbsp;</p>"){
+				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p>&nbsp;&nbsp;</p>"){
+				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p>&nbsp;&nbsp;&nbsp;</p>"){
+				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p>&nbsp;&nbsp;&nbsp;&nbsp;</p>"){
+				alert("내용을 입력해주세요.");
+			}else if($(".note-editable").html() == "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>"){
+				alert("내용을 입력해주세요.");
 			}else{
 				$("#myContent").val($(".note-editable").html());
 		        $("#myform").submit();	
@@ -445,7 +464,7 @@
             			})	
             		}
             	})
-            	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages";
+            	location.href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing";
         	}
         })
 	</script>

@@ -337,7 +337,16 @@
       <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
    </div>
    <script>
-    
+   $("#phone").on("blur", function() {
+       var phonenum = $('#phone').val();
+       var regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
+       if ($("#phone").val() != "") {
+          if (!regPhone.test(phonenum)) {
+             alert('잘못된 휴대폰 번호입니다.');
+             $('#phone').val("");
+          }
+       }
+    });
     
     function autoHypenPhone(str){
         str = str.replace(/[^0-9]/g, '');

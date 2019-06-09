@@ -121,10 +121,9 @@ public class BoardController extends HttpServlet {
 					dto.setAccount(multi.getParameter("account"));
 
 					String content = multi.getParameter("contents");
-					System.out.println("before: " + content);
 					content.replaceAll("&lt;", "");
 					content.replaceAll("&gt;", "");
-					System.out.println("after: " + content);
+					content.replaceAll("<.?script>", "");
 					dto.setContents(content);
 
 					try {
