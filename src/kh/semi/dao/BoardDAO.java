@@ -20,10 +20,11 @@ public class BoardDAO {
 	static int boardRecordCountPerPage = 12;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
+	static String goBoard = "List.board";
 
 	public Connection getConnection() throws Exception {
 		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String url = "jdbc:oracle:thin:@localhost:1522:xe";
 		String user = "semi";
 		String pw = "semi";
 		return DriverManager.getConnection(url,user,pw);
@@ -120,13 +121,30 @@ public class BoardDAO {
 		}
 	}
 
+	  public int deleteClosedBoard() throws Exception {
+	      String sql = "delete from board where b_no in (select b_no from board where b_due_date-sysdate like '%-%')";
+	      try(
+	            Connection con = this.getConnection();
+	            PreparedStatement pstat = con.prepareStatement(sql);
+	            ){
+	         int result = pstat.executeUpdate();
+	         con.commit();
+	         return result;
+	      }
+	   }
+	  
 	private PreparedStatement pstatForSelectOneArticle(Connection con, int boardNo)throws Exception{
 		String sql = "select * from board where b_no=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		pstat.setInt(1, boardNo);
 		return pstat;
 	}
-
+	private PreparedStatement pstatForSelectOneClosedArticle(Connection con, int boardNo)throws Exception{
+		String sql = "select * from closed where cl_b_no=?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setInt(1, boardNo);
+		return pstat;
+	}
 	public BoardDTO selectOneArticle(int boardNo)throws Exception{
 		try(
 				Connection con = this.getConnection();
@@ -135,19 +153,52 @@ public class BoardDAO {
 				){
 			BoardDTO boardDTO = new BoardDTO();
 			if(rs.next()) {
-				boardDTO.setBoardNo(rs.getInt("b_no"));
-				boardDTO.setTitle(rs.getString("b_title"));
-				boardDTO.setEmail(rs.getString("b_email"));
-				boardDTO.setWriter(rs.getString("b_writer"));
-				boardDTO.setAmount(rs.getInt("b_amount"));
-				boardDTO.setBank(rs.getString("b_bank"));
-				boardDTO.setAccount(rs.getString("b_account"));
-				boardDTO.setContents(rs.getString("b_contents"));
-				boardDTO.setDueDate(rs.getTimestamp("b_due_date"));
-				boardDTO.setViewCount(rs.getInt("b_viewcount"));
-				boardDTO.setWriteDate(rs.getTimestamp("b_writedate"));
-				boardDTO.setRecommend(rs.getInt("b_recommend"));
-				boardDTO.setSumAmount(rs.getInt("b_sum_amount"));
+				boardDTO.setBoardNo(rs.getInt(1));
+				boardDTO.setTitle(rs.getString(2));
+				boardDTO.setEmail(rs.getString(3));
+				boardDTO.setWriter(rs.getString(4));
+				boardDTO.setAmount(rs.getInt(5));
+				boardDTO.setBank(rs.getString(6));
+				boardDTO.setAccount(rs.getString(7));
+				boardDTO.setContents(rs.getString(9));
+				boardDTO.setDueDate(rs.getTimestamp(8));
+				boardDTO.setViewCount(rs.getInt(10));
+				boardDTO.setWriteDate(rs.getTimestamp(11));
+				boardDTO.setRecommend(rs.getInt(12));
+				boardDTO.setSumAmount(rs.getInt(13));
+				return boardDTO;
+			}
+			return null;
+		}
+	}
+	/**
+	 * closed list  불러올때 사용
+	 * @param boardNo
+	 * @param closedParam
+	 * @return
+	 * @throws Exception
+	 */
+	public BoardDTO selectOneArticle(int boardNo,String closedParam)throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = pstatForSelectOneClosedArticle(con, boardNo);
+				ResultSet rs = pstat.executeQuery();
+				){
+			BoardDTO boardDTO = new BoardDTO();
+			if(rs.next()) {
+				boardDTO.setBoardNo(rs.getInt(1));
+				boardDTO.setTitle(rs.getString(2));
+				boardDTO.setEmail(rs.getString(3));
+				boardDTO.setWriter(rs.getString(4));
+				boardDTO.setAmount(rs.getInt(5));
+				boardDTO.setBank(rs.getString(6));
+				boardDTO.setAccount(rs.getString(7));
+				boardDTO.setContents(rs.getString(9));
+				boardDTO.setDueDate(rs.getTimestamp(8));
+				boardDTO.setViewCount(rs.getInt(10));
+				boardDTO.setWriteDate(rs.getTimestamp(11));
+				boardDTO.setRecommend(rs.getInt(12));
+				boardDTO.setSumAmount(rs.getInt(13));
 				return boardDTO;
 			}
 			return null;
@@ -204,7 +255,41 @@ public class BoardDAO {
 			return result;
 		}
 	}
-
+	/*(3) 마감된 게시글 전체 개수*/
+	public int totalClosedRecordNum() throws Exception{
+		String sql = "select row_number() over(order by cl_b_no desc) as rown, t1.*,t2.* from closed t1 join title_img t2 on (t1.cl_b_no = t2.t_b_no)";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();	
+				){
+			int result = 0;
+			while(rs.next()) {
+				result++;
+			}
+			return result;
+		}
+	}
+	/*(4) 마감된 게시글에서 검색했을 때 전체 글 개수*/
+	public PreparedStatement psForSearchOptionClosed(Connection con, String searchOption, String searchWord) throws Exception{
+		String sql = "select * from closed t1 join title_img t2 on (t1.cl_b_no = t2.t_b_no) where "+searchOption+" like ? order by cl_b_no desc";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, "%"+searchWord+"%");
+		return ps;
+	}
+	public int totalClosedRecordNumBySearch(String searchOption, String searchWord) throws Exception{
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = this.psForSearchOptionClosed(con, searchOption, searchWord);
+				ResultSet rs = ps.executeQuery();	
+				){
+			int result = 0;
+			while(rs.next()) {
+				result++;
+			}
+			return result;
+		}
+	}
 	/*(1)전체 게시판 목록*/
 	public PreparedStatement psForSelectByPage(Connection con, int startNum, int endNum) throws Exception{
 		String sql = "select * from (select row_number() over(order by b_no desc) as rown, t1.*,t2.* from board t1 join title_img t2 on (t1.b_no = t2.t_b_no)) where rown between ? and ?";
@@ -296,8 +381,99 @@ public class BoardDAO {
 		}	
 	}
 	
+	/*(3) 마감된 게시글 목록*/
+	public PreparedStatement psForSelectByClosedPage(Connection con, int startNum, int endNum) throws Exception{
+		String sql = "select * from (select row_number() over(order by cl_b_no desc) as rown, t1.*,t2.* from closed t1 join title_img t2 on (t1.cl_b_no = t2.t_b_no)) where rown between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, startNum);
+		ps.setInt(2, endNum);
+		return ps;
+	}
+	
+	public List<BoardListDTO> selectByClosedPage(int currentPage) throws Exception{
+		int endNum = currentPage *boardRecordCountPerPage;
+		int startNum = endNum - (boardRecordCountPerPage-1);
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = this.psForSelectByClosedPage(con, startNum, endNum);
+				ResultSet rs = ps.executeQuery();	
+				){
+			List<BoardListDTO> result = new ArrayList<>();
+			while(rs.next()) {
+
+				int boardNo = rs.getInt("cl_b_no");
+				String email = rs.getString("cl_b_email");
+				String title = rs.getString("cl_b_title");
+				String writer = rs.getString("cl_b_writer");
+				int amount = rs.getInt("cl_b_amount");
+				String bank = rs.getString("cl_b_bank");
+				String account = rs.getString("cl_b_account");
+				String dueDate = rs.getString("cl_b_due_date");
+				String contents = rs.getString("cl_b_contents");
+				int viewCount = rs.getInt("cl_b_viewcount");
+				String writeDate = rs.getString("cl_b_writedate");
+				int recommend = rs.getInt("cl_b_recommend");
+				int sumAmount = rs.getInt("cl_b_sum_amount");
+
+				String fileName = rs.getString("t_fileName");				
+				String filePath = rs.getString("t_filePath");	
+
+				BoardListDTO dto = new BoardListDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,
+						fileName,filePath);
+				result.add(dto);
+			}
+			return result;
+		}
+	}	
+	
+	/*(4)마감된 페이지에서 searchOption으로 검색했을 때 게시글 목록*/
+	public PreparedStatement psForClosedSearchList(Connection con, String searchOption, String searchWord, int startNum, int endNum) throws Exception{
+		String sql = "select * from (select row_number() over(order by cl_b_no desc) as rown, t1.*,t2.* from closed t1 join title_img t2 on (t1.cl_b_no = t2.t_b_no) where "+searchOption+" LIKE ?) where rown between ? and ?";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, "%"+searchWord+"%");
+		ps.setInt(2, startNum);
+		ps.setInt(3, endNum);	
+		return ps;
+	}
+	
+	public List<BoardListDTO> closedSearchList(int currentPage, String searchOption, String searchWord) throws Exception{		
+		int endNum = currentPage *boardRecordCountPerPage;
+		int startNum = endNum - (boardRecordCountPerPage-1);
+			
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement ps = this.psForClosedSearchList(con, searchOption, searchWord, startNum, endNum);
+				ResultSet rs = ps.executeQuery();
+				){
+			List<BoardListDTO> result = new ArrayList<>();
+			while(rs.next()) {
+				int boardNo = rs.getInt("cl_b_no");
+				String email = rs.getString("cl_b_email");
+				String title = rs.getString("cl_b_title");
+				String writer = rs.getString("cl_b_writer");
+				int amount = rs.getInt("cl_b_amount");
+				String bank = rs.getString("cl_b_bank");
+				String account = rs.getString("cl_b_account");
+				String dueDate = rs.getString("cl_b_due_date");
+				String contents = rs.getString("cl_b_contents");
+				int viewCount = rs.getInt("cl_b_viewcount");
+				String writeDate = rs.getString("cl_b_writedate");
+				int recommend = rs.getInt("cl_b_recommend");
+				int sumAmount = rs.getInt("cl_b_sum_amount");
+				String fileName = rs.getString("t_fileName");				
+				String filePath = rs.getString("t_filePath");		
+
+				BoardListDTO dto = new BoardListDTO(boardNo,email,title,writer,amount,bank,account,dueDate,contents,viewCount,writeDate,recommend,sumAmount,
+						fileName,filePath);
+				result.add(dto);
+			}
+			return result;
+		}	
+	}
+	
+	
 	/*페이지 네비게이터*/
-		public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord) throws Exception {
+		public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord, String classification) throws Exception {
 			
 			int recordTotalCount = totalRecordCount;
 			int recordCountPerPage = 12; //12개의 글이 보이게 한다.	
@@ -333,21 +509,35 @@ public class BoardDAO {
 			}
 
 			StringBuilder sb = new StringBuilder();
-			if(searchOption.contains(" ")) { //추가
+			if(searchOption.contains(" ")&classification.equals("ongoing")) { 
 				searchOption = "b_title or b_contents";
+			}else if(classification.equals("closed")) {
+				if(searchOption.contains(" ")) {
+				searchOption = "cl_b_title or cl_b_contents";
+				}else if(searchOption.equals("b_title")) {
+					searchOption = "cl_b_title";
+				}else if(searchOption.equals("b_contents")) {
+					searchOption = "cl_b_contents";
+				}
+			}
+			
+			if(classification.equals("ongoing")) {
+				goBoard = "List.board";
+			}else{
+				goBoard = "ClosedList.board";
 			}
 			if(needPrev) {
 				int prevStartNavi = startNavi-1;
-				sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ prevStartNavi +"\"" + 
+				sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ prevStartNavi +"&classification="+classification+"\"" + 
 						"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
 						"						</a></li>");		
 			}
 			for(int i = startNavi; i <= endNavi; i++) {
-				sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"\">" + i + "</a></li>");
+				sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"&classification="+classification+"\">" + i + "</a></li>");
 			}
 			if(needNext) {
 				int nextEndNavi = endNavi+1;
-				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\"List.board?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ nextEndNavi++ +"\""+ 
+				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ nextEndNavi++ +"&classification="+classification+"\""+ 
 						"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
 						"						</a></li>");
 			}

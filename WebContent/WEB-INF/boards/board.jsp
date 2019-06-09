@@ -6,12 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>도움닿기 - 후원 게시판</title>
-<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Noto+Sans+KR|Sunflower:300|Jua|Poor+Story|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 <link rel="stylesheet" href="nav_footer.css">
 
 <style>
@@ -31,7 +30,24 @@
       font-size: 50px;
       color: darkslategray;
    }
-   
+   /*분류*/
+   #top{
+	width: 85%;
+	margin: auto;
+	margin-bottom: -50px;
+   }
+  
+   .classificationCol{
+   		margin : auto;
+    	float:left; 
+   }
+  .classificationCol a{
+   		width: 100px;
+   		height: 40px;
+  		text-align: center;
+  		line-height: 90%;
+   }
+  
    /*검색*/
       #dropdownforSearch {
       float: left;
@@ -65,7 +81,7 @@
       background-color: #28a39f;
       color: #FFF;
    }
-   
+     
    .noneListRow div{
       margin: auto;
       text-align: center;
@@ -78,9 +94,13 @@
     width: 100%;
 	margin-right: 190px;
    }
+   .search{
+   	min-width: 500px;
+   }
    .listRow{
-         width: 90%;
-         margin: auto;
+       width: 90%;
+       margin: auto;
+       font-family: 'Jua', sans-serif;
    }
    
    .list {
@@ -93,8 +113,8 @@
        height: 50px;
    }
    .article .writer {
-   color : grey;
-   margin-top: -10px;
+  	 color : grey;
+  	 margin-top: -10px;
    }
    .list img {
       width: 240px;
@@ -110,8 +130,8 @@
    }
    
    .percentage{
-         float : left;
-          position: static;
+      float : left;
+      position: static;
    }
    .amount {
       position: relative;
@@ -160,6 +180,7 @@
    .check{
       margin-left:auto;
    }
+   
 </style>
 <script>
 	$(function(){
@@ -184,30 +205,28 @@
 		$(".article").on("click", function(){
 			var boardNo = $(this).attr("boardNo");
 			var currentPage ="${currentPage }";
-			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1";
+			var classification = "${classification}";
+			location.href="Read.board?boardNo=" + boardNo + "&currentPage=" + currentPage + "&commentPage=1&classification="+classification;
 		})
-//-----------------------------------------------------------------------------		
-		$(".searchBtn").on("click",function(){		
-			var searchWord = $(".searchWord").val();
-			var searchOption = $("#dropdownforSearch option:selected").val();
-	       if(searchWord==""){
-	    	   alert("검색할 내용을 입력해주세요.");
-	       }else{
-	    	   location.href="List.board?currentPage=1&searchOption="+searchOption+"&searchWord="+searchWord;
-	       }
-		})	
+
 //		창훈이 삭제버튼 부분--------------------------------------------------------------	
 		$("#deleteBtn").on("click",function(){
 				location.href="BoardWriteDelete.manager";	
 		})
 		
-	//------------추가--------------------
-				$(".pageNumber").each(function(item){
-				if(${currentPage} == $(this).text()){
-					$(this).css("background-color", "#1ebdd8");
-					$(this).css("color", "white");
-				}
-			})
+	//-----------------------------------------------------------------------------
+		$(".pageNumber").each(function(item){
+			if(${currentPage} == $(this).text()){
+				$(this).css("background-color", "#1ebdd8");
+				$(this).css("color", "white");
+			}
+		})
+		$(".state").each(function(item){
+			if("${classification }" == $(this).attr("flag")){
+				$(this).css("background-color", "#1ebdd8");
+				$(this).css("color", "white");
+			}
+		})	
 		
 	})
 </script>
@@ -264,22 +283,48 @@
 	<hr style="margin: 0px;">
 
 	<div class="boardName">
-		<p>게시판</p>
+		<p>후원 게시판</p>
 	</div>
 
+<div id="top">
+<!--글 분류 -->
+<!--    <div class="classificationRow"> -->
+       <div class="col-6 classificationCol d-flex justify-content-left">
+            <div class="list-group list-group-horizontal-sm classification">
+                <a href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing" class="list-group-item list-group-item-action ongoing state" flag="ongoing">진행중</a>
+                <a href="ClosedList.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=closed" class="list-group-item list-group-item-action closed state" flag="closed">마감</a>
+            </div>
+<!--        </div> -->
+   </div>
+    
 <!--검색창-->
-   <div id="wrapper" class="container searchBox">
-		<div class="row d-flex justify-content-end">
-			<select name="searchOption" id="dropdownforSearch">
-				<option name="searchOption" class="searchOption" value="b_title">제목</option>
-				<option name="searchOption" class="searchOption" value="b_contents">내용</option>
-				<option name="searchOption" class="searchOption"
-					value="b_title or b_contents">제목+내용</option>
-			</select> <input type="text" name="searchWord" class="searchWord"
-				placeholder="검색할 내용 입력">
-			<button type="submit" class="btn searchBtn">검색</button>
-		</div>
-	</div>
+	<form id="searchForm">
+			<input type="hidden" name="currentPage" value="1">
+			<c:choose>
+				<c:when test="${classification=='ongoing' }">
+					<input type="hidden" name="classification" value="ongoing">	
+				</c:when>
+				<c:otherwise>
+					<input type="hidden" name="classification" value="closed">
+				</c:otherwise>
+			</c:choose>
+	
+<!-- 		  <div id="wrapper" class="container searchBox"> -->
+				<div class="col-6 d-flex justify-content-end search searchBox">
+				<select name="searchOption" id="dropdownforSearch">
+					<option name="searchOption" class="searchOption" value="b_title">제목</option>
+					<option name="searchOption" class="searchOption" value="b_contents">내용</option>
+					<option name="searchOption" class="searchOption"
+						value="b_title or b_contents">제목+내용</option>
+				</select> <input type="text" name="searchWord" class="searchWord"
+					placeholder="검색할 내용 입력">
+				<button type="submit" class="btn searchBtn">검색</button>
+				</div>
+<!-- 		 </div> -->
+	</form>
+
+</div>
+
 
 	<!--글목록-->
 	<c:choose>
@@ -327,49 +372,6 @@
 		</c:otherwise>
 	</c:choose>
 
-<<<<<<< HEAD
-      <!--글목록-->
-      <c:choose>
-         <c:when test="${totalRecordCount<1}">
-            <div class="row noneListRow">
-              <div class="col-12">
-              	<p>검색어 : ${searchWord }</p> 
-          	 	 <p>검색 결과가 없습니다.</p>
-          	  </div>
-            </div>
-         </c:when>
-         <c:otherwise>
-            <form action="BoardWriteDelete.manager">
-               <div class="row listRow">
-                  <c:forEach var="list" items="${board }" varStatus="status">
-                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                     <c:if test="${sessionScope.admin!=null}">       
-                        <div class="check"><input type="checkbox" name="checkDelete" value="${list.boardNo }"></div>
-                     </c:if> 
-                        <div class="card list">
-                           <img src="${list.newFilePath}"> 
-                           <div class="card-body article" boardNo="${list.boardNo}">
-                              <h5 class="card-title title">${list.title }</h5>
-                              <p class="card-text writer">${list.writer }</p>
-                              <div class="progress">
- 									<div class="progress-bar" role="progressbar" 
- 									style="width: ${list.percentage}%;" aria-valuemin="0" 
- 									aria-valuemax="100"></div>
- 
-                              </div>
-                              <div class="percentage">
-                                 <small class="text-muted amount">${list.percentage }%</small>
-                              </div>
-                              <div class="amount d-flex justify-content-end">
-                                 <small class="text-muted amount">${sumAmount[status.index]}원</small>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </c:forEach>
-               </div>
-         </c:otherwise>   
-      </c:choose>
       
 	<!--페이지네비게이터 -->
 	<div class="row  p-0 m-0" id="num_box">

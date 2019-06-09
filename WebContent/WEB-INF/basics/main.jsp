@@ -112,7 +112,7 @@ body{
 			<ul class="navbar-nav nav-ul">
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판</a></li>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
 
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
@@ -144,15 +144,15 @@ body{
 		</ol>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="bestgift.jpg"
+				<img src="photo_image/bestgift.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="hands_together.jpg"
+				<img src="photo_image/hands_together.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 			<div class="carousel-item">
-				<img src="girls_heart_2.jpg"
+				<img src="photo_image/girls_heart_2.jpg"
 					class="d-block w-100 img_carousel" alt="...">
 			</div>
 		</div>
