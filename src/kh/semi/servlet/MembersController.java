@@ -37,6 +37,7 @@ public class MembersController extends HttpServlet {
 	public static int oneStart;
 	public static int count;
 	public static String today;
+	
 	public static List<String> loginMembers = new ArrayList<>();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -55,6 +56,12 @@ public class MembersController extends HttpServlet {
 
 		if(oneStart<1) {	// 서버 실행되고 처음 요청이 들어왔을 때
 			today = sdf2.format(date);
+			try{
+				int result = bdao.deleteClosedBoard();
+				System.out.println(result + "개의 게시글 마감");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 			oneStart++;
 			TimeVisiterCount visiterCount = new TimeVisiterCount();
 			Timer timer1 = new Timer();

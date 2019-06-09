@@ -83,7 +83,7 @@
                   <a class="collapse-item" href="start.html">홈페이지</a> 
                   <a class="collapse-item" href="Introduce.members">소개 페이지</a>
                   <a class="collapse-item" href="TalentDonations.board">재능기부 게시판</a>
-                  <a class="collapse-item" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원 게시판 페이지</a>
+				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
                   <a class="collapse-item" href="#">회원 정보 페이지</a>
                </div>
             </div></li>
