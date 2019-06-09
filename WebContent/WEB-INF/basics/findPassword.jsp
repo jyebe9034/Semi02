@@ -107,7 +107,7 @@ a:hover {
 	#inputEmail, #inputNum {
 		display: inline-block;
 	}
-	#pw_form, #pw_match{
+	#pw_form, #pw_match, #emailCheck{
 		font-size: 12px;
 	}
 </style>
@@ -162,7 +162,7 @@ a:hover {
 					<input type="email" class="form-control" id="inputEmail"
 						name="email" aria-describedby="emailHelp"
 						placeholder="이메일 주소(아이디)" required>
-					<p></p>
+					<p id="emailCheck"></p>
 					<input type="hidden" class="form-control" id="inputNum"
                			placeholder="*인증번호" style="width: 70%" flag="false" required>
             		<button type="button" id="btnInputNum" class="btn btn-outline-info">확인</button>
@@ -236,11 +236,14 @@ a:hover {
 					$("#inputEmail").focus();
 					return;
 	         }else {
+	        	 $("#emailCheck").text("인증번호를 메일로 발송중입니다.");
+	        	 $("#btnConfirmEmail").prop("disabled", true);
 	            $.ajax({
 	               url : "SendMail.members",
 	               type : "post",
 	               data : {
-	                  email : $("#inputEmail").val()
+	                  email : $("#inputEmail").val(),
+	                  classification : "P"
 	               }
 	            }).done(function(resp) {
 	               if (resp == 0) {
@@ -273,6 +276,10 @@ a:hover {
 	         }
 		});
 		$("#btnUpdatePw").on("click", function(){
+			if($("#inputPassword").val() == ""){
+				alert("비밀번호를 입력해주세요.");
+				return;
+			}
 			if($("#pw_match").text() != "" || $("#pw_form").text() != ""){
 				alert("비밀번호를 다시 확인해주세요.");
 			}else{

@@ -287,7 +287,7 @@ public class MemberDAO{
 			}
 		}
 	}
-	public static int sendMail(String email) {
+	public static int sendMail(String email, String classification) {
 		Properties p = System.getProperties();
 		p.put("mail.smtp.starttls.enable", "true");     // gmail은 무조건 true 고정
 		p.put("mail.smtp.host", "smtp.gmail.com");      // smtp 서버 주소
@@ -314,13 +314,25 @@ public class MemberDAO{
 			InternetAddress to = new InternetAddress(email);
 			msg.setRecipient(Message.RecipientType.TO, to);
 
-			// 이메일 제목
-			msg.setSubject("*도움닿기* 회원가입 인증 메일", "UTF-8");
+			
+			if(classification.equals("J")) {
+				// 이메일 제목
+				msg.setSubject("*도움닿기* 회원가입 인증 메일", "UTF-8");
 
-			// 이메일 내용
-			msg.setText("<h3>\"도움닿기\" 회원가입 인증 메일입니다.</h3><br>"
-					+ "아래 인증번호를 입력창에 입력해주세요.<br>"
-					+ "인증번호는 " + ranNum + "입니다.", "UTF-8");
+				// 이메일 내용
+				msg.setText("<h3>\"도움닿기\" 회원가입 인증 메일입니다.</h3><br>"
+						+ "아래 인증번호를 입력창에 입력해주세요.<br>"
+						+ "인증번호는 " + ranNum + "입니다.", "UTF-8");
+			}else if(classification.equals("P")) {
+				// 이메일 제목
+				msg.setSubject("*도움닿기* 비밀번호 찾기 인증 메일", "UTF-8");
+
+				// 이메일 내용
+				msg.setText("<h3>\"도움닿기\" 비밀번호 찾기 인증 메일입니다.</h3><br>"
+						+ "아래 인증번호를 입력창에 입력해주세요.<br>"
+						+ "인증번호는 " + ranNum + "입니다.", "UTF-8");
+			}
+			
 
 			// 이메일 헤더
 

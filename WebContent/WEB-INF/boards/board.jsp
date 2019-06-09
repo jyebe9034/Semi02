@@ -20,9 +20,16 @@
    .progress-bar {
       background-color: orange;
    }
-   .wrapper {
-      display: inline-block;
-   }
+html, body {
+   height: 89%;
+}
+.wrapper{
+	min-height: 100%;
+	margin: 0 auto -155px;
+}
+.push{
+	height: 200px;
+}
    .boardName {
       text-align: center;
       margin: 50px;
@@ -280,7 +287,7 @@
 		</div>
 	</nav>
 	<hr style="margin: 0px;">
-
+<div class="wrapper">
 	<div class="boardName">
 		<p>후원 게시판</p>
 	</div>
@@ -319,7 +326,6 @@
 	</form>
 
 </div>
-
 
 	<!--글목록-->
 	<c:choose>
@@ -391,7 +397,8 @@
       </div>
    </div>
    </form>
-   
+   <div class="push"></div>
+   </div>
    
    <div id="footer">
       <div id="f_logo_wrap">
