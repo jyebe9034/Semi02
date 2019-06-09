@@ -230,12 +230,12 @@ a:hover {
                href="Introduce.members">소개</a></li>
             <li class="nav-item nav-li"><a id="logos"
                class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
-				<li class="nav-item nav-li"><a id="logos"
-					class="nav-link anker"
-					href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원
-						게시판</a></li>
+            <li class="nav-item nav-li"><a id="logos"
+               class="nav-link anker"
+               href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원
+                  게시판</a></li>
 
-				<li class="nav-item nav-li"><a id="logos"
+            <li class="nav-item nav-li"><a id="logos"
                class="nav-link anker"
                href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
             <li class="nav-item nav-li"><a class="nav-link anker"
@@ -339,11 +339,11 @@ a:hover {
       <div class="container">
          <div class="row head">
             <div
-               class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none minwidth">글
+               class="col-xl-2 col-lg-2 col-md-4 col-sm-4 d-sm-block d-none minwidth">글
                번호</div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">후원
                명</div>
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">후원
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 d-sm-block d-none">후원
                금액</div>
             <div class="col-xl-2 col-lg-2 d-none d-lg-block">후원 날짜</div>
             <div class="col-xl-2 col-lg-2 d-lg-block d-none">글 작성자</div>
@@ -358,9 +358,9 @@ a:hover {
          <!--       </div> -->
          <div class="row contents">
             <c:forEach var="myDonateContents" items="${myDonateContents }">
-               <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
-               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents.boardNo }&currentPage=1&commentPage=1&&classification=ongoing">${myDonateContents.boardTitle }</a></div>
-               <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
+               <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">${myDonateContents.boardNo }</div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents.boardNo }&currentPage=1&commentPage=1&classification=ongoing&searchOption=allPages&searchWord=allPages">${myDonateContents.boardTitle }</a></div>
+               <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">${myDonateContents.paymentAmount }원</div>
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents.paymentDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents.boardWriter }</div>
                <hr>
@@ -385,11 +385,11 @@ a:hover {
       <div class="container">
          <div class="row head">
             <div
-               class="col-xl-1 col-lg-1 col-md-4 col-sm-4 d-sm-block d-none minwidth">글
+               class="col-xl-2 col-lg-2 col-md-4 col-sm-4 d-sm-block d-none minwidth">글
                번호</div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 d-sm-block d-none">글
                제목</div>
-            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-sm-block d-none">모인
+            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 d-sm-block d-none">모인
                금액</div>
             <div class="col-xl-2 col-lg-2 d-none d-lg-block">작성일</div>
             <div class="col-xl-2 col-lg-2 d-lg-block d-none">조회수</div>
@@ -397,9 +397,15 @@ a:hover {
          <br>
          <div class="row contents">
             <c:forEach var="myDonateContents2" items="${myDonateContents2 }">
+<<<<<<< HEAD
                <div class="col-xl-1 col-lg-1 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents2.boardNo }&currentPage=1&commentPage=1&classification=ongoing">${myDonateContents2.title }</a></div>
                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
+=======
+               <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">${myDonateContents2.boardNo }</div>
+               <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><a href="Read.board?boardNo=${myDonateContents2.boardNo }&currentPage=1&commentPage=1&classification=ongoing&searchOption=allPages&searchWord=allPages">${myDonateContents2.title }</a></div>
+               <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">${myDonateContents2.sumAmount }원</div>
+>>>>>>> JeonHaeYong-master
                <div class="col-xl-2 col-lg-2 d-none d-lg-block">${myDonateContents2.writeDate }</div>
                <div class="col-xl-2 col-lg-2 d-lg-block d-none">${myDonateContents2.viewCount }</div>
                <hr>
@@ -440,16 +446,16 @@ a:hover {
 <script type="text/javascript">
 
 $(".pageNumber1").each(function(item){
-	if(${currentPage1} == $(this).text()){
-		$(this).css("background-color", "#1ebdd8");
-		$(this).css("color", "white");
-	}
+   if(${currentPage1} == $(this).text()){
+      $(this).css("background-color", "#1ebdd8");
+      $(this).css("color", "white");
+   }
 })
 $(".pageNumber2").each(function(item){
-	if(${currentPage2} == $(this).text()){
-		$(this).css("background-color", "#1ebdd8");
-		$(this).css("color", "white");
-	}
+   if(${currentPage2} == $(this).text()){
+      $(this).css("background-color", "#1ebdd8");
+      $(this).css("color", "white");
+   }
 })
 
 </script>

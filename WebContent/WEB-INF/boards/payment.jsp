@@ -173,7 +173,17 @@
 				$("#amount").attr("type", "hidden");
 				$("#amount").val(selected);
 			}
-		})
+		});
+		$("#phone").on("blur", function() {
+			var phonenum = $('#phone').val();
+			var regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
+			if ($("#phone").val() != "") {
+				if (!regPhone.test(phonenum)) {
+					alert('잘못된 휴대폰 번호입니다.');
+					$('#phone').val("");
+				}
+			}
+		});
 		$("#btnPay").click(function() {
 			if($("#inputName").val() == ""){
 				alert("이름을 입력해주세요.");
@@ -249,7 +259,7 @@
 					var msg = '결제에 실패하였습니다.';
 					msg += '에러내용 : ' + rsp.error_msg;
 					alert(msg);
-					location.href = "Read.board?boardNo=" + ${boardNo} + "&currentPage=1&commentPage=1&classification=ongoing";
+					location.href = "Read.board?boardNo=" + ${boardNo} + "&currentPage=1&commentPage=1&classification=ongoing&searchOption=allPages&searchWord=allPages";
 				}
 			});
 		});

@@ -194,10 +194,10 @@
 			<div class="btnBox2 col-md-6 col-sm-6 col-12">
 				<c:choose>
 					<c:when test="${classification == 'ongoing' }">
-						<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&searchOption=allPages&searchWord=allPages&classification=ongoing">목록</a>
+						<a class="btn btn-primary" href="List.board?currentPage=${currentPage}&classification=ongoing&searchOption=${searchOption }&searchWord=${searchWord }">목록</a>
 					</c:when>
 					<c:otherwise>
-						<a class="btn btn-primary" href="ClosedList.board?currentPage=${currentPage}&searchOption=allPages&searchWord=allPages&classification=closed">목록</a>
+						<a class="btn btn-primary" href="ClosedList.board?currentPage=${currentPage}&classification=closed&searchOption=${searchOption }&searchWord=${searchWord }">목록</a>
 					</c:otherwise>
 				</c:choose>
 				
@@ -242,31 +242,31 @@
 			<ul class="pagination pagination-sm justify-content-center m-0">
 				<c:if test="${pageNavi.needPrev == 1 }">
 					<li class="page-item"><a class="page-link pageNum"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.startNavi - 1}&classification=${classification}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.startNavi - 1}&classification=${classification}&searchOption=${searchOption }&searchWord=${searchWord }"
 						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 					</a></li>
 				</c:if>
 				<c:if test="${pageNavi.currentPage > 1 }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage - 1}&classification=${classification}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage - 1}&classification=${classification}&searchOption=${searchOption }&searchWord=${searchWord }"
 						aria-label="Previous"> <span aria-hidden="true">&lt;</span>
 					</a></li>
 				</c:if>
 
 				<c:forEach var="i" begin="${pageNavi.startNavi}" end="${pageNavi.endNavi}">
 					<li class="page-item"><a class="page-link pageNumber"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${i }&classification=${classification}">${i}</a></li>
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${i }&classification=${classification}&searchOption=${searchOption }&searchWord=${searchWord }">${i}</a></li>
 				</c:forEach>
 					
 				<c:if test="${pageNavi.currentPage < pageNavi.pageTotalCount }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage + 1}&classification=${classification}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.currentPage + 1}&classification=${classification}&searchOption=${searchOption }&searchWord=${searchWord }"
 						aria-label="Previous"> <span aria-hidden="true">&gt;</span>
 					</a></li>
 				</c:if>
 				<c:if test="${pageNavi.needNext == 1 }">
 					<li class="page-item"><a class="page-link"
-						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.endNavi + 1}&classification=${classification}"
+						href="Read.board?boardNo=${result.boardNo }&currentPage=${currentPage }&commentPage=${pageNavi.endNavi + 1}&classification=${classification}&searchOption=${searchOption }&searchWord=${searchWord }"
 						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 					</a></li>
 				</c:if>
@@ -385,16 +385,32 @@
 					location.href = "LoginForm.members";
 				}
 			}else{
-				if($("#inputComment").html() == ""){
+				var inputComment = $("#inputComment").html();
+				alert(inputComment);
+				inputComment = inputComment.replace(/(&nbsp;)+/ig, "");	// 맨 앞 공백, 공백연속으로 쳤을때 &nbsp;
+				inputComment = inputComment.replace(/^[ ]+/ig, "");	// &nbsp;자르고나서 또 맨앞에 오는 공백 자르기
+				inputComment = inputComment.replace(/(<div><br><\/div>)+/ig, "");// 내용없이 엔터쳤을때
+				inputComment = inputComment.replace(/(<div>[ ]*?<\/div>)/ig, "");// 공백만 넣고 엔터쳤을때
+				alert(inputComment.length);
+				if(inputComment == ""){
 					alert("내용을 입력해주세요.");
-				}else{
+					$("#inputComment").html("");
+					$("#inputComment").focus();
+					return;
+				}else if(getByte(inputComment) > 900){
+					alert("300자 이내로 작성해주세요.");
+					$("#inputComment").html("");
+					$("#inputComment").focus();
+					return;
+				}
+				else{
 					$.ajax({
 						url : "Comment.board",
 						type : "post",
 						dataType: "json",
 						data : {
 							boardNo: ${result.boardNo},
-							comment: $("#inputComment").html()
+							comment: inputComment
 						}
 					}).done(function(resp){
 						location.reload();
@@ -402,6 +418,24 @@
 				}
 			}
 		});
+		
+		function getByte(str){
+			var strLength = 0; 
+			for (i = 0; i < str.length; i++){
+				var code = str.charCodeAt(i);
+				var ch = str.substr(i,1).toUpperCase();
+				
+				code = parseInt(code);
+                 
+				if ((ch < "0" || ch > "9") && (ch < "A" || ch > "Z") && ((code > 255) || (code < 0))){
+					strLength = strLength + 3; //UTF-8 3byte 로 계산
+				}else{
+ 					strLength = strLength + 1;
+				}
+            }
+			console.log(strLength);
+			return strLength;
+		}
 		
 		$(".deleteCommentBtn").on("click", function(){
 			if(confirm("삭제하시겠습니까?")){
@@ -442,11 +476,23 @@
 			comment.css("border", "0.5px solid #00000030");
 			
 			modifyComplete.on("click", function(){
+				var inputComment = comment.html();
+				alert(inputComment);
+				inputComment = inputComment.replace(/(&nbsp;)+/ig, "");
+				inputComment = inputComment.replace(/^[ ]+/ig, "");
+				inputComment = inputComment.replace(/(<div><br><\/div>)+/ig, "");
+				inputComment = inputComment.replace(/(<div>[ ]*?<\/div>)/ig, "");
+				if(inputComment == ""){
+					alert("내용을 입력해주세요.");
+					comment.html("");
+					comment.focus();
+					return;
+				}
 				$.ajax({
 					url: "ModifyComment.board",
 					type: "post",
 					data: {
-						comment: comment.text(),
+						comment: inputComment,
 						writeDate: writeDate
 					}
 				}).done(function(){

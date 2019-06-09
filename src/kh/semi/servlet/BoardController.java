@@ -226,6 +226,8 @@ public class BoardController extends HttpServlet {
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				int commentPage = Integer.parseInt(request.getParameter("commentPage"));
+				String searchOption = request.getParameter("searchOption"); //검색 종류
+				String searchWord = request.getParameter("searchWord"); //검색어
 				String classification = request.getParameter("classification");
 				BoardDTO article = null;
 				if(classification.equals("closed")) {
@@ -247,13 +249,15 @@ public class BoardController extends HttpServlet {
 				request.setCharacterEncoding("UTF-8");
 
 				String str = titleImg.getFilePath();
-//				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
+				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 				//				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
 		//		String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-				String result = str.replaceAll("D.+?4.+?",""); // 지혜
+//				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
+				request.setAttribute("searchOption", searchOption);
+				request.setAttribute("searchWord", searchWord);
 				request.setAttribute("classification", classification);
 				request.setAttribute("currentPage", currentPage);
 				request.setAttribute("titleImg", result+"/"+titleImg.getFileName());
@@ -335,7 +339,6 @@ public class BoardController extends HttpServlet {
 						totalRecordCount = dao.totalRecordNumBySearch(searchOption, searchWord);
 						request.setAttribute("totalRecordCount", totalRecordCount);	 
 						result = dao.searchList(currentPage, searchOption, searchWord);
-						request.setAttribute("searchWord", searchWord);
 					}
 
 					String[] sumAmountArr = new String[12];
@@ -358,6 +361,8 @@ public class BoardController extends HttpServlet {
 						sumAmountArr[i] = Commas.format(sumAmount);
 						request.setAttribute("sumAmount", sumAmountArr);	
 					}
+					request.setAttribute("searchOption", searchOption);
+					request.setAttribute("searchWord", searchWord);
 					request.setAttribute("classification", classification);
 					request.setAttribute("board", result);
 					request.setAttribute("fail", request.getParameter("fail"));
@@ -417,6 +422,8 @@ public class BoardController extends HttpServlet {
 						sumAmountArr[i] = Commas.format(sumAmount);
 						request.setAttribute("sumAmount", sumAmountArr);	
 					}
+					request.setAttribute("searchOption", searchOption);
+					request.setAttribute("searchWord", searchWord);
 					request.setAttribute("classification", classification);
 					request.setAttribute("board", result);
 					request.setAttribute("fail", request.getParameter("fail"));
