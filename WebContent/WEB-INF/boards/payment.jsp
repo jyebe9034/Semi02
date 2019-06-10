@@ -225,6 +225,15 @@
 		    this.value = autoHypenPhone(_val) ;
 		}
 		$("#btnPay").click(function() {
+			var name = $("#inputName").val();
+			alert(name);
+			var regex = /^[가-힣]{2,5}$/g;
+			var result = regex.exec(name);
+			if(result == null){
+				alert("잘못된 이름 형식입니다.");
+				$("#inputName").val("");
+				return;
+			}
 			if($("#inputName").val() == ""){
 				alert("이름을 입력해주세요.");
 				return;

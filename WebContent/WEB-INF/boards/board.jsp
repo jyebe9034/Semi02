@@ -2,7 +2,6 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>도움닿기 - 후원 게시판</title>
@@ -237,7 +236,31 @@ html, body {
 				$(this).css("color", "white");
 			}
 		})	
-		
+	//-----------------------------------------------------------------------------
+		$(".searchBtn").on("click", function(){
+			var searchWord = $(".searchWord").val();
+			var regex = /<.?script>/g;
+			var regex2 = /[ㄱ-힣]+/g;
+			var result = regex.exec(searchWord);
+			var result2 = regex2.exec(searchWord);
+			console.log(result);
+			if(result != null){
+				alert("잘못된 검색어입니다.");
+				$(".searchWord").val("");
+				return;
+			}else if(searchWord == ""){
+				alert("검색할 내용을 입력해주세요.");
+				return;
+			}else if(result2 == null){
+				alert("검색어는 한글을 포함해야합니다.");
+				$(".searchWord").val("");
+				return;
+			}
+			else{
+				$("#searchForm").submit();
+			}
+		})
+	
 	})
 </script>
 </head>
@@ -323,7 +346,7 @@ html, body {
 						value="b_title or b_contents">제목+내용</option>
 				</select> <input type="text" name="searchWord" class="searchWord"
 					placeholder="검색할 내용 입력">
-				<button type="submit" class="btn searchBtn">검색</button>
+				<button type="button" class="btn searchBtn">검색</button>
 				</div>
 	</form>
 

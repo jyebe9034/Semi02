@@ -321,7 +321,7 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/List.board")){ //후원 게시판 목록
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
-					String searchWord = request.getParameter("searchWord"); //검색어
+					String searchWord = request.getParameter("searchWord").replaceAll("&lt;script&gt;", "").replaceAll("<script>", ""); //검색어
 					String classification = request.getParameter("classification"); //분류
 					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
 
