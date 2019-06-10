@@ -110,7 +110,7 @@ public class BoardController extends HttpServlet {
 						dis.close();
 						oldFile.delete();
 					}
-					
+
 					dto.setTitle(multi.getParameter("title"));
 					dto.setWriter(multi.getParameter("writer"));
 					dto.setAmount(Integer.parseInt(multi.getParameter("amount")));
@@ -248,11 +248,11 @@ public class BoardController extends HttpServlet {
 				request.setCharacterEncoding("UTF-8");
 
 				String str = titleImg.getFilePath();
-				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
-				//				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
+				//				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
+				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
-		//		String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-//				String result = str.replaceAll("D.+?4.+?",""); // 지혜
+				//		String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
+				//				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
 				request.setAttribute("searchOption", searchOption);
@@ -345,11 +345,11 @@ public class BoardController extends HttpServlet {
 						String path = result.get(i).getFilePath();
 						//String folder = path.replaceAll("D.+?3.+?",""); //지혜꺼
 						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
-						//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
+						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
 						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
-//						String folder = path.replaceAll("C:.+?2Project.+?","");	// 해용 집
-						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
-//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+						//						String folder = path.replaceAll("C:.+?2Project.+?","");	// 해용 집
+						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
+						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();
@@ -373,7 +373,7 @@ public class BoardController extends HttpServlet {
 					response.sendRedirect("error.jsp");
 				}
 			}
-			
+
 			else if(cmd.equals("/ClosedList.board")){
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
@@ -406,11 +406,11 @@ public class BoardController extends HttpServlet {
 					String[] sumAmountArr = new String[12];
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
-						
-//						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
-//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
-//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
-						String folder = path.replaceAll("C:.+?2Project.+?", "");
+
+						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
+						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
+						//						String folder = path.replaceAll("C:.+?2Project.+?", "");
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();
@@ -434,7 +434,7 @@ public class BoardController extends HttpServlet {
 					response.sendRedirect("error.jsp");
 				}
 			}
-			
+
 			else if(cmd.equals("/TalentDonations.board")){ //재능기부 게시판
 				request.getRequestDispatcher("WEB-INF/boards/talentDonations.jsp").forward(request, response);
 
@@ -499,14 +499,14 @@ public class BoardController extends HttpServlet {
 					e.printStackTrace();
 					response.sendRedirect("error.jsp");
 				}
-				
+
 			}else if(cmd.equals("/DeleteComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String writeDate = request.getParameter("writeDate");
 
 				int result = dao.deleteComment(email, writeDate);
 				pw.print(result);
-				
+
 			}else if(cmd.equals("/ModifyComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
 				String comment = request.getParameter("comment").replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", "");

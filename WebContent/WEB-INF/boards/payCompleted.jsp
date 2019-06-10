@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -13,12 +14,9 @@
 	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <title>도움닿기 - 결제 내역</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link
-	href="https://fonts.googleapis.com/css?family=Do+Hyeon|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Cute+Font|Jeju+Gothic|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>	
 
 <link rel="stylesheet" href="nav_footer.css">
@@ -29,6 +27,7 @@
 	padding: 40px;
 	border: 1px solid #e4e4e4;
 	border-radius: 5px;
+	margin-top: 50px;
 }
 .btn-primary {
 	margin: 20px 0px 20px;
@@ -49,13 +48,17 @@
 #inputEmail{
 	display:inline-block;
 }
-
+#footer{
+   position: fixed;
+   bottom: 0;
+}
 </style>
 </head>
 <body>
-		<nav class="navbar navbar-expand-lg navbar-light">
+	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="logo">
-			<a class="navbar-brand anker" href="Main.members" style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
+			<a class="navbar-brand anker" href="Main.members"
+				style="font-family: 'Cute Font', cursive;"><h1>도움닿기</h1></a>
 		</div>
 		<div id="toggle">
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -69,12 +72,12 @@
 				<li class="nav-item nav-li"><a class="nav-link anker" href="Introduce.members">소개</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="TalentDonations.board">재능기부 게시판</a></li>
 				<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원 게시판</a></li>
-	
+
 				<c:choose>
 					<c:when test="${sessionScope.loginEmail != null}">
 						<c:if test="${sessionScope.admin==null}">
 							<li class="nav-item nav-li"><a id="logos" class="nav-link anker" href="myPage.members?currentPage=1&currentPage2=1">마이 페이지</a></li>
-						</c:if>	
+						</c:if>
 						<c:if test="${sessionScope.admin!=null}">
 							<li class="nav-item nav-li"><a class="nav-link anker" href="Bar.manager">대시보드</a></li>
 						</c:if>
@@ -94,7 +97,7 @@
 			<h3>후원 내역</h3>
 		</div>
 		<div class="form-group">
-			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1$classification=ongoing&searchOption=allPages&searchWord=allPages">${board.title }</a></p>
+			<p>후원 프로젝트 : <a href="Read.board?boardNo=${board.boardNo }&currentPage=1&commentPage=1&classification=ongoing&searchOption=allPages&searchWord=allPages">${board.title }</a></p>
 		</div>
 		<div class="form-group">
 			<p>후원자 : ${payment.name }</p>
@@ -110,7 +113,7 @@
 		</div>
 		<div id="divBtn">
 			<a id="btnMyPage" class="btn btn-primary" href="myPage.members?currentPage=1&currentPage2=1">마이페이지</a>
-			<a id="btnBoard" class="btn btn-primary" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages">후원게시판</a>
+			<a id="btnBoard" class="btn btn-primary" href="List.board?currentPage=1&searchOption=allPages&searchWord=allPages&classification=ongoing">후원게시판</a>
 			<a id="btnMain" class="btn btn-primary" href="Main.members">메인으로</a>
 		</div>
 	</div>
