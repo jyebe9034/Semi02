@@ -12,7 +12,7 @@
    content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-
+<link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 대시보드</title>
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Sunflower:300|Jua|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <!-- Custom fonts for this template-->

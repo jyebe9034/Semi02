@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 후원 게시판</title>
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Noto+Sans+KR|Sunflower:300|Jua|Poor+Story|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -247,19 +248,44 @@ html, body {
 			if(result != null){
 				alert("잘못된 검색어입니다.");
 				$(".searchWord").val("");
+				$(".searchWord").focus();
 				return;
 			}else if(searchWord == ""){
 				alert("검색할 내용을 입력해주세요.");
+				$(".searchWord").focus();
 				return;
 			}else if(result2 == null){
 				alert("검색어는 한글을 포함해야합니다.");
 				$(".searchWord").val("");
+				$(".searchWord").focus();
+				return;
+			}else if(getByte(searchWord) > 30){
+				alert("검색어는 10자 이내로 작성해주세요.");
+				$(".searchWord").val("");
+				$(".searchWord").focus();
 				return;
 			}
 			else{
 				$("#searchForm").submit();
 			}
-		})
+		});
+		function getByte(str){
+			var strLength = 0; 
+			for (i = 0; i < str.length; i++){
+				var code = str.charCodeAt(i);
+				var ch = str.substr(i,1).toUpperCase();
+				
+				code = parseInt(code);
+                 
+				if ((ch < "0" || ch > "9") && (ch < "A" || ch > "Z") && ((code > 255) || (code < 0))){
+					strLength = strLength + 3; //UTF-8 3byte 로 계산
+				}else{
+ 					strLength = strLength + 1;
+				}
+            }
+			console.log(strLength);
+			return strLength;
+		}
 	
 	})
 </script>
@@ -346,6 +372,7 @@ html, body {
 						value="b_title or b_contents">제목+내용</option>
 				</select> <input type="text" name="searchWord" class="searchWord"
 					placeholder="검색할 내용 입력">
+					<input style="VISIBILITY: hidden; WIDTH: 0px">
 				<button type="button" class="btn searchBtn">검색</button>
 				</div>
 	</form>
