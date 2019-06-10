@@ -22,6 +22,7 @@
 	padding: 40px;
 	border: 1px solid #e4e4e4;
 	border-radius: 5px;
+	margin-top: 50px;
 }
 
 .top_wrapper {
@@ -64,6 +65,11 @@
 }
 #inputEmail{
 	display:inline-block;
+}
+
+#footer{
+	position: fixed;
+	bottom: 0;
 }
 </style>
 

@@ -50,6 +50,10 @@ href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
       background-color: #28a39f;
       color: #FFF;
    }
+   #footer{
+	  position: fixed;
+	  bottom: 0;
+	}
 </style>
 <script>
    $(function(){

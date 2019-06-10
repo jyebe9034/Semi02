@@ -2,8 +2,6 @@ package kh.semi.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kh.semi.dao.ManagerDAO;
-import kh.semi.dto.BoardDTO;
-import kh.semi.dto.MemberDTO;
-import kh.semi.dto.PaymentDTO;
-import kh.semi.dto.TimePersonCountDTO;
 
 @WebServlet("*.manager")
 public class managerController extends HttpServlet {

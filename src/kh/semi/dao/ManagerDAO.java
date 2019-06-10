@@ -12,7 +12,6 @@ import kh.semi.dto.BoardDTO;
 import kh.semi.dto.MemberDTO;
 import kh.semi.dto.PaymentDTO;
 import kh.semi.dto.TimePersonCountDTO;
-import kh.semi.servlet.MembersController;
 
 
 public class ManagerDAO {
