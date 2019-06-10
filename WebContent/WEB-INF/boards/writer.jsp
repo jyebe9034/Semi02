@@ -214,7 +214,7 @@
 	<script>
 		$("#myTitle").on("input",function(){
 			var title = $("#myTitle").val();
-			var regex = /^[가-힣 .,:;()!^?~0-9\"\']{5,22}$/g
+			var regex = /^[가-힣 .,:;()!^?~0-9]{5,22}$/g
 			
 			var result = regex.exec(title);
 	        if(result == null){

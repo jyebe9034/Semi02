@@ -62,7 +62,7 @@
 	font-size: 12px;
 }
 
-#pw_form, #pw_match, #emailCheck {
+#pw_form, #pw_match, #emailCheck, #nameCheck {
 	font-size: 12px;
 }
 
@@ -158,6 +158,7 @@ ul {
          <div class="form-group">
             <input type="text" class="form-control" id="name" name="name"
                placeholder="*이름" required>
+            <p id="nameCheck"></p>
          </div>
          <div class="form-group">
             <input type="text" class="form-control" id="phone" name="phone"
@@ -320,7 +321,9 @@ ul {
             alert("비밀번호를 다시 확인해주세요.");
          } else if ($("#name").val() == "") {
             alert("이름을 입력해주세요.");
-         } else {
+         }else if($("#nameCheck").html() != ""){
+        	 alert("이름을 다시 확인해주세요.");
+         }else {
             $("#joinForm").submit();
          }
       })
@@ -349,10 +352,17 @@ ul {
          var inputPw = document.getElementById("inputPassword").value;
          var regex = /^.*(?=^.{8,25}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
          var result = regex.exec(inputPw);
+         
+         var regex2 = /[<>]/g;
+         var result2 = regex2.exec(inputPw);
+         console.log(result2);
          if (result == null) {
             document.getElementById("pw_form").innerHTML = "8자 이상 영문,숫자,특수문자를 사용하세요.";
             document.getElementById("pw_form").style.color = "red";
-         } else {
+         }else if(result2 != null){
+        	 document.getElementById("pw_form").innerHTML = "'<', '>' 기호는 들어갈 수 없습니다.";
+        	 document.getElementById("pw_form").style.color = "red";
+       	 }else {
             document.getElementById("pw_form").innerHTML = "";
          }
       }
@@ -368,6 +378,19 @@ ul {
             document.getElementById("pw_match").style.color = "red";
          }
       }
+      
+      $("#name").on("input", function(){
+    	  var inputName = $("#name").val();
+    	  var regex = /^[가-힣]{2,5}$/g;
+    	  var result = regex.exec(inputName);
+    	  
+    	  if(result == null){
+    		  $("#nameCheck").html("잘못된 이름 형식입니다.");
+    		  $("#nameCheck").css("color", "red");
+    	  }else{
+    		  $("#nameCheck").html("");
+    	  }
+      })
 
       document.getElementById("search").onclick = searchAddress;
 

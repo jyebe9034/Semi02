@@ -27,22 +27,17 @@ public class ManagerDAO {
 
 
 	public int totalMoney()throws Exception{
-		String sql = "select sum(b_sum_amount) from board";
-		String sql1 = "select sum(cl_b_amount) from closed";
+		String sql = "select sum(p_amount) from payment";
 		try(	
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
-				PreparedStatement psata1 = con.prepareStatement(sql1);
 				){
 			ResultSet rs = pstat.executeQuery();
 			rs.next();
-			int sum = rs.getInt(1);
-			ResultSet rs1 = pstat.executeQuery();
-			rs1.next();
-			int sum1 = rs1.getInt(1);
-			int result = sum+sum1;
+
+			int result = rs.getInt(1);
 			rs.close();
-			rs1.close();
+
 			return result;
 		}
 	}

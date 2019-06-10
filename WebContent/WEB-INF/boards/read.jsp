@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -475,7 +474,6 @@
 			
 			modifyComplete.on("click", function(){
 				var inputComment = comment.html();
-				alert(inputComment);
 				inputComment = inputComment.replace(/(&nbsp;)+/ig, "");
 				inputComment = inputComment.replace(/^[ ]+/ig, "");
 				inputComment = inputComment.replace(/(<div><br><\/div>)+/ig, "");

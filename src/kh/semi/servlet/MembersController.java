@@ -180,11 +180,11 @@ public class MembersController extends HttpServlet {
 		} else if (cmd.equals("/Join.members")) {
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");
-			String name = request.getParameter("name");
+			String name = request.getParameter("name").replaceAll("&lt;script&gt;", "").replaceAll("<script>", "");
 			String phone = request.getParameter("phone");
 			String zipCode = request.getParameter("zip");
 			String address1 = request.getParameter("address1");
-			String address2 = request.getParameter("address2");
+			String address2 = request.getParameter("address2").replaceAll("&lt;script&gt;", "").replaceAll("<script>", "");
 
 			MemberDTO dto = new MemberDTO(email, pw, name, phone, zipCode, address1, address2, null, request.getRemoteAddr(), "n");
 			try {
@@ -317,7 +317,7 @@ public class MembersController extends HttpServlet {
 			String pw = request.getParameter("pw");
 			String zipcode = request.getParameter("zipcode");
 			String add1 = request.getParameter("address1");
-			String add2 = request.getParameter("address2");
+			String add2 = request.getParameter("address2").replaceAll("&lt;script&gt;", "").replaceAll("<script>", "");
 			String email = (String)request.getSession().getAttribute("loginEmail");
 
 			MemberDTO dto = new MemberDTO();
