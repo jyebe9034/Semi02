@@ -301,10 +301,11 @@
 // 	    		}
 // 	    	})
 // 	    });
+		
 	
 		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
 			var title = $("#myTitle").val();
-			var titleRegex = /^[가-힣 .,:;()!^?~0-9\"\']{5,22}$/g
+			var titleRegex = /^[가-힣 .,:;()!^?~0-9]{5,22}$/g
 			var result1 = titleRegex.exec(title);
 			
 			var writer = $("#myWriter").val();
