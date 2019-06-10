@@ -386,12 +386,10 @@
 				}
 			}else{
 				var inputComment = $("#inputComment").html();
-				alert(inputComment);
 				inputComment = inputComment.replace(/(&nbsp;)+/ig, "");	// 맨 앞 공백, 공백연속으로 쳤을때 &nbsp;
 				inputComment = inputComment.replace(/^[ ]+/ig, "");	// &nbsp;자르고나서 또 맨앞에 오는 공백 자르기
 				inputComment = inputComment.replace(/(<div><br><\/div>)+/ig, "");// 내용없이 엔터쳤을때
 				inputComment = inputComment.replace(/(<div>[ ]*?<\/div>)/ig, "");// 공백만 넣고 엔터쳤을때
-				alert(inputComment.length);
 				if(inputComment == ""){
 					alert("내용을 입력해주세요.");
 					$("#inputComment").html("");
