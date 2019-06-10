@@ -22,6 +22,7 @@
 	padding: 40px;
 	border: 1px solid #e4e4e4;
 	border-radius: 5px;
+	margin-top: 50px;
 }
 
 .top_wrapper {
@@ -64,6 +65,10 @@
 }
 #inputEmail{
 	display:inline-block;
+}
+#footer{
+	position: fixed;
+	bottom: 0;
 }
 </style>
 
@@ -174,16 +179,51 @@
 				$("#amount").val(selected);
 			}
 		});
-		$("#phone").on("blur", function() {
-			var phonenum = $('#phone').val();
-			var regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
-			if ($("#phone").val() != "") {
-				if (!regPhone.test(phonenum)) {
-					alert('잘못된 휴대폰 번호입니다.');
-					$('#phone').val("");
-				}
-			}
-		});
+		   $("#phone").on("blur", function() {
+		       var phonenum = $('#phone').val();
+		       var regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
+		       if ($("#phone").val() != "") {
+		          if (!regPhone.test(phonenum)) {
+		             alert('잘못된 휴대폰 번호입니다.');
+		             $('#phone').val("");
+		          }
+		       }
+		    });
+		    
+		    function autoHypenPhone(str){
+		        str = str.replace(/[^0-9]/g, '');
+		        var tmp = '';
+		        if( str.length < 4){
+		            return str;
+		        }else if(str.length < 7){
+		            tmp += str.substr(0, 3);
+		            tmp += '-';
+		            tmp += str.substr(3);
+		            return tmp;
+		        }else if(str.length < 11){
+		            tmp += str.substr(0, 3);
+		            tmp += '-';
+		            tmp += str.substr(3, 3);
+		            tmp += '-';
+		            tmp += str.substr(6);
+		            return tmp;
+		        }else{              
+		            tmp += str.substr(0, 3);
+		            tmp += '-';
+		            tmp += str.substr(3, 4);
+		            tmp += '-';
+		            tmp += str.substr(7);
+		            return tmp;
+		        }
+		        return str;
+		    }
+
+		var cellPhone = document.getElementById('phone');
+		cellPhone.onkeyup = function(event){
+		    event = event || window.event;
+		    var _val = this.value.trim();
+		    this.value = autoHypenPhone(_val) ;
+		}
 		$("#btnPay").click(function() {
 			if($("#inputName").val() == ""){
 				alert("이름을 입력해주세요.");

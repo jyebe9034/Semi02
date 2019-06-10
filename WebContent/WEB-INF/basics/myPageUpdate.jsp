@@ -284,7 +284,7 @@
                      <div class="form-group">
                         <input type="text" id="address1"
                            class="second form-control mx-sm-3" value="${dto.address1 }"
-                           name="address1" maxlength="20">
+                           name="address1" maxlength="20" readonly>
                      </div>
                </span></span>
             </div>
