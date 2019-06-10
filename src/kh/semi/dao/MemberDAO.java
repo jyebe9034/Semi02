@@ -7,15 +7,12 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.TimerTask;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -25,6 +22,9 @@ import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,12 +34,11 @@ import kh.semi.dto.MyDonateDTO;
 import kh.semi.dto.MyWriteDTO;
 
 public class MemberDAO{
-	public Connection getConnection() throws Exception {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String user = "semi";
-		String pw = "semi";
-		return DriverManager.getConnection(url, user, pw);
+	private Connection getConnection() throws Exception{
+		Context root = new InitialContext();
+		Context ctx = (Context)root.lookup("java:/comp/env");
+		DataSource ds = (DataSource)ctx.lookup("jdbc");
+		return ds.getConnection();   
 	}
 
 	public static String testSHA256(String str){
@@ -101,7 +100,7 @@ public class MemberDAO{
 			return result;
 		}
 	}
-	
+
 	public int updatePassword(String email, String pw) throws Exception {
 		String sql = "update members set m_pw=? where m_email=?";
 		try(
@@ -314,7 +313,7 @@ public class MemberDAO{
 			InternetAddress to = new InternetAddress(email);
 			msg.setRecipient(Message.RecipientType.TO, to);
 
-			
+
 			if(classification.equals("J")) {
 				// 이메일 제목
 				msg.setSubject("*도움닿기* 회원가입 인증 메일", "UTF-8");
@@ -332,7 +331,7 @@ public class MemberDAO{
 						+ "아래 인증번호를 입력창에 입력해주세요.<br>"
 						+ "인증번호는 " + ranNum + "입니다.", "UTF-8");
 			}
-			
+
 
 			// 이메일 헤더
 
@@ -622,15 +621,15 @@ public class MemberDAO{
 //-----------------------------------------------------------------------------------
 
 class MyAuthentication extends Authenticator {
-   PasswordAuthentication pa;
-   public MyAuthentication(){
-      String id = "junhaeyong95@gmail.com";       // 구글 ID
-      String pw = "wjsgodyd95!!";          // 구글 비밀번호
-      // ID와 비밀번호를 입력한다.
-      pa = new PasswordAuthentication(id, pw);
-   }
-   // 시스템에서 사용하는 인증정보
-   public PasswordAuthentication getPasswordAuthentication() {
-      return pa;
-   }
+	PasswordAuthentication pa;
+	public MyAuthentication(){
+		String id = "junhaeyong95@gmail.com";       // 구글 ID
+		String pw = "wjsgodyd95!!";          // 구글 비밀번호
+		// ID와 비밀번호를 입력한다.
+		pa = new PasswordAuthentication(id, pw);
+	}
+	// 시스템에서 사용하는 인증정보
+	public PasswordAuthentication getPasswordAuthentication() {
+		return pa;
+	}
 }

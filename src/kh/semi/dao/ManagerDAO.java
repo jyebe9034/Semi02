@@ -2,11 +2,14 @@ package kh.semi.dao;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.MemberDTO;
@@ -15,27 +18,35 @@ import kh.semi.dto.TimePersonCountDTO;
 
 
 public class ManagerDAO {
-	public Connection getConnection() throws Exception {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String user = "semi";
-		String pw = "semi";
-		return DriverManager.getConnection(url,user,pw);
+	private Connection getConnection() throws Exception{
+		Context root = new InitialContext();
+		Context ctx = (Context)root.lookup("java:/comp/env");
+		DataSource ds = (DataSource)ctx.lookup("jdbc");
+		return ds.getConnection();   
 	}
 
 
-	public String totalMoney()throws Exception{
-		String sql = "select to_char(sum(b_sum_amount),'999,999,999') from board";
+	public int totalMoney()throws Exception{
+		String sql = "select sum(b_sum_amount) from board";
+		String sql1 = "select sum(cl_b_amount) from closed";
 		try(	
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();
+				PreparedStatement psata1 = con.prepareStatement(sql1);
 				){
+			ResultSet rs = pstat.executeQuery();
 			rs.next();
-			String result = rs.getString(1);
+			int sum = rs.getInt(1);
+			ResultSet rs1 = pstat.executeQuery();
+			rs1.next();
+			int sum1 = rs1.getInt(1);
+			int result = sum+sum1;
+			rs.close();
+			rs1.close();
 			return result;
 		}
 	}
+
 
 	public int nowingProjectCount() throws Exception { //현재 진행중인 프로젝트 갯수
 		String sql = "select count(*) from board";
@@ -80,7 +91,7 @@ public class ManagerDAO {
 	}
 
 	public List<Object> bestRecommendCount()throws Exception{
-		String sql = "select b_title,max(b_recommend)from board group by b_title";
+		String sql = "select b_title,b_recommend from board where b_recommend=(select max(b_recommend)from board)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -96,7 +107,7 @@ public class ManagerDAO {
 	}
 
 	public List<Object> worstRecommendCount()throws Exception{
-		String sql = "select b_title,min(b_recommend)from board group by b_title";
+		String sql = "select b_title,b_recommend from board where b_recommend=(select min(b_recommend)from board)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -112,7 +123,7 @@ public class ManagerDAO {
 	}
 
 	public List<Object> bestViewCount()throws Exception{
-		String sql = "select b_title,max(b_viewcount)from board group by b_title";
+		String sql = "select b_title,b_viewcount from board where b_viewcount=(select max(b_viewcount)from board)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -128,7 +139,7 @@ public class ManagerDAO {
 	}
 
 	public List<Object> worstViewCount()throws Exception{
-		String sql = "select b_title,min(b_viewcount)from board group by b_title";
+		String sql = "select b_title,b_viewcount from board where b_viewcount=(select min(b_viewcount)from board)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -230,7 +241,7 @@ public class ManagerDAO {
 				){
 			List<BoardDTO> li = new ArrayList<>();
 			while(rs.next()) {
-				if(rs.getInt("b_sum_amount")==rs.getInt("b_amount")) {
+				if(rs.getInt("b_sum_amount")==rs.getInt("b_amount") || rs.getInt("b_sum_amount")>rs.getInt("b_amount")) {
 					BoardDTO dto = new BoardDTO(rs.getString(1),rs.getString(2),rs.getTimestamp(3),rs.getTimestamp(4),rs.getInt(5),rs.getInt(6),true);
 					li.add(dto);
 				}else {
@@ -241,7 +252,7 @@ public class ManagerDAO {
 			return li;		
 		}
 	}
-	
+
 	public int boardWriteDelete(String value)throws Exception{
 		String sql = "delete from board where b_no=?";
 		try(
@@ -253,17 +264,17 @@ public class ManagerDAO {
 			return result;
 		}
 	}
-	
+
 	public int titleImgDelete(String value)throws Exception{
-	      String sql = "delete from title_img where t_b_no=?";
-	      try(
-	            Connection con = this.getConnection();
-	            PreparedStatement pstat = con.prepareStatement(sql);
-	            ){
-	         pstat.setString(1, value);
-	         int result = pstat.executeUpdate();
-	         return result;
-	         
-	      }
-	   }
+		String sql = "delete from title_img where t_b_no=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1, value);
+			int result = pstat.executeUpdate();
+			return result;
+
+		}
+	}
 }

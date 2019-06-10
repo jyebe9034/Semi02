@@ -105,7 +105,8 @@ public class MembersController extends HttpServlet {
 				request.setAttribute("listSize", list.size());
 				String[] strArr = new String[4];
 				int[] intArr = new int[4];	
-				int[] sumArr = new int[4];
+				String[] sumArr = new String[4];
+				DecimalFormat commas = new DecimalFormat("###,###,###,###");
 				List<TitleImgDTO> imgList = new ArrayList<>();
 				for(int i = 0; i < list.size(); i++) {
 					int goalAmount = list.get(i).getAmount();
@@ -114,7 +115,7 @@ public class MembersController extends HttpServlet {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					strArr[i] = sdf.format(dueTime);
 					int sumAmount = list.get(i).getSumAmount();
-					sumArr[i] = sumAmount;
+					sumArr[i] = commas.format(sumAmount);
 					intArr[i] = (int)Math.floor((double)sumAmount / goalAmount * 100);
 					imgList.add(bdao.getTitleImg(list.get(i).getBoardNo()));
 				}
@@ -126,9 +127,9 @@ public class MembersController extends HttpServlet {
 					String str = imgList.get(i).getFilePath();
 //					String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
 					//					String result = str.replaceAll("C:.+?mi.+?mi02.+?",""); //재용
-					 String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
+//					 String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 					//					String result = str.replaceAll("D:.+?Project.+?Project.+?",""); 해용이꺼
-//										String result = str.replaceAll("D.+?4.+?", "");
+					String result = str.replaceAll("D.+?4.+?", "");
 					//					String result = str.replaceAll("D:.+?mi.+?",""); //슬기
 					imgSrc[i] = result + "/" + imgList.get(i).getFileName();
 				}
@@ -139,7 +140,7 @@ public class MembersController extends HttpServlet {
 
 				int totalAmount = pdao.getTotalAmount();	
 				int countDonors = pdao.getNumberOfDonors();
-				DecimalFormat commas = new DecimalFormat("###,###,###,###");
+				
 				request.setAttribute("totalAmount", commas.format(totalAmount));
 				request.setAttribute("countDonors", commas.format(countDonors));
 				request.getRequestDispatcher("/WEB-INF/basics/main.jsp").forward(request, response);

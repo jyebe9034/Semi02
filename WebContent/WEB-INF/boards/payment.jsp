@@ -132,8 +132,7 @@
 			</div>
 			<div class="form-group">
 				전화번호
-				<input type="text" class="form-control" id="phone" name="phone"
-					placeholder="전화번호" value="${result[2] }">
+				<input type="text" class="form-control" id="phone" name="phone"value="${result[2] }">
 			</div>
 			<div class="form-group">
 				후원 금액
@@ -190,6 +189,42 @@
 				}
 			}
 		});
+		
+		 function autoHypenPhone(str){
+             str = str.replace(/[^0-9]/g, '');
+             var tmp = '';
+             if( str.length < 4){
+                 return str;
+             }else if(str.length < 7){
+                 tmp += str.substr(0, 3);
+                 tmp += '-';
+                 tmp += str.substr(3);
+                 return tmp;
+             }else if(str.length < 11){
+                 tmp += str.substr(0, 3);
+                 tmp += '-';
+                 tmp += str.substr(3, 3);
+                 tmp += '-';
+                 tmp += str.substr(6);
+                 return tmp;
+             }else{              
+                 tmp += str.substr(0, 3);
+                 tmp += '-';
+                 tmp += str.substr(3, 4);
+                 tmp += '-';
+                 tmp += str.substr(7);
+                 return tmp;
+             }
+             return str;
+         }
+		 
+		 var cellPhone = document.getElementById('phone');
+	      cellPhone.onkeyup = function(event){
+	          event = event || window.event;
+	          var _val = this.value.trim();
+	          this.value = autoHypenPhone(_val) ;
+	      }
+		
 		$("#btnPay").click(function() {
 			if($("#inputName").val() == ""){
 				alert("이름을 입력해주세요.");

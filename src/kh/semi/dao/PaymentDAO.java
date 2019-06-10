@@ -1,22 +1,24 @@
 package kh.semi.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import kh.semi.dto.PaymentDTO;
 
 public class PaymentDAO {
-	public Connection getConnection() throws Exception {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String user = "semi";
-		String pw = "semi";
-		return DriverManager.getConnection(url, user, pw);
+	private Connection getConnection() throws Exception{
+		Context root = new InitialContext();
+		Context ctx = (Context)root.lookup("java:/comp/env");
+		DataSource ds = (DataSource)ctx.lookup("jdbc");
+		return ds.getConnection();   
 	}
-	
+
 	public PreparedStatement pstatForGetSumAmount(Connection con, int b_no)throws Exception {
 		String sql = "select b_sum_amount from board where b_no=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
@@ -36,7 +38,7 @@ public class PaymentDAO {
 			return -1;
 		}
 	}
-	
+
 	public PreparedStatement pstatForGetGoalAmount(Connection con, int b_no)throws Exception {
 		String sql = "select b_amount from board where b_no=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
@@ -56,7 +58,7 @@ public class PaymentDAO {
 			return -1;
 		}
 	}
-	
+
 	public PreparedStatement pstatForGetDueDate(Connection con, int b_no)throws Exception {
 		String sql = "select b_due_date from board where b_no=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
@@ -76,7 +78,7 @@ public class PaymentDAO {
 			return null;
 		}
 	}
-	
+
 	public int insertPayment(PaymentDTO dto) throws Exception {
 		String sql = "insert into payment values (?, ?, ?, ?, ?, default)";
 		try(
@@ -93,13 +95,13 @@ public class PaymentDAO {
 			return result;
 		}
 	}
-	
+
 	public PreparedStatement pstatForGetTotalAmount(Connection con)throws Exception {
 		String sql = "select sum(p_amount) from payment";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		return pstat;
 	}
-	
+
 	public int getTotalAmount() throws Exception{
 		try(
 				Connection con = this.getConnection();
@@ -111,16 +113,16 @@ public class PaymentDAO {
 				return totalAmount;
 			}
 			return -1;
-			
+
 		}
-		
+
 	}
 	public PreparedStatement pstatForGetNumberOfDonors(Connection con)throws Exception{
 		String sql = "select count(p_b_no) from payment";
 		PreparedStatement pstat = con.prepareStatement(sql);
 		return pstat;
 	}
-	
+
 	public int getNumberOfDonors() throws Exception{
 		try(
 				Connection con = this.getConnection();
@@ -133,7 +135,7 @@ public class PaymentDAO {
 			}
 			return -1;
 		}
-		
+
 	}
-	
+
 }

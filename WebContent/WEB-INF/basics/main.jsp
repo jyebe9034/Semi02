@@ -43,7 +43,7 @@
 }
 .card {
 	border-radius: 10px;
-	height: 450px;
+	height: 500px;
     width: 90%;
     margin: auto;
     font-family: 'Jua', sans-serif;
@@ -128,7 +128,10 @@
 	cursor: pointer;
 	font-size: 20px;
 }
-
+#mainTitle{
+	height: 60px;
+	overflow: hidden;
+}
 </style>
 </head>
 <body>
@@ -251,10 +254,12 @@
 					<c:forEach var="i" begin="0" end="${listSize-1}">
 						<div class="card col-lg-3 col-md-6 col-sm-12 p-0">
 							<div class="imgBox" style="height:250px;">
-								<img src="${imgSrc[i] }" class="imgTag" width="100%" style="max-height:100%">
+								<img src="${imgSrc[i] }" class="imgTag" width="100%" height="100%">
 							</div>
 							<div class="card-body article" boardNo="${list[i].boardNo}">
-								<span class="card-title">${list[i].title}</span>
+								<div id="mainTitle">
+									<span class="card-title">${list[i].title}</span>
+								</div>
 								<hr>
 								<p class="card-text" align="left">
 									모금 마감일 &nbsp; &nbsp; <span>${duedate[i]}</span><p></p>

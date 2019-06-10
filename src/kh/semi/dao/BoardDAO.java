@@ -1,7 +1,6 @@
 package kh.semi.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -10,25 +9,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 import kh.semi.dto.BoardDTO;
 import kh.semi.dto.BoardListDTO;
 import kh.semi.dto.CommentDTO;
 import kh.semi.dto.TitleImgDTO;
 
 public class BoardDAO {
-	
+
 	static int recordCountPerPage = 10;
 	static int boardRecordCountPerPage = 12;
 	static int naviCountPerPage = 5;
 	public static int pageTotalCount;
 	static String goBoard = "List.board";
 
-	public Connection getConnection() throws Exception {
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
-		String user = "semi";
-		String pw = "semi";
-		return DriverManager.getConnection(url,user,pw);
+	private Connection getConnection() throws Exception{
+		Context root = new InitialContext();
+		Context ctx = (Context)root.lookup("java:/comp/env");
+		DataSource ds = (DataSource)ctx.lookup("jdbc");
+		return ds.getConnection();   
 	}
 
 	// read 페이지에서 필요함
@@ -56,8 +58,8 @@ public class BoardDAO {
 			return null;
 		}
 	}
-	
-	
+
+
 	public PreparedStatement pstatForGetDataForMain(Connection con)throws Exception{
 		String sql = "select b_due_date-sysdate as d_day, b_no, b_title, b_amount, "
 				+ "b_due_date, b_sum_amount from board where b_due_date-sysdate like '+%' order by d_day";
@@ -105,16 +107,16 @@ public class BoardDAO {
 			pstat.setTimestamp(7, dto.getDueDate());
 			pstat.setString(8, dto.getContents());
 			int result = pstat.executeUpdate();
-			
+
 			// title_img 테이블에 insert!!
 			pstat2.setString(1, tdto.getFileName());
 			pstat2.setString(2, tdto.getOriFileName());
 			pstat2.setString(3, tdto.getFilePath());
 			pstat2.setLong(4, tdto.getFileSize());
 			int result2 = pstat2.executeUpdate();
-			
+
 			con.commit();
-			
+
 			if(result>0 && result2>0) {
 				return 1;
 			}
@@ -122,18 +124,18 @@ public class BoardDAO {
 		}
 	}
 
-	  public int deleteClosedBoard() throws Exception {
-	      String sql = "delete from board where b_no in (select b_no from board where b_due_date-sysdate like '%-%')";
-	      try(
-	            Connection con = this.getConnection();
-	            PreparedStatement pstat = con.prepareStatement(sql);
-	            ){
-	         int result = pstat.executeUpdate();
-	         con.commit();
-	         return result;
-	      }
-	   }
-	  
+	public int deleteClosedBoard() throws Exception {
+		String sql = "delete from board where b_no in (select b_no from board where b_due_date-sysdate like '%-%')";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+
 	private PreparedStatement pstatForSelectOneArticle(Connection con, int boardNo)throws Exception{
 		String sql = "select * from board where b_no=?";
 		PreparedStatement pstat = con.prepareStatement(sql);
@@ -154,19 +156,19 @@ public class BoardDAO {
 				){
 			BoardDTO boardDTO = new BoardDTO();
 			if(rs.next()) {
-	            boardDTO.setBoardNo(rs.getInt("b_no"));
-	            boardDTO.setTitle(rs.getString("b_title"));
-	            boardDTO.setEmail(rs.getString("b_email"));
-	            boardDTO.setWriter(rs.getString("b_writer"));
-	            boardDTO.setAmount(rs.getInt("b_amount"));
-	            boardDTO.setBank(rs.getString("b_bank"));
-	            boardDTO.setAccount(rs.getString("b_account"));
-	            boardDTO.setContents(rs.getString("b_contents"));
-	            boardDTO.setDueDate(rs.getTimestamp("b_due_date"));
-	            boardDTO.setViewCount(rs.getInt("b_viewcount"));
-	            boardDTO.setWriteDate(rs.getTimestamp("b_writedate"));
-	            boardDTO.setRecommend(rs.getInt("b_recommend"));
-	            boardDTO.setSumAmount(rs.getInt("b_sum_amount"));
+				boardDTO.setBoardNo(rs.getInt("b_no"));
+				boardDTO.setTitle(rs.getString("b_title"));
+				boardDTO.setEmail(rs.getString("b_email"));
+				boardDTO.setWriter(rs.getString("b_writer"));
+				boardDTO.setAmount(rs.getInt("b_amount"));
+				boardDTO.setBank(rs.getString("b_bank"));
+				boardDTO.setAccount(rs.getString("b_account"));
+				boardDTO.setContents(rs.getString("b_contents"));
+				boardDTO.setDueDate(rs.getTimestamp("b_due_date"));
+				boardDTO.setViewCount(rs.getInt("b_viewcount"));
+				boardDTO.setWriteDate(rs.getTimestamp("b_writedate"));
+				boardDTO.setRecommend(rs.getInt("b_recommend"));
+				boardDTO.setSumAmount(rs.getInt("b_sum_amount"));
 				return boardDTO;
 			}
 			return null;
@@ -205,7 +207,7 @@ public class BoardDAO {
 			return null;
 		}
 	}
-	
+
 	public int updatedEditing(int boardNo, String title, String content) throws Exception {
 		String sql = "update board set b_title=?, b_contents=? where b_no=?";
 		try(
@@ -219,7 +221,7 @@ public class BoardDAO {
 		}
 	}
 
-//*게시판*//==============================================================================================================================
+	//*게시판*//==============================================================================================================================
 	//totalCount//전체글개수----------------
 	/*(1)전체 게시글의 개수*/
 	public int totalRecordNum() throws Exception{
@@ -299,7 +301,7 @@ public class BoardDAO {
 		ps.setInt(2, endNum);
 		return ps;
 	}
-	
+
 	public List<BoardListDTO> selectByPage(int currentPage) throws Exception{
 		int endNum = currentPage *boardRecordCountPerPage;
 		int startNum = endNum - (boardRecordCountPerPage-1);
@@ -346,11 +348,11 @@ public class BoardDAO {
 		ps.setInt(3, endNum);	
 		return ps;
 	}
-	
+
 	public List<BoardListDTO> searchList(int currentPage, String searchOption, String searchWord) throws Exception{		
 		int endNum = currentPage *boardRecordCountPerPage;
 		int startNum = endNum - (boardRecordCountPerPage-1);
-			
+
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement ps = this.psForSearchList(con, searchOption, searchWord, startNum, endNum);
@@ -381,7 +383,7 @@ public class BoardDAO {
 			return result;
 		}	
 	}
-	
+
 	/*(3) 마감된 게시글 목록*/
 	public PreparedStatement psForSelectByClosedPage(Connection con, int startNum, int endNum) throws Exception{
 		String sql = "select * from (select row_number() over(order by cl_b_no desc) as rown, t1.*,t2.* from closed t1 join title_img t2 on (t1.cl_b_no = t2.t_b_no)) where rown between ? and ?";
@@ -390,7 +392,7 @@ public class BoardDAO {
 		ps.setInt(2, endNum);
 		return ps;
 	}
-	
+
 	public List<BoardListDTO> selectByClosedPage(int currentPage) throws Exception{
 		int endNum = currentPage *boardRecordCountPerPage;
 		int startNum = endNum - (boardRecordCountPerPage-1);
@@ -426,7 +428,7 @@ public class BoardDAO {
 			return result;
 		}
 	}	
-	
+
 	/*(4)마감된 페이지에서 searchOption으로 검색했을 때 게시글 목록*/
 	public PreparedStatement psForClosedSearchList(Connection con, String searchOption, String searchWord, int startNum, int endNum) throws Exception{
 		String sql = "select * from (select row_number() over(order by cl_b_no desc) as rown, t1.*,t2.* from closed t1 join title_img t2 on (t1.cl_b_no = t2.t_b_no) where "+searchOption+" LIKE ?) where rown between ? and ?";
@@ -436,11 +438,11 @@ public class BoardDAO {
 		ps.setInt(3, endNum);	
 		return ps;
 	}
-	
+
 	public List<BoardListDTO> closedSearchList(int currentPage, String searchOption, String searchWord) throws Exception{		
 		int endNum = currentPage *boardRecordCountPerPage;
 		int startNum = endNum - (boardRecordCountPerPage-1);
-			
+
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement ps = this.psForClosedSearchList(con, searchOption, searchWord, startNum, endNum);
@@ -471,82 +473,82 @@ public class BoardDAO {
 			return result;
 		}	
 	}
-	
-	
+
+
 	/*페이지 네비게이터*/
-		public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord, String classification) throws Exception {
-			
-			int recordTotalCount = totalRecordCount;
-			int recordCountPerPage = 12; //12개의 글이 보이게 한다.	
-			int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
-			  
-			int pageTotalCount = recordTotalCount / recordCountPerPage;
-			if(recordTotalCount % recordCountPerPage > 0) {
-				pageTotalCount++;
-			}
-		
-			//현재  페이지 오류 검출 및 정정
-			/*보안코드 : 현재페이지가 1보다 작다면 1로, 전체페이지보다 크다면 전체페이지(pageTotalCount)로 표시하겠다*/
-			if(currentPage < 1) {
-				currentPage = 1;
-			}else if(currentPage > pageTotalCount) {
-				currentPage = pageTotalCount;
-			}
-			int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
-			int endNavi = startNavi + (naviCountPerPage - 1); 
-			
-			if(endNavi > pageTotalCount) {
-				endNavi = pageTotalCount;
-			}
-			
-			boolean needPrev = true;
-			boolean needNext = true;
+	public String getNavi(int currentPage, int totalRecordCount, String searchOption, String searchWord, String classification) throws Exception {
 
-			if(startNavi == 1) { 
-				needPrev = false;
-			}
-			if(endNavi == pageTotalCount) {
-				needNext = false;
-			}
+		int recordTotalCount = totalRecordCount;
+		int recordCountPerPage = 12; //12개의 글이 보이게 한다.	
+		int naviCountPerPage = 5; //5개의 네비가 보이게 한다.
 
-			StringBuilder sb = new StringBuilder();
-			if(searchOption.contains(" ")&classification.equals("ongoing")) { 
-				searchOption = "b_title or b_contents";
-			}else if(classification.equals("closed")) {
-				if(searchOption.contains(" ")) {
-				searchOption = "cl_b_title or cl_b_contents";
-				}else if(searchOption.equals("b_title")) {
-					searchOption = "cl_b_title";
-				}else if(searchOption.equals("b_contents")) {
-					searchOption = "cl_b_contents";
-				}
-			}
-			
-			if(classification.equals("ongoing")) {
-				goBoard = "List.board";
-			}else{
-				goBoard = "ClosedList.board";
-			}
-			if(needPrev) {
-				int prevStartNavi = startNavi-1;
-				sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ prevStartNavi +"&classification="+classification+"\"" + 
-						"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
-						"						</a></li>");		
-			}
-			for(int i = startNavi; i <= endNavi; i++) {
-				sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"&classification="+classification+"\">" + i + "</a></li>");
-			}
-			if(needNext) {
-				int nextEndNavi = endNavi+1;
-				sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ nextEndNavi++ +"&classification="+classification+"\""+ 
-						"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
-						"						</a></li>");
-			}
-			
-			return sb.toString();
+		int pageTotalCount = recordTotalCount / recordCountPerPage;
+		if(recordTotalCount % recordCountPerPage > 0) {
+			pageTotalCount++;
 		}
-//============================================================================================================================	
-	
+
+		//현재  페이지 오류 검출 및 정정
+		/*보안코드 : 현재페이지가 1보다 작다면 1로, 전체페이지보다 크다면 전체페이지(pageTotalCount)로 표시하겠다*/
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+		int startNavi = (currentPage - 1)/naviCountPerPage * naviCountPerPage + 1;
+		int endNavi = startNavi + (naviCountPerPage - 1); 
+
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if(startNavi == 1) { 
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		if(searchOption.contains(" ")&classification.equals("ongoing")) { 
+			searchOption = "b_title or b_contents";
+		}else if(classification.equals("closed")) {
+			if(searchOption.contains(" ")) {
+				searchOption = "cl_b_title or cl_b_contents";
+			}else if(searchOption.equals("b_title")) {
+				searchOption = "cl_b_title";
+			}else if(searchOption.equals("b_contents")) {
+				searchOption = "cl_b_contents";
+			}
+		}
+
+		if(classification.equals("ongoing")) {
+			goBoard = "List.board";
+		}else{
+			goBoard = "ClosedList.board";
+		}
+		if(needPrev) {
+			int prevStartNavi = startNavi-1;
+			sb.append("	<li class=\"page-item\"><a class=\"page-link\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ prevStartNavi +"&classification="+classification+"\"" + 
+					"							aria-label=\"Previous\"> <span aria-hidden=\"true\">&laquo;</span>" + 
+					"						</a></li>");		
+		}
+		for(int i = startNavi; i <= endNavi; i++) {
+			sb.append("<li class=\"page-item\"><a class=\"page-link pageNumber\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+i+"&classification="+classification+"\">" + i + "</a></li>");
+		}
+		if(needNext) {
+			int nextEndNavi = endNavi+1;
+			sb.append("<li class=\"page-item\"><a class=\"page-link\" href=\""+goBoard+"?searchOption="+searchOption+"&searchWord="+searchWord+"&currentPage="+ nextEndNavi++ +"&classification="+classification+"\""+ 
+					"							aria-label=\"Next\"> <span aria-hidden=\"true\">&raquo;</span>" + 
+					"						</a></li>");
+		}
+
+		return sb.toString();
+	}
+	//============================================================================================================================	
+
 
 	public int updateSumAccount(int amount, int boardNo) throws Exception {
 		String sql = "update board set b_sum_amount=b_sum_amount+? where b_No=?";
@@ -619,7 +621,7 @@ public class BoardDAO {
 			return result;
 		}
 	}
-	
+
 	public int insertComment(String email, String name, int boardNo, String comment) throws Exception {
 		String sql = "insert into comments values(?, ?, ?, ?, default)";
 		try(

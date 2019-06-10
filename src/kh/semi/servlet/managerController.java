@@ -2,6 +2,7 @@ package kh.semi.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +20,7 @@ public class managerController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter write = response.getWriter();
-
+		DecimalFormat commas = new DecimalFormat("###,###,###,###");
 
 		String requestURI = request.getRequestURI();
 		String comtextPath = request.getContextPath();
@@ -28,7 +29,8 @@ public class managerController extends HttpServlet {
 
 		if (cmd.equals("/Bar.manager")) {
 			try {
-				request.setAttribute("totalMoney", dao.totalMoney());
+				request.setAttribute("visitPerson", MembersController.visitPerson);
+				request.setAttribute("totalMoney", commas.format(dao.totalMoney()));
 				request.setAttribute("nowingProjectCount", dao.nowingProjectCount());
 				request.setAttribute("joinMemberCount", dao.joinMemberCount());
 				request.setAttribute("line", dao.timePersonCount());

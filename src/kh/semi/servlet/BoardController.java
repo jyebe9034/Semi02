@@ -249,10 +249,10 @@ public class BoardController extends HttpServlet {
 
 				String str = titleImg.getFilePath();
 				//				String result = str.replaceAll("C:.+?2Project.+?",""); // 해용이 집
-				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
+//				String result = str.replaceAll("D:.+?mi4.+?",""); // 해용이꺼
 				//String result = str.replaceAll("D:.+?mi.+?mi02.+?",""); 재용오빠꺼
 				//		String result = str.replaceAll("D:.+?mi.+?",""); //슬기꺼
-				//				String result = str.replaceAll("D.+?4.+?",""); // 지혜
+				String result = str.replaceAll("D.+?4.+?",""); // 지혜
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 
 				request.setAttribute("searchOption", searchOption);
@@ -311,7 +311,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("searchOption", "allPages");
 				request.setAttribute("searchWord", "allPages");
 				if(result > 0) {
-					request.getRequestDispatcher("Read.board").forward(request, response);
+					request.getRequestDispatcher("Read.board?&searchOption=allPages&searchWord=allPages").forward(request, response);
 				}else {
 					request.setAttribute("fail", 1);
 					request.getRequestDispatcher("List.board").forward(request, response);
@@ -345,10 +345,10 @@ public class BoardController extends HttpServlet {
 						String path = result.get(i).getFilePath();
 						//String folder = path.replaceAll("D.+?3.+?",""); //지혜꺼
 						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
-						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
+//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
 						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
 						//						String folder = path.replaceAll("C:.+?2Project.+?","");	// 해용 집
-						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
+						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
 						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
@@ -407,9 +407,9 @@ public class BoardController extends HttpServlet {
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
 
-						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
+						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
 						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
-						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
+//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
 						//						String folder = path.replaceAll("C:.+?2Project.+?", "");
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
