@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - ${result.title }</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
@@ -21,7 +22,8 @@
 }
 .progress-bar {
 	background-color: orange;
-	width: ${percentage}%;
+ 	width: ${percentage}%;
+	transition: width 3s;
 }
 .hope {
 	text-align: center;
@@ -310,6 +312,24 @@
 	</div>
 	
 	<script>
+		$(document).bind('keydown',function(e){
+	       if ( e.keyCode == 123 /* F12 */) {
+	           e.preventDefault();
+	           e.returnValue = false;
+	       }
+	   });
+	  
+	   
+	   document.onmousedown=disableclick;
+	   status="마우스 우클릭은 사용할 수 없습니다.";
+	   
+	   function disableclick(event){
+	       if (event.button==2) {
+	           alert(status);
+	           return false;
+	       }
+	   }
+	
 		$(function(){
 			var docHeight = $(document).height();
 			var winHeight = $(window).height();
@@ -335,7 +355,6 @@
 				$("#inputComment").attr("contenteditable", false);
 				$("#commentBtn").prop("disabled", true);
 			}
-			
 			$(".progress-bar").css("width","${barNum}");
 		});
 		
@@ -474,8 +493,8 @@
 			comment.attr("contenteditable", true);
 			comment.focus();
 			comment.css("border", "0.5px solid #00000030");
-			comment.css("height", "70px");
-			comment.css("overflow-y", "auto");
+			comment.css("height", "100px");
+	        comment.css("overflow-y", "auto");
 			
 			modifyComplete.on("click", function(){
 				var inputComment = comment.html();

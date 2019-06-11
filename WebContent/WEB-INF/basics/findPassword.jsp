@@ -4,6 +4,7 @@
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.security.SecureRandom"%>
 <%@ page import="java.math.BigInteger"%>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,6 +112,9 @@ a:hover {
 	#pw_form, #pw_match, #emailCheck{
 		font-size: 12px;
 	}
+	#pw_match{
+		display: none;
+	}
 </style>
 </head>
 <body>
@@ -177,7 +181,7 @@ a:hover {
 				<div class="form-group pwBox">
 					<input type="hidden" class="form-control" id="checkPassword"
 					placeholder="*비밀번호 확인" required>
-					<p id="pw_match"></p>
+					<p id="pw_match">비밀번호 확인을 해주세요.</p>
 				</div>
 				<button type="button" id="btnConfirmEmail" class="btn btn-primary btn-md btn-block"
 					style="font-size: 18px; font-weight: bold;">인증번호 받기</button>
@@ -208,6 +212,23 @@ a:hover {
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
 	<script>
+	$(document).bind('keydown',function(e){
+	       if ( e.keyCode == 123 /* F12 */) {
+	           e.preventDefault();
+	           e.returnValue = false;
+	       }
+	   });
+	  
+	   
+	   document.onmousedown=disableclick;
+	   status="마우스 우클릭은 사용할 수 없습니다.";
+	   
+	   function disableclick(event){
+	       if (event.button==2) {
+	           alert(status);
+	           return false;
+	       }
+	   }
 		var emailCheck;
 		$("#inputEmail").on("input", function() {
 	         $.ajax({
@@ -266,6 +287,7 @@ a:hover {
 	                        $("#btnUpdatePw").css("display", "inline-block");
 	                        $("#inputPassword").attr("type", "password");
 	                        $("#checkPassword").attr("type", "password");
+	                        $("#pw_match").css("display", "block");
 	                     } else if (resp) {
 	                        alert("인증번호가 일치하지 않습니다.");
 	                        $("#inputNum").attr("flag", false);
@@ -289,6 +311,7 @@ a:hover {
 			}
 		})
 		document.getElementById("inputPassword").oninput = function() {
+			$("#pw_match").html("비밀번호 확인을 해주세요.");
 	         var inputPw = document.getElementById("inputPassword").value;
 	         var regex = /^.*(?=^.{8,25}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
 	         var result = regex.exec(inputPw);

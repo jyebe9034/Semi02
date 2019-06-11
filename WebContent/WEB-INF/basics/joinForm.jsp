@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 회원가입</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -86,7 +87,6 @@
 ul {
 	margin: auto;
 }
-
 </style>
 </head>
 <body>
@@ -154,7 +154,7 @@ ul {
          <div class="form-group">
             <input type="password" class="form-control" id="checkPassword"
                placeholder="*비밀번호 확인" required>
-            <p id="pw_match"></p>
+            <p id="pw_match">비밀번호 확인을 해주세요.</p>
          </div>
          <div class="form-group">
             <input type="text" class="form-control" id="name" name="name"
@@ -269,11 +269,12 @@ ul {
 	}
    
       $("#btnConfirmEmail").on("click", function() {
-    	 $("#btnConfirmEmail").prop("disabled", true);
-    	 $("#emailCheck").text("인증번호를 메일로 발송중입니다.");
          if ($("#inputEmail").val() == "") {
             alert("이메일을 입력해주세요.");
+            return;
          } else {
+        	$("#btnConfirmEmail").prop("disabled", true);
+        	$("#emailCheck").text("인증번호를 메일로 발송중입니다.");
             $.ajax({
                url : "SendMail.members",
                type : "post",
@@ -320,6 +321,8 @@ ul {
          }
          else if($("#pw_match").text() != "" || $("#pw_form").text() != ""){
             alert("비밀번호를 다시 확인해주세요.");
+            $("#inputPassword").val("").focus();
+        	$("#checkPassword").val("");
          } else if ($("#name").val() == "") {
             alert("이름을 입력해주세요.");
          }else if($("#nameCheck").html() != ""){
@@ -350,6 +353,8 @@ ul {
       })
 
       document.getElementById("inputPassword").oninput = function() {
+    	 $("#pw_match").html("비밀번호 확인을 해주세요.");
+    	 $("#pw_match").css("color", "black");
          var inputPw = document.getElementById("inputPassword").value;
          var regex = /^.*(?=^.{8,25}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
          var result = regex.exec(inputPw);

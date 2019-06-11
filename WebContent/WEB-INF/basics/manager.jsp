@@ -7,6 +7,7 @@
 <head>
 
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
    content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -157,7 +158,7 @@
                            <div class="row no-gutters align-items-center">
                               <div class="col mr-2">
                                  <div
-                                    class="text-xs font-weight-bold text-info text-uppercase mb-1">총 게시판 개수</div>
+                                    class="text-xs font-weight-bold text-info text-uppercase mb-1">총 게시글 개수</div>
                                  <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${nowingProjectCount}개</div>
@@ -263,7 +264,7 @@
                      <!-- Color System -->
                      <div class="card shadow mb-4" style="height: 27rem;">
                         <div class="card-header py-3">
-                           <h6 class="m-0 font-weight-bold text-primary">기부 많이 사람</h6>
+                           <h6 class="m-0 font-weight-bold text-primary">기부 TOP3</h6>
                         </div>
                         <div class="card-body">
                            <canvas id="donationManyPerson"></canvas>                        

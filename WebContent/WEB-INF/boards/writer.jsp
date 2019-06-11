@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 후원 신청</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
@@ -213,10 +214,31 @@
 	</div>
 	
 	<script>
+// 		$(document).bind('keydown',function(e){
+// 	       if ( e.keyCode == 123 /* F12 */) {
+// 	           e.preventDefault();
+// 	           e.returnValue = false;
+// 	       }
+// 	   });
+	  
+	   
+	   document.onmousedown=disableclick;
+	   status="마우스 우클릭은 사용할 수 없습니다.";
+	   
+	   function disableclick(event){
+	       if (event.button==2) {
+	           alert(status);
+	           return false;
+	       }
+	   }
+	
 		$("#myTitle").on("input",function(){
 			var title = $("#myTitle").val();
 			var regex = /^[가-힣 .,:;()!^?~0-9]{5,22}$/g
-			
+			title = title.replace(/(&nbsp;)+/ig, "");	// 맨 앞 공백, 공백연속으로 쳤을때 &nbsp;
+			title = title.replace(/^[ ]+/ig, "");	// &nbsp;자르고나서 또 맨앞에 오는 공백 자르기
+			title = title.replace(/(<p><br><\/p><p><br><\/p>)+/ig, "<p><br><\/p>");// 내용없이 엔터쳤을때
+			title = title.replace(/(<p>[ ]*?<\/p>)/ig, "<p><br><\/p>");// 공백만 넣고 엔터쳤을때
 			var result = regex.exec(title);
 	        if(result == null){
 	             $("#wrongTitle").html("잘못된 제목 형식입니다.");
@@ -264,8 +286,13 @@
         $("#myDueDate").on("change",function(){
             var today = new Date();
             var dueDate = $(this).val();
+            
             var dueArr = dueDate.split("-");
             var dateObj = new Date(dueArr[0], Number(dueArr[1])-1, dueArr[2]);
+            if(dueArr[0] > 2099){
+            	alert("2099년 이후의 년도는 선택하실 수 없습니다.");
+            	$("#myDueDate").val("");
+            }
             
             var between = Math.ceil((dateObj.getTime() - today.getTime())/1000/60/60/24);
             if(between < 7){
@@ -302,11 +329,17 @@
 // 	    		}
 // 	    	})
 // 	    });
+		
 	
 		$("#sendit").on("click", function(){ // 등록 버튼을 눌렀을 때
 			var title = $("#myTitle").val();
-			var titleRegex = /^[가-힣 .,:;()!^?~0-9\"\']{5,22}$/g
+			var titleRegex = /^[가-힣 .,:;()!^?~0-9]{5,22}$/g
 			var result1 = titleRegex.exec(title);
+			if($("#wrongTitle").html() != ""){
+				alert("제목을 입력해주세요!");
+				$("#myTitle").val("");
+				return;
+			}
 			
 			var writer = $("#myWriter").val();
 			var writerRegex = /^[가-힣]{2,5}$/g

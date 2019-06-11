@@ -701,7 +701,6 @@ public class BoardDAO {
 			return result;
 		}
 	}
-
 	public int updateComment(String email, String comment, String writeDate) throws Exception {
 		String sql = "update comments set c_comment=? where c_email=? and c_write_date=?";
 		try(

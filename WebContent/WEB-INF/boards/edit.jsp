@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 글 수정</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
@@ -171,6 +172,24 @@
 	</div>
 	
 	<script>
+		$(document).bind('keydown',function(e){
+	       if ( e.keyCode == 123 /* F12 */) {
+	           e.preventDefault();
+	           e.returnValue = false;
+	       }
+	   });
+	  
+	   
+	   document.onmousedown=disableclick;
+	   status="마우스 우클릭은 사용할 수 없습니다.";
+	   
+	   function disableclick(event){
+	       if (event.button==2) {
+	           alert(status);
+	           return false;
+	       }
+	   }
+	
 		$("#myTitle").on("input",function(){
 			var title = $("#myTitle").val();
 			var regex = /^[가-힣 .,:;()!^?~0-9]{5,22}$/g
@@ -185,8 +204,14 @@
 		
 		$("#sendit").on("click", function(){
 			var title = $("#myTitle").val();
-			var titleRegex = /^[가-힣 .,:;()!^?~0-9\"\']{5,22}$/g
+			var titleRegex = /^[가-힣 .,:;()!^?~0-9]{5,22}$/g
 			var result1 = titleRegex.exec(title);
+			
+			var content = $(".note-editable").html();
+			content = content.replace(/(&nbsp;)+/ig, "");	// 맨 앞 공백, 공백연속으로 쳤을때 &nbsp;
+			content = content.replace(/^[ ]+/ig, "");	// &nbsp;자르고나서 또 맨앞에 오는 공백 자르기
+			content = content.replace(/(<p><br><\/p><p><br><\/p>)+/ig, "<p><br><\/p>");// 내용없이 엔터쳤을때
+			content = content.replace(/(<p>[ ]*?<\/p>)/ig, "<p><br><\/p>");// 공백만 넣고 엔터쳤을때
 			
 			if($("#myTitle").val() == ""){
 				alert("제목을 입력해 주세요.");
@@ -195,7 +220,7 @@
 				$("#myTitle").val("");
 				$("#wrongTitle").html("");
 				
-			}else if($(".note-editable").html() == "<p><br></p>"){
+			}else if(content == "<p><br></p>"){
 				alert("내용을 입력해주세요.");
 			}else{
 				$("#myContent").val($(".note-editable").html());

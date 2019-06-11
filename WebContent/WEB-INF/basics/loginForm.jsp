@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 로그인</title>
 <link rel="stylesheet"
@@ -98,6 +99,10 @@ a:hover {
 	#kakao-login-btn{
 		width : 193px;
 		height : 47px;
+	}
+	#footer{
+		position: fixed;
+		bottom: 0;
 	}
 </style>
 </head>

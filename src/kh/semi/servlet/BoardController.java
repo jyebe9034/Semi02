@@ -127,13 +127,13 @@ public class BoardController extends HttpServlet {
 						e.printStackTrace();
 						response.sendRedirect("error.jsp");
 					}
-
+					request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
+				
 				}catch(Exception e) {
 					e.printStackTrace();
 					response.sendRedirect("error.jsp");
 				}
-				request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
-
+				
 			}else if(cmd.equals("/uploadImage.board")) { // 서버 측 이미지 업로드 
 				request.getSession().setAttribute("flag", "false");
 				int maxSize = 10 * 1024 * 1024;
@@ -190,6 +190,7 @@ public class BoardController extends HttpServlet {
 
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 
 			}else if(cmd.equals("/deleteImage.board")) { // 서버 측 이미지 삭제
@@ -247,7 +248,7 @@ public class BoardController extends HttpServlet {
 				DecimalFormat Commas = new DecimalFormat("#,###,###");
 				
 				String content = article.getContents();
-				content = content.replaceAll("&lt;script&gt;", "").replaceAll("<script>", "");
+				content = content.replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", "");
 				article.setContents(content);
 
 				request.setAttribute("searchOption", searchOption);
@@ -296,7 +297,6 @@ public class BoardController extends HttpServlet {
 				String classification = request.getParameter("classification");
 				String title = request.getParameter("title");
 				String content = request.getParameter("contents");
-				content.replaceAll("<.?script>", "");
 				dto.setContents(content);
 				int result = dao.updatedEditing(boardNo, title, content);
 				request.setAttribute("boardNo", boardNo);
@@ -315,7 +315,7 @@ public class BoardController extends HttpServlet {
 			}else if(cmd.equals("/List.board")){ //후원 게시판 목록
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
-					String searchWord = request.getParameter("searchWord").replaceAll("&lt;script&gt;", "").replaceAll("<script>", ""); //검색어
+					String searchWord = request.getParameter("searchWord").replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", ""); //검색어
 					String classification = request.getParameter("classification"); //분류
 					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
 
@@ -338,13 +338,7 @@ public class BoardController extends HttpServlet {
 					String[] sumAmountArr = new String[12];
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
-						//String folder = path.replaceAll("D.+?3.+?",""); //지혜꺼
-						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
-						//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
-						//						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
-						//						String folder = path.replaceAll("C:.+?2Project.+?","");	// 해용 집
-						String folder = path.replaceAll("D.+?4.+?",""); //지혜껀가
-						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
+						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();
@@ -372,7 +366,7 @@ public class BoardController extends HttpServlet {
 			else if(cmd.equals("/ClosedList.board")){
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
-					String searchWord = request.getParameter("searchWord"); //검색어
+					String searchWord = request.getParameter("searchWord").replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", ""); //검색어
 					String classification = request.getParameter("classification"); //분류
 					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
 
@@ -401,11 +395,7 @@ public class BoardController extends HttpServlet {
 					String[] sumAmountArr = new String[12];
 					for(int i = 0; i < result.size(); i++) {
 						String path = result.get(i).getFilePath();
-
 						String folder = path.replaceAll("D.+?4.+?",""); //지혜꺼
-						//						String folder = path.replaceAll("D:.+?mi.+?",""); //슬기꺼
-						//						String folder = path.replaceAll("D:.+?mi4.+?","");	// 해용이꺼
-						//						String folder = path.replaceAll("C:.+?2Project.+?", "");
 						result.get(i).setNewFilePath(folder + "/" + result.get(i).getFileName());						
 						/*progress bar 추가됨*/
 						int sumAmount = result.get(i).getSumAmount();
