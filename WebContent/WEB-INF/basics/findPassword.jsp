@@ -4,6 +4,7 @@
 <%@ page import="java.net.URLEncoder"%>
 <%@ page import="java.security.SecureRandom"%>
 <%@ page import="java.math.BigInteger"%>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!DOCTYPE html>
 <html>
 <head>
@@ -159,6 +160,7 @@ a:hover {
 				<hr></hr>
 			</div>
 			<form action="FindPW.members" id="findPwForm" method="post">
+				<input style="VISIBILITY: hidden; WIDTH: 0px">
 				<div class="form-group">
 					<input type="email" class="form-control" id="inputEmail"
 						name="email" aria-describedby="emailHelp"
@@ -207,6 +209,23 @@ a:hover {
 		<div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
 	</div>
 	<script>
+	$(document).bind('keydown',function(e){
+	       if ( e.keyCode == 123 /* F12 */) {
+	           e.preventDefault();
+	           e.returnValue = false;
+	       }
+	   });
+	  
+	   
+	   document.onmousedown=disableclick;
+	   status="마우스 우클릭은 사용할 수 없습니다.";
+	   
+	   function disableclick(event){
+	       if (event.button==2) {
+	           alert(status);
+	           return false;
+	       }
+	   }
 		var emailCheck;
 		$("#inputEmail").on("input", function() {
 	         $.ajax({

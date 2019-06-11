@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 후원 게시판</title>
 <link href="https://fonts.googleapis.com/css?family=Cute+Font|Noto+Serif+KR:700|Do+Hyeon|Noto+Sans+KR|Sunflower:300|Jua|Poor+Story|Nanum+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
@@ -192,9 +193,27 @@ html, body {
 </style>
 <script>
    $(function(){
-      if(${fail == 1}){
-         alert("수정에 실패했습니다. 다시 시도해 주세요.");
-      }
+	   $(document).bind('keydown',function(e){
+		    if ( e.keyCode == 123 /* F12 */) {
+		        e.preventDefault();
+		        e.returnValue = false;
+		    }
+		});
+
+
+		document.onmousedown=disableclick;
+		status="마우스 우클릭은 사용할 수 없습니다.";
+		
+		function disableclick(event){
+		    if (event.button==2) {
+		        alert(status);
+		        return false;
+		    }
+		}
+		
+	      if(${fail == 1}){
+	         alert("수정에 실패했습니다. 다시 시도해 주세요.");
+	      }
 		$("#goMainBtn").on("click",function(){
 			location.href="Main.members";
 		})

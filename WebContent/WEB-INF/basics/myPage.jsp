@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 마이 페이지</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -164,9 +165,13 @@ a:hover {
 .update {
    position: relative;
    top: 30px;
-   left: 45%;
+   left: 40%;
 }
-
+.update2 {
+   position: relative;
+   top: 30px;
+   left: 40%;
+}
 #address1, #address2 {
    width: 270px;
 }
@@ -326,6 +331,7 @@ a:hover {
          <div class="col-12">
             <a href="myPageUpdateLocation.members"><button type="button"
                   class="btn btn-info update">정보 수정</button></a>
+             <button type="button" class="btn btn-info signout update2">탈퇴하기</button>
          </div>
       </div>
 
@@ -453,5 +459,8 @@ $(".pageNumber2").each(function(item){
    }
 })
 
+$(".signout").on("click", function(){
+	alert("탈퇴는 가입 후 10일이 지나야 가능합니다.");
+})
 </script>
 </html>

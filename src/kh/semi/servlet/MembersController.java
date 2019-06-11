@@ -69,12 +69,13 @@ public class MembersController extends HttpServlet {
 			Calendar date1 = Calendar.getInstance();
 			date1.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 			date1.set(Calendar.AM_PM, Calendar.PM);
-			date1.set(Calendar.HOUR, 0);
-			date1.set(Calendar.MINUTE, 0);
+			date1.set(Calendar.HOUR, 21);
+			date1.set(Calendar.MINUTE, 15);
 			date1.set(Calendar.SECOND, 0);
 			date1.set(Calendar.MILLISECOND, 0);
+			System.out.println(date1.getTime());
 
-			timer1.schedule(visiterCount,1000,1000*10);//10초마다 저장
+			timer1.schedule(visiterCount,date1.getTime(),1000*10);//10초마다 저장
 		}
 		if(!today.equals(sdf2.format(date))) {
 			try{

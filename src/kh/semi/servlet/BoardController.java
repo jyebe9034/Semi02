@@ -127,13 +127,13 @@ public class BoardController extends HttpServlet {
 						e.printStackTrace();
 						response.sendRedirect("error.jsp");
 					}
-
+					request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
+				
 				}catch(Exception e) {
 					e.printStackTrace();
 					response.sendRedirect("error.jsp");
 				}
-				request.getRequestDispatcher("/WEB-INF/boards/alertWrite.jsp").forward(request, response);
-
+				
 			}else if(cmd.equals("/uploadImage.board")) { // 서버 측 이미지 업로드 
 				request.getSession().setAttribute("flag", "false");
 				int maxSize = 10 * 1024 * 1024;
@@ -190,6 +190,7 @@ public class BoardController extends HttpServlet {
 
 				}catch(Exception e) {
 					e.printStackTrace();
+					response.sendRedirect("error.jsp");
 				}
 
 			}else if(cmd.equals("/deleteImage.board")) { // 서버 측 이미지 삭제
@@ -365,7 +366,7 @@ public class BoardController extends HttpServlet {
 			else if(cmd.equals("/ClosedList.board")){
 				try {
 					String searchOption = request.getParameter("searchOption"); //검색 종류
-					String searchWord = request.getParameter("searchWord"); //검색어
+					String searchWord = request.getParameter("searchWord").replaceAll("&lt;script&gt;", "").replaceAll("<.?script>", ""); //검색어
 					String classification = request.getParameter("classification"); //분류
 					int currentPage = Integer.parseInt(request.getParameter("currentPage")); //현재페이지
 

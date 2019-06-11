@@ -5,6 +5,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/photo_image/favicon.ico">
         <title>도움닿기 - 회원 정보 수정</title>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -74,6 +75,9 @@
             #pw_form, #pw_match, #emailCheck{
                 font-size:12px;
             }
+            #pw_match{
+            	color: red;
+            }
             #divBtnJoin{
                 text-align:center;
             }
@@ -138,7 +142,12 @@
             .update{
                 position: relative;
                 top: 40px;
-                left: 45%;
+                left: 40%;
+            }
+            .update2{
+                position: relative;
+                top: 40px;
+                left: 40%;
             }
             #address1,#address2{
                 width: 270px;
@@ -251,7 +260,7 @@
                               class="second form-control mx-sm-3"
                               placeholder="비밀번호확인"
                               aria-describedby="passwordHelpInline" name="pw" required>
-                           <small id="pw_match" class="text-mute"></small>
+                           <small id="pw_match" class="text-mute">X</small>
                         </div>
                   </span></span>
                </div>
@@ -310,7 +319,7 @@
             <div class="col-12">
                <input type="button" class="btn btn-info update" id="update"
                   value="수정 하기"></input>
-				<input type="button" class="btn btn-info update" id="cancel"
+				<input type="button" class="btn btn-info update2" id="cancel"
                   value="취소 하기"></input>
             </div>
          </div>
@@ -337,6 +346,24 @@
       <div id="copyright">COPYRIGHT ⓒ 2019 BY RUNUP ALL RIGHT RESERVED</div>
    </div>
    <script>
+   $(document).bind('keydown',function(e){
+       if ( e.keyCode == 123 /* F12 */) {
+           e.preventDefault();
+           e.returnValue = false;
+       }
+   });
+  
+   
+   document.onmousedown=disableclick;
+   status="마우스 우클릭은 사용할 수 없습니다.";
+   
+   function disableclick(event){
+       if (event.button==2) {
+           alert(status);
+           return false;
+       }
+   }
+   
    $("#phone").on("blur", function() {
        var phonenum = $('#phone').val();
        var regPhone = /(01[0|1|6|9|7])[-](\d{3}|\d{4})[-](\d{4}$)/g;
@@ -394,7 +421,7 @@ cellPhone.onkeyup = function(event){
                     alert("패스워드를 입력해주세요.")
                     return;
                 }
-                if($("#pw_form").html() != ""){
+                if($("#pw_form").html() != "" || $("#pw_match").html() != ""){
                 	alert("패스워드를 확인해주세요.");
                 	return;
                 }
@@ -461,6 +488,7 @@ cellPhone.onkeyup = function(event){
         }
         
         document.getElementById("inputPassword").oninput = function() {
+        	$("#pw_match").html("X");
             var inputPw = document.getElementById("inputPassword").value;
             var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
             var result = regex.exec(inputPw);

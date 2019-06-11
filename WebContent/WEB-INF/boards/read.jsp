@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - ${result.title }</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
@@ -21,7 +22,8 @@
 }
 .progress-bar {
 	background-color: orange;
-	width: ${percentage}%;
+ 	width: ${percentage}%;
+	transition: width 3s;
 }
 .hope {
 	text-align: center;
@@ -222,7 +224,7 @@
 	    			<div class="col-md-7 col-8 comment">${com.comment }</div>
 	    			<div class="col-md-2 col-3">${com.name }</div>
 	    			<c:choose>
-	    				<c:when test="${sessionScope.loginEmail == com.email }">
+	    				<c:when test="${sessionScope.loginEmail == com.email || sessionScope.admin!=null}">
 	    					<div class="col-md-2 d-none d-md-block">${com.formedTime }</div>
 	    					<div class="col-1">
 	    						<span class="modifyCommentBtn" writeDate="${com.writeDate }">✎</span>
@@ -277,10 +279,9 @@
 	<div class="fixedMenu">
 		<div class="progressBox col-12 justify-content-center p-0 m-0">
 			<div class="progress mt-4">
-				<div class="progress-bar" role="progressbar"
-					aria-valuenow="80px" aria-valuemin="0"
-						aria-valuemax="100">
-				</div>
+				<div class="progress-bar" role="progressbar" style="width:0;"
+               aria-valuemin="0" aria-valuemax="100">
+            </div>
 			</div>
 			<div id="percentageDiv" class="mr-3 ml-3"><span id="percentage">${percentage }%</span></div>
 			<div class="btnBox2">
@@ -311,6 +312,24 @@
 	</div>
 	
 	<script>
+		$(document).bind('keydown',function(e){
+	       if ( e.keyCode == 123 /* F12 */) {
+	           e.preventDefault();
+	           e.returnValue = false;
+	       }
+	   });
+	  
+	   
+	   document.onmousedown=disableclick;
+	   status="마우스 우클릭은 사용할 수 없습니다.";
+	   
+	   function disableclick(event){
+	       if (event.button==2) {
+	           alert(status);
+	           return false;
+	       }
+	   }
+	
 		$(function(){
 			var docHeight = $(document).height();
 			var winHeight = $(window).height();
@@ -336,6 +355,7 @@
 				$("#inputComment").attr("contenteditable", false);
 				$("#commentBtn").prop("disabled", true);
 			}
+			$(".progress-bar").css("width","${barNum}");
 		});
 		
 		$(".donateBtn").on("click", function(){
@@ -436,24 +456,25 @@
 		}
 		
 		$(".deleteCommentBtn").on("click", function(){
-			if(confirm("삭제하시겠습니까?")){
-				var writeDate = $(this).attr("writeDate");
-				$.ajax({
-					url: "DeleteComment.board",
-					type: "post",
-					data:{
-						writeDate: writeDate
-					}
-				}).done(function(resp){
-					if(resp == "1"){
-						alert("삭제되었습니다.");
-						location.reload();
-					}else{
-						alert("삭제하실 수 없습니다.");
-					}
-				});
-			}
-		});
+	         if(confirm("삭제하시겠습니까?")){
+	            var writeDate = $(this).attr("writeDate");
+	            $.ajax({
+	               url: "DeleteComment.board",
+	               type: "post",
+	               data:{
+	                  writeDate: writeDate,
+	                  boardNo: ${result.boardNo}
+	               }
+	            }).done(function(resp){
+	               if(resp == "1"){
+	                  alert("삭제되었습니다.");
+	                  location.reload();
+	               }else{
+	                  alert("삭제하실 수 없습니다.");
+	               }
+	            });
+	         }
+	      });
 		
 		$(".modifyCommentBtn").on("click", function(){
 			var writeDate = $(this).attr("writeDate");
@@ -472,6 +493,9 @@
 			comment.attr("contenteditable", true);
 			comment.focus();
 			comment.css("border", "0.5px solid #00000030");
+			comment.css("height", "100px");
+	        comment.css("overflow-y", "auto");
+			
 			
 			modifyComplete.on("click", function(){
 				var inputComment = comment.html();

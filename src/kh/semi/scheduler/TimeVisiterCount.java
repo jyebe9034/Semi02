@@ -20,7 +20,7 @@ public class TimeVisiterCount extends TimerTask{
 				int realTime=Integer.parseInt(time1)/10000+1;
 				int realTime2 = Integer.parseInt(time1);
 				dao.timePerson(MembersController.timePerson,realTime);
-				if(230000<realTime2 && realTime2<235959) {
+				if(235900<realTime2 && realTime2<235959) {
 					dao.allTimeUpdate();
 					MembersController.visitPerson=0;
 				}

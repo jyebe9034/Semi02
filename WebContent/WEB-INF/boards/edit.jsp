@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 글 수정</title>
 <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
@@ -171,6 +172,24 @@
 	</div>
 	
 	<script>
+		$(document).bind('keydown',function(e){
+	       if ( e.keyCode == 123 /* F12 */) {
+	           e.preventDefault();
+	           e.returnValue = false;
+	       }
+	   });
+	  
+	   
+	   document.onmousedown=disableclick;
+	   status="마우스 우클릭은 사용할 수 없습니다.";
+	   
+	   function disableclick(event){
+	       if (event.button==2) {
+	           alert(status);
+	           return false;
+	       }
+	   }
+	
 		$("#myTitle").on("input",function(){
 			var title = $("#myTitle").val();
 			var regex = /^[가-힣 .,:;()!^?~0-9]{5,22}$/g

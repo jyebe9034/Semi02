@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/photo_image/favicon.ico">
 <title>도움닿기 - 회원가입</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -268,11 +269,12 @@ ul {
 	}
    
       $("#btnConfirmEmail").on("click", function() {
-    	 $("#btnConfirmEmail").prop("disabled", true);
-    	 $("#emailCheck").text("인증번호를 메일로 발송중입니다.");
          if ($("#inputEmail").val() == "") {
             alert("이메일을 입력해주세요.");
+            return;
          } else {
+        	$("#btnConfirmEmail").prop("disabled", true);
+        	$("#emailCheck").text("인증번호를 메일로 발송중입니다.");
             $.ajax({
                url : "SendMail.members",
                type : "post",
