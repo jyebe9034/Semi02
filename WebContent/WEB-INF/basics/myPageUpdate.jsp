@@ -75,9 +75,6 @@
             #pw_form, #pw_match, #emailCheck{
                 font-size:12px;
             }
-            #pw_match{
-            	color: red;
-            }
             #divBtnJoin{
                 text-align:center;
             }
@@ -158,8 +155,6 @@
             }
             #addressbt{
                 position: relative;
-            }
-            small{
             }
         </style>
     </head>
@@ -260,7 +255,7 @@
                               class="second form-control mx-sm-3"
                               placeholder="비밀번호확인"
                               aria-describedby="passwordHelpInline" name="pw" required>
-                           <small id="pw_match" class="text-mute">X</small>
+                           <small id="pw_match" class="text-mute">비밀번호 확인을 해주세요.</small>
                         </div>
                   </span></span>
                </div>
@@ -423,6 +418,8 @@ cellPhone.onkeyup = function(event){
                 }
                 if($("#pw_form").html() != "" || $("#pw_match").html() != ""){
                 	alert("패스워드를 확인해주세요.");
+                	$("#inputPassword").val("").focus();
+                	$("#inputPasswordCheck").val("");
                 	return;
                 }
            }
@@ -488,7 +485,8 @@ cellPhone.onkeyup = function(event){
         }
         
         document.getElementById("inputPassword").oninput = function() {
-        	$("#pw_match").html("X");
+        	$("#pw_match").html("비밀번호 확인을 해주세요.");
+       		$("#pw_match").css("color", "black");
             var inputPw = document.getElementById("inputPassword").value;
             var regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/g; // 숫자+영문자+특수문자 조합, 8자리 이상
             var result = regex.exec(inputPw);

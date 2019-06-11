@@ -487,9 +487,16 @@ public class BoardController extends HttpServlet {
 
 			}else if(cmd.equals("/DeleteComment.board")) {
 				String email = (String)request.getSession().getAttribute("loginEmail");
+				String admin = (String)request.getSession().getAttribute("admin");
+				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				String writeDate = request.getParameter("writeDate");
-
-				int result = dao.deleteComment(email, writeDate);
+				System.out.println(admin);
+				int result = 0;
+				if(admin.equals("y")) {
+					result = dao.deleteComment(boardNo, writeDate);
+				}else {
+					result = dao.deleteComment(email, writeDate);
+				}
 				pw.print(result);
 
 			}else if(cmd.equals("/ModifyComment.board")) {

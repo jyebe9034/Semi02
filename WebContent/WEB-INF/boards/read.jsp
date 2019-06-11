@@ -280,8 +280,8 @@
 		<div class="progressBox col-12 justify-content-center p-0 m-0">
 			<div class="progress mt-4">
 				<div class="progress-bar" role="progressbar" style="width:0;"
-               aria-valuemin="0" aria-valuemax="100">
-            </div>
+					aria-valuemin="0" aria-valuemax="100">
+				</div>
 			</div>
 			<div id="percentageDiv" class="mr-3 ml-3"><span id="percentage">${percentage }%</span></div>
 			<div class="btnBox2">
@@ -456,25 +456,25 @@
 		}
 		
 		$(".deleteCommentBtn").on("click", function(){
-	         if(confirm("삭제하시겠습니까?")){
-	            var writeDate = $(this).attr("writeDate");
-	            $.ajax({
-	               url: "DeleteComment.board",
-	               type: "post",
-	               data:{
-	                  writeDate: writeDate,
-	                  boardNo: ${result.boardNo}
-	               }
-	            }).done(function(resp){
-	               if(resp == "1"){
-	                  alert("삭제되었습니다.");
-	                  location.reload();
-	               }else{
-	                  alert("삭제하실 수 없습니다.");
-	               }
-	            });
-	         }
-	      });
+			if(confirm("삭제하시겠습니까?")){
+				var writeDate = $(this).attr("writeDate");
+				$.ajax({
+					url: "DeleteComment.board",
+					type: "post",
+					data:{
+						writeDate: writeDate,
+						boardNo: ${result.boardNo}
+					}
+				}).done(function(resp){
+					if(resp == "1"){
+						alert("삭제되었습니다.");
+						location.reload();
+					}else{
+						alert("삭제하실 수 없습니다.");
+					}
+				});
+			}
+		});
 		
 		$(".modifyCommentBtn").on("click", function(){
 			var writeDate = $(this).attr("writeDate");
@@ -495,7 +495,6 @@
 			comment.css("border", "0.5px solid #00000030");
 			comment.css("height", "100px");
 	        comment.css("overflow-y", "auto");
-			
 			
 			modifyComplete.on("click", function(){
 				var inputComment = comment.html();
