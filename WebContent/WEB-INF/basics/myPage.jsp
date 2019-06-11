@@ -326,6 +326,7 @@ a:hover {
          <div class="col-12">
             <a href="myPageUpdateLocation.members"><button type="button"
                   class="btn btn-info update">정보 수정</button></a>
+            <a><button type="button" class="btn btn-info update signout">회원 탈퇴</button></a>
          </div>
       </div>
 

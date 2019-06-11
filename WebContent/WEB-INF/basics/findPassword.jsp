@@ -159,6 +159,7 @@ a:hover {
 				<hr></hr>
 			</div>
 			<form action="FindPW.members" id="findPwForm" method="post">
+				<input style="VISIBILITY: hidden; WIDTH: 0px">
 				<div class="form-group">
 					<input type="email" class="form-control" id="inputEmail"
 						name="email" aria-describedby="emailHelp"

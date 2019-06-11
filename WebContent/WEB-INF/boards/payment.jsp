@@ -135,6 +135,16 @@
 				<input type="text" class="form-control" id="phone" name="phone"value="${result[2] }">
 			</div>
 			<div class="form-group">
+				결제 방식
+				<select class="form-control" id="selectMethod">
+    				<option value="0">결제 방식</option>
+    				<option value="card">카드결제</option>
+    				<option value="trans">실시간 계좌이체</option>
+    				<option value="vbank">가상계좌</option>
+    				<option value="phone">휴대폰 소액결제</option>
+				</select>
+			</div>
+			<div class="form-group">
 				후원 금액
 				<select class="form-control" id="selectAmount">
     				<option value="0">금액 선택</option>
@@ -230,6 +240,7 @@
 			var name = $("#inputName").val();
 			var regex = /^[가-힣]{2,5}$/g;
 			var result = regex.exec(name);
+			var payMethod = $("#selectMethod option:selected").val();
 			if(result == null){
 				alert("잘못된 이름 형식입니다.");
 				$("#inputName").val("");
@@ -240,6 +251,9 @@
 				return;
 			}else if($("#phone").val() == ""){
 				alert("전화번호를 입력해주세요.");
+				return;
+			}else if(payMethod == "0"){
+				alert("결제 방식을 선택해주세요.");
 				return;
 			}else if($("#amount").val() == ""){
 				alert("금액을 선택해주세요");
@@ -260,7 +274,7 @@
 				        'syrup':시럽페이
 				        'paypal':페이팔
 				 */
-				pay_method : 'card',
+				pay_method : payMethod,
 				/* 
 				    'samsung':삼성페이, 
 				    'card':신용카드, 

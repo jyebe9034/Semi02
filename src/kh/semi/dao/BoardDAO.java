@@ -687,6 +687,20 @@ public class BoardDAO {
 			return result;
 		}
 	}
+	
+	public int deleteComment(int boardNo, String writeDate) throws Exception {
+		String sql = "delete comments where c_b_no=? and c_write_date=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setInt(1, boardNo);
+			pstat.setTimestamp(2, Timestamp.valueOf(writeDate));
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
 
 	public int updateComment(String email, String comment, String writeDate) throws Exception {
 		String sql = "update comments set c_comment=? where c_email=? and c_write_date=?";

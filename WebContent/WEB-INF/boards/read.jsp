@@ -222,7 +222,7 @@
 	    			<div class="col-md-7 col-8 comment">${com.comment }</div>
 	    			<div class="col-md-2 col-3">${com.name }</div>
 	    			<c:choose>
-	    				<c:when test="${sessionScope.loginEmail == com.email }">
+	    				<c:when test="${sessionScope.loginEmail == com.email || sessionScope.admin!=null}">
 	    					<div class="col-md-2 d-none d-md-block">${com.formedTime }</div>
 	    					<div class="col-1">
 	    						<span class="modifyCommentBtn" writeDate="${com.writeDate }">✎</span>
@@ -277,9 +277,8 @@
 	<div class="fixedMenu">
 		<div class="progressBox col-12 justify-content-center p-0 m-0">
 			<div class="progress mt-4">
-				<div class="progress-bar" role="progressbar"
-					aria-valuenow="80px" aria-valuemin="0"
-						aria-valuemax="100">
+				<div class="progress-bar" role="progressbar" style="width:0;"
+					aria-valuemin="0" aria-valuemax="100">
 				</div>
 			</div>
 			<div id="percentageDiv" class="mr-3 ml-3"><span id="percentage">${percentage }%</span></div>
@@ -336,6 +335,8 @@
 				$("#inputComment").attr("contenteditable", false);
 				$("#commentBtn").prop("disabled", true);
 			}
+			
+			$(".progress-bar").css("width","${barNum}");
 		});
 		
 		$(".donateBtn").on("click", function(){
@@ -442,7 +443,8 @@
 					url: "DeleteComment.board",
 					type: "post",
 					data:{
-						writeDate: writeDate
+						writeDate: writeDate,
+						boardNo: ${result.boardNo}
 					}
 				}).done(function(resp){
 					if(resp == "1"){
@@ -472,6 +474,8 @@
 			comment.attr("contenteditable", true);
 			comment.focus();
 			comment.css("border", "0.5px solid #00000030");
+			comment.css("height", "70px");
+			comment.css("overflow-y", "auto");
 			
 			modifyComplete.on("click", function(){
 				var inputComment = comment.html();
