@@ -136,27 +136,15 @@
 				<input type="text" class="form-control" id="phone" name="phone"value="${result[2] }">
 			</div>
 			<div class="form-group">
-<<<<<<< HEAD
 				결제 방식
 				<select class="form-control" id="selectMethod">
-    				<option value="0">결제 방식</option>
-    				<option value="card">카드결제</option>
-    				<option value="trans">실시간 계좌이체</option>
-    				<option value="vbank">가상계좌</option>
-    				<option value="phone">휴대폰 소액결제</option>
+					<option value="0">결제 방식</option>
+					<option value="card">카드결제</option>
+					<option value="trans">실시간 계좌이체</option>
+					<option value="vbank">가상계좌</option>
+					<option value="phone">휴대폰 소액결제</option>
 				</select>
 			</div>
-=======
-	                         결제 방식
-	            <select class="form-control" id="selectMethod">
-	                <option value="0">결제 방식</option>
-	                <option value="card">카드결제</option>
-	                <option value="trans">실시간 계좌이체</option>
-	                <option value="vbank">가상계좌</option>
-	                <option value="phone">휴대폰 소액결제</option>
-	            </select>
-	         </div>
->>>>>>> 452d28a72a7f71fdeab8833b32aefebdd8f1ac84
 			<div class="form-group">
 				후원 금액
 				<select class="form-control" id="selectAmount">
